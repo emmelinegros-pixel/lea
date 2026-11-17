@@ -1,0 +1,16 @@
+{
+  "name": "Vos questions sur la licence LEA",
+  "short_name": "Licence LEA",
+  "description": "Cours, spés, alternance, CAPES, SAÉ, MCC, examens et règlement des études de la licence LEA de l'Université de la Nouvelle-Calédonie.",
+  "lang": "fr",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#F6F7F9",
+  "theme_color": "#15202E",
+  "icons": [
+    { "src": "icone-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icone-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icone-masquable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
