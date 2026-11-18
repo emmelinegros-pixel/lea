@@ -882,18 +882,18 @@ html.pg-ouvert, html.pg-ouvert body{overflow:hidden;}
 /* intertitres des fiches (Notions à couvrir, Compétences visées à évaluer, Syllabus...) : en gras, lisibles */
 .cb h5{font-weight:700; color:var(--ink); font-size:11px; margin:16px 0 6px;}
 /* encarts depliables de la fiche, dans le volet */
-.pg-corps details.pg-pli{border-top:1px solid var(--line); padding:0;}
-.pg-corps details.pg-pli:last-of-type{border-bottom:1px solid var(--line);}
-.pg-corps details.pg-pli > summary{list-style:none; cursor:pointer; display:flex; align-items:center; gap:8px;
+.cb details.pg-pli{border-top:1px solid var(--line); padding:0;}
+.cb details.pg-pli:last-of-type{border-bottom:1px solid var(--line);}
+.cb details.pg-pli > summary{list-style:none; cursor:pointer; display:flex; align-items:center; gap:8px;
   padding:9px 2px; font-family:"IBM Plex Mono",monospace; font-size:11px; font-weight:700; letter-spacing:.08em;
   text-transform:uppercase; color:var(--ink);}
-.pg-corps details.pg-pli > summary::-webkit-details-marker{display:none;}
-.pg-corps details.pg-pli > summary::before{content:"+"; width:16px; color:var(--k, var(--c3)); font-size:14px;}
-.pg-corps details.pg-pli[open] > summary::before{content:"\2212";}
-.pg-corps details.pg-pli > summary:hover{color:var(--k, var(--c3));}
-.pg-corps details.pg-pli[open]{padding-bottom:10px;}
-.pg-corps .pg-nb{font-weight:400; letter-spacing:0; color:var(--muted); border:1px solid var(--line); border-radius:999px; padding:0 7px; font-size:10.5px;}
-.pg-corps .pg-tout{display:block; margin:8px 0 6px auto; font-size:11.5px; padding:3px 11px;}
+.cb details.pg-pli > summary::-webkit-details-marker{display:none;}
+.cb details.pg-pli > summary::before{content:"+"; width:16px; color:var(--k, var(--c3)); font-size:14px;}
+.cb details.pg-pli[open] > summary::before{content:"\2212";}
+.cb details.pg-pli > summary:hover{color:var(--k, var(--c3));}
+.cb details.pg-pli[open]{padding-bottom:10px;}
+.cb .pg-nb{font-weight:400; letter-spacing:0; color:var(--muted); border:1px solid var(--line); border-radius:999px; padding:0 7px; font-size:10.5px;}
+.cb .pg-tout{display:block; margin:8px 0 6px auto; font-size:11.5px; padding:3px 11px;}
 /* fin de l'habillage */
 /* menu-mobile:debut */
 .mm-barre, .mm-feuille, .mm-suite{display:none;}
@@ -1928,27 +1928,45 @@ s'adresser à la responsable de la licence.</p>
     t.textContent = src.querySelector('.cn').textContent;
     var h = document.createElement('span'); h.textContent = src.id.replace('f2027-', ''); t.appendChild(h); bloc.appendChild(t);
     var cb = src.querySelector('.cb').cloneNode(true); bloc.appendChild(cb);
-    var fil = FIL[code];
+    var fil = FIL[code], dl = null;
     if (fil) {
-      var dl = document.createElement('dl'); dl.className = 'faits';
+      dl = document.createElement('dl'); dl.className = 'faits';
       [['Suppose acquis', fil[0]], ['Prépare à', fil[1]]].forEach(function(p){
         if (!p[1]) { return; }
         var d = document.createElement('div'), dt = document.createElement('dt'), dd = document.createElement('dd');
         dt.textContent = p[0]; dd.textContent = p[1]; d.appendChild(dt); d.appendChild(dd); dl.appendChild(d);
       });
-      if (dl.children.length) { cb.insertBefore(dl, cb.firstChild); }
     }
     replier(cb);
+    if (dl && dl.children.length) {
+      var idt = cb.querySelector(':scope > details.pg-id');
+      if (idt) { idt.insertBefore(dl, idt.querySelector('summary').nextSibling); } else { cb.insertBefore(dl, cb.firstChild); }
+    }
     return bloc;
   }
 
   /* chaque rubrique de la fiche (exercices types, notions, compétences, syllabus...) devient un encart depliable */
   function replier(cb){
-    // l'en-tete de la fiche (prerequis, heures, UE, competence, niveau, note) : un encart replie lui aussi
+    if (!cb.querySelector(':scope > details.pg-pli')) { plier(cb); }
+    Array.prototype.forEach.call(cb.querySelectorAll(':scope > .pg-tout'), function(x){ x.parentNode.removeChild(x); });
+    var plis = cb.querySelectorAll(':scope > details.pg-pli');
+    if (plis.length > 1) {
+      var t = document.createElement('button'); t.type = 'button'; t.className = 'pg-tout'; t.textContent = 'Tout déplier';
+      t.addEventListener('click', function(ev){
+        ev.preventDefault(); ev.stopPropagation();
+        var ouvrir = !Array.prototype.every.call(plis, function(d){ return d.open; });
+        Array.prototype.forEach.call(plis, function(d){ d.open = ouvrir; });
+        t.textContent = ouvrir ? 'Tout replier' : 'Tout déplier';
+      });
+      cb.insertBefore(t, plis[0]);
+    }
+  }
+  function plier(cb){
+    // l'en-tete de la fiche (heures, UE, competence, niveau, note) : un encart replie lui aussi
     var tete = [];
     for (var e = cb.firstElementChild; e && e.tagName !== 'H5'; e = e.nextElementSibling) { tete.push(e); }
     if (tete.length) {
-      var id = document.createElement('details'); id.className = 'pg-pli';
+      var id = document.createElement('details'); id.className = 'pg-pli pg-id';
       var si = document.createElement('summary'); si.textContent = 'Prérequis, UE, compétence';
       id.appendChild(si); cb.insertBefore(id, tete[0]);
       tete.forEach(function(x){ id.appendChild(x); });
@@ -1982,16 +2000,6 @@ s'adresser à la responsable de la licence.</p>
       if (d.querySelector('tr')) { n = n - 1; }
       if (n > 1) { var c = document.createElement('span'); c.className = 'pg-nb'; c.textContent = n; d.querySelector('summary').appendChild(c); }
     });
-    var plis = cb.querySelectorAll('details.pg-pli');
-    if (plis.length > 1) {
-      var t = document.createElement('button'); t.type = 'button'; t.className = 'pg-tout'; t.textContent = 'Tout déplier';
-      t.addEventListener('click', function(){
-        var ouvrir = !Array.prototype.every.call(plis, function(d){ return d.open; });
-        Array.prototype.forEach.call(plis, function(d){ d.open = ouvrir; });
-        t.textContent = ouvrir ? 'Tout replier' : 'Tout déplier';
-      });
-      cb.insertBefore(t, plis[0]);
-    }
   }
 
   /* ---- la fiche s'ouvre dans un volet, a droite ; fleches pour passer d'une etape a l'autre ---- */
@@ -2136,6 +2144,11 @@ s'adresser à la responsable de la licence.</p>
   Array.prototype.forEach.call(document.querySelectorAll('.vprog .et[data-codes]'), function(et){
     et.addEventListener('click', function(){ if (courant === et && volet && !volet.hidden) { fermer(); } else { ouvrir(et); } });
     et.addEventListener('keydown', function(ev){ if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); ouvrir(et); } });
+  });
+
+  /* ---- rubrique Mes cours : memes encarts plies dans chaque fiche ---- */
+  Array.prototype.forEach.call(document.querySelectorAll('details.cours > .cb'), function(cb){
+    if (!cb.closest('.pg-volet')) { replier(cb); }
   });
 
   /* ---- barre « Aller à » : reste visible en haut, menne a chaque fil ---- */
