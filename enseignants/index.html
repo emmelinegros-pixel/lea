@@ -894,6 +894,16 @@ html.pg-ouvert, html.pg-ouvert body{overflow:hidden;}
 .cb details.pg-pli[open]{padding-bottom:10px;}
 .cb .pg-nb{font-weight:400; letter-spacing:0; color:var(--muted); border:1px solid var(--line); border-radius:999px; padding:0 7px; font-size:10.5px;}
 .cb .pg-tout{display:block; margin:8px 0 6px auto; font-size:11.5px; padding:3px 11px;}
+/* liens vers les cours cites, codes MCC expliques */
+.pg-lien{font:inherit; color:var(--k, var(--c3)); background:none; border:none; padding:0; cursor:pointer;
+  text-decoration:underline; text-decoration-color:color-mix(in srgb, var(--k, var(--c3)) 45%, transparent); text-underline-offset:2px;}
+.pg-lien:hover{text-decoration-color:currentColor;}
+.cmeta .mcc[role="button"], .pg-mcc .mcc{cursor:pointer; text-decoration:underline dotted; text-underline-offset:2px;}
+.mcc-expl{margin:6px 0 10px; padding:9px 12px; border-left:3px solid var(--k, var(--c3)); border-radius:6px;
+  background:color-mix(in srgb, var(--k, var(--c3)) 7%, var(--surface)); font-size:13px;}
+.mcc-expl p{margin:2px 0;}
+.mcc-expl .mcc-t{font-weight:600;}
+.mcc-expl .mcc-f{font-family:"IBM Plex Mono",monospace; font-size:11.5px; color:var(--muted);}
 /* fin de l'habillage */
 /* menu-mobile:debut */
 .mm-barre, .mm-feuille, .mm-suite{display:none;}
@@ -1934,7 +1944,7 @@ s'adresser à la responsable de la licence.</p>
       [['Suppose acquis', fil[0]], ['Prépare à', fil[1]]].forEach(function(p){
         if (!p[1]) { return; }
         var d = document.createElement('div'), dt = document.createElement('dt'), dd = document.createElement('dd');
-        dt.textContent = p[0]; dd.textContent = p[1]; d.appendChild(dt); d.appendChild(dd); dl.appendChild(d);
+        dt.textContent = p[0]; lierCours(dd, p[1]); d.appendChild(dt); d.appendChild(dd); dl.appendChild(d);
       });
     }
     replier(cb);
@@ -1943,6 +1953,12 @@ s'adresser à la responsable de la licence.</p>
       if (idt) { idt.insertBefore(dl, idt.querySelector('summary').nextSibling); } else { cb.insertBefore(dl, cb.firstChild); }
     }
     return bloc;
+  }
+
+  function catalogue(){
+    return Array.prototype.map.call(document.querySelectorAll('details[id^="f2027-"]'), function(d){
+      return [d.id.replace('f2027-', ''), d.querySelector('.cn') ? d.querySelector('.cn').textContent : ''];
+    });
   }
 
   /* chaque rubrique de la fiche (exercices types, notions, compétences, syllabus...) devient un encart depliable */
@@ -2002,6 +2018,76 @@ s'adresser à la responsable de la licence.</p>
     });
   }
 
+  /* ---- fin des fonctions propres a la page (la page des etudiants remplace tout ce qui precede) ---- */
+
+  /* ---- « Suppose acquis » / « Prépare à » : chaque cours cite s'ouvre d'un clic ---- */
+  function nrm(x){ return (x || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\([^)]*\)/g, ' ')
+                       .replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim(); }
+  var CAT = null;
+  var ABREG = [[/\benv eco\b/, 'environnement economique'], [/\bcompta\b/, 'comptabilite'], [/^grc$/, 'gestion de la relation client']];
+  function trouverCours(texte){
+    if (!CAT) { CAT = catalogue().map(function(c){ return [c[0], nrm(c[1])]; }).filter(function(c){ return c[1]; }); }
+    var n = nrm(texte).replace(/ s\d( et \d)?$/, '');
+    ABREG.forEach(function(a){ n = n.replace(a[0], a[1]); });
+    var q = ' ' + n + ' ', best = null, lg = 0;
+    // 1. le titre d'un cours figure en entier dans le texte (le plus long l'emporte)
+    CAT.forEach(function(c){ if (q.indexOf(' ' + c[1] + ' ') > -1 && c[1].length > lg) { lg = c[1].length; best = c[0]; } });
+    if (best) { return best; }
+    // 2. le texte est le debut d'un seul titre (« Prospection » pour « Prospection à l'international »)
+    var deb = CAT.filter(function(c){ return (c[1] + ' ').indexOf(n + ' ') === 0; });
+    var ids = deb.map(function(c){ return c[0]; }).filter(function(v, i, a){ return a.indexOf(v) === i; });
+    if (n.length > 3 && ids.length === 1) { return ids[0]; }
+    return null;
+  }
+  function lierCours(dd, texte){
+    dd.textContent = '';
+    texte.split(' · ').forEach(function(part, k){
+      if (k) { dd.appendChild(document.createTextNode(' · ')); }
+      var code = trouverCours(part);
+      if (code) {
+        var b = document.createElement('button'); b.type = 'button'; b.className = 'pg-lien'; b.textContent = part;
+        b.title = 'Ouvrir la fiche de ce cours';
+        b.addEventListener('click', function(ev){ ev.preventDefault(); ev.stopPropagation(); ouvrirLie(code, part); });
+        dd.appendChild(b);
+      } else { dd.appendChild(document.createTextNode(part)); }
+    });
+  }
+
+  /* ---- les codes MCC s'expliquent d'un clic (definitions lues dans le tableau des MCC de la page) ---- */
+  var DEFS = null;
+  function defsMCC(){
+    if (DEFS) { return DEFS; }
+    DEFS = {};
+    Array.prototype.forEach.call(document.querySelectorAll('td.code'), function(td){
+      var c = td.textContent.trim(); if (!/^MCC\d+T?$/.test(c) || DEFS[c]) { return; }
+      var tr = td.parentNode, d = td.nextElementSibling, f = tr.querySelector('td.formule') || tr.lastElementChild;
+      var full = d ? d.textContent.replace(/\s+/g, ' ').trim() : '', bt = d && d.querySelector('b') ? d.querySelector('b').textContent.replace(/\s+/g, ' ').trim() : '';
+      var reste = full.indexOf(bt) === 0 ? full.slice(bt.length).trim() : '';
+      var titreSeul = !bt || full.indexOf(bt) !== 0 || /^[,;:a-zà-ü]/.test(reste);
+      DEFS[c] = {t: titreSeul ? full : bt, x: titreSeul ? '' : reste, f: f && f !== d ? f.textContent.replace(/\s+/g, ' ').trim() : ''};
+    });
+    return DEFS;
+  }
+  document.addEventListener('click', function(ev){
+    var m = ev.target.closest && ev.target.closest('.mcc');
+    if (!m || m.closest('table')) { return; }
+    var code = (m.textContent.match(/MCC\d+T?/) || [])[0], def = code ? defsMCC()[code] : null;
+    if (!def) { return; }
+    ev.preventDefault(); ev.stopPropagation();
+    var ligne = m.closest('.cmeta, .pg-mcc') || m.parentNode, nx = ligne.nextElementSibling;
+    if (nx && nx.classList.contains('mcc-expl') && nx.getAttribute('data-code') === code) { nx.parentNode.removeChild(nx); return; }
+    if (nx && nx.classList.contains('mcc-expl')) { nx.parentNode.removeChild(nx); }
+    var box = document.createElement('div'); box.className = 'mcc-expl'; box.setAttribute('data-code', code);
+    box.innerHTML = '<p class="mcc-t"></p><p class="mcc-x"></p><p class="mcc-f"></p>';
+    box.querySelector('.mcc-t').textContent = code + ' — ' + def.t;
+    if (def.x) { box.querySelector('.mcc-x').textContent = def.x; } else { box.removeChild(box.querySelector('.mcc-x')); }
+    if (def.f) { box.querySelector('.mcc-f').textContent = def.f; } else { box.removeChild(box.querySelector('.mcc-f')); }
+    ligne.parentNode.insertBefore(box, ligne.nextSibling);
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('.cmeta .mcc'), function(m){
+    if (/MCC\d/.test(m.textContent)) { m.setAttribute('role', 'button'); m.setAttribute('tabindex', '0'); m.title = 'Que veut dire ce code ?'; }
+  });
+
   /* ---- la fiche s'ouvre dans un volet, a droite ; fleches pour passer d'une etape a l'autre ---- */
   var volet = null, voile = null, courant = null;
   function construire(panneau){
@@ -2041,6 +2127,7 @@ s'adresser à la responsable de la licence.</p>
   }
   function nomCours(m){ return m.getAttribute('data-nom') || m.textContent.replace(/\s*·.*$/, '').trim(); }
   function ouvrir(el){
+    retour = null;
     var et = el.classList.contains('et') ? el : el.closest('.et'), cours = el !== et;
     if (!volet) { construire(et.closest('.panneau') || document.body); }
     if (courant) { courant.setAttribute('aria-expanded', 'false'); courant.classList.remove('vu'); }
@@ -2075,7 +2162,21 @@ s'adresser à la responsable de la licence.</p>
     volet.focus && volet.setAttribute('tabindex', '-1');
     volet.focus({preventScroll: true});
   }
+  var retour = null;
+  function ouvrirLie(code, nom){
+    if (!volet) { return; }
+    var depuis = courant;
+    var corps = volet.querySelector('.pg-corps'); corps.innerHTML = '';
+    var b = fiche(code); if (b) { corps.appendChild(b); }
+    volet.querySelector('.pg-fil').textContent = 'Cours cité dans la fiche';
+    volet.querySelector('.pg-titre').textContent = nom.replace(/\s*\([^)]*\)\s*$/, '');
+    var pr = volet.querySelector('.pg-prec'), sv = volet.querySelector('.pg-suiv');
+    pr.disabled = !depuis; pr.querySelector('span').textContent = 'retour'; sv.disabled = true; sv.querySelector('span').textContent = '';
+    volet.querySelector('.pg-pos').textContent = '';
+    retour = depuis; corps.scrollTop = 0;
+  }
   function voisin(s){
+    if (retour) { var r = retour; retour = null; if (s < 0) { ouvrir(r); } return; }
     if (!courant) { return; }
     var l = courant.classList.contains('et') ? etapes(courant)
           : Array.prototype.slice.call(courant.closest('.et').querySelectorAll('.mat [data-codes]'));
@@ -2147,9 +2248,11 @@ s'adresser à la responsable de la licence.</p>
   });
 
   /* ---- rubrique Mes cours : memes encarts plies dans chaque fiche ---- */
-  Array.prototype.forEach.call(document.querySelectorAll('details.cours > .cb'), function(cb){
-    if (!cb.closest('.pg-volet')) { replier(cb); }
-  });
+  if (typeof replier === 'function') {
+    Array.prototype.forEach.call(document.querySelectorAll('details[id^="f2027-"] > .cb, details[id^="f2026-"] > .cb'), function(cb){
+      if (!cb.closest('.pg-volet')) { replier(cb); }
+    });
+  }
 
   /* ---- barre « Aller à » : reste visible en haut, menne a chaque fil ---- */
   var barre = document.querySelector('.vprog .pg-nav');

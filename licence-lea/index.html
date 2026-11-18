@@ -706,18 +706,28 @@ html.pg-ouvert, html.pg-ouvert body{overflow:hidden;}
 #vue-prog.vprog .pg-leg-t{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.07em; text-transform:uppercase;}
 #vue-prog.vprog .pg-leg-a{margin-left:auto; font-style:italic;}
 /* encarts depliables de la fiche, dans le volet */
-.pg-corps details.pg-pli{border-top:1px solid var(--line); padding:0;}
-.pg-corps details.pg-pli:last-of-type{border-bottom:1px solid var(--line);}
-.pg-corps details.pg-pli > summary{list-style:none; cursor:pointer; display:flex; align-items:center; gap:8px;
+.cb details.pg-pli{border-top:1px solid var(--line); padding:0;}
+.cb details.pg-pli:last-of-type{border-bottom:1px solid var(--line);}
+.cb details.pg-pli > summary{list-style:none; cursor:pointer; display:flex; align-items:center; gap:8px;
   padding:9px 2px; font-family:"IBM Plex Mono",monospace; font-size:11px; font-weight:700; letter-spacing:.08em;
   text-transform:uppercase; color:var(--ink);}
-.pg-corps details.pg-pli > summary::-webkit-details-marker{display:none;}
-.pg-corps details.pg-pli > summary::before{content:"+"; width:16px; color:var(--k, var(--c3)); font-size:14px;}
-.pg-corps details.pg-pli[open] > summary::before{content:"\2212";}
-.pg-corps details.pg-pli > summary:hover{color:var(--k, var(--c3));}
-.pg-corps details.pg-pli[open]{padding-bottom:10px;}
-.pg-corps .pg-nb{font-weight:400; letter-spacing:0; color:var(--muted); border:1px solid var(--line); border-radius:999px; padding:0 7px; font-size:10.5px;}
-.pg-corps .pg-tout{display:block; margin:8px 0 6px auto; font-size:11.5px; padding:3px 11px;}
+.cb details.pg-pli > summary::-webkit-details-marker{display:none;}
+.cb details.pg-pli > summary::before{content:"+"; width:16px; color:var(--k, var(--c3)); font-size:14px;}
+.cb details.pg-pli[open] > summary::before{content:"\2212";}
+.cb details.pg-pli > summary:hover{color:var(--k, var(--c3));}
+.cb details.pg-pli[open]{padding-bottom:10px;}
+.cb .pg-nb{font-weight:400; letter-spacing:0; color:var(--muted); border:1px solid var(--line); border-radius:999px; padding:0 7px; font-size:10.5px;}
+.cb .pg-tout{display:block; margin:8px 0 6px auto; font-size:11.5px; padding:3px 11px;}
+/* liens vers les cours cites, codes MCC expliques */
+.pg-lien{font:inherit; color:var(--k, var(--c3)); background:none; border:none; padding:0; cursor:pointer;
+  text-decoration:underline; text-decoration-color:color-mix(in srgb, var(--k, var(--c3)) 45%, transparent); text-underline-offset:2px;}
+.pg-lien:hover{text-decoration-color:currentColor;}
+.cmeta .mcc[role="button"], .pg-mcc .mcc{cursor:pointer; text-decoration:underline dotted; text-underline-offset:2px;}
+.mcc-expl{margin:6px 0 10px; padding:9px 12px; border-left:3px solid var(--k, var(--c3)); border-radius:6px;
+  background:color-mix(in srgb, var(--k, var(--c3)) 7%, var(--surface)); font-size:13px;}
+.mcc-expl p{margin:2px 0;}
+.mcc-expl .mcc-t{font-weight:600;}
+.mcc-expl .mcc-f{font-family:"IBM Plex Mono",monospace; font-size:11.5px; color:var(--muted);}
 /* fin de l'habillage */
 
 /* progression-etudiants:fin */
@@ -2778,6 +2788,7 @@ html.pg-ouvert, html.pg-ouvert body{overflow:hidden;}
 /* menu-mobile:fin */</script>
 <script>/* progression-etudiants:debut */
 window.PROG_FIL_ETU = {"11_0424":["Aucun : c'est le premier cours du fil","Pratique de Langue : Anglais \u00e9crit ET oral 2 (S2)"],"11_0429":["Phonologie et Anglais oral 1 (S1)","Pratique de Langue : Anglais des affaires 3 (S3)"],"11_0575":["Pratique de Langue : Anglais \u00e9crit ET oral 2 (S2)","Pratique de Langue : Anglais des affaires 4 (S4)"],"11_0439":["Pratique de Langue : Anglais des affaires 3 (S3)","Pratique de Langue : Anglais des affaires 5 (S5)"],"11_0608":["Pratique de Langue : Anglais des affaires 4 (S4)","Pratique de Langue : Anglais des affaires 6 (S6)"],"11_0436":["Pratique de Langue : Anglais des affaires 5 (S5)","Techniques d'expression et de communication (anglais) (S7)"],"11_0609":["Pratique de Langue : Anglais des affaires 6 (S6)","Dernier cours du fil"],"06_0631":["Strat\u00e9gie d'entreprise (S2) \u00b7 Env. \u00e9co international et RSE (S5) \u00b7 Comp\u00e9tences interculturelles (S4)","Simulation de gestion"],"14_0111":["Aucun : c'est le premier cours du fil","Pratique de Langue : Espagnol \u00e9crit ET oral 2 (S2)"],"14_0123":["Phonologie et Espagnol oral 1 (S1)","Pratique de Langue : Espagnol des affaires 3 (S3)"],"14_0072":["Pratique de Langue : Espagnol \u00e9crit ET oral 2 (S2)","Pratique de Langue : Espagnol des affaires 4 (S4)"],"14_0082":["Pratique de Langue : Espagnol des affaires 3 (S3)","Pratique de Langue : Espagnol des affaires 5 (S5)"],"14_0091":["Pratique de Langue : Espagnol des affaires 4 (S4)","Pratique de Langue : Espagnol des affaires 6 (S6)"],"14_0131":["Pratique de Langue : Espagnol des affaires 5 (S5)","Techniques d'expression et de communication (espagnol) (S7)"],"05_0248":["Aucun : c'est le premier cours du fil","Strat\u00e9gie d'entreprise S2 \u00b7 Env. \u00e9co international et RSE S5 \u00b7 Droit international S5 \u00b7 Marketing international 1 (S5)"],"06_0552":["Aucun : c'est le premier cours du fil","Marketing 2 S2 \u00b7 Gestion de la relation client S3"],"06_0624":["Aucun : c'est le premier cours du fil","Analyse de gestion S2"],"05_0249":["Structures et Fonctions de l'entreprise 1 (S1)","Marketing 2 (m\u00eame semestre, apr\u00e8s) \u00b7 Strat\u00e9gie d'entreprise (m\u00eame semestre, apr\u00e8s) \u00b7 Comptabilit\u00e9 financi\u00e8re S4 \u00b7 Simulation de gestion S7"],"06_0616":["Marketing 1 (S1) \u00b7 les co\u00fbts de l'Analyse de gestion (S2, 1re moiti\u00e9)","Gestion de la relation client S3 \u00b7 Marketing international 1 S5"],"06_0618":["Environnement \u00e9conomique (S1) \u00b7 Analyse de gestion (S2, en parall\u00e8le)","SA\u00c9 S3 \u00b7 SA\u00c9 S4 \u00b7 Env. \u00e9co international et RSE S5 \u00b7 Prospection S6 \u00b7 International strategy S7 \u00b7 Simulation S7"],"06_0289":["Marketing 1 (S1) \u00b7 Marketing 2 (S2)","Marketing digital S6 \u00b7 Prospection \u00e0 l'international S6"],"01_0280":["Structures et Fonctions de l'entreprise 1 (S1)","Droit international S5"],"06_0625":["Analyse de gestion (S2)","Supply Chain 1 S5 \u00b7 Simulation de gestion S7"],"06_0287":["Strat\u00e9gie d'entreprise (S2)","Stage 1 mois \u00b7 International strategy S7"],"02_0372":["Droit social et des contrats (S3) \u00b7 acquis L1-L2 du bloc","Prospection S6 \u00b7 Simulation S7 \u00b7 Prospection \u00e0 l'international (S6)"],"06_0563":["Gestion de projet (S3) \u00b7 Projet tutor\u00e9 (S3)","Excellence op\u00e9rationnelle S7"],"06_0290":["Analyse de gestion (S2) \u00b7 Compta financi\u00e8re (S4) \u00b7 Gestion de projet (S3)","Supply Chain 2 S6 \u00b7 Excellence op\u00e9rationnelle S7 \u00b7 Simulation S7"],"06_0559":["Strat\u00e9gie d'entreprise (S2)","International strategy S7"],"06_0626":["Environnement \u00e9conomique (S1) \u00b7 Strat\u00e9gie d'entreprise (S2)","International strategy S7 \u00b7 Simulation S7"],"06_0285":["Marketing 1 (S1) \u00b7 Marketing 2 (S2) \u00b7 GRC (S3)","Marketing international 2 S6 \u00b7 Prospection S6"],"06_0619":["Supply Chain 1 (S5)","Excellence op\u00e9rationnelle S7 \u00b7 Simulation de gestion S7"],"71_0264":["SA\u00c9 Noum\u00e9a, r\u00e9cits crois\u00e9s (S4)",""],"06_0627":["Marketing (S1, S2, S3, S5) \u00b7 Strat\u00e9gie d'entreprise (S2)","Simulation de gestion S7"],"06_0622":["Gestion de la relation client (S3)","Simulation de gestion S7"],"06_0628":["Marketing international 1 (S5)","Simulation de gestion S7 \u00b7 International strategy S7"],"06_0621":["Supply Chain 1 (S5) et 2 (S6) \u00b7 Management d'\u00e9quipe (S5)","Simulation de gestion"],"06_0333":["Analyse de gestion (S2) \u00b7 Comptabilit\u00e9 financi\u00e8re (S4) \u00b7 Marketing international 2 (S6) \u00b7 Marketing Digital et Parcours client (S6) \u00b7 Strat\u00e9gie d'entreprise (S2) \u00b7 Environnement \u00e9conomique international et RSE (S5) \u00b7 Supply Chain 2 (S6) \u00b7 Prospection \u00e0 l'international (S6) \u00b7 Monographie (S6)",""],"27_0428":["Outils num\u00e9riques renforc\u00e9s 3 (S3)","Prospection S6 \u00b7 Simulation S7 \u00b7 Prospection \u00e0 l'international (S6)"]};
+window.MCC_ETU = {"14_0111": "MCC1 en 2026", "14_0122": "MCC1 en 2026", "11_0424": "MCC7", "11_0572": "MCC3 en 2026", "09_0186": "MCC3 en 2026", "11_0359": "MCC7 en 2026", "27_0353": "MCC4 en 2026", "71_0157": "MCC2 en 2026", "11_0618": "MCC7 en 2026", "05_0248": "MCC4 en 2026", "06_0552": "MCC1 en 2026", "06_0624": "MCC4 en 2026", "11_0581": "MCC7 en 2026", "CRÉATION-S2-ANGLAIS": "MCC7", "09_0187": "MCC3 en 2026", "11_0423": "MCC7 en 2026", "27_0354": "MCC4 en 2026", "98_0031": "MCC4 en 2026", "11_0619": "MCC7 en 2026", "06_0616": "MCC1 en 2026", "05_0249": "MCC1 en 2026", "06_0618": "MCC4", "11_0573": "MCC7", "11_0575": "MCC7", "14_0117": "MCC7 en 2026", "27_0408": "MCC4 en 2026", "11_0571": "MCC7 en 2026", "14_0073": "MCC7 en 2026", "06_0289": "MCC1 en 2026", "01_0280": "MCC2", "06_0294": "MCC2", "14_0118": "MCC7", "11_0441": "MCC7", "14_0082": "MCC7", "11_0439": "MCC7", "11_0432": "MCC7", "14_0079": "MCC4", "85_0061": "MCC3", "06_0625": "MCC4", "06_0287": "MCC7", "11_0576": "MCC1 en 2026", "14_0119": "MCC7 en 2026", "11_0608": "MCC3 en 2026", "14_0091": "MCC4 en 2026", "11_0434": "MCC7 en 2026", "27_0428": "MCC7 en 2026", "06_0563": "MCC4 en 2026", "06_0290": "MCC2 en 2026", "02_0372": "MCC2 en 2026", "06_0626": "MCC2 en 2026", "06_0285": "MCC3 en 2026", "14_0084": "MCC7", "14_0085": "MCC4", "14_0087": "MCC7", "11_0436": "MCC3", "14_0131": "MCC7 en 2026", "11_0582": "MCC7 en 2026", "14_0124": "MCC7", "06_0619": "MCC2 en 2026", "71_0264": "MCC1 en 2026", "99_0135": "MCC7 en 2026", "06_0627": "MCC2 en 2026", "06_0622": "MCC3 en 2026", "06_0628": "MCC3 en 2026", "14_0125": "MCC7", "14_0092": "MCC7", "14_0094": "MCC4", "11_0609": "MCC7", "14_0126": "MCC7", "15_0167": "MCC7", "11_0437": "MCC7", "14_0088": "MCC4", "15_0166": "MCC7", "14_0120": "MCC7", "14_0127": "MCC7", "99_0260": "MCC4", "98_0029": "MCC4", "96_0138": "MCC6", "96_0139": "MCC4", "96_0091": "MCC12", "06_0621": "MCC2", "06_0631": "MCC3", "06_0333": "MCC4"};
 
 (function(){
   Array.prototype.forEach.call(document.querySelectorAll('#vue-prog .et[data-codes]'), function(e){
@@ -2793,6 +2804,12 @@ window.PROG_FIL_ETU = {"11_0424":["Aucun : c'est le premier cours du fil","Prati
     });
     return src;
   }
+  function catalogue(){
+    return Array.prototype.map.call(document.querySelectorAll('#vue-sem details.cours'), function(d){
+      var sp = d.querySelector('.cmeta span');
+      return [d.getAttribute('data-code') || (sp ? sp.textContent.trim() : ''), d.querySelector('.cn') ? d.querySelector('.cn').textContent : ''];
+    });
+  }
   function fiche(code){
     var src = source(code);
     if (!src) { return null; }
@@ -2802,13 +2819,23 @@ window.PROG_FIL_ETU = {"11_0424":["Aucun : c'est le premier cours du fil","Prati
     var cm = src.querySelector('.cm');
     if (cm) { var h = document.createElement('span'); h.textContent = cm.textContent; t.appendChild(h); }
     bloc.appendChild(t);
+    var mc = (window.MCC_ETU || {})[code];
+    if (mc && defsMCC()[mc.replace(/ en 2026$/, '')]) {   // seulement si la page explique les codes MCC
+      var pm = document.createElement('p'); pm.className = 'pg-mcc';
+      var c26 = / en 2026$/.test(mc), cd = mc.replace(/ en 2026$/, '');
+      pm.appendChild(document.createTextNode(c26 ? 'Modalités de contrôle en 2026 : ' : 'Modalités de contrôle prévues : '));
+      var bm = document.createElement('button'); bm.type = 'button'; bm.className = 'mcc'; bm.textContent = cd;
+      bm.title = 'Que veut dire ce code ?'; pm.appendChild(bm);
+      pm.appendChild(document.createTextNode(' (l’enseignant confirmera les MCC en début de semestre)'));
+      bloc.appendChild(pm);
+    }
     var fil = FIL[code];
     if (fil) {
       var dl = document.createElement('dl'); dl.className = 'faits';
       [['Prérequis', fil[0]], ['Prépare à', fil[1]]].forEach(function(p){
         if (!p[1]) { return; }
         var d = document.createElement('div'), dt = document.createElement('dt'), dd = document.createElement('dd');
-        dt.textContent = p[0]; dd.textContent = p[1]; d.appendChild(dt); d.appendChild(dd); dl.appendChild(d);
+        dt.textContent = p[0]; lierCours(dd, p[1]); d.appendChild(dt); d.appendChild(dd); dl.appendChild(d);
       });
       if (dl.children.length) { bloc.appendChild(dl); }
     }
@@ -2826,6 +2853,76 @@ window.PROG_FIL_ETU = {"11_0424":["Aucun : c'est le premier cours du fil","Prati
     bloc.appendChild(cb);
     return bloc;
   }
+
+  /* ---- fin des fonctions propres a la page (la page des etudiants remplace tout ce qui precede) ---- */
+
+  /* ---- « Suppose acquis » / « Prépare à » : chaque cours cite s'ouvre d'un clic ---- */
+  function nrm(x){ return (x || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\([^)]*\)/g, ' ')
+                       .replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim(); }
+  var CAT = null;
+  var ABREG = [[/\benv eco\b/, 'environnement economique'], [/\bcompta\b/, 'comptabilite'], [/^grc$/, 'gestion de la relation client']];
+  function trouverCours(texte){
+    if (!CAT) { CAT = catalogue().map(function(c){ return [c[0], nrm(c[1])]; }).filter(function(c){ return c[1]; }); }
+    var n = nrm(texte).replace(/ s\d( et \d)?$/, '');
+    ABREG.forEach(function(a){ n = n.replace(a[0], a[1]); });
+    var q = ' ' + n + ' ', best = null, lg = 0;
+    // 1. le titre d'un cours figure en entier dans le texte (le plus long l'emporte)
+    CAT.forEach(function(c){ if (q.indexOf(' ' + c[1] + ' ') > -1 && c[1].length > lg) { lg = c[1].length; best = c[0]; } });
+    if (best) { return best; }
+    // 2. le texte est le debut d'un seul titre (« Prospection » pour « Prospection à l'international »)
+    var deb = CAT.filter(function(c){ return (c[1] + ' ').indexOf(n + ' ') === 0; });
+    var ids = deb.map(function(c){ return c[0]; }).filter(function(v, i, a){ return a.indexOf(v) === i; });
+    if (n.length > 3 && ids.length === 1) { return ids[0]; }
+    return null;
+  }
+  function lierCours(dd, texte){
+    dd.textContent = '';
+    texte.split(' · ').forEach(function(part, k){
+      if (k) { dd.appendChild(document.createTextNode(' · ')); }
+      var code = trouverCours(part);
+      if (code) {
+        var b = document.createElement('button'); b.type = 'button'; b.className = 'pg-lien'; b.textContent = part;
+        b.title = 'Ouvrir la fiche de ce cours';
+        b.addEventListener('click', function(ev){ ev.preventDefault(); ev.stopPropagation(); ouvrirLie(code, part); });
+        dd.appendChild(b);
+      } else { dd.appendChild(document.createTextNode(part)); }
+    });
+  }
+
+  /* ---- les codes MCC s'expliquent d'un clic (definitions lues dans le tableau des MCC de la page) ---- */
+  var DEFS = null;
+  function defsMCC(){
+    if (DEFS) { return DEFS; }
+    DEFS = {};
+    Array.prototype.forEach.call(document.querySelectorAll('td.code'), function(td){
+      var c = td.textContent.trim(); if (!/^MCC\d+T?$/.test(c) || DEFS[c]) { return; }
+      var tr = td.parentNode, d = td.nextElementSibling, f = tr.querySelector('td.formule') || tr.lastElementChild;
+      var full = d ? d.textContent.replace(/\s+/g, ' ').trim() : '', bt = d && d.querySelector('b') ? d.querySelector('b').textContent.replace(/\s+/g, ' ').trim() : '';
+      var reste = full.indexOf(bt) === 0 ? full.slice(bt.length).trim() : '';
+      var titreSeul = !bt || full.indexOf(bt) !== 0 || /^[,;:a-zà-ü]/.test(reste);
+      DEFS[c] = {t: titreSeul ? full : bt, x: titreSeul ? '' : reste, f: f && f !== d ? f.textContent.replace(/\s+/g, ' ').trim() : ''};
+    });
+    return DEFS;
+  }
+  document.addEventListener('click', function(ev){
+    var m = ev.target.closest && ev.target.closest('.mcc');
+    if (!m || m.closest('table')) { return; }
+    var code = (m.textContent.match(/MCC\d+T?/) || [])[0], def = code ? defsMCC()[code] : null;
+    if (!def) { return; }
+    ev.preventDefault(); ev.stopPropagation();
+    var ligne = m.closest('.cmeta, .pg-mcc') || m.parentNode, nx = ligne.nextElementSibling;
+    if (nx && nx.classList.contains('mcc-expl') && nx.getAttribute('data-code') === code) { nx.parentNode.removeChild(nx); return; }
+    if (nx && nx.classList.contains('mcc-expl')) { nx.parentNode.removeChild(nx); }
+    var box = document.createElement('div'); box.className = 'mcc-expl'; box.setAttribute('data-code', code);
+    box.innerHTML = '<p class="mcc-t"></p><p class="mcc-x"></p><p class="mcc-f"></p>';
+    box.querySelector('.mcc-t').textContent = code + ' — ' + def.t;
+    if (def.x) { box.querySelector('.mcc-x').textContent = def.x; } else { box.removeChild(box.querySelector('.mcc-x')); }
+    if (def.f) { box.querySelector('.mcc-f').textContent = def.f; } else { box.removeChild(box.querySelector('.mcc-f')); }
+    ligne.parentNode.insertBefore(box, ligne.nextSibling);
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('.cmeta .mcc'), function(m){
+    if (/MCC\d/.test(m.textContent)) { m.setAttribute('role', 'button'); m.setAttribute('tabindex', '0'); m.title = 'Que veut dire ce code ?'; }
+  });
 
   /* ---- la fiche s'ouvre dans un volet, a droite ; fleches pour passer d'une etape a l'autre ---- */
   var volet = null, voile = null, courant = null;
@@ -2866,6 +2963,7 @@ window.PROG_FIL_ETU = {"11_0424":["Aucun : c'est le premier cours du fil","Prati
   }
   function nomCours(m){ return m.getAttribute('data-nom') || m.textContent.replace(/\s*·.*$/, '').trim(); }
   function ouvrir(el){
+    retour = null;
     var et = el.classList.contains('et') ? el : el.closest('.et'), cours = el !== et;
     if (!volet) { construire(et.closest('.panneau') || document.body); }
     if (courant) { courant.setAttribute('aria-expanded', 'false'); courant.classList.remove('vu'); }
@@ -2900,7 +2998,21 @@ window.PROG_FIL_ETU = {"11_0424":["Aucun : c'est le premier cours du fil","Prati
     volet.focus && volet.setAttribute('tabindex', '-1');
     volet.focus({preventScroll: true});
   }
+  var retour = null;
+  function ouvrirLie(code, nom){
+    if (!volet) { return; }
+    var depuis = courant;
+    var corps = volet.querySelector('.pg-corps'); corps.innerHTML = '';
+    var b = fiche(code); if (b) { corps.appendChild(b); }
+    volet.querySelector('.pg-fil').textContent = 'Cours cité dans la fiche';
+    volet.querySelector('.pg-titre').textContent = nom.replace(/\s*\([^)]*\)\s*$/, '');
+    var pr = volet.querySelector('.pg-prec'), sv = volet.querySelector('.pg-suiv');
+    pr.disabled = !depuis; pr.querySelector('span').textContent = 'retour'; sv.disabled = true; sv.querySelector('span').textContent = '';
+    volet.querySelector('.pg-pos').textContent = '';
+    retour = depuis; corps.scrollTop = 0;
+  }
   function voisin(s){
+    if (retour) { var r = retour; retour = null; if (s < 0) { ouvrir(r); } return; }
     if (!courant) { return; }
     var l = courant.classList.contains('et') ? etapes(courant)
           : Array.prototype.slice.call(courant.closest('.et').querySelectorAll('.mat [data-codes]'));
@@ -2968,6 +3080,13 @@ window.PROG_FIL_ETU = {"11_0424":["Aucun : c'est le premier cours du fil","Prati
     et.addEventListener('click', function(){ if (courant === et && volet && !volet.hidden) { fermer(); } else { ouvrir(et); } });
     et.addEventListener('keydown', function(ev){ if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); ouvrir(et); } });
   });
+
+  /* ---- rubrique Mes cours : memes encarts plies dans chaque fiche ---- */
+  if (typeof replier === 'function') {
+    Array.prototype.forEach.call(document.querySelectorAll('details[id^="f2027-"] > .cb, details[id^="f2026-"] > .cb'), function(cb){
+      if (!cb.closest('.pg-volet')) { replier(cb); }
+    });
+  }
 
   /* ---- barre « Aller à » : reste visible en haut, menne a chaque fil ---- */
   var barre = document.querySelector('.vprog .pg-nav');
