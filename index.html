@@ -652,7 +652,134 @@ a.renvoi.bouton-onglet:hover{background:var(--ink); color:#FFFFFF; border:0;}
   .suite{display:none!important;}
 }
 @media print{.mm-barre, .mm-feuille, .mm-suite{display:none!important;}}
-/* menu-mobile:fin */</style>
+/* menu-mobile:fin *//* progression-etudiants:debut */
+
+/* habillage de la vue « Par progression » (18/11/2026) : une couleur par fil, frises sans defilement */
+#vue-prog.vprog{--k:var(--c3);}
+#vue-prog.vprog .et, #vue-prog.vprog .fiche-prog, #vue-prog.vprog .filprog{--mi:var(--k);}
+#vue-prog.vprog .fil-anglais{--k:var(--c1);} #vue-prog.vprog .fil-espagnol{--k:var(--c5);}
+#vue-prog.vprog .fil-gestion{--k:var(--c1);} #vue-prog.vprog .fil-marketing{--k:var(--ce);}
+#vue-prog.vprog .fil-strategie{--k:var(--c2);} #vue-prog.vprog .fil-commerce{--k:var(--c5);}
+#vue-prog.vprog .paliers .et:nth-of-type(1){--k:var(--c3);} #vue-prog.vprog .paliers .et:nth-of-type(2){--k:var(--c1);}
+#vue-prog.vprog .paliers .et:nth-of-type(3){--k:var(--c2);} #vue-prog.vprog .paliers .et:nth-of-type(4){--k:var(--ce);}
+#vue-prog.vprog .progbloc{background:var(--surface); border:1px solid var(--line); border-radius:12px;
+  padding:18px 20px 12px; margin-bottom:22px; box-shadow:var(--shadow);}
+#vue-prog.vprog .progbloc > h4{font-family:Spectral,Georgia,serif; font-size:19px; margin:0 0 4px;}
+#vue-prog.vprog .filtitre{margin:18px 0 10px;}
+#vue-prog.vprog .filtitre b{display:inline-flex; align-items:center; gap:8px; font-size:15.5px;
+  color:var(--k); background:color-mix(in srgb, var(--k) 10%, var(--surface)); border-radius:999px; padding:3px 14px 3px 10px;}
+#vue-prog.vprog .filtitre b::before{content:""; width:9px; height:9px; border-radius:50%; background:var(--k);}
+#vue-prog.vprog .frisewrap{overflow:visible; padding-bottom:4px;}
+#vue-prog.vprog .frise{display:grid; grid-auto-flow:column; grid-auto-columns:minmax(0,1fr); gap:10px;
+  min-width:0; position:relative;}
+#vue-prog.vprog .frise::before{content:""; position:absolute; left:14px; right:14px; top:24px; height:2px;
+  background:color-mix(in srgb, var(--k) 35%, transparent);}
+#vue-prog.vprog .frise .fl{display:none;}
+#vue-prog.vprog .frise .et{position:relative; width:auto; padding:12px 12px 12px; border-radius:10px;
+  border:1px solid color-mix(in srgb, var(--k) 22%, var(--line)); border-top:4px solid var(--k);
+  background:linear-gradient(180deg, color-mix(in srgb, var(--k) 8%, var(--surface)) 0, var(--surface) 70%);
+  transition:transform .15s, box-shadow .15s;}
+#vue-prog.vprog .frise .et .s{align-self:flex-start; color:#fff; background:var(--k); border-radius:999px;
+  padding:2px 9px; font-size:10px;}
+#vue-prog.vprog .frise .et .n{font-size:14px;}
+#vue-prog.vprog .frise .et .d{font-size:11.8px;}
+#vue-prog.vprog .frise .et .mat span{color:var(--k); background:color-mix(in srgb, var(--k) 11%, var(--surface)); font-weight:500;}
+#vue-prog.vprog .frise .et:hover{transform:translateY(-2px); box-shadow:var(--shadow); border-color:var(--k);}
+#vue-prog.vprog .frise .et[aria-expanded="true"]{box-shadow:0 0 0 2px var(--k); border-color:var(--k);}
+#vue-prog.vprog .fiche-prog{border-color:var(--k); border-top:4px solid var(--k);}
+#vue-prog.vprog .fiche-prog .fp-etape{color:var(--k);}
+#vue-prog.vprog .progbloc > h5{font-family:Spectral,Georgia,serif; font-size:16px; margin:22px 0 10px;}
+#vue-prog.vprog .filprog{border-left:5px solid var(--k);}
+#vue-prog.vprog .filprog > summary .n{color:var(--k);}
+#vue-prog.vprog .filprog > summary::after{content:"+"; margin-left:auto; font-size:18px; color:var(--k);}
+#vue-prog.vprog .filprog[open] > summary::after{content:"\2212";}
+#vue-prog.vprog .filprog[open] > summary{background:color-mix(in srgb, var(--k) 8%, var(--surface));}
+@media (max-width:900px){
+  #vue-prog.vprog .frise{grid-auto-flow:row; grid-template-columns:1fr;}
+  #vue-prog.vprog .frise::before{left:22px; right:auto; top:0; bottom:0; width:2px; height:auto;}
+  #vue-prog.vprog .progbloc{padding:14px 12px 8px;}
+}
+/* barre « Aller à » */
+#vue-prog.vprog .pg-nav{position:sticky; z-index:6; display:flex; flex-wrap:wrap; align-items:center; gap:6px;
+  margin:0 0 18px; padding:8px 10px; border:1px solid var(--line); border-radius:999px;
+  background:color-mix(in srgb, var(--surface) 92%, transparent); backdrop-filter:blur(6px); box-shadow:var(--shadow);}
+#vue-prog.vprog .pg-nav-t{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.07em; text-transform:uppercase;
+  color:var(--muted); padding:0 6px 0 4px;}
+#vue-prog.vprog .pg-nav button{font:inherit; font-size:12.5px; cursor:pointer; border:1px solid color-mix(in srgb, var(--k) 35%, var(--line));
+  color:var(--k); background:var(--surface); border-radius:999px; padding:4px 11px; display:inline-flex; align-items:center; gap:6px;}
+#vue-prog.vprog .pg-nav button::before{content:""; width:7px; height:7px; border-radius:50%; background:var(--k);}
+#vue-prog.vprog .pg-nav button:hover{background:color-mix(in srgb, var(--k) 10%, var(--surface));}
+#vue-prog.vprog .pg-nav button.actif{background:var(--k); color:#fff; border-color:var(--k);}
+#vue-prog.vprog .pg-nav button.actif::before{background:#fff;}
+#vue-prog.vprog .pg-nav .fil-paliers{--k:var(--c3);}
+/* volet de la fiche */
+.pg-voile{position:fixed; inset:0; z-index:60; background:rgba(15,20,27,.28);}
+.pg-volet{position:fixed; z-index:61; top:0; right:0; bottom:0; width:min(680px, 94vw); display:flex; flex-direction:column;
+  background:var(--surface); border-left:5px solid var(--k, var(--c3)); box-shadow:-18px 0 40px -18px rgba(0,0,0,.35);
+  animation:pg-entree .18s ease-out;}
+.pg-volet[hidden], .pg-voile[hidden]{display:none;}
+@keyframes pg-entree{from{transform:translateX(24px); opacity:.4;} to{transform:none; opacity:1;}}
+.pg-volet:focus{outline:none;}
+.pg-haut{padding:14px 20px 12px; border-bottom:1px solid var(--line);
+  background:color-mix(in srgb, var(--k, var(--c3)) 8%, var(--surface));}
+.pg-ligne{display:flex; align-items:center; gap:10px;}
+.pg-fil{flex:1; margin:0; font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.07em;
+  text-transform:uppercase; color:var(--k, var(--c3));}
+.pg-titre{margin:6px 0 10px; font-family:Spectral,Georgia,serif; font-size:21px; font-weight:600; line-height:1.25; color:var(--ink);}
+.pg-btns{display:flex; align-items:center; gap:8px;}
+.pg-pos{flex:1; text-align:center; font-size:11.5px; color:var(--muted);}
+.pg-volet button{font:inherit; font-size:12.5px; cursor:pointer; border-radius:999px; padding:5px 13px;
+  border:1px solid color-mix(in srgb, var(--k, var(--c3)) 40%, var(--line)); background:var(--surface); color:var(--ink);}
+.pg-volet .pg-prec, .pg-volet .pg-suiv{color:var(--k, var(--c3)); font-weight:600;}
+.pg-volet button:hover:not(:disabled){background:color-mix(in srgb, var(--k, var(--c3)) 12%, var(--surface));}
+.pg-volet button:disabled{opacity:.35; cursor:default;}
+.pg-corps{flex:1; overflow-y:auto; padding:6px 20px 28px; overscroll-behavior:contain;}
+.pg-resume{font-size:14px; color:var(--ink-2); margin:12px 0 4px; padding:10px 12px; border-radius:8px;
+  background:color-mix(in srgb, var(--k, var(--c3)) 7%, var(--surface));}
+.pg-corps .fp-cours{padding:12px 0; border-top:1px solid var(--line);}
+.pg-corps .fp-cours:first-of-type{border-top:none;}
+.pg-corps .fp-t{font-family:Spectral,Georgia,serif; font-size:17px; font-weight:600; color:var(--ink); margin:6px 0 4px;}
+.pg-corps .fp-t span{font-family:"IBM Plex Mono",monospace; font-size:11px; font-weight:400; color:var(--muted); margin-left:8px;}
+.pg-corps .cb{padding:0; border-top:none;}
+.pg-corps dl.faits{margin:8px 0 10px;}
+html.pg-ouvert, html.pg-ouvert body{overflow:hidden;}
+@media (max-width:700px){
+  .pg-volet{width:100vw; border-left:none; border-top:5px solid var(--k, var(--c3));}
+  #vue-prog.vprog .pg-nav{border-radius:12px;}
+}
+@media print{.pg-voile, .pg-volet, #vue-prog.vprog .pg-nav{display:none!important;}}
+/* pastilles de cours : couleur de leur matiere, cliquables */
+#vue-prog.vprog .fil-autre{--k:#66748A;}
+#vue-prog.vprog .frise .et .mat span[data-codes]{cursor:pointer; position:relative; padding-left:18px;
+  transition:background .12s, color .12s;}
+#vue-prog.vprog .frise .et .mat span[data-codes]::before{content:""; position:absolute; left:7px; top:50%; width:6px; height:6px;
+  margin-top:-3px; border-radius:50%; background:var(--k);}
+#vue-prog.vprog .frise .et .mat span[data-codes]:hover, #vue-prog.vprog .frise .et .mat span.vu{background:var(--k); color:#fff;}
+#vue-prog.vprog .frise .et .mat span[data-codes]:hover::before, #vue-prog.vprog .frise .et .mat span.vu::before{background:#fff;}
+#vue-prog.vprog .frise .et .mat span[data-codes]:focus-visible{outline:2px solid var(--k); outline-offset:1px;}
+#vue-prog.vprog .paliers .et .mat span{border-left:3px solid var(--k);}
+#vue-prog.vprog .pg-legende{display:flex; flex-wrap:wrap; align-items:center; gap:6px 12px; font-size:12px; color:var(--muted); margin:-2px 0 12px;}
+#vue-prog.vprog .pg-legende span[class^="fil-"]{display:inline-flex; align-items:center; gap:5px; color:var(--k); font-weight:500;}
+#vue-prog.vprog .pg-legende span[class^="fil-"]::before{content:""; width:8px; height:8px; border-radius:50%; background:var(--k);}
+#vue-prog.vprog .pg-leg-t{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.07em; text-transform:uppercase;}
+#vue-prog.vprog .pg-leg-a{margin-left:auto; font-style:italic;}
+/* encarts depliables de la fiche, dans le volet */
+.pg-corps details.pg-pli{border-top:1px solid var(--line); padding:0;}
+.pg-corps details.pg-pli:last-of-type{border-bottom:1px solid var(--line);}
+.pg-corps details.pg-pli > summary{list-style:none; cursor:pointer; display:flex; align-items:center; gap:8px;
+  padding:9px 2px; font-family:"IBM Plex Mono",monospace; font-size:11px; font-weight:700; letter-spacing:.08em;
+  text-transform:uppercase; color:var(--ink);}
+.pg-corps details.pg-pli > summary::-webkit-details-marker{display:none;}
+.pg-corps details.pg-pli > summary::before{content:"+"; width:16px; color:var(--k, var(--c3)); font-size:14px;}
+.pg-corps details.pg-pli[open] > summary::before{content:"\2212";}
+.pg-corps details.pg-pli > summary:hover{color:var(--k, var(--c3));}
+.pg-corps details.pg-pli[open]{padding-bottom:10px;}
+.pg-corps .pg-nb{font-weight:400; letter-spacing:0; color:var(--muted); border:1px solid var(--line); border-radius:999px; padding:0 7px; font-size:10.5px;}
+.pg-corps .pg-tout{display:block; margin:8px 0 6px auto; font-size:11.5px; padding:3px 11px;}
+/* fin de l'habillage */
+
+/* progression-etudiants:fin */
+</style>
 </head>
 <body>
 <header class="top">
@@ -1141,119 +1268,106 @@ a.renvoi.bouton-onglet:hover{background:var(--ink); color:#FFFFFF; border:0;}
 </div>
     </div>
 
-    <div id="vue-prog" hidden>
-    <p class="consigne">Comment les enseignements s'enchaînent, semestre après semestre. <strong>Cliquez sur une
-      étape</strong> pour lire ce que vous allez y apprendre, et à quoi cela vous servira dans votre vie
-      professionnelle.</p>
-
-    <div class="progbloc">
-      <h4>Langues des affaires</h4>
-      <p class="chapo">Anglais : S1 → S7. Espagnol : S1 → S6 — la spécialisation CAPES d'espagnol continue
+    <div class="vprog" hidden="" id="vue-prog">
+<p class="consigne">Comment les enseignements s'enchaînent, semestre après semestre. <strong>Cliquez sur une étape</strong> : ce que vous allez y apprendre, et à quoi cela vous servira dans votre vie professionnelle, s'ouvre sur le côté. Les flèches (ou les touches ← →) mènent à l'étape précédente ou suivante ; la barre « Aller à » conduit directement à chaque fil.</p><div aria-label="Aller à un fil" class="pg-nav" role="navigation"><span class="pg-nav-t">Aller à</span><button class="fil-anglais" data-cible="pg-anglais" type="button">Anglais</button><button class="fil-espagnol" data-cible="pg-espagnol" type="button">Espagnol</button><button class="fil-paliers" data-cible="pg-appli" type="button">Matières d'application</button><button class="fil-gestion" data-cible="pg-gestion" type="button">Gestion</button><button class="fil-marketing" data-cible="pg-marketing" type="button">Marketing</button><button class="fil-strategie" data-cible="pg-strategie" type="button">Stratégie</button><button class="fil-commerce" data-cible="pg-commerce" type="button">Commerce international</button></div>
+<div class="progbloc">
+<h4>Langues des affaires</h4>
+<p class="chapo">Anglais : S1 → S7. Espagnol : S1 → S6 — la spécialisation CAPES d'espagnol continue
         ensuite sur ses propres cours.</p>
-
-      <div class="filtitre"><b>Anglais des affaires</b></div>
-      <div class="frisewrap"><div class="frise">
-        <div class="et" role="button" tabindex="0" aria-expanded="false" data-codes="11_0424"><span class="s">S1</span><span class="n">Se familiariser avec son environnement de travail</span><span class="d">Le vocabulaire des structures, des départements, des fonctions et des cultures d'entreprise.</span><div class="mat"><span>Anglais écrit 1 · 18 h</span></div></div>
-        <span class="fl">→</span>
-        <div class="et" role="button" tabindex="0" aria-expanded="false" data-codes="11_0429"><span class="s">S2</span><span class="n">L'offre commerciale et le prix</span><span class="d">Structure d'une offre, prix, rentabilité, marges — et la pratique de l'oral.</span><div class="mat"><span>Anglais écrit ET oral 2 · 18 h</span></div></div>
-        <span class="fl">→</span>
-        <div class="et" role="button" tabindex="0" aria-expanded="false" data-codes="11_0575"><span class="s">S3</span><span class="n">Présentation commerciale et stratégique</span><span class="d">Présenter une entreprise et son positionnement : USP, SWOT, value proposition.</span><div class="mat"><span>Anglais des affaires 3 · 24 h</span></div></div>
-        <span class="fl">→</span>
-        <div class="et" role="button" tabindex="0" aria-expanded="false" data-codes="11_0439"><span class="s">S4</span><span class="n">Audit critique</span><span class="d">De la description au diagnostic : Porter, PESTEL, VRIO, Blue Ocean.</span><div class="mat"><span>Anglais des affaires 4 · 18 h</span></div></div>
-        <span class="fl">→</span>
-        <div class="et" role="button" tabindex="0" aria-expanded="false" data-codes="11_0608"><span class="s">S5</span><span class="n">Analyse stratégique et conseil</span><span class="d">Formuler des recommandations et les défendre devant un « client » simulé.</span><div class="mat"><span>Anglais des affaires 5 · 20 h</span></div></div>
-        <span class="fl">→</span>
-        <div class="et" role="button" tabindex="0" aria-expanded="false" data-codes="11_0436"><span class="s">S6</span><span class="n">Gestion de projet à l'international</span><span class="d">Piloter un projet d'internationalisation : business model canvas, étude de marché, risques, jury.</span><div class="mat"><span>Anglais des affaires 6 · 20 h</span></div></div>
-        <span class="fl">→</span>
-        <div class="et" role="button" tabindex="0" aria-expanded="false" data-codes="11_0609 06_0631"><span class="s">S7</span><span class="n">Négociation et communication persuasive</span><span class="d">Vendre sous pression le projet construit au S6 : objections, codes culturels.</span><div class="mat"><span>Techniques d'expression (anglais) · 22 h</span><span>International strategy : negociation and pitching · 20 h</span></div></div>
-      </div></div>
-
-      <div class="filtitre"><b>Espagnol des affaires</b></div>
-      <div class="frisewrap"><div class="frise">
-        <div class="et" role="button" tabindex="0" aria-expanded="false" data-codes="14_0111"><span class="s">S1</span><span class="n">Se familiariser avec son environnement de travail</span><span class="d">Le vocabulaire de l'entreprise et les premiers écrits professionnels.</span><div class="mat"><span>Espagnol écrit 1 · 18 h</span></div></div>
-        <span class="fl">→</span>
-        <div class="et" role="button" tabindex="0" aria-expanded="false" data-codes="14_0123"><span class="s">S2</span><span class="n">Correspondance et argumentation</span><span class="d">Correspondance d'affaires et textes argumentatifs — et la pratique de l'oral.</span><div class="mat"><span>Espagnol écrit ET oral 2 · 18 h</span></div></div>
-        <span class="fl">→</span>
-        <div class="et" role="button" tabindex="0" aria-expanded="false" data-codes="14_0072"><span class="s">S3</span><span class="n">Fondamentaux et présentation commerciale</span><span class="d">Présenter une entreprise à un interlocuteur hispanophone : courriel, appel, canvas simple.</span><div class="mat"><span>Espagnol des affaires 3 · 24 h</span></div></div>
-        <span class="fl">→</span>
-        <div class="et" role="button" tabindex="0" aria-expanded="false" data-codes="14_0082"><span class="s">S4</span><span class="n">Analyse marketing et consommateur</span><span class="d">Analyser le marketing mix et les comportements d'achat du marché hispanique.</span><div class="mat"><span>Espagnol des affaires 4 · 18 h</span></div></div>
-        <span class="fl">→</span>
-        <div class="et" role="button" tabindex="0" aria-expanded="false" data-codes="14_0091"><span class="s">S5</span><span class="n">Tourisme et création de contenu</span><span class="d">Communiquer dans le tourisme : jeux de rôle, contenu promotionnel, objections.</span><div class="mat"><span>Espagnol des affaires 5 · 20 h</span></div></div>
-        <span class="fl">→</span>
-        <div class="et" role="button" tabindex="0" aria-expanded="false" data-codes="14_0131"><span class="s">S6</span><span class="n">Espagnol professionnel et interculturel</span><span class="d">Enjeux interculturels et dossier de candidature : CV, lettre, entretien.</span><div class="mat"><span>Espagnol des affaires 6 · 20 h</span></div></div>
-      </div></div>
-    </div>
-
-    <div class="progbloc">
-      <h4>Matières d'application : quatre fils, quatre paliers</h4>
-      <p class="chapo">Gestion · marketing · stratégie · commerce international — chaque cours reçoit des
+<div class="filtitre fil-anglais" id="pg-anglais"><b>Anglais des affaires</b></div>
+<div class="frisewrap fil-anglais"><div class="frise">
+<div aria-expanded="false" class="et" data-codes="11_0424" role="button" tabindex="0"><span class="s">S1</span><span class="n">Se familiariser avec son environnement de travail</span><span class="d">Le vocabulaire des structures, des départements, des fonctions et des cultures d'entreprise.</span><div class="mat"><span>Anglais écrit 1 · 18 h</span></div></div>
+<span class="fl">→</span>
+<div aria-expanded="false" class="et" data-codes="11_0429" role="button" tabindex="0"><span class="s">S2</span><span class="n">L'offre commerciale et le prix</span><span class="d">Structure d'une offre, prix, rentabilité, marges — et la pratique de l'oral.</span><div class="mat"><span>Anglais écrit ET oral 2 · 18 h</span></div></div>
+<span class="fl">→</span>
+<div aria-expanded="false" class="et" data-codes="11_0575" role="button" tabindex="0"><span class="s">S3</span><span class="n">Présentation commerciale et stratégique</span><span class="d">Présenter une entreprise et son positionnement : USP, SWOT, value proposition.</span><div class="mat"><span>Anglais des affaires 3 · 24 h</span></div></div>
+<span class="fl">→</span>
+<div aria-expanded="false" class="et" data-codes="11_0439" role="button" tabindex="0"><span class="s">S4</span><span class="n">Audit critique</span><span class="d">De la description au diagnostic : Porter, PESTEL, VRIO, Blue Ocean.</span><div class="mat"><span>Anglais des affaires 4 · 18 h</span></div></div>
+<span class="fl">→</span>
+<div aria-expanded="false" class="et" data-codes="11_0608" role="button" tabindex="0"><span class="s">S5</span><span class="n">Analyse stratégique et conseil</span><span class="d">Formuler des recommandations et les défendre devant un « client » simulé.</span><div class="mat"><span>Anglais des affaires 5 · 20 h</span></div></div>
+<span class="fl">→</span>
+<div aria-expanded="false" class="et" data-codes="11_0436" role="button" tabindex="0"><span class="s">S6</span><span class="n">Gestion de projet à l'international</span><span class="d">Piloter un projet d'internationalisation : business model canvas, étude de marché, risques, jury.</span><div class="mat"><span>Anglais des affaires 6 · 20 h</span></div></div>
+<span class="fl">→</span>
+<div aria-expanded="false" class="et" data-codes="11_0609 06_0631" role="button" tabindex="0"><span class="s">S7</span><span class="n">Négociation et communication persuasive</span><span class="d">Vendre sous pression le projet construit au S6 : objections, codes culturels.</span><div class="mat"><span>Techniques d'expression (anglais) · 22 h</span><span>International strategy : negociation and pitching · 20 h</span></div></div>
+</div></div>
+<div class="filtitre fil-espagnol" id="pg-espagnol"><b>Espagnol des affaires</b></div>
+<div class="frisewrap fil-espagnol"><div class="frise">
+<div aria-expanded="false" class="et" data-codes="14_0111" role="button" tabindex="0"><span class="s">S1</span><span class="n">Se familiariser avec son environnement de travail</span><span class="d">Le vocabulaire de l'entreprise et les premiers écrits professionnels.</span><div class="mat"><span>Espagnol écrit 1 · 18 h</span></div></div>
+<span class="fl">→</span>
+<div aria-expanded="false" class="et" data-codes="14_0123" role="button" tabindex="0"><span class="s">S2</span><span class="n">Correspondance et argumentation</span><span class="d">Correspondance d'affaires et textes argumentatifs — et la pratique de l'oral.</span><div class="mat"><span>Espagnol écrit ET oral 2 · 18 h</span></div></div>
+<span class="fl">→</span>
+<div aria-expanded="false" class="et" data-codes="14_0072" role="button" tabindex="0"><span class="s">S3</span><span class="n">Fondamentaux et présentation commerciale</span><span class="d">Présenter une entreprise à un interlocuteur hispanophone : courriel, appel, canvas simple.</span><div class="mat"><span>Espagnol des affaires 3 · 24 h</span></div></div>
+<span class="fl">→</span>
+<div aria-expanded="false" class="et" data-codes="14_0082" role="button" tabindex="0"><span class="s">S4</span><span class="n">Analyse marketing et consommateur</span><span class="d">Analyser le marketing mix et les comportements d'achat du marché hispanique.</span><div class="mat"><span>Espagnol des affaires 4 · 18 h</span></div></div>
+<span class="fl">→</span>
+<div aria-expanded="false" class="et" data-codes="14_0091" role="button" tabindex="0"><span class="s">S5</span><span class="n">Tourisme et création de contenu</span><span class="d">Communiquer dans le tourisme : jeux de rôle, contenu promotionnel, objections.</span><div class="mat"><span>Espagnol des affaires 5 · 20 h</span></div></div>
+<span class="fl">→</span>
+<div aria-expanded="false" class="et" data-codes="14_0131" role="button" tabindex="0"><span class="s">S6</span><span class="n">Espagnol professionnel et interculturel</span><span class="d">Enjeux interculturels et dossier de candidature : CV, lettre, entretien.</span><div class="mat"><span>Espagnol des affaires 6 · 20 h</span></div></div>
+</div></div>
+</div>
+<div class="progbloc">
+<h4 id="pg-appli">Matières d'application : quatre fils, quatre paliers</h4>
+<p class="chapo">Gestion · marketing · stratégie · commerce international — chaque cours reçoit des
         prérequis et alimente des cours en aval. Le niveau de Bloom monte d'un palier à l'autre :
         comprendre et appliquer en L1, appliquer et analyser en L2, analyser et évaluer en L3, évaluer et
         créer au S7.</p>
-
-      <div class="frisewrap"><div class="frise paliers">
-        <div class="et" role="button" tabindex="0" aria-expanded="false" data-codes="05_0248 06_0552 06_0616 06_0624 05_0249 06_0618"><span class="s">L1 · S1-S2</span><span class="n">Situer l'entreprise, lire ses chiffres, poser un premier diagnostic</span><span class="d">L'entreprise et ses fonctions, la démarche marketing, le compte de résultat et les coûts, le plan de marchéage et le prix, les premiers outils de diagnostic : SWOT, PESTEL, Porter.</span><div class="mat"><span>Environnement économique</span><span>Marketing 1 et 2</span><span>Structures et fonctions de l'entreprise 1</span><span>Analyse de gestion</span><span>Stratégie d'entreprise</span></div></div>
-        <span class="fl">→</span>
-        <div class="et" role="button" tabindex="0" aria-expanded="false" data-codes="06_0289 01_0280 06_0625 06_0287"><span class="s">L2 · S3-S4</span><span class="n">Approfondir la lecture financière, agir sur la relation client, conduire un projet</span><span class="d">Le bilan et les indicateurs de performance, la relation commerciale et la fidélisation, le droit du travail et des contrats, la communication interculturelle en contexte professionnel.</span><div class="mat"><span>Gestion de la relation client</span><span>Droit social et des contrats</span><span>Comptabilité financière et analyse de la performance</span><span>Compétences interculturelles en contexte professionnel</span></div></div>
-        <span class="fl">→</span>
-        <div class="et" role="button" tabindex="0" aria-expanded="false" data-codes="02_0372 06_0563 06_0290 06_0619 06_0559 06_0626 06_0285 06_0628 71_0264 06_0627 06_0622"><span class="s">L3 · S5-S6</span><span class="n">Internationaliser le raisonnement</span><span class="d">Le droit du commerce international, l'approvisionnement et les stocks, l'adaptation de l'offre à un marché étranger, la prospection, le parcours client numérique, la RSE et le management d'équipe.</span><div class="mat"><span>Droit international</span><span>Management d'équipe</span><span>Supply Chain 1 et 2</span><span>Entreprendre et négocier</span><span>Environnement économique international et RSE</span><span>Marketing international 1 et 2</span><span>Communication expérientielle et patrimoniale</span><span>Prospection à l'international</span><span>Marketing digital et parcours client</span></div></div>
-        <span class="fl">→</span>
-        <div class="et" role="button" tabindex="0" aria-expanded="false" data-codes="06_0621 06_0631 06_0333"><span class="s">S7</span><span class="n">Intégrer et piloter une entreprise complète en concurrence</span><span class="d">La négociation internationale en anglais, le pilotage des opérations et la simulation de gestion, où les quatre fils se rejoignent sur une même entreprise en concurrence.</span><div class="mat"><span>Excellence opérationnelle</span><span>International strategy : negociation and pitching</span><span>Simulation de gestion</span></div></div>
-      </div></div>
-
-      <h5 style="margin-top:18px; font-family:Spectral,Georgia,serif; font-size:15px;">Les quatre fils, en détail</h5>
-
-      <details class="filprog"><summary><span class="n">Gestion</span><span class="cnt">2 étapes · 2 cours · 44 h</span></summary><div class="dedans">
-        <p class="chapo">Lire et raisonner les chiffres d'une entreprise : le socle quantitatif de toute décision.</p>
-        <div class="frisewrap"><div class="frise">
-          <div class="et" role="button" tabindex="0" aria-expanded="false" data-codes="05_0249"><span class="s">S2</span><span class="n">Lire l'intérieur</span><span class="d">Compte de résultat, classement des coûts, marge et seuil de rentabilité.</span><div class="mat"><span>Analyse de gestion · 20 h</span></div></div>
-          <span class="fl">→</span>
-          <div class="et" role="button" tabindex="0" aria-expanded="false" data-codes="06_0625"><span class="s">S4</span><span class="n">Lire l'extérieur</span><span class="d">Bilan, indicateurs de performance, l'entreprise telle qu'un tiers la voit.</span><div class="mat"><span>Comptabilité financière et analyse de la performance · 24 h</span></div></div>
-        </div></div>
-        <p class="chapo">L'analyse de gestion regarde l'intérieur — les coûts et la décision interne. La comptabilité financière regarde l'extérieur — le bilan et la performance lisible par un tiers.</p>
-      </div></details>
-
-      <details class="filprog"><summary><span class="n">Marketing</span><span class="cnt">5 étapes · 7 cours · 130 h</span></summary><div class="dedans">
-        <p class="chapo">Comprendre un marché, construire une offre, agir sur le client.</p>
-        <div class="frisewrap"><div class="frise">
-          <div class="et" role="button" tabindex="0" aria-expanded="false" data-codes="06_0552"><span class="s">S1</span><span class="n">La démarche</span><span class="d">Marché, segmentation, ciblage.</span><div class="mat"><span>Marketing 1 · 18 h</span></div></div>
-          <span class="fl">→</span>
-          <div class="et" role="button" tabindex="0" aria-expanded="false" data-codes="06_0616"><span class="s">S2</span><span class="n">L'offre et le prix</span><span class="d">Plan de marchéage et fixation du prix, sur les coûts vus en gestion.</span><div class="mat"><span>Marketing 2 · 18 h</span></div></div>
-          <span class="fl">→</span>
-          <div class="et" role="button" tabindex="0" aria-expanded="false" data-codes="06_0289"><span class="s">S3</span><span class="n">La relation</span><span class="d">Agir sur la relation commerciale et la fidélisation.</span><div class="mat"><span>Gestion de la relation client · 22 h</span></div></div>
-          <span class="fl">→</span>
-          <div class="et" role="button" tabindex="0" aria-expanded="false" data-codes="06_0285"><span class="s">S5</span><span class="n">L'export</span><span class="d">Adapter l'offre à un marché étranger.</span><div class="mat"><span>Marketing international 1 · 20 h</span></div></div>
-          <span class="fl">→</span>
-          <div class="et" role="button" tabindex="0" aria-expanded="false" data-codes="06_0628 06_0622 06_0627"><span class="s">S6</span><span class="n">Parcours client et prospection</span><span class="d">Parcours client numérique, offre export, démarchage.</span><div class="mat"><span>Marketing international 2 · 14 h</span><span>Marketing digital et parcours client · 18 h</span><span>Prospection à l'international · 20 h</span></div></div>
-        </div></div>
-      </div></details>
-
-      <details class="filprog"><summary><span class="n">Stratégie</span><span class="cnt">3 étapes · 3 cours · 60 h</span></summary><div class="dedans">
-        <p class="chapo">Poser un diagnostic intégré et formuler des orientations.</p>
-        <div class="frisewrap"><div class="frise">
-          <div class="et" role="button" tabindex="0" aria-expanded="false" data-codes="05_0248"><span class="s">S1</span><span class="n">Lire un pays</span><span class="d">Lire un pays par ses indicateurs, comprendre le cadre des échanges.</span><div class="mat"><span>Environnement économique · 16 h</span></div></div>
-          <span class="fl">→</span>
-          <div class="et" role="button" tabindex="0" aria-expanded="false" data-codes="06_0618"><span class="s">S2</span><span class="n">Diagnostiquer</span><span class="d">SWOT, PESTEL, Porter, avantage-coût.</span><div class="mat"><span>Stratégie d'entreprise · 20 h</span></div></div>
-          <span class="fl">→</span>
-          <div class="et" role="button" tabindex="0" aria-expanded="false" data-codes="06_0626"><span class="s">S5</span><span class="n">Internationaliser le diagnostic</span><span class="d">Porter le diagnostic à l'échelle internationale, RSE comprise.</span><div class="mat"><span>Environnement économique international et RSE · 24 h</span></div></div>
-        </div></div>
-        <p class="chapo">La stratégie est propriétaire unique des outils de diagnostic — SWOT, PESTEL, Porter. Les autres cours cessent de les enseigner et se contentent de les mobiliser.</p>
-      </div></details>
-
-      <details class="filprog"><summary><span class="n">Commerce international</span><span class="cnt">3 étapes · 7 cours · 132 h</span></summary><div class="dedans">
-        <p class="chapo">Agir en contexte international. Ce fil ne démarre qu'en L3, et c'est logique : on internationalise un raisonnement déjà construit.</p>
-        <div class="frisewrap"><div class="frise">
-          <div class="et" role="button" tabindex="0" aria-expanded="false" data-codes="02_0372 27_0428 06_0290"><span class="s">S5</span><span class="n">Le cadre et les outils</span><span class="d">Droit du commerce export, outils numériques, approvisionnement et achats.</span><div class="mat"><span>Droit international · 16 h</span><span>Outils numériques pour le commerce international · 10 h</span><span>Supply Chain 1 · 26 h</span></div></div>
-          <span class="fl">→</span>
-          <div class="et" role="button" tabindex="0" aria-expanded="false" data-codes="06_0619 06_0627"><span class="s">S6</span><span class="n">Les flux et le démarchage</span><span class="d">Gestion des stocks, démarchage de marchés étrangers.</span><div class="mat"><span>Supply Chain 2 · 20 h</span><span>Prospection à l'international · 20 h</span></div></div>
-          <span class="fl">→</span>
-          <div class="et" role="button" tabindex="0" aria-expanded="false" data-codes="06_0631 06_0621"><span class="s">S7</span><span class="n">Négocier et piloter</span><span class="d">Négociation internationale et pilotage des opérations.</span><div class="mat"><span>International strategy : negociation and pitching · 20 h</span><span>Excellence opérationnelle · 20 h</span></div></div>
-        </div></div>
-      </div></details>
-    </div>
-
-    <p class="note-tbl">D'après la maquette référentiel LEA 2027 (section « Progression à suivre »).</p>
-    </div>
+<div class="frisewrap"><div class="frise paliers fil-paliers">
+<div aria-expanded="false" class="et" data-codes="05_0248 06_0552 06_0616 06_0624 05_0249 06_0618" role="button" tabindex="0"><span class="s">L1 · S1-S2</span><span class="n">Situer l'entreprise, lire ses chiffres, poser un premier diagnostic</span><span class="d">L'entreprise et ses fonctions, la démarche marketing, le compte de résultat et les coûts, le plan de marchéage et le prix, les premiers outils de diagnostic : SWOT, PESTEL, Porter.</span><div class="mat"><span>Environnement économique</span><span>Marketing 1 et 2</span><span>Structures et fonctions de l'entreprise 1</span><span>Analyse de gestion</span><span>Stratégie d'entreprise</span></div></div>
+<span class="fl">→</span>
+<div aria-expanded="false" class="et" data-codes="06_0289 01_0280 06_0625 06_0287" role="button" tabindex="0"><span class="s">L2 · S3-S4</span><span class="n">Approfondir la lecture financière, agir sur la relation client, conduire un projet</span><span class="d">Le bilan et les indicateurs de performance, la relation commerciale et la fidélisation, le droit du travail et des contrats, la communication interculturelle en contexte professionnel.</span><div class="mat"><span>Gestion de la relation client</span><span>Droit social et des contrats</span><span>Comptabilité financière et analyse de la performance</span><span>Compétences interculturelles en contexte professionnel</span></div></div>
+<span class="fl">→</span>
+<div aria-expanded="false" class="et" data-codes="02_0372 06_0563 06_0290 06_0619 06_0559 06_0626 06_0285 06_0628 71_0264 06_0627 06_0622" role="button" tabindex="0"><span class="s">L3 · S5-S6</span><span class="n">Internationaliser le raisonnement</span><span class="d">Le droit du commerce international, l'approvisionnement et les stocks, l'adaptation de l'offre à un marché étranger, la prospection, le parcours client numérique, la RSE et le management d'équipe.</span><div class="mat"><span>Droit international</span><span>Management d'équipe</span><span>Supply Chain 1 et 2</span><span>Entreprendre et négocier</span><span>Environnement économique international et RSE</span><span>Marketing international 1 et 2</span><span>Communication expérientielle et patrimoniale</span><span>Prospection à l'international</span><span>Marketing digital et parcours client</span></div></div>
+<span class="fl">→</span>
+<div aria-expanded="false" class="et" data-codes="06_0621 06_0631 06_0333" role="button" tabindex="0"><span class="s">S7</span><span class="n">Intégrer et piloter une entreprise complète en concurrence</span><span class="d">La négociation internationale en anglais, le pilotage des opérations et la simulation de gestion, où les quatre fils se rejoignent sur une même entreprise en concurrence.</span><div class="mat"><span>Excellence opérationnelle</span><span>International strategy : negociation and pitching</span><span>Simulation de gestion</span></div></div>
+</div></div>
+<h5 style="margin-top:18px; font-family:Spectral,Georgia,serif; font-size:15px;">Les quatre fils, en détail</h5>
+<details class="filprog fil-gestion" id="pg-gestion"><summary><span class="n">Gestion</span><span class="cnt">2 étapes · 2 cours · 44 h</span></summary><div class="dedans">
+<p class="chapo">Lire et raisonner les chiffres d'une entreprise : le socle quantitatif de toute décision.</p>
+<div class="frisewrap"><div class="frise">
+<div aria-expanded="false" class="et" data-codes="05_0249" role="button" tabindex="0"><span class="s">S2</span><span class="n">Lire l'intérieur</span><span class="d">Compte de résultat, classement des coûts, marge et seuil de rentabilité.</span><div class="mat"><span>Analyse de gestion · 20 h</span></div></div>
+<span class="fl">→</span>
+<div aria-expanded="false" class="et" data-codes="06_0625" role="button" tabindex="0"><span class="s">S4</span><span class="n">Lire l'extérieur</span><span class="d">Bilan, indicateurs de performance, l'entreprise telle qu'un tiers la voit.</span><div class="mat"><span>Comptabilité financière et analyse de la performance · 24 h</span></div></div>
+</div></div>
+<p class="chapo">L'analyse de gestion regarde l'intérieur — les coûts et la décision interne. La comptabilité financière regarde l'extérieur — le bilan et la performance lisible par un tiers.</p>
+</div></details>
+<details class="filprog fil-marketing" id="pg-marketing"><summary><span class="n">Marketing</span><span class="cnt">5 étapes · 7 cours · 130 h</span></summary><div class="dedans">
+<p class="chapo">Comprendre un marché, construire une offre, agir sur le client.</p>
+<div class="frisewrap"><div class="frise">
+<div aria-expanded="false" class="et" data-codes="06_0552" role="button" tabindex="0"><span class="s">S1</span><span class="n">La démarche</span><span class="d">Marché, segmentation, ciblage.</span><div class="mat"><span>Marketing 1 · 18 h</span></div></div>
+<span class="fl">→</span>
+<div aria-expanded="false" class="et" data-codes="06_0616" role="button" tabindex="0"><span class="s">S2</span><span class="n">L'offre et le prix</span><span class="d">Plan de marchéage et fixation du prix, sur les coûts vus en gestion.</span><div class="mat"><span>Marketing 2 · 18 h</span></div></div>
+<span class="fl">→</span>
+<div aria-expanded="false" class="et" data-codes="06_0289" role="button" tabindex="0"><span class="s">S3</span><span class="n">La relation</span><span class="d">Agir sur la relation commerciale et la fidélisation.</span><div class="mat"><span>Gestion de la relation client · 22 h</span></div></div>
+<span class="fl">→</span>
+<div aria-expanded="false" class="et" data-codes="06_0285" role="button" tabindex="0"><span class="s">S5</span><span class="n">L'export</span><span class="d">Adapter l'offre à un marché étranger.</span><div class="mat"><span>Marketing international 1 · 20 h</span></div></div>
+<span class="fl">→</span>
+<div aria-expanded="false" class="et" data-codes="06_0628 06_0622 06_0627" role="button" tabindex="0"><span class="s">S6</span><span class="n">Parcours client et prospection</span><span class="d">Parcours client numérique, offre export, démarchage.</span><div class="mat"><span>Marketing international 2 · 14 h</span><span>Marketing digital et parcours client · 18 h</span><span>Prospection à l'international · 20 h</span></div></div>
+</div></div>
+</div></details>
+<details class="filprog fil-strategie" id="pg-strategie"><summary><span class="n">Stratégie</span><span class="cnt">3 étapes · 3 cours · 60 h</span></summary><div class="dedans">
+<p class="chapo">Poser un diagnostic intégré et formuler des orientations.</p>
+<div class="frisewrap"><div class="frise">
+<div aria-expanded="false" class="et" data-codes="05_0248" role="button" tabindex="0"><span class="s">S1</span><span class="n">Lire un pays</span><span class="d">Lire un pays par ses indicateurs, comprendre le cadre des échanges.</span><div class="mat"><span>Environnement économique · 16 h</span></div></div>
+<span class="fl">→</span>
+<div aria-expanded="false" class="et" data-codes="06_0618" role="button" tabindex="0"><span class="s">S2</span><span class="n">Diagnostiquer</span><span class="d">SWOT, PESTEL, Porter, avantage-coût.</span><div class="mat"><span>Stratégie d'entreprise · 20 h</span></div></div>
+<span class="fl">→</span>
+<div aria-expanded="false" class="et" data-codes="06_0626" role="button" tabindex="0"><span class="s">S5</span><span class="n">Internationaliser le diagnostic</span><span class="d">Porter le diagnostic à l'échelle internationale, RSE comprise.</span><div class="mat"><span>Environnement économique international et RSE · 24 h</span></div></div>
+</div></div>
+<p class="chapo">La stratégie est propriétaire unique des outils de diagnostic — SWOT, PESTEL, Porter. Les autres cours cessent de les enseigner et se contentent de les mobiliser.</p>
+</div></details>
+<details class="filprog fil-commerce" id="pg-commerce"><summary><span class="n">Commerce international</span><span class="cnt">3 étapes · 7 cours · 132 h</span></summary><div class="dedans">
+<p class="chapo">Agir en contexte international. Ce fil ne démarre qu'en L3, et c'est logique : on internationalise un raisonnement déjà construit.</p>
+<div class="frisewrap"><div class="frise">
+<div aria-expanded="false" class="et" data-codes="02_0372 27_0428 06_0290" role="button" tabindex="0"><span class="s">S5</span><span class="n">Le cadre et les outils</span><span class="d">Droit du commerce export, outils numériques, approvisionnement et achats.</span><div class="mat"><span>Droit international · 16 h</span><span>Outils numériques pour le commerce international · 10 h</span><span>Supply Chain 1 · 26 h</span></div></div>
+<span class="fl">→</span>
+<div aria-expanded="false" class="et" data-codes="06_0619 06_0627" role="button" tabindex="0"><span class="s">S6</span><span class="n">Les flux et le démarchage</span><span class="d">Gestion des stocks, démarchage de marchés étrangers.</span><div class="mat"><span>Supply Chain 2 · 20 h</span><span>Prospection à l'international · 20 h</span></div></div>
+<span class="fl">→</span>
+<div aria-expanded="false" class="et" data-codes="06_0631 06_0621" role="button" tabindex="0"><span class="s">S7</span><span class="n">Négocier et piloter</span><span class="d">Négociation internationale et pilotage des opérations.</span><div class="mat"><span>International strategy : negociation and pitching · 20 h</span><span>Excellence opérationnelle · 20 h</span></div></div>
+</div></div>
+</div></details>
+</div>
+<p class="note-tbl">D'après la maquette référentiel LEA 2027 (section « Progression à suivre »).</p>
+</div>
 
     <div id="vue-pratique" hidden>
       <p class="consigne">Au-delà des cours et des compétences, voici où la formation se vérifie <strong>en
@@ -3370,6 +3484,235 @@ a.renvoi.bouton-onglet:hover{background:var(--ink); color:#FFFFFF; border:0;}
   maj();
 })();
 /* menu-mobile:fin */</script>
+<script>/* progression-etudiants:debut */
+window.PROG_FIL_ETU = {"11_0424":["Aucun : c'est le premier cours du fil","Pratique de Langue : Anglais \u00e9crit ET oral 2 (S2)"],"11_0429":["Phonologie et Anglais oral 1 (S1)","Pratique de Langue : Anglais des affaires 3 (S3)"],"11_0575":["Pratique de Langue : Anglais \u00e9crit ET oral 2 (S2)","Pratique de Langue : Anglais des affaires 4 (S4)"],"11_0439":["Pratique de Langue : Anglais des affaires 3 (S3)","Pratique de Langue : Anglais des affaires 5 (S5)"],"11_0608":["Pratique de Langue : Anglais des affaires 4 (S4)","Pratique de Langue : Anglais des affaires 6 (S6)"],"11_0436":["Pratique de Langue : Anglais des affaires 5 (S5)","Techniques d'expression et de communication (anglais) (S7)"],"11_0609":["Pratique de Langue : Anglais des affaires 6 (S6)","Dernier cours du fil"],"06_0631":["Strat\u00e9gie d'entreprise (S2) \u00b7 Env. \u00e9co international et RSE (S5) \u00b7 Comp\u00e9tences interculturelles (S4)","Simulation de gestion"],"14_0111":["Aucun : c'est le premier cours du fil","Pratique de Langue : Espagnol \u00e9crit ET oral 2 (S2)"],"14_0123":["Phonologie et Espagnol oral 1 (S1)","Pratique de Langue : Espagnol des affaires 3 (S3)"],"14_0072":["Pratique de Langue : Espagnol \u00e9crit ET oral 2 (S2)","Pratique de Langue : Espagnol des affaires 4 (S4)"],"14_0082":["Pratique de Langue : Espagnol des affaires 3 (S3)","Pratique de Langue : Espagnol des affaires 5 (S5)"],"14_0091":["Pratique de Langue : Espagnol des affaires 4 (S4)","Pratique de Langue : Espagnol des affaires 6 (S6)"],"14_0131":["Pratique de Langue : Espagnol des affaires 5 (S5)","Techniques d'expression et de communication (espagnol) (S7)"],"05_0248":["Aucun : c'est le premier cours du fil","Strat\u00e9gie d'entreprise S2 \u00b7 Env. \u00e9co international et RSE S5 \u00b7 Droit international S5 \u00b7 Marketing international 1 (S5)"],"06_0552":["Aucun : c'est le premier cours du fil","Marketing 2 S2 \u00b7 Gestion de la relation client S3"],"06_0624":["Aucun : c'est le premier cours du fil","Analyse de gestion S2"],"05_0249":["Structures et Fonctions de l'entreprise 1 (S1)","Marketing 2 (m\u00eame semestre, apr\u00e8s) \u00b7 Strat\u00e9gie d'entreprise (m\u00eame semestre, apr\u00e8s) \u00b7 Comptabilit\u00e9 financi\u00e8re S4 \u00b7 Simulation de gestion S7"],"06_0616":["Marketing 1 (S1) \u00b7 les co\u00fbts de l'Analyse de gestion (S2, 1re moiti\u00e9)","Gestion de la relation client S3 \u00b7 Marketing international 1 S5"],"06_0618":["Environnement \u00e9conomique (S1) \u00b7 Analyse de gestion (S2, en parall\u00e8le)","SA\u00c9 S3 \u00b7 SA\u00c9 S4 \u00b7 Env. \u00e9co international et RSE S5 \u00b7 Prospection S6 \u00b7 International strategy S7 \u00b7 Simulation S7"],"06_0289":["Marketing 1 (S1) \u00b7 Marketing 2 (S2)","Marketing digital S6 \u00b7 Prospection \u00e0 l'international S6"],"01_0280":["Structures et Fonctions de l'entreprise 1 (S1)","Droit international S5"],"06_0625":["Analyse de gestion (S2)","Supply Chain 1 S5 \u00b7 Simulation de gestion S7"],"06_0287":["Strat\u00e9gie d'entreprise (S2)","Stage 1 mois \u00b7 International strategy S7"],"02_0372":["Droit social et des contrats (S3) \u00b7 acquis L1-L2 du bloc","Prospection S6 \u00b7 Simulation S7 \u00b7 Prospection \u00e0 l'international (S6)"],"06_0563":["Gestion de projet (S3) \u00b7 Projet tutor\u00e9 (S3)","Excellence op\u00e9rationnelle S7"],"06_0290":["Analyse de gestion (S2) \u00b7 Compta financi\u00e8re (S4) \u00b7 Gestion de projet (S3)","Supply Chain 2 S6 \u00b7 Excellence op\u00e9rationnelle S7 \u00b7 Simulation S7"],"06_0559":["Strat\u00e9gie d'entreprise (S2)","International strategy S7"],"06_0626":["Environnement \u00e9conomique (S1) \u00b7 Strat\u00e9gie d'entreprise (S2)","International strategy S7 \u00b7 Simulation S7"],"06_0285":["Marketing 1 (S1) \u00b7 Marketing 2 (S2) \u00b7 GRC (S3)","Marketing international 2 S6 \u00b7 Prospection S6"],"06_0619":["Supply Chain 1 (S5)","Excellence op\u00e9rationnelle S7 \u00b7 Simulation de gestion S7"],"71_0264":["SA\u00c9 Noum\u00e9a, r\u00e9cits crois\u00e9s (S4)",""],"06_0627":["Marketing (S1, S2, S3, S5) \u00b7 Strat\u00e9gie d'entreprise (S2)","Simulation de gestion S7"],"06_0622":["Gestion de la relation client (S3)","Simulation de gestion S7"],"06_0628":["Marketing international 1 (S5)","Simulation de gestion S7 \u00b7 International strategy S7"],"06_0621":["Supply Chain 1 (S5) et 2 (S6) \u00b7 Management d'\u00e9quipe (S5)","Simulation de gestion"],"06_0333":["Analyse de gestion (S2) \u00b7 Comptabilit\u00e9 financi\u00e8re (S4) \u00b7 Marketing international 2 (S6) \u00b7 Marketing Digital et Parcours client (S6) \u00b7 Strat\u00e9gie d'entreprise (S2) \u00b7 Environnement \u00e9conomique international et RSE (S5) \u00b7 Supply Chain 2 (S6) \u00b7 Prospection \u00e0 l'international (S6) \u00b7 Monographie (S6)",""],"27_0428":["Outils num\u00e9riques renforc\u00e9s 3 (S3)","Prospection S6 \u00b7 Simulation S7 \u00b7 Prospection \u00e0 l'international (S6)"]};
+
+(function(){
+  Array.prototype.forEach.call(document.querySelectorAll('#vue-prog .et[data-codes]'), function(e){
+    var c = e.cloneNode(true); e.parentNode.replaceChild(c, e);
+  });
+  var FIL = window.PROG_FIL_ETU || {};
+  function source(code){
+    var src = null;
+    Array.prototype.some.call(document.querySelectorAll('#vue-sem details.cours'), function(d){
+      var s = d.querySelector('.cmeta span');
+      if (d.getAttribute('data-code') === code || (s && s.textContent.trim() === code)) { src = d; return true; }
+      return false;
+    });
+    return src;
+  }
+  function fiche(code){
+    var src = source(code);
+    if (!src) { return null; }
+    var bloc = document.createElement('div'); bloc.className = 'fp-cours';
+    var t = document.createElement('p'); t.className = 'fp-t';
+    t.textContent = src.querySelector('.cn').textContent;
+    var cm = src.querySelector('.cm');
+    if (cm) { var h = document.createElement('span'); h.textContent = cm.textContent; t.appendChild(h); }
+    bloc.appendChild(t);
+    var fil = FIL[code];
+    if (fil) {
+      var dl = document.createElement('dl'); dl.className = 'faits';
+      [['Prérequis', fil[0]], ['Prépare à', fil[1]]].forEach(function(p){
+        if (!p[1]) { return; }
+        var d = document.createElement('div'), dt = document.createElement('dt'), dd = document.createElement('dd');
+        dt.textContent = p[0]; dd.textContent = p[1]; d.appendChild(dt); d.appendChild(dd); dl.appendChild(d);
+      });
+      if (dl.children.length) { bloc.appendChild(dl); }
+    }
+    var cb = document.createElement('div'); cb.className = 'cb';
+    Array.prototype.forEach.call(src.querySelector('.cb').children, function(el){
+      if (el.classList.contains('cmeta')) { return; }
+      var c = el.cloneNode(true);
+      if (c.tagName === 'H5') {
+        var x = c.textContent.trim();
+        if (x === 'Ce que le cours couvre') { c.textContent = 'Ce que vous allez apprendre'; }
+        else if (x === 'Concrètement') { c.textContent = 'À quoi cela vous servira dans votre vie professionnelle'; }
+      }
+      cb.appendChild(c);
+    });
+    bloc.appendChild(cb);
+    return bloc;
+  }
+
+  /* ---- la fiche s'ouvre dans un volet, a droite ; fleches pour passer d'une etape a l'autre ---- */
+  var volet = null, voile = null, courant = null;
+  function construire(panneau){
+    voile = document.createElement('div'); voile.className = 'pg-voile'; voile.hidden = true;
+    volet = document.createElement('aside'); volet.className = 'pg-volet'; volet.hidden = true;
+    volet.setAttribute('role', 'dialog'); volet.setAttribute('aria-labelledby', 'pg-titre');
+    volet.innerHTML = '<div class="pg-haut"><div class="pg-ligne"><p class="pg-fil"></p>'
+      + '<button type="button" class="pg-fermer">Fermer ✕</button></div>'
+      + '<p class="pg-titre" id="pg-titre"></p>'
+      + '<div class="pg-btns"><button type="button" class="pg-prec" title="Étape précédente (flèche gauche)">← <span></span></button>'
+      + '<span class="pg-pos"></span>'
+      + '<button type="button" class="pg-suiv" title="Étape suivante (flèche droite)"><span></span> →</button></div></div>'
+      + '<div class="pg-corps"></div>';
+    panneau.appendChild(voile); panneau.appendChild(volet);
+    voile.addEventListener('click', fermer);
+    volet.querySelector('.pg-fermer').addEventListener('click', fermer);
+    volet.querySelector('.pg-prec').addEventListener('click', function(){ voisin(-1); });
+    volet.querySelector('.pg-suiv').addEventListener('click', function(){ voisin(1); });
+    document.addEventListener('keydown', function(ev){
+      if (!volet || volet.hidden) { return; }
+      if (ev.key === 'Escape') { fermer(); }
+      else if (ev.key === 'ArrowRight') { ev.preventDefault(); voisin(1); }
+      else if (ev.key === 'ArrowLeft') { ev.preventDefault(); voisin(-1); }
+    });
+    window.addEventListener('hashchange', fermer);
+  }
+  function etapes(et){
+    return Array.prototype.filter.call(et.parentNode.children, function(e){ return e.classList.contains('et'); });
+  }
+  function nomFil(et){
+    var w = et.closest('.frisewrap'), p = w.previousElementSibling;
+    while (p && !p.classList.contains('filtitre') && p.tagName !== 'H4') { p = p.previousElementSibling; }
+    if (p && p.classList.contains('filtitre')) { return p.textContent.trim(); }
+    var d = et.closest('details.filprog');
+    if (d) { return 'Fil ' + d.querySelector('summary .n').textContent.trim().toLowerCase(); }
+    var b = et.closest('.progbloc'); return b && b.querySelector('h4') ? b.querySelector('h4').textContent.trim() : '';
+  }
+  function nomCours(m){ return m.getAttribute('data-nom') || m.textContent.replace(/\s*·.*$/, '').trim(); }
+  function ouvrir(el){
+    var et = el.classList.contains('et') ? el : el.closest('.et'), cours = el !== et;
+    if (!volet) { construire(et.closest('.panneau') || document.body); }
+    if (courant) { courant.setAttribute('aria-expanded', 'false'); courant.classList.remove('vu'); }
+    courant = el; el.setAttribute('aria-expanded', 'true'); if (cours) { el.classList.add('vu'); }
+    volet.style.setProperty('--k', getComputedStyle(el).getPropertyValue('--k'));
+    var corps = volet.querySelector('.pg-corps'); corps.innerHTML = '';
+    var etiq = et.querySelector('.s').textContent + ' · ' + et.querySelector('.n').textContent, codes, l, i, nom;
+    if (cours) {
+      volet.querySelector('.pg-fil').textContent = (el.getAttribute('data-filnom') ? 'Fil ' + el.getAttribute('data-filnom') + ' · ' : '') + etiq;
+      volet.querySelector('.pg-titre').textContent = nomCours(el);
+      codes = el.getAttribute('data-codes') || '';
+      l = Array.prototype.slice.call(et.querySelectorAll('.mat [data-codes]')); i = l.indexOf(el); nom = nomCours;
+    } else {
+      volet.querySelector('.pg-fil').textContent = nomFil(et);
+      volet.querySelector('.pg-titre').textContent = etiq;
+      var d = et.querySelector('.d');
+      if (d) { var r = document.createElement('p'); r.className = 'pg-resume'; r.textContent = d.textContent; corps.appendChild(r); }
+      codes = et.getAttribute('data-codes') || '';
+      l = etapes(et); i = l.indexOf(et); nom = function(e){ return e.querySelector('.s').textContent; };
+    }
+    var n = 0;
+    codes.split(' ').forEach(function(c){ var b = c ? fiche(c) : null; if (b) { corps.appendChild(b); n++; } });
+    if (!n) { var p = document.createElement('p'); p.textContent = 'La fiche de ce cours se trouve dans la rubrique Mes cours.'; corps.appendChild(p); }
+    var pr = volet.querySelector('.pg-prec'), sv = volet.querySelector('.pg-suiv');
+    pr.disabled = i <= 0; sv.disabled = i >= l.length - 1;
+    pr.querySelector('span').textContent = i > 0 ? nom(l[i - 1]) : '';
+    sv.querySelector('span').textContent = i < l.length - 1 ? nom(l[i + 1]) : '';
+    volet.querySelector('.pg-pos').textContent = (cours ? 'cours ' : 'étape ') + (i + 1) + ' sur ' + l.length;
+    voile.hidden = false; volet.hidden = false; document.documentElement.classList.add('pg-ouvert');
+    corps.scrollTop = 0;
+    try { et.scrollIntoView({block: 'nearest', behavior: 'smooth'}); } catch (e) {}
+    volet.focus && volet.setAttribute('tabindex', '-1');
+    volet.focus({preventScroll: true});
+  }
+  function voisin(s){
+    if (!courant) { return; }
+    var l = courant.classList.contains('et') ? etapes(courant)
+          : Array.prototype.slice.call(courant.closest('.et').querySelectorAll('.mat [data-codes]'));
+    var i = l.indexOf(courant) + s;
+    if (i >= 0 && i < l.length) { ouvrir(l[i]); }
+  }
+  function fermer(){
+    if (!volet || volet.hidden) { return; }
+    volet.hidden = true; voile.hidden = true; document.documentElement.classList.remove('pg-ouvert');
+    if (courant) { courant.setAttribute('aria-expanded', 'false'); courant.classList.remove('vu'); courant.focus({preventScroll: true}); courant = null; }
+  }
+  /* chaque pastille de cours : sa matiere (fil) en couleur, un clic ouvre la fiche de ce cours */
+  var FILS = {}, NOMS = {};
+  Array.prototype.forEach.call(document.querySelectorAll('.vprog details.filprog'), function(d){
+    var cl = Array.prototype.filter.call(d.classList, function(c){ return c.indexOf('fil-') === 0; })[0];
+    var n = d.querySelector('summary .n'); if (!cl) { return; }
+    Array.prototype.forEach.call(d.querySelectorAll('.et[data-codes]'), function(e){
+      e.getAttribute('data-codes').split(' ').forEach(function(c){ if (c && !FILS[c]) { FILS[c] = cl; NOMS[c] = n ? n.textContent.trim().toLowerCase() : ''; } });
+    });
+  });
+  function norm(x){ return (x || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim(); }
+  function titreFiche(c){
+    var f = source(c);
+    return f && f.querySelector('.cn') ? norm(f.querySelector('.cn').textContent) : '';
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('.vprog .et[data-codes]'), function(et){
+    var dispo = et.getAttribute('data-codes').split(' ').filter(Boolean);
+    var pastilles = et.querySelectorAll('.mat span');
+    Array.prototype.forEach.call(pastilles, function(m){
+      var base = norm(m.textContent.replace(/\s*·.*$/, '')), cherches = [base];
+      var dbl = base.match(/^(.*?) (\d) et (\d)$/);
+      if (dbl) { cherches = [dbl[1] + ' ' + dbl[2], dbl[1] + ' ' + dbl[3]]; }
+      var trouves = [];
+      cherches.forEach(function(q){
+        var meilleur = null, score = 0;
+        dispo.forEach(function(c){
+          var t = titreFiche(c); if (!t) { return; }
+          var sc = t.indexOf(q) === 0 ? 1000 : q.split(' ').filter(function(w){ return w.length > 2 && (' ' + t + ' ').indexOf(' ' + w + ' ') > -1; }).length;
+          if (sc > score) { score = sc; meilleur = c; }
+        });
+        if (meilleur && trouves.indexOf(meilleur) < 0) { trouves.push(meilleur); }
+      });
+      if (dispo.length === 1 && pastilles.length === 1) { trouves = dispo; }
+      if (!trouves.length) { return; }
+      m.setAttribute('data-codes', trouves.join(' '));
+      m.setAttribute('data-nom', m.textContent.replace(/\s*·.*$/, '').trim());
+      m.setAttribute('role', 'button'); m.setAttribute('tabindex', '0');
+      m.setAttribute('title', 'Ouvrir la fiche du cours');
+      var fil = FILS[trouves[0]];
+      if (et.closest('.paliers')) { m.classList.add(fil || 'fil-autre'); if (fil) { m.setAttribute('data-filnom', NOMS[trouves[0]]); } }
+      m.addEventListener('click', function(ev){ ev.stopPropagation(); if (courant === m && volet && !volet.hidden) { fermer(); } else { ouvrir(m); } });
+      m.addEventListener('keydown', function(ev){ if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); ev.stopPropagation(); ouvrir(m); } });
+    });
+  });
+  var pal = document.querySelector('.vprog .paliers');
+  if (pal && !document.querySelector('.vprog .pg-legende')) {
+    var lg = document.createElement('p'); lg.className = 'pg-legende';
+    lg.innerHTML = '<span class="pg-leg-t">Couleur des cours :</span>' +
+      [['fil-gestion', 'gestion'], ['fil-marketing', 'marketing'], ['fil-strategie', 'stratégie'], ['fil-commerce', 'commerce international'], ['fil-autre', 'autres matières']]
+      .map(function(x){ return '<span class="' + x[0] + '">' + x[1] + '</span>'; }).join('') +
+      '<span class="pg-leg-a">Cliquez sur un cours pour ouvrir sa fiche.</span>';
+    var w = pal.closest('.frisewrap'); w.parentNode.insertBefore(lg, w);
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll('.vprog .et[data-codes]'), function(et){
+    et.addEventListener('click', function(){ if (courant === et && volet && !volet.hidden) { fermer(); } else { ouvrir(et); } });
+    et.addEventListener('keydown', function(ev){ if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); ouvrir(et); } });
+  });
+
+  /* ---- barre « Aller à » : reste visible en haut, menne a chaque fil ---- */
+  var barre = document.querySelector('.vprog .pg-nav');
+  if (!barre) { return; }
+  function hautFixe(){
+    var h = 0;
+    Array.prototype.forEach.call(document.querySelectorAll('nav.tabs, .mm-barre'), function(e){
+      var st = getComputedStyle(e);
+      if (st.display !== 'none' && (st.position === 'sticky' || st.position === 'fixed')) { h = Math.max(h, e.getBoundingClientRect().bottom); }
+    });
+    return Math.max(0, Math.round(h));
+  }
+  function caler(){ barre.style.top = hautFixe() + 'px'; }
+  caler(); window.addEventListener('resize', caler); window.addEventListener('scroll', caler, {passive: true});
+  var boutons = Array.prototype.slice.call(barre.querySelectorAll('button[data-cible]'));
+  boutons.forEach(function(b){
+    b.addEventListener('click', function(){
+      var c = document.getElementById(b.getAttribute('data-cible'));
+      if (!c) { return; }
+      if (c.tagName === 'DETAILS') { c.open = true; }
+      var y = c.getBoundingClientRect().top + window.pageYOffset - hautFixe() - barre.offsetHeight - 14;
+      window.scrollTo({top: y, behavior: 'smooth'});
+    });
+  });
+  function suivre(){
+    var lim = hautFixe() + barre.offsetHeight + 40, actif = null;
+    boutons.forEach(function(b){
+      var c = document.getElementById(b.getAttribute('data-cible'));
+      if (c && c.offsetParent !== null && c.getBoundingClientRect().top <= lim) { actif = b; }
+    });
+    boutons.forEach(function(b){ b.classList.toggle('actif', b === actif); });
+  }
+  window.addEventListener('scroll', suivre, {passive: true}); suivre();
+})();
+
+/* progression-etudiants:fin */</script>
 <script>
 (function () {
   if ('serviceWorker' in navigator && location.protocol !== 'file:') {
