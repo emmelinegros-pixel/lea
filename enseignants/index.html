@@ -767,85 +767,6 @@ nav.tabs .g-accueil a{font-weight:600;}
 .progbloc.encart-onglet > h4{color:var(--c1); margin-bottom:4px;}
 .progbloc.encart-onglet .chapo{font-style:normal; color:var(--ink-2);}
 .progbloc.encart-onglet p:last-child{margin-bottom:0;}
-.vprog.vprog{--k:var(--c3);}
-.vprog.vprog .et, .vprog.vprog .fiche-prog, .vprog.vprog .filprog{--mi:var(--k);}
-.vprog.vprog .fil-anglais{--k:var(--c1);}
-.vprog.vprog .fil-espagnol{--k:var(--c5);}
-.vprog.vprog .fil-gestion{--k:var(--c1);}
-.vprog.vprog .fil-marketing{--k:var(--ce);}
-.vprog.vprog .fil-strategie{--k:var(--c2);}
-.vprog.vprog .fil-commerce{--k:var(--c5);}
-.vprog.vprog .paliers .et:nth-of-type(1){--k:var(--c3);}
-.vprog.vprog .paliers .et:nth-of-type(2){--k:var(--c1);}
-.vprog.vprog .paliers .et:nth-of-type(3){--k:var(--c2);}
-.vprog.vprog .paliers .et:nth-of-type(4){--k:var(--ce);}
-.vprog.vprog .progbloc{background:var(--surface); border:1px solid var(--line); border-radius:12px;
-  padding:18px 20px 12px; margin-bottom:22px; box-shadow:var(--shadow);}
-.vprog.vprog .progbloc > h4{font-family:Spectral,Georgia,serif; font-size:19px; margin:0 0 4px;}
-.vprog.vprog .filtitre{margin:18px 0 10px;}
-.vprog.vprog .filtitre b{display:inline-flex; align-items:center; gap:8px; font-size:15.5px;
-  color:var(--k); background:color-mix(in srgb, var(--k) 10%, var(--surface)); border-radius:999px; padding:3px 14px 3px 10px;}
-.vprog.vprog .filtitre b::before{content:""; width:9px; height:9px; border-radius:50%; background:var(--k);}
-.vprog.vprog .frisewrap{overflow:visible; padding-bottom:4px;}
-.vprog.vprog .frise{display:grid; grid-auto-flow:column; grid-auto-columns:minmax(0,1fr); gap:10px;
-  min-width:0; position:relative;}
-.vprog.vprog .frise::before{content:""; position:absolute; left:14px; right:14px; top:24px; height:2px;
-  background:color-mix(in srgb, var(--k) 35%, transparent);}
-.vprog.vprog .frise .fl{display:none;}
-.vprog.vprog .frise .et{position:relative; width:auto; padding:12px 12px 12px; border-radius:10px;
-  border:1px solid color-mix(in srgb, var(--k) 22%, var(--line)); border-top:4px solid var(--k);
-  background:linear-gradient(180deg, color-mix(in srgb, var(--k) 8%, var(--surface)) 0, var(--surface) 70%);
-  transition:transform .15s, box-shadow .15s;}
-.vprog.vprog .frise .et .s{align-self:flex-start; color:#fff; background:var(--k); border-radius:999px;
-  padding:2px 9px; font-size:10px;}
-.vprog.vprog .frise .et .n{font-size:14px;}
-.vprog.vprog .frise .et .d{font-size:11.8px;}
-.vprog.vprog .frise .et .mat span{color:var(--k); background:color-mix(in srgb, var(--k) 11%, var(--surface)); font-weight:500;}
-.vprog.vprog .frise .et:hover{transform:translateY(-2px); box-shadow:var(--shadow); border-color:var(--k);}
-.vprog.vprog .frise .et[aria-expanded="true"]{box-shadow:0 0 0 2px var(--k); border-color:var(--k);}
-.vprog.vprog .fiche-prog{border-color:var(--k); border-top:4px solid var(--k);}
-.vprog.vprog .fiche-prog .fp-etape{color:var(--k);}
-.vprog.vprog .progbloc > h5{font-family:Spectral,Georgia,serif; font-size:16px; margin:22px 0 10px;}
-.vprog.vprog .filprog{border-left:5px solid var(--k);}
-.vprog.vprog .filprog > summary .n{color:var(--k);}
-.vprog.vprog .filprog > summary::after{content:"+"; margin-left:auto; font-size:18px; color:var(--k);}
-.vprog.vprog .filprog[open] > summary::after{content:"\2212";}
-.vprog.vprog .filprog[open] > summary{background:color-mix(in srgb, var(--k) 8%, var(--surface));}
-.vprog.vprog .frise{grid-auto-flow:row; grid-template-columns:1fr;}
-.vprog.vprog .frise::before{left:22px; right:auto; top:0; bottom:0; width:2px; height:auto;}
-.vprog.vprog .progbloc{padding:14px 12px 8px;}
-.vprog.vprog .pg-nav{position:sticky; z-index:6; display:flex; flex-wrap:wrap; align-items:center; gap:6px;
-  margin:0 0 18px; padding:8px 10px; border:1px solid var(--line); border-radius:999px;
-  background:color-mix(in srgb, var(--surface) 92%, transparent); backdrop-filter:blur(6px); box-shadow:var(--shadow);}
-.vprog.vprog .pg-nav-t{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.07em; text-transform:uppercase;
-  color:var(--muted); padding:0 6px 0 4px;}
-.vprog.vprog .pg-nav button{font:inherit; font-size:12.5px; cursor:pointer; border:1px solid color-mix(in srgb, var(--k) 35%, var(--line));
-  color:var(--k); background:var(--surface); border-radius:999px; padding:4px 11px; display:inline-flex; align-items:center; gap:6px;}
-.vprog.vprog .pg-nav button::before{content:""; width:7px; height:7px; border-radius:50%; background:var(--k);}
-.vprog.vprog .pg-nav button:hover{background:color-mix(in srgb, var(--k) 10%, var(--surface));}
-.vprog.vprog .pg-nav button.actif{background:var(--k); color:#fff; border-color:var(--k);}
-.vprog.vprog .pg-nav button.actif::before{background:#fff;}
-.vprog.vprog .pg-nav .fil-paliers{--k:var(--c3);}
-.pg-corps .fp-cours{padding:12px 0; border-top:1px solid var(--line);}
-.pg-corps .fp-cours:first-of-type{border-top:none;}
-.pg-corps .fp-t{font-family:Spectral,Georgia,serif; font-size:17px; font-weight:600; color:var(--ink); margin:6px 0 4px;}
-.pg-corps .fp-t span{font-family:"IBM Plex Mono",monospace; font-size:11px; font-weight:400; color:var(--muted); margin-left:8px;}
-.vprog.vprog .pg-nav{border-radius:12px;}
-.pg-voile, .pg-volet, .vprog.vprog .pg-nav{display:none!important;}
-.vprog.vprog .fil-autre{--k:#66748A;}
-.vprog.vprog .frise .et .mat span[data-codes]{cursor:pointer; position:relative; padding-left:18px;
-  transition:background .12s, color .12s;}
-.vprog.vprog .frise .et .mat span[data-codes]::before{content:""; position:absolute; left:7px; top:50%; width:6px; height:6px;
-  margin-top:-3px; border-radius:50%; background:var(--k);}
-.vprog.vprog .frise .et .mat span[data-codes]:hover, .vprog.vprog .frise .et .mat span.vu{background:var(--k); color:#fff;}
-.vprog.vprog .frise .et .mat span[data-codes]:hover::before, .vprog.vprog .frise .et .mat span.vu::before{background:#fff;}
-.vprog.vprog .frise .et .mat span[data-codes]:focus-visible{outline:2px solid var(--k); outline-offset:1px;}
-.vprog.vprog .paliers .et .mat span{border-left:3px solid var(--k);}
-.vprog.vprog .pg-legende{display:flex; flex-wrap:wrap; align-items:center; gap:6px 12px; font-size:12px; color:var(--muted); margin:-2px 0 12px;}
-.vprog.vprog .pg-legende span[class^="fil-"]{display:inline-flex; align-items:center; gap:5px; color:var(--k); font-weight:500;}
-.vprog.vprog .pg-legende span[class^="fil-"]::before{content:""; width:8px; height:8px; border-radius:50%; background:var(--k);}
-.vprog.vprog .pg-leg-t{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.07em; text-transform:uppercase;}
-.vprog.vprog .pg-leg-a{margin-left:auto; font-style:italic;}
 .vprog{--mi:var(--c3);}
 .vprog .frise .et{cursor:pointer;}
 
@@ -1186,13 +1107,11 @@ page, le temps de la séance. Les mêmes grilles existent en PDF et en classeur,
   <h2><span class="eyeb">Par progression</span>Comment les enseignements s'enchaînent</h2>
 </div>
 
-<div class="vprog"><div aria-label="Aller à un fil" class="pg-nav" role="navigation"><span class="pg-nav-t">Aller à</span><button class="fil-anglais" data-cible="pg-anglais" type="button">Anglais</button><button class="fil-espagnol" data-cible="pg-espagnol" type="button">Espagnol</button><button class="fil-paliers" data-cible="pg-appli" type="button">Matières d'application</button><button class="fil-gestion" data-cible="pg-gestion" type="button">Gestion</button><button class="fil-marketing" data-cible="pg-marketing" type="button">Marketing</button><button class="fil-strategie" data-cible="pg-strategie" type="button">Stratégie</button><button class="fil-commerce" data-cible="pg-commerce" type="button">Commerce international</button></div><div aria-label="Aller à un fil" class="pg-nav" role="navigation"><span class="pg-nav-t">Aller à</span><button class="fil-anglais" data-cible="pg-anglais" type="button">Anglais</button><button class="fil-espagnol" data-cible="pg-espagnol" type="button">Espagnol</button><button class="fil-paliers" data-cible="pg-appli" type="button">Matières d'application</button><button class="fil-gestion" data-cible="pg-gestion" type="button">Gestion</button><button class="fil-marketing" data-cible="pg-marketing" type="button">Marketing</button><button class="fil-strategie" data-cible="pg-strategie" type="button">Stratégie</button><button class="fil-commerce" data-cible="pg-commerce" type="button">Commerce international</button></div>
+<div class="vprog"><div aria-label="Aller à un fil" class="pg-nav" role="navigation"><span class="pg-nav-t">Aller à</span><button class="fil-anglais" data-cible="pg-anglais" type="button">Anglais</button><button class="fil-espagnol" data-cible="pg-espagnol" type="button">Espagnol</button><button class="fil-paliers" data-cible="pg-appli" type="button">Matières d'application</button><button class="fil-gestion" data-cible="pg-gestion" type="button">Gestion</button><button class="fil-marketing" data-cible="pg-marketing" type="button">Marketing</button><button class="fil-strategie" data-cible="pg-strategie" type="button">Stratégie</button><button class="fil-commerce" data-cible="pg-commerce" type="button">Commerce international</button></div>
 <div class="progbloc">
 <h4>Langues des affaires</h4>
-<p class="chapo">Anglais : S1 → S7. Espagnol : S1 → S6 — la spécialisation CAPES d'espagnol continue
-        ensuite sur ses propres cours.</p>
-<div class="filtitre fil-anglais fil-anglais" id="pg-anglais"><b>Anglais des affaires</b></div>
-<div class="frisewrap fil-anglais fil-anglais"><div class="frise">
+<div class="filtitre fil-anglais" id="pg-anglais"><b>Anglais des affaires</b></div>
+<div class="frisewrap fil-anglais"><div class="frise">
 <div aria-expanded="false" class="et" data-codes="11_0424" role="button" tabindex="0"><span class="s">S1</span><span class="n">Se familiariser avec son environnement de travail</span><span class="d">Le vocabulaire des structures, des départements, des fonctions et des cultures d'entreprise.</span><div class="mat"><span>Anglais écrit 1 · 18 h</span></div></div>
 <span class="fl">→</span>
 <div aria-expanded="false" class="et" data-codes="11_0429" role="button" tabindex="0"><span class="s">S2</span><span class="n">L'offre commerciale et le prix</span><span class="d">Structure d'une offre, prix, rentabilité, marges — et la pratique de l'oral.</span><div class="mat"><span>Anglais écrit ET oral 2 · 18 h</span></div></div>
@@ -1207,8 +1126,8 @@ page, le temps de la séance. Les mêmes grilles existent en PDF et en classeur,
 <span class="fl">→</span>
 <div aria-expanded="false" class="et" data-codes="11_0609 06_0631" role="button" tabindex="0"><span class="s">S7</span><span class="n">Négociation et communication persuasive</span><span class="d">Vendre sous pression le projet construit au S6 : objections, codes culturels.</span><div class="mat"><span>Techniques d'expression (anglais) · 22 h</span><span>International strategy : negociation and pitching · 20 h</span></div></div>
 </div></div>
-<div class="filtitre fil-espagnol fil-espagnol" id="pg-espagnol"><b>Espagnol des affaires</b></div>
-<div class="frisewrap fil-espagnol fil-espagnol"><div class="frise">
+<div class="filtitre fil-espagnol" id="pg-espagnol"><b>Espagnol des affaires</b></div>
+<div class="frisewrap fil-espagnol"><div class="frise">
 <div aria-expanded="false" class="et" data-codes="14_0111" role="button" tabindex="0"><span class="s">S1</span><span class="n">Se familiariser avec son environnement de travail</span><span class="d">Le vocabulaire de l'entreprise et les premiers écrits professionnels.</span><div class="mat"><span>Espagnol écrit 1 · 18 h</span></div></div>
 <span class="fl">→</span>
 <div aria-expanded="false" class="et" data-codes="14_0123" role="button" tabindex="0"><span class="s">S2</span><span class="n">Correspondance et argumentation</span><span class="d">Correspondance d'affaires et textes argumentatifs — et la pratique de l'oral.</span><div class="mat"><span>Espagnol écrit ET oral 2 · 18 h</span></div></div>
@@ -1224,11 +1143,7 @@ page, le temps de la séance. Les mêmes grilles existent en PDF et en classeur,
 </div>
 <div class="progbloc">
 <h4 id="pg-appli">Matières d'application : quatre fils, quatre paliers</h4>
-<p class="chapo">Gestion · marketing · stratégie · commerce international — chaque cours reçoit des
-        prérequis et alimente des cours en aval. Le niveau de Bloom monte d'un palier à l'autre :
-        comprendre et appliquer en L1, appliquer et analyser en L2, analyser et évaluer en L3, évaluer et
-        créer au S7.</p>
-<div class="frisewrap"><div class="frise paliers fil-paliers fil-paliers">
+<div class="frisewrap"><div class="frise paliers fil-paliers">
 <div aria-expanded="false" class="et" data-codes="05_0248 06_0552 06_0616 06_0624 05_0249 06_0618" role="button" tabindex="0"><span class="s">L1 · S1-S2</span><span class="n">Situer l'entreprise, lire ses chiffres, poser un premier diagnostic</span><span class="d">L'entreprise et ses fonctions, la démarche marketing, le compte de résultat et les coûts, le plan de marchéage et le prix, les premiers outils de diagnostic : SWOT, PESTEL, Porter.</span><div class="mat"><span>Environnement économique</span><span>Marketing 1 et 2</span><span>Structures et fonctions de l'entreprise 1</span><span>Analyse de gestion</span><span>Stratégie d'entreprise</span></div></div>
 <span class="fl">→</span>
 <div aria-expanded="false" class="et" data-codes="06_0289 01_0280 06_0625 06_0287" role="button" tabindex="0"><span class="s">L2 · S3-S4</span><span class="n">Approfondir la lecture financière, agir sur la relation client, conduire un projet</span><span class="d">Le bilan et les indicateurs de performance, la relation commerciale et la fidélisation, le droit du travail et des contrats, la communication interculturelle en contexte professionnel.</span><div class="mat"><span>Gestion de la relation client</span><span>Droit social et des contrats</span><span>Comptabilité financière et analyse de la performance</span><span>Compétences interculturelles en contexte professionnel</span></div></div>
@@ -1238,17 +1153,14 @@ page, le temps de la séance. Les mêmes grilles existent en PDF et en classeur,
 <div aria-expanded="false" class="et" data-codes="06_0621 06_0631 06_0333" role="button" tabindex="0"><span class="s">S7</span><span class="n">Intégrer et piloter une entreprise complète en concurrence</span><span class="d">La négociation internationale en anglais, le pilotage des opérations et la simulation de gestion, où les quatre fils se rejoignent sur une même entreprise en concurrence.</span><div class="mat"><span>Excellence opérationnelle</span><span>International strategy : negociation and pitching</span><span>Simulation de gestion</span></div></div>
 </div></div>
 <h5 style="margin-top:18px; font-family:Spectral,Georgia,serif; font-size:15px;">Les quatre fils, en détail</h5>
-<details class="filprog fil-gestion fil-gestion" id="pg-gestion"><summary><span class="n">Gestion</span><span class="cnt">2 étapes · 2 cours · 44 h</span></summary><div class="dedans">
-<p class="chapo">Lire et raisonner les chiffres d'une entreprise : le socle quantitatif de toute décision.</p>
+<details class="filprog fil-gestion" id="pg-gestion"><summary><span class="n">Gestion</span><span class="cnt">2 étapes · 2 cours · 44 h</span></summary><div class="dedans">
 <div class="frisewrap"><div class="frise">
 <div aria-expanded="false" class="et" data-codes="05_0249" role="button" tabindex="0"><span class="s">S2</span><span class="n">Lire l'intérieur</span><span class="d">Compte de résultat, classement des coûts, marge et seuil de rentabilité.</span><div class="mat"><span>Analyse de gestion · 20 h</span></div></div>
 <span class="fl">→</span>
 <div aria-expanded="false" class="et" data-codes="06_0625" role="button" tabindex="0"><span class="s">S4</span><span class="n">Lire l'extérieur</span><span class="d">Bilan, indicateurs de performance, l'entreprise telle qu'un tiers la voit.</span><div class="mat"><span>Comptabilité financière et analyse de la performance · 24 h</span></div></div>
 </div></div>
-<p class="chapo">L'analyse de gestion regarde l'intérieur — les coûts et la décision interne. La comptabilité financière regarde l'extérieur — le bilan et la performance lisible par un tiers.</p>
 </div></details>
-<details class="filprog fil-marketing fil-marketing" id="pg-marketing"><summary><span class="n">Marketing</span><span class="cnt">5 étapes · 7 cours · 130 h</span></summary><div class="dedans">
-<p class="chapo">Comprendre un marché, construire une offre, agir sur le client.</p>
+<details class="filprog fil-marketing" id="pg-marketing"><summary><span class="n">Marketing</span><span class="cnt">5 étapes · 7 cours · 130 h</span></summary><div class="dedans">
 <div class="frisewrap"><div class="frise">
 <div aria-expanded="false" class="et" data-codes="06_0552" role="button" tabindex="0"><span class="s">S1</span><span class="n">La démarche</span><span class="d">Marché, segmentation, ciblage.</span><div class="mat"><span>Marketing 1 · 18 h</span></div></div>
 <span class="fl">→</span>
@@ -1261,8 +1173,7 @@ page, le temps de la séance. Les mêmes grilles existent en PDF et en classeur,
 <div aria-expanded="false" class="et" data-codes="06_0628 06_0622 06_0627" role="button" tabindex="0"><span class="s">S6</span><span class="n">Parcours client et prospection</span><span class="d">Parcours client numérique, offre export, démarchage.</span><div class="mat"><span>Marketing international 2 · 14 h</span><span>Marketing digital et parcours client · 18 h</span><span>Prospection à l'international · 20 h</span></div></div>
 </div></div>
 </div></details>
-<details class="filprog fil-strategie fil-strategie" id="pg-strategie"><summary><span class="n">Stratégie</span><span class="cnt">3 étapes · 3 cours · 60 h</span></summary><div class="dedans">
-<p class="chapo">Poser un diagnostic intégré et formuler des orientations.</p>
+<details class="filprog fil-strategie" id="pg-strategie"><summary><span class="n">Stratégie</span><span class="cnt">3 étapes · 3 cours · 60 h</span></summary><div class="dedans">
 <div class="frisewrap"><div class="frise">
 <div aria-expanded="false" class="et" data-codes="05_0248" role="button" tabindex="0"><span class="s">S1</span><span class="n">Lire un pays</span><span class="d">Lire un pays par ses indicateurs, comprendre le cadre des échanges.</span><div class="mat"><span>Environnement économique · 16 h</span></div></div>
 <span class="fl">→</span>
@@ -1270,10 +1181,8 @@ page, le temps de la séance. Les mêmes grilles existent en PDF et en classeur,
 <span class="fl">→</span>
 <div aria-expanded="false" class="et" data-codes="06_0626" role="button" tabindex="0"><span class="s">S5</span><span class="n">Internationaliser le diagnostic</span><span class="d">Porter le diagnostic à l'échelle internationale, RSE comprise.</span><div class="mat"><span>Environnement économique international et RSE · 24 h</span></div></div>
 </div></div>
-<p class="chapo">La stratégie est propriétaire unique des outils de diagnostic — SWOT, PESTEL, Porter. Les autres cours cessent de les enseigner et se contentent de les mobiliser.</p>
 </div></details>
-<details class="filprog fil-commerce fil-commerce" id="pg-commerce"><summary><span class="n">Commerce international</span><span class="cnt">3 étapes · 7 cours · 132 h</span></summary><div class="dedans">
-<p class="chapo">Agir en contexte international. Ce fil ne démarre qu'en L3, et c'est logique : on internationalise un raisonnement déjà construit.</p>
+<details class="filprog fil-commerce" id="pg-commerce"><summary><span class="n">Commerce international</span><span class="cnt">3 étapes · 7 cours · 132 h</span></summary><div class="dedans">
 <div class="frisewrap"><div class="frise">
 <div aria-expanded="false" class="et" data-codes="02_0372 27_0428 06_0290" role="button" tabindex="0"><span class="s">S5</span><span class="n">Le cadre et les outils</span><span class="d">Droit du commerce export, outils numériques, approvisionnement et achats.</span><div class="mat"><span>Droit international · 16 h</span><span>Outils numériques pour le commerce international · 10 h</span><span>Supply Chain 1 · 26 h</span></div></div>
 <span class="fl">→</span>
@@ -1300,7 +1209,7 @@ L’autonomie est renforcée (travail en mode projet, choix du terrain, construc
   <h2><span class="eyeb">Par objectif</span>Langues et matières d'application, semestre par semestre</h2>
 </div>
 <div class="intro">
-  <p>Les cours de matières d'application (marketing, stratégie, droit, logistique…) et les cours de langue (langues des affaires, traduction) travaillent sur les mêmes situations, et chaque semestre, la situation se complexifie. Chaque carte donne l'objectif du semestre, ce que l'étudiant fait dans le cours d'application et ce qu'il fait dans le cours de langue.</p>
+  <p>Chaque carte donne l'objectif du semestre, ce que l'étudiant fait dans le cours d'application et ce qu'il fait dans le cours de langue.</p>
 </div>
 <div class="vobj">
 <div class="vo-path" aria-hidden="true"><span class="d">Débutant</span><span class="i">Intermédiaire</span><span class="a">Avancé</span></div>
