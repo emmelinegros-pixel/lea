@@ -1185,12 +1185,8 @@ page, le temps de la séance. Les mêmes grilles existent en PDF et en classeur,
 <div class="tete">
   <h2><span class="eyeb">Par progression</span>Comment les enseignements s'enchaînent</h2>
 </div>
-<div class="intro"><p>Les mêmes frises que sur la page des étudiants : semestre après semestre, ce que chaque cours
-reprend et ce qu'il prépare. <strong>Cliquez sur une étape</strong> : sa fiche s'ouvre sur le côté, avec ce que le
-cours suppose acquis et ce qu'il prépare ; les flèches (ou les touches ← →) mènent à l'étape précédente ou suivante.
-La barre « Aller à » conduit directement à chaque fil.</p></div>
-<div class="vprog"><div aria-label="Aller à un fil" class="pg-nav" role="navigation"><span class="pg-nav-t">Aller à</span><button class="fil-anglais" data-cible="pg-anglais" type="button">Anglais</button><button class="fil-espagnol" data-cible="pg-espagnol" type="button">Espagnol</button><button class="fil-paliers" data-cible="pg-appli" type="button">Matières d'application</button><button class="fil-gestion" data-cible="pg-gestion" type="button">Gestion</button><button class="fil-marketing" data-cible="pg-marketing" type="button">Marketing</button><button class="fil-strategie" data-cible="pg-strategie" type="button">Stratégie</button><button class="fil-commerce" data-cible="pg-commerce" type="button">Commerce international</button></div>
-<div aria-label="Aller à un fil" class="pg-nav" role="navigation"><span class="pg-nav-t">Aller à</span><button class="fil-anglais" data-cible="pg-anglais" type="button">Anglais</button><button class="fil-espagnol" data-cible="pg-espagnol" type="button">Espagnol</button><button class="fil-paliers" data-cible="pg-appli" type="button">Matières d'application</button><button class="fil-gestion" data-cible="pg-gestion" type="button">Gestion</button><button class="fil-marketing" data-cible="pg-marketing" type="button">Marketing</button><button class="fil-strategie" data-cible="pg-strategie" type="button">Stratégie</button><button class="fil-commerce" data-cible="pg-commerce" type="button">Commerce international</button></div>
+
+<div class="vprog"><div aria-label="Aller à un fil" class="pg-nav" role="navigation"><span class="pg-nav-t">Aller à</span><button class="fil-anglais" data-cible="pg-anglais" type="button">Anglais</button><button class="fil-espagnol" data-cible="pg-espagnol" type="button">Espagnol</button><button class="fil-paliers" data-cible="pg-appli" type="button">Matières d'application</button><button class="fil-gestion" data-cible="pg-gestion" type="button">Gestion</button><button class="fil-marketing" data-cible="pg-marketing" type="button">Marketing</button><button class="fil-strategie" data-cible="pg-strategie" type="button">Stratégie</button><button class="fil-commerce" data-cible="pg-commerce" type="button">Commerce international</button></div><div aria-label="Aller à un fil" class="pg-nav" role="navigation"><span class="pg-nav-t">Aller à</span><button class="fil-anglais" data-cible="pg-anglais" type="button">Anglais</button><button class="fil-espagnol" data-cible="pg-espagnol" type="button">Espagnol</button><button class="fil-paliers" data-cible="pg-appli" type="button">Matières d'application</button><button class="fil-gestion" data-cible="pg-gestion" type="button">Gestion</button><button class="fil-marketing" data-cible="pg-marketing" type="button">Marketing</button><button class="fil-strategie" data-cible="pg-strategie" type="button">Stratégie</button><button class="fil-commerce" data-cible="pg-commerce" type="button">Commerce international</button></div>
 <div class="progbloc">
 <h4>Langues des affaires</h4>
 <p class="chapo">Anglais : S1 → S7. Espagnol : S1 → S6 — la spécialisation CAPES d'espagnol continue
@@ -2214,8 +2210,7 @@ s'adresser à la responsable de la licence.</p>
     var lg = document.createElement('p'); lg.className = 'pg-legende';
     lg.innerHTML = '<span class="pg-leg-t">Couleur des cours :</span>' +
       [['fil-gestion', 'gestion'], ['fil-marketing', 'marketing'], ['fil-strategie', 'stratégie'], ['fil-commerce', 'commerce international'], ['fil-autre', 'autres matières']]
-      .map(function(x){ return '<span class="' + x[0] + '">' + x[1] + '</span>'; }).join('') +
-      '<span class="pg-leg-a">Cliquez sur un cours pour ouvrir sa fiche.</span>';
+      .map(function(x){ return '<span class="' + x[0] + '">' + x[1] + '</span>'; }).join('');
     var w = pal.closest('.frisewrap'); w.parentNode.insertBefore(lg, w);
   }
 
