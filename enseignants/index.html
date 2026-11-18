@@ -1927,7 +1927,7 @@ s'adresser à la responsable de la licence.</p>
     var t = document.createElement('p'); t.className = 'fp-t';
     t.textContent = src.querySelector('.cn').textContent;
     var h = document.createElement('span'); h.textContent = src.id.replace('f2027-', ''); t.appendChild(h); bloc.appendChild(t);
-    var cb = src.querySelector('.cb').cloneNode(true); replier(cb); bloc.appendChild(cb);
+    var cb = src.querySelector('.cb').cloneNode(true); bloc.appendChild(cb);
     var fil = FIL[code];
     if (fil) {
       var dl = document.createElement('dl'); dl.className = 'faits';
@@ -1936,13 +1936,23 @@ s'adresser à la responsable de la licence.</p>
         var d = document.createElement('div'), dt = document.createElement('dt'), dd = document.createElement('dd');
         dt.textContent = p[0]; dd.textContent = p[1]; d.appendChild(dt); d.appendChild(dd); dl.appendChild(d);
       });
-      if (dl.children.length) { bloc.insertBefore(dl, cb); }
+      if (dl.children.length) { cb.insertBefore(dl, cb.firstChild); }
     }
+    replier(cb);
     return bloc;
   }
 
   /* chaque rubrique de la fiche (exercices types, notions, compétences, syllabus...) devient un encart depliable */
   function replier(cb){
+    // l'en-tete de la fiche (prerequis, heures, UE, competence, niveau, note) : un encart replie lui aussi
+    var tete = [];
+    for (var e = cb.firstElementChild; e && e.tagName !== 'H5'; e = e.nextElementSibling) { tete.push(e); }
+    if (tete.length) {
+      var id = document.createElement('details'); id.className = 'pg-pli';
+      var si = document.createElement('summary'); si.textContent = 'Prérequis, UE, compétence';
+      id.appendChild(si); cb.insertBefore(id, tete[0]);
+      tete.forEach(function(x){ id.appendChild(x); });
+    }
     var cur = null;
     Array.prototype.slice.call(cb.children).forEach(function(k){
       if (k.tagName === 'H5') {
