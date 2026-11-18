@@ -1967,7 +1967,7 @@ s'adresser à la responsable de la licence.</p>
     for (var e = cb.firstElementChild; e && e.tagName !== 'H5'; e = e.nextElementSibling) { tete.push(e); }
     if (tete.length) {
       var id = document.createElement('details'); id.className = 'pg-pli pg-id';
-      var si = document.createElement('summary'); si.textContent = 'Prérequis, UE, compétence';
+      var si = document.createElement('summary'); si.textContent = 'Intitulé du Cours, UE, compétence, MCC';
       id.appendChild(si); cb.insertBefore(id, tete[0]);
       tete.forEach(function(x){ id.appendChild(x); });
     }
