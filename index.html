@@ -885,6 +885,16 @@ html.cp-ouvert{overflow:hidden;}
 .semtete.cp-tete.c1{--k:var(--c1);} .semtete.cp-tete.c2{--k:var(--c2);} .semtete.cp-tete.c3{--k:var(--c3);}
 .semtete.cp-tete.c4mi{--k:var(--c4mi);} .semtete.cp-tete.c4lch{--k:var(--c4lch);} .semtete.cp-tete.c5{--k:var(--c5);}
 /* couleurs-mes-cours:fin */
+/* haut-de-page:debut */
+.haut-page{position:fixed; right:18px; bottom:18px; z-index:60; display:flex; align-items:center; gap:6px;
+  min-height:48px; padding:0 18px; border-radius:999px; border:1px solid var(--line-2, #cfd6df);
+  background:var(--surface, #fff); color:var(--ink, #1b2430); font:600 15px/1 "IBM Plex Sans",system-ui,sans-serif;
+  box-shadow:0 6px 18px rgba(0,0,0,.18); cursor:pointer; opacity:0; transform:translateY(12px); pointer-events:none;
+  transition:opacity .18s, transform .18s;}
+.haut-page.vu{opacity:1; transform:none; pointer-events:auto;}
+.haut-page:hover, .haut-page:focus-visible{background:var(--ink, #1b2430); color:#fff; outline:none;}
+@media print{.haut-page{display:none;}}
+/* haut-de-page:fin */
 /* confort-lecture:debut */
 body{line-height:1.6;}
 .intro p, .pc > p, .pc li, .consigne{max-width:78ch;}
@@ -3151,8 +3161,10 @@ body{line-height:1.6;}
   }
 
   function remonter(){
-    var y = nav.getBoundingClientRect().top + window.pageYOffset;
-    if (window.pageYOffset > y) { window.scrollTo(0, y); }
+    /* 20/11/2026 : le menu est collé en haut ; on remonte au début du contenu, juste sous le menu */
+    var m = document.querySelector('main') || nav;
+    var y = m.getBoundingClientRect().top + window.pageYOffset - nav.offsetHeight;
+    if (window.pageYOffset > y) { window.scrollTo(0, Math.max(0, y)); }
   }
 
   function showTab(id, opts){
@@ -3787,6 +3799,20 @@ window.MCC_ETU = {"14_0111": "MCC1 en 2026", "14_0122": "MCC1 en 2026", "11_0424
     }
   });
   window.addEventListener('appinstalled', function () { bloc.hidden = true; });
+})();
+</script>
+<script>/* haut-de-page (20/11/2026) : un bouton « Haut de page » apparaît dès qu'on a défilé */
+(function(){
+  var b = document.createElement('button');
+  b.type = 'button'; b.className = 'haut-page'; b.setAttribute('aria-label', 'Revenir en haut de la page');
+  b.innerHTML = '<span aria-hidden="true">↑</span> Haut de page';
+  document.body.appendChild(b);
+  function maj(){ b.classList.toggle('vu', window.pageYOffset > 500); }
+  window.addEventListener('scroll', maj, {passive: true}); maj();
+  b.addEventListener('click', function(){
+    window.scrollTo({top: 0, behavior: 'smooth'});
+    var t = document.querySelector('nav.tabs [aria-selected="true"]'); if (t) { setTimeout(function(){ t.focus({preventScroll: true}); }, 400); }
+  });
 })();
 </script>
 

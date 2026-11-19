@@ -1177,6 +1177,45 @@ html.cp-ouvert{overflow:hidden;}
 .semtete.cp-tete.c4mi{--k:var(--c4mi);} .semtete.cp-tete.c4lch{--k:var(--c4lch);} .semtete.cp-tete.c5{--k:var(--c5);}
 /* couleurs-mes-cours:fin */
 /* confort-lecture:applique */
+/* grilles-editables:debut */
+.g-versions{display:flex; flex-wrap:wrap; align-items:center; gap:8px 10px; margin:10px 0 4px;}
+.g-versions label{font:600 12.5px "IBM Plex Mono",monospace; letter-spacing:.08em; text-transform:uppercase; color:var(--muted);}
+.g-versions select{font:inherit; font-size:16px; padding:8px 10px; border:1px solid var(--line-2); border-radius:8px; background:var(--surface); min-width:220px;}
+.g-versions button, .g-edit button{font:inherit; font-size:15px; cursor:pointer; padding:8px 14px; min-height:42px; border-radius:999px;
+  border:1px solid var(--line-2); background:var(--surface); color:var(--ink);}
+.g-versions button:hover, .g-edit button:hover{background:var(--surface-2);}
+#g-adapter, .g-edit .g-ok{background:var(--ink); color:#fff; border-color:var(--ink);}
+.g-edit{margin:10px 0 18px; padding:16px 18px; border:2px solid var(--c2); border-radius:12px; background:var(--surface);}
+.g-edit h3{margin:0 0 4px; font-size:20px;}
+.g-edit .g-e-aide{margin:0 0 12px; color:var(--ink-2); font-size:16px; max-width:78ch;}
+.g-e-ce{border:1px solid var(--line); border-radius:10px; padding:12px 14px; margin:0 0 12px; background:var(--surface-2, #f6f7f9);}
+.g-e-ce.off{opacity:.55;}
+.g-e-ce h4{margin:0 0 8px; font-size:17px;}
+.g-e-reg{display:flex; flex-wrap:wrap; gap:8px 18px; align-items:center; margin:0 0 10px; font-size:15px;}
+.g-e-reg select{font:inherit; font-size:15px; padding:4px 8px; border-radius:6px; border:1px solid var(--line-2);}
+.g-e-niv{display:grid; grid-template-columns:repeat(5, minmax(0,1fr)); gap:8px;}
+.g-e-niv label, .g-e-ind{display:flex; flex-direction:column; gap:4px; font:600 12.5px "IBM Plex Mono",monospace; color:var(--muted); text-transform:uppercase;}
+.g-edit textarea{font:400 15px/1.45 "IBM Plex Sans",system-ui,sans-serif; color:var(--ink); text-transform:none; padding:8px 10px;
+  border:1px solid var(--line-2); border-radius:8px; min-height:96px; resize:vertical; background:var(--surface);}
+.g-e-ind{margin-top:10px;}
+.g-e-ind textarea{min-height:80px;}
+.g-e-pied{display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-top:6px;}
+.g-e-pied input{font:inherit; font-size:16px; padding:8px 10px; border:1px solid var(--line-2); border-radius:8px; min-width:260px;}
+.g-coef{margin:-2px 0 6px; font:600 12.5px "IBM Plex Mono",monospace; color:var(--c2); text-transform:uppercase;}
+@media (max-width:900px){ .g-e-niv{grid-template-columns:1fr;} }
+#g-edit:not([hidden]) ~ .bilan{position:static;}
+@media print{ .g-versions, .g-edit{display:none !important;} }
+/* grilles-editables:fin */
+/* haut-de-page:debut */
+.haut-page{position:fixed; right:18px; bottom:18px; z-index:60; display:flex; align-items:center; gap:6px;
+  min-height:48px; padding:0 18px; border-radius:999px; border:1px solid var(--line-2, #cfd6df);
+  background:var(--surface, #fff); color:var(--ink, #1b2430); font:600 15px/1 "IBM Plex Sans",system-ui,sans-serif;
+  box-shadow:0 6px 18px rgba(0,0,0,.18); cursor:pointer; opacity:0; transform:translateY(12px); pointer-events:none;
+  transition:opacity .18s, transform .18s;}
+.haut-page.vu{opacity:1; transform:none; pointer-events:auto;}
+.haut-page:hover, .haut-page:focus-visible{background:var(--ink, #1b2430); color:#fff; outline:none;}
+@media print{.haut-page{display:none;}}
+/* haut-de-page:fin */
 /* confort-lecture:debut */
 body{line-height:1.6;}
 .intro p, .pc > p, .pc li, .consigne{max-width:78ch;}
@@ -1408,6 +1447,17 @@ Elle vous mandate pour produire une analyse et formuler des recommandations opé
   <label for="sel-grille">Grille</label>
   <select id="sel-grille"><option value="C1_L1">C1 · L1 — L1 – Novice</option><option value="C1_L2">C1 · L2 — L2 – Intermédiaire</option><option value="C1_L3">C1 · L3/L4 — L3 – Compétent</option><option value="C2_L1">C2 · L1 — L1 – Novice</option><option value="C2_L2">C2 · L2 — L2 – Intermédiaire</option><option value="C2_L3">C2 · L3/L4 — L3 – Compétent</option><option value="C3_L1">C3 · L1 — L1 – Novice</option><option value="C3_L2">C3 · L2 — L2 – Intermédiaire</option><option value="C3_L3">C3 · L3/L4 — L3 – Compétent</option><option value="C4_CAPES_Espagnol_Niv1">C4 · CAPES · niveau 1 — Niveau 1</option><option value="C4_CAPES_Espagnol_Niv2">C4 · CAPES · niveau 2 — Niveau 2</option><option value="C4_MI_Niv1">C4 · MI · niveau 1 — Niveau 1</option><option value="C4_MI_Niv2">C4 · MI · niveau 2 — Niveau 2</option><option value="C5_L1">C5 · L1 — L1 – Novice</option><option value="C5_L2">C5 · L2 — L2 – Intermédiaire</option><option value="C5_L3">C5 · L3/L4 — L3 – Compétent</option></select>
 </div>
+<div class="g-versions" id="g-versions">
+  <label for="sel-version">Version</label>
+  <select id="sel-version"><option value="">Grille officielle</option></select>
+  <button type="button" id="g-adapter">Adapter cette grille</button>
+  <button type="button" id="g-export">Exporter mes grilles</button>
+  <button type="button" id="g-import-b">Importer des grilles</button>
+  <input type="file" id="g-import" accept=".json,application/json" hidden>
+  <span class="etat" id="g-v-etat" role="status"></span>
+</div>
+<div class="g-edit" id="g-edit" hidden></div>
+
 <div class="ident">
   <label for="g-etu">Étudiant<input id="g-etu" type="text" placeholder="Nom et prénom"></label>
   <label for="g-eval">Évaluation<input id="g-eval" type="text" placeholder="Devoir, exercice, date"></label>
@@ -1427,8 +1477,7 @@ Elle vous mandate pour produire une analyse et formuler des recommandations opé
   <span class="etat" id="g-etat" role="status"></span>
 </div>
 <p class="note-tbl" id="g-bareme"></p>
-<p class="note-tbl">Rien de ce que vous saisissez ici n'est enregistré ni transmis : la saisie reste dans cette
-page, le temps de la séance. Les mêmes grilles existent en PDF et en classeur, rubrique
+<p class="note-tbl">Les notes et observations saisies ne sont ni enregistrées ni transmises. Vos grilles adaptées sont gardées dans ce navigateur, sur cet ordinateur : pour les retrouver ailleurs ou les donner à un collègue, exportez-les en fichier, puis importez ce fichier. Les mêmes grilles existent en PDF et en classeur, rubrique
 <a class="renvoi" href="#documents">Documents</a>.</p>
 <nav class="suite" aria-label="Rubrique précédente ou suivante"><a class="prec" href="#cours"><small>← Précédent · Enseigner</small><b>Mes cours</b></a><a class="suiv" href="#mcc"><small>Suivant · Évaluer →</small><b>Les MCC</b></a></nav></div></section><section class="panneau" id="mcc" data-accent="c3" role="tabpanel" aria-labelledby="t-mcc" hidden><div class="wrap">
 <div class="tete">
@@ -1725,8 +1774,10 @@ note de la DRH sur l'accueil des missionnaires, octobre 2024.</p>
   var ids = panels.map(function(p){ return p.id; });
 
   function remonter(){
-    var y = nav.getBoundingClientRect().top + window.pageYOffset;
-    if (window.pageYOffset > y) { window.scrollTo(0, y); }
+    /* 20/11/2026 : le menu est collé en haut ; on remonte au début du contenu, juste sous le menu */
+    var m = document.querySelector('main') || nav;
+    var y = m.getBoundingClientRect().top + window.pageYOffset - nav.offsetHeight;
+    if (window.pageYOffset > y) { window.scrollTo(0, Math.max(0, y)); }
   }
   /* 19/11/2026 : « Par progression » et « Par objectif » sont deux boutons de « Mes cours » ; anciennes adresses gardées */
   var ALIAS = {progression: 'prog', objectif: 'prog', fils: 'fil', detail: 'prog', logique: 'prog', competences: 'comp'};
@@ -1941,12 +1992,15 @@ note de la DRH sur l'accueil des missionnaires, octobre 2024.</p>
   var zone = document.getElementById('grille');
   var scores = [];
 
+  function grilleCourante(k){ return window.LEA_GRILLE ? window.LEA_GRILLE(k, GRILLES[k]) : GRILLES[k]; }
+  window.LEA_GRILLES = GRILLES;
   function dessiner(){
-    var g = GRILLES[sel.value];
+    var g = grilleCourante(sel.value);
+    window.__gPoids = g.lignes.map(function(l){ return l.poids || 1; });
     scores = g.lignes.map(function(){ return null; });
     var h = '<h3>' + ech(g.titre) + '</h3><p class="g-sous">' + ech(g.sous) + '</p>';
     g.lignes.forEach(function(l, i){
-      h += '<div class="g-ce"><h4>' + ech(l.ce) + '</h4>' + (l.dim ? '<p class="dim">' + ech(l.dim) + '</p>' : '')
+      h += '<div class="g-ce"><h4>' + ech(l.ce) + '</h4>' + ((l.poids || 1) > 1 ? '<p class="g-coef">Coefficient ' + l.poids + '</p>' : '') + (l.dim ? '<p class="dim">' + ech(l.dim) + '</p>' : '')
         + (l.groupe ? '<p class="g-grp">Travail de groupe : <b>' + ech(l.groupe.split(', ')[0]) + '</b>' + (l.groupe.indexOf(', ') > -1 ? ', ' + ech(l.groupe.slice(l.groupe.indexOf(', ') + 2)) : '') + '</p>' : '');
       h += '<details><summary>Indicateurs observables</summary><ul>'
         + l.ind.map(function(x){ return '<li>' + ech(x) + '</li>'; }).join('') + '</ul></details>';
@@ -1977,8 +2031,9 @@ note de la DRH sur l'accueil des missionnaires, octobre 2024.</p>
       detail.textContent = 'Aucune composante notée pour l’instant : choisissez un niveau par composante.';
       return null;
     }
-    var somme = notes.reduce(function(a, b){ return a + b; }, 0);
-    var v = somme * 20 / (notes.length * 4);
+    var P = window.__gPoids || [], somme = 0, sMax = 0;
+    scores.forEach(function(x, i){ if (x !== null) { var w = P[i] || 1; somme += x * w; sMax += 4 * w; } });
+    var v = somme * 20 / sMax;
     note.innerHTML = fr(v) + '<small> / 20</small>';
     var m = v >= 18 ? 'Excellent' : v >= 14 ? 'Très bien' : v >= 10 ? 'Bien' : v >= 7 ? 'Passable' : 'Insuffisant';
     mention.textContent = m;
@@ -1986,7 +2041,7 @@ note de la DRH sur l'accueil des missionnaires, octobre 2024.</p>
     verdict.textContent = zero ? 'Compétence non validée : une composante est à 0' : 'Compétence validée';
     verdict.className = 'verdict ' + (zero ? 'ko' : 'ok');
     detail.textContent = notes.length + (notes.length > 1 ? ' composantes notées' : ' composante notée') + ' sur '
-      + scores.length + ' ; total ' + somme + ' / ' + (notes.length * 4)
+      + scores.length + ' ; total ' + fr(somme) + ' / ' + sMax
       + (notes.length < scores.length ? '. La note est ramenée sur 20 sur les seules composantes notées.' : '.');
     return {note: v, mention: m, zero: zero};
   }
@@ -2005,7 +2060,7 @@ note de la DRH sur l'accueil des missionnaires, octobre 2024.</p>
     document.getElementById('g-etat').textContent = 'Grille remise à zéro.';
   });
   document.getElementById('g-copier').addEventListener('click', function(){
-    var g = GRILLES[sel.value], r = calculer(), etat = document.getElementById('g-etat');
+    var g = grilleCourante(sel.value), r = calculer(), etat = document.getElementById('g-etat');
     if (!r) { etat.textContent = 'Rien à copier : aucune composante n’est notée.'; return; }
     var L = [g.titre, g.sous,
       'Étudiant : ' + document.getElementById('g-etu').value,
@@ -2570,6 +2625,148 @@ note de la DRH sur l'accueil des missionnaires, octobre 2024.</p>
   maj();
 })();
 /* menu-mobile:fin */</script>
+<script>/* grilles-editables (20/11/2026) : chaque enseignant adapte les grilles, version par version */
+(function(){
+  var sel = document.getElementById('sel-grille'), selV = document.getElementById('sel-version');
+  var zone = document.getElementById('g-edit'), etat = document.getElementById('g-v-etat');
+  if (!sel || !selV || !zone || !window.LEA_GRILLES) { return; }
+  var CLE = 'lea-grilles-v1', memoire = true, D = {perso: {}, choix: {}};
+  try { var x = JSON.parse(localStorage.getItem(CLE) || 'null'); if (x && x.perso) { D = x; D.choix = D.choix || {}; } }
+  catch (e) { memoire = false; }
+  function garder(){
+    try { localStorage.setItem(CLE, JSON.stringify(D)); return true; }
+    catch (e) { memoire = false; etat.textContent = 'Ce navigateur n’enregistre pas : exportez vos grilles pour les garder.'; return false; }
+  }
+  function ech(t){ return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+  function copie(o){ return JSON.parse(JSON.stringify(o)); }
+  /* la grille affichée : officielle, ou officielle + réglages de la version choisie */
+  window.LEA_GRILLE = function(k, off){
+    var nom = D.choix[k], v = nom && D.perso[k] && D.perso[k][nom];
+    if (!v) { return off; }
+    var g = copie(off);
+    g.lignes = off.lignes.map(function(l, i){
+      var r = v.lignes[i] || {}, n = copie(l);
+      if (r.niv) { n.niv = r.niv.slice(); }
+      if (r.ind) { n.ind = r.ind.slice(); }
+      n.poids = r.poids || 1; n.on = r.on !== false;
+      return n;
+    }).filter(function(l){ return l.on; });
+    if (!g.lignes.length) { return off; }
+    g.sous = off.sous + ' · Version : ' + nom;
+    return g;
+  };
+  function redessiner(){ sel.dispatchEvent(new Event('change')); }
+  function remplir(){
+    var k = sel.value, noms = Object.keys(D.perso[k] || {}).sort();
+    selV.innerHTML = '<option value="">Grille officielle</option>'
+      + noms.map(function(n){ return '<option value="' + ech(n) + '">' + ech(n) + '</option>'; }).join('');
+    selV.value = (D.choix[k] && noms.indexOf(D.choix[k]) > -1) ? D.choix[k] : '';
+  }
+  sel.addEventListener('change', function(){ remplir(); zone.hidden = true; });
+  selV.addEventListener('change', function(){
+    if (selV.value) { D.choix[sel.value] = selV.value; } else { delete D.choix[sel.value]; }
+    garder(); redessiner(); remplir();
+  });
+  /* l'éditeur */
+  document.getElementById('g-adapter').addEventListener('click', function(){
+    if (!zone.hidden) { zone.hidden = true; return; }
+    var k = sel.value, off = window.LEA_GRILLES[k], nom = D.choix[k] || '';
+    var v = (nom && D.perso[k] && D.perso[k][nom]) || {lignes: []};
+    var h = '<h3>Adapter la grille ' + ech(off.titre.split(' – ')[0]) + ' · ' + ech(off.sous.split('|')[0].replace('Niveau : ', '')) + '</h3>'
+      + '<p class="g-e-aide">Réécrivez les descripteurs pour votre discipline, choisissez les composantes que ce devoir évalue et '
+      + 'leur coefficient. Les intitulés des composantes restent ceux du référentiel. Une composante à 0 invalide toujours la compétence.</p>';
+    off.lignes.forEach(function(l, i){
+      var r = v.lignes[i] || {}, on = r.on !== false, p = r.poids || 1, niv = r.niv || l.niv, ind = r.ind || l.ind;
+      h += '<fieldset class="g-e-ce' + (on ? '' : ' off') + '" data-i="' + i + '"><h4>' + ech(l.ce) + '</h4>'
+        + '<div class="g-e-reg"><label><input type="checkbox" class="g-e-on"' + (on ? ' checked' : '') + '> Évaluée dans ce devoir</label>'
+        + '<label>Coefficient <select class="g-e-p">' + [1, 2, 3].map(function(n){ return '<option' + (n === p ? ' selected' : '') + '>' + n + '</option>'; }).join('') + '</select></label></div>'
+        + '<div class="g-e-niv">' + niv.map(function(t, j){
+            return '<label>' + ech(off.entetes[j] || String(j)) + '<textarea class="g-e-n">' + ech(t) + '</textarea></label>'; }).join('') + '</div>'
+        + '<label class="g-e-ind">Indicateurs observables, un par ligne<textarea class="g-e-i">' + ech(ind.join('\n')) + '</textarea></label></fieldset>';
+    });
+    h += '<div class="g-e-pied"><label>Nom de la version <input type="text" class="g-e-nom" value="' + ech(nom || 'Ma version') + '"></label>'
+      + '<button type="button" class="g-ok">Enregistrer</button>'
+      + (nom ? '<button type="button" class="g-suppr">Supprimer cette version</button>' : '')
+      + '<button type="button" class="g-annul">Fermer sans enregistrer</button></div>';
+    zone.innerHTML = h; zone.hidden = false;
+    zone.scrollIntoView({behavior: 'smooth', block: 'start'});
+  });
+  zone.addEventListener('change', function(ev){
+    if (ev.target.classList.contains('g-e-on')) { ev.target.closest('.g-e-ce').classList.toggle('off', !ev.target.checked); }
+  });
+  zone.addEventListener('click', function(ev){
+    var k = sel.value;
+    if (ev.target.classList.contains('g-annul')) { zone.hidden = true; return; }
+    if (ev.target.classList.contains('g-suppr')) {
+      var n0 = D.choix[k];
+      if (n0 && D.perso[k]) { delete D.perso[k][n0]; delete D.choix[k]; }
+      garder(); zone.hidden = true; remplir(); redessiner();
+      etat.textContent = 'Version « ' + n0 + ' » supprimée.'; return;
+    }
+    if (!ev.target.classList.contains('g-ok')) { return; }
+    var nom = (zone.querySelector('.g-e-nom').value || '').trim() || 'Ma version';
+    var lignes = Array.prototype.map.call(zone.querySelectorAll('.g-e-ce'), function(f){
+      return {on: f.querySelector('.g-e-on').checked, poids: parseInt(f.querySelector('.g-e-p').value, 10) || 1,
+        niv: Array.prototype.map.call(f.querySelectorAll('.g-e-n'), function(t){ return t.value.trim(); }),
+        ind: f.querySelector('.g-e-i').value.split('\n').map(function(s){ return s.trim(); }).filter(Boolean)};
+    });
+    if (!lignes.some(function(l){ return l.on; })) { etat.textContent = 'Gardez au moins une composante évaluée.'; return; }
+    D.perso[k] = D.perso[k] || {};
+    D.perso[k][nom] = {lignes: lignes, maj: new Date().toISOString().slice(0, 10)};
+    D.choix[k] = nom;
+    var ok = garder();
+    zone.hidden = true; remplir(); redessiner();
+    etat.textContent = 'Version « ' + nom + ' » enregistrée' + (ok ? ' dans ce navigateur.' : ' pour cette séance seulement.');
+  });
+  /* exporter, importer */
+  document.getElementById('g-export').addEventListener('click', function(){
+    var n = Object.keys(D.perso).reduce(function(a, k){ return a + Object.keys(D.perso[k]).length; }, 0);
+    if (!n) { etat.textContent = 'Aucune version adaptée à exporter pour l’instant.'; return; }
+    var b = new Blob([JSON.stringify({type: 'grilles-LEA', version: 1, perso: D.perso}, null, 1)], {type: 'application/json'});
+    var a = document.createElement('a'); a.href = URL.createObjectURL(b);
+    a.download = 'grilles-LEA-' + new Date().toISOString().slice(0, 10) + '.json';
+    document.body.appendChild(a); a.click(); setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 500);
+    etat.textContent = n + (n > 1 ? ' versions exportées.' : ' version exportée.');
+  });
+  var fic = document.getElementById('g-import');
+  document.getElementById('g-import-b').addEventListener('click', function(){ fic.click(); });
+  fic.addEventListener('change', function(){
+    var f = fic.files && fic.files[0]; if (!f) { return; }
+    var r = new FileReader();
+    r.onload = function(){
+      try {
+        var x = JSON.parse(r.result), n = 0;
+        if (!x || x.type !== 'grilles-LEA' || !x.perso) { throw 0; }
+        Object.keys(x.perso).forEach(function(k){
+          if (!window.LEA_GRILLES[k]) { return; }
+          D.perso[k] = D.perso[k] || {};
+          Object.keys(x.perso[k]).forEach(function(nom){ D.perso[k][nom] = x.perso[k][nom]; n++; });
+        });
+        garder(); remplir(); redessiner();
+        etat.textContent = n + (n > 1 ? ' versions importées' : ' version importée') + ' : choisissez-la dans « Version ».';
+      } catch (e) { etat.textContent = 'Ce fichier n’est pas un export de grilles LEA.'; }
+      fic.value = '';
+    };
+    r.readAsText(f);
+  });
+  remplir();
+  if (D.choix[sel.value]) { redessiner(); }
+})();
+</script>
+<script>/* haut-de-page (20/11/2026) : un bouton « Haut de page » apparaît dès qu'on a défilé */
+(function(){
+  var b = document.createElement('button');
+  b.type = 'button'; b.className = 'haut-page'; b.setAttribute('aria-label', 'Revenir en haut de la page');
+  b.innerHTML = '<span aria-hidden="true">↑</span> Haut de page';
+  document.body.appendChild(b);
+  function maj(){ b.classList.toggle('vu', window.pageYOffset > 500); }
+  window.addEventListener('scroll', maj, {passive: true}); maj();
+  b.addEventListener('click', function(){
+    window.scrollTo({top: 0, behavior: 'smooth'});
+    var t = document.querySelector('nav.tabs [aria-selected="true"]'); if (t) { setTimeout(function(){ t.focus({preventScroll: true}); }, 400); }
+  });
+})();
+</script>
 
 <script>/* couleurs-mes-cours (19/11/2026) : la bulle de compétence d'une fiche s'ouvre sur la compétence */
 window.COMP_INFO = {"c1": {"code": "C1", "titre": "Conduire des Échanges Professionnels en langues étrangères", "familles": "Anglais / LV2 ; à l'Oral et à l'Écrit", "ce": [["CE1", "En s'adaptant aux caractéristiques de son interlocuteur et/ou au contexte professionnel"], ["CE2", "En communiquant de façon claire, précise et fluide dans la langue cible"], ["CE3", "En comprenant des locuteurs natifs et/ou des documents authentiques dans un cadre professionnel"], ["CE4", "En structurant et en argumentant son propos de manière cohérente et adaptée à la situation professionnelle"], ["CE5", "En tenant compte des différences culturelles qui influencent l'échange professionnel"]], "niv": [{"tete": "L1", "titre": "Novice — Échanger des informations factuelles dans un cadre professionnel guidé (Bloom 1-2)", "app": ["Distinguer types de textes : niveaux de langue, registres, styles", "Respecter les normes sociales (règles d'adresse et de politesse, régulation des rapports sociaux)", "Mobiliser un vocabulaire de base adapté aux situations professionnelles courantes", "Restituer le sens d'un message oral produit par des locuteurs de variétés linguistiques différentes"]}, {"tete": "L2", "titre": "Intermédiaire — Conduire un échange argumenté sur des sujets professionnels courants (Bloom 3)", "app": ["Identifier et nommer les différences interculturelles qui influencent un échange professionnel", "Utiliser à bon escient des expressions idiomatiques courantes en tenant compte de leur dimension connotative", "Vérifier la compréhension de son interlocuteur et ajuster son discours en conséquence"]}, {"tete": "L3/L4", "titre": "Compétent — Gérer des échanges complexes, y compris en négociation ou médiation interculturelle (Bloom 4-6)", "app": ["Structurer et délivrer une présentation professionnelle argumentée devant un public, en maintenant l'intelligibilité et la cohérence du discours", "Adapter son registre et sa stratégie de communication au contexte professionnel, au support (oral/écrit) et à l'interlocuteur, dans au moins deux langues étrangères"]}]}, "c2": {"code": "C2", "titre": "Traduire un message d'une/dans une autre langue", "familles": "Traduction / Interprétation / Interface machine", "ce": [["CE1", "En employant les techniques fondamentales de la traduction"], ["CE2", "En produisant une traduction fidèle au sens du texte source, précise et idiomatique dans la langue cible"], ["CE3", "En intégrant les spécificités linguistiques, culturelles et stylistiques des langues source et cible"], ["CE4", "En utilisant les outils numériques adaptés"], ["CE5", "En produisant des textes de qualité et structurés adaptés au contexte et aux interlocuteurs"]], "niv": [{"tete": "L1", "titre": "Traduction guidée — Maîtrise au niveau de la phrase et du groupe verbal/nominal", "app": ["Utiliser le vocabulaire fondamental d'un champ professionnel dans les deux langues de travail", "Produire une traduction au niveau de la phrase", "Identifier les difficultés et les nuances d'une traduction au niveau de la phrase et du groupe verbal/nominal"]}, {"tete": "L2", "titre": "Traduction généraliste — Production d'une traduction respectant le style et l'esprit du texte", "app": ["Analyser les mécanismes stylistiques et sémantiques d'un texte source avant de le traduire", "Produire une traduction qui respecte le style, le sens et l'esprit du texte de départ", "Appliquer les techniques de base de la traduction (procédés notamment)"]}, {"tete": "L3/L4", "titre": "Traduction technique — Avec spécificités linguistiques, culturelles et contextuelles", "app": ["Mobiliser des savoirs thématiques spécialisés pour répondre aux exigences d'une traduction technique", "Mettre en œuvre des stratégies de contrôle qualité de ses traductions", "S'adapter à la typologie textuelle (phraséologie) et au profil du client/récepteur", "Mobiliser les principes généraux de la traduction — y compris l'adaptation culturelle et la transculturation — en tenant compte des contraintes techniques et contextuelles propres au projet"]}]}, "c3": {"code": "C3", "titre": "Analyser le fonctionnement et les enjeux d'une organisation dans ses contextes économique, institutionnel et culturel", "familles": "Gestion d'une organisation ; Projet collectif ; Mission de conseil", "ce": [["CE1", "En s'appuyant sur des outils d'analyse quantitatifs et qualitatifs pour évaluer des données internes et externes"], ["CE2", "En identifiant les leviers d'action possibles pour une organisation dans un environnement donné"], ["CE3", "En prenant en compte les dynamiques sociales, économiques, réglementaires et culturelles"], ["CE4", "En formulant des recommandations cohérentes, justifiées et adaptées au contexte"], ["CE5", "En mobilisant des sources et des données dans au moins deux langues étrangères"]], "niv": [{"tete": "L1", "titre": "Identification guidée — Du fonctionnement d'une organisation dans son environnement", "app": ["Décrire le fonctionnement d'une organisation en utilisant la terminologie et les concepts fondamentaux", "Situer les informations dans un contexte historique, géopolitique, socio-économique, culturel et légal", "Mobiliser des sources ou des exemples issus d'au moins deux contextes culturels ou linguistiques différents", "Utiliser les outils d'analyse des champs disciplinaires concernés (économie, droit, gestion) pour traiter une problématique"]}, {"tete": "L2", "titre": "Problématiser l'information — Identifier les risques et proposer des solutions", "app": ["Poser des questions sur un marché, un environnement, une culture, une pensée", "Identifier les risques d'une organisation dans son contexte pour tenter de les prévenir", "Proposer et comparer des solutions possibles aux difficultés identifiées dans l'environnement d'une organisation"]}, {"tete": "L3/L4", "titre": "Réaliser des choix éclairés et proposer des solutions", "app": ["Exploiter les données dans une perspective interculturelle et internationale pour formuler des orientations stratégiques éclairées", "Sélectionner avec un esprit critique diverses ressources pertinentes pour documenter un sujet de façon concise", "Exploiter les données afin de répondre à une problématique d'économie ou de gestion spécifique", "Évaluer la fiabilité et la pertinence d'une information en la confrontant à d'autres sources et données"]}]}, "c4mi": {"code": "C4 MI", "titre": "Aider à l'élaboration d'une stratégie marketing et commerciale adaptée à l'exportation dans des contextes internationaux et interculturels", "familles": "Gestion d'une organisation ; Projet export ; Mission de conseil ; Organismes publics", "ce": [["CE1", "En prenant en compte la variété et la complexité des marchés, des acteurs et des territoires"], ["CE2", "En utilisant les outils numériques et supports adaptés"], ["CE3", "En développant une réflexion analytique problématisée et structurée"], ["CE4", "En synthétisant les éléments clefs des ressources et supports utilisés"], ["CE5", "En contrôlant le respect des règles et des normes"]], "niv": [{"tete": "Niveau 1", "titre": "Novice (fin S4→S5) — Appliquer les outils d'analyse stratégique dans un cadre guidé", "app": ["Appliquer les outils d'analyse stratégique (SWOT, PESTEL, forces concurrentielles) à un cas d'étude encadré", "Adapter une offre commerciale aux attentes d'un segment international identifié", "Repérer les enjeux éthiques, économiques, sociaux et environnementaux liés à une implantation internationale", "Identifier et expliquer les notions de différenciation, d'avantage concurrentiel et de ciblage stratégique"]}, {"tete": "Niveau 2", "titre": "Compétent (L3/L4) — Concevoir, présenter et évaluer une stratégie export adaptée à un contexte donné", "app": ["Identifier les contraintes logistiques et d'approvisionnement dans un projet d'exportation", "Construire une offre ou une réponse commerciale export (à partir d'un brief, d'un marché cible, de données encadrées)", "Mettre en œuvre des indicateurs opérationnels (KPI) pour évaluer une stratégie commerciale", "Analyser le lien entre efficacité logistique et satisfaction client dans un contexte d'exportation", "Intégrer les enjeux de durabilité, fiabilité et conformité dans la chaîne de valeur"]}]}, "c4lch": {"code": "C4 CAPES Espagnol", "titre": "Exploiter les savoirs culturels et littéraires d'un espace linguistique donné à des fins d'analyse et de communication", "familles": "Projet touristique ; Projet citoyen ; Projet scolaire / CAPES", "ce": [["CE1", "En prenant en compte les spécificités culturelles et la diversité des récepteurs"], ["CE2", "En tenant compte de la langue source et de ses spécificités culturelles, lexicales, syntaxiques et sémantiques"], ["CE3", "En utilisant les outils numériques et supports adaptés"], ["CE4", "En développant une argumentation problématisée et structurée"], ["CE5", "En synthétisant les éléments clefs des ressources utilisées"]], "niv": [{"tete": "Niveau 1", "titre": "Intermédiaire (L3→L3/L4) — Analyser des documents culturels et littéraires dans un contexte connu", "app": ["Rechercher et mobiliser le vocabulaire d'un champ professionnel en langue étrangère", "Interpréter et interpréter des ressources en langues étrangères", "Distinguer les spécificités des systèmes linguistiques et culturels hispanophones et en rendre compte dans une analyse écrite ou orale", "Contextualiser un document historique ou civilisationnel en mobilisant des connaissances générales"]}, {"tete": "Niveau 2", "titre": "Compétent (L3/L4) — Produire des analyses et supports de communication exploitant les savoirs culturels et littéraires", "app": ["Mobiliser des connaissances approfondies des faits de civilisation à partir de sources fiables", "Concevoir et rédiger des supports de communication ou contenus pédagogiques en français ou en langues étrangères", "Élaborer des analyses de textes et de documents iconographiques à partir d'outils stylistiques et linguistiques", "Confronter les textes littéraires avec d'autres supports artistiques et culturels"]}]}, "c5": {"code": "C5", "titre": "Construire et mettre en œuvre son projet professionnel", "familles": "Enseignement ; Culture et Patrimoine ; Organisation nationale et/ou internationale ; Agence de traduction ou de communication", "ce": [["CE1", "En identifiant et valorisant ses compétences (se connaître)"], ["CE2", "En analysant les enjeux et les besoins du secteur professionnel visé (décrire le marché)"], ["CE3", "En respectant les codes culturels, les normes professionnelles et les principes éthiques (respecter les normes)"], ["CE4", "En travaillant en équipe et en réseau ainsi qu'en autonomie et responsabilité au service d'un projet"], ["CE5", "En adoptant une posture professionnelle en fonction du contexte (dimension comportementale/posturale)"]], "niv": [{"tete": "L1", "titre": "En tant qu'apprenant — Dans son rapport à ses études", "app": ["S'inscrire dans une démarche de développement professionnel en identifiant ses forces et ses faiblesses", "Considérer l'apprentissage des langues comme un outil au service d'une profession", "Identifier ses points forts et ses axes d'amélioration à partir d'un retour formatif", "Mettre en œuvre une méthode de travail adaptée aux exigences universitaires et professionnelles"]}, {"tete": "L2", "titre": "En tant que futur professionnel — Se situer dans un champ métier", "app": ["Se créer une représentation des professions cible", "Pratiquer une veille sur les champs professionnels et l'évolution des métiers", "Construire un projet professionnel en cohérence avec ses aspirations et ses potentialités", "S'inscrire dans une démarche de formation continue", "Développer une stratégie efficace d'insertion professionnelle (recherche de stage et d'emploi)"]}, {"tete": "L3/L4", "titre": "En tant qu'acteur responsable — Dans son rapport au milieu du travail", "app": ["Analyser ses actions en situation professionnelle, s'autoévaluer pour améliorer sa/une pratique", "Rédiger un rapport d'activité professionnelle en français et/ou en langue étrangère", "Apprécier une situation d'entreprise afin d'élaborer des problématiques pertinentes, argumentées et complexes", "Justifier ses choix et ses pratiques professionnelles en s'appuyant sur des référents théoriques"]}]}};
