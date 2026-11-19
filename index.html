@@ -876,7 +876,27 @@ html.cp-ouvert{overflow:hidden;}
 .groupe h4.ue-tete .ue-voir{font:600 11px/1 "IBM Plex Mono",monospace; color:#fff; background:var(--k); border-radius:999px; padding:5px 9px; white-space:nowrap;}
 .groupe.c1 h4.ue-tete{--k:var(--c1);} .groupe.c2 h4.ue-tete{--k:var(--c2);} .groupe.c3 h4.ue-tete{--k:var(--c3);}
 .groupe.c4mi h4.ue-tete{--k:var(--c4mi);} .groupe.c4lch h4.ue-tete{--k:var(--c4lch);} .groupe.c5 h4.ue-tete{--k:var(--c5);}
+/* « par compétence » : l'en-tête du panneau ouvre la bulle de la compétence */
+.semtete.cp-tete{--k:var(--muted); cursor:pointer; border-radius:8px; transition:background .15s;}
+.semtete.cp-tete:hover, .semtete.cp-tete:focus-visible{background:color-mix(in srgb, var(--k) 8%, transparent); outline:none;}
+.semtete.cp-tete h3{color:var(--k);}
+.semtete.cp-tete .cp-voir{font:600 11px/1 "IBM Plex Mono",monospace; color:#fff; background:var(--k); border-radius:999px; padding:5px 10px; white-space:nowrap;}
+.semtete.cp-tete.c1{--k:var(--c1);} .semtete.cp-tete.c2{--k:var(--c2);} .semtete.cp-tete.c3{--k:var(--c3);}
+.semtete.cp-tete.c4mi{--k:var(--c4mi);} .semtete.cp-tete.c4lch{--k:var(--c4lch);} .semtete.cp-tete.c5{--k:var(--c5);}
 /* couleurs-mes-cours:fin */
+/* lisibilite-etudiants:debut */
+@media (max-width:760px){
+  header.top .wrap{padding-block:12px 10px; gap:6px 18px;}
+  header.top .logos .membre, header.top .chiffres{display:none;}
+  header.top .plaque img.l-unc{height:34px; width:auto;}
+  header.top .plaque img.l-anlea{height:24px; width:auto;}
+  header.top .eyebrow{display:none;}
+  header.top h1{font-size:1.45rem; line-height:1.15; margin:0;}
+  .panneau .tete{margin-bottom:10px;}
+  .panneau .intro p{font-size:.95rem;}
+  details.pli > summary .pr{font-size:.82rem;}
+}
+/* lisibilite-etudiants:fin */
 </style>
 </head>
 <body>
@@ -922,7 +942,6 @@ html.cp-ouvert{overflow:hidden;}
     <a role="tab" id="t-examens" href="#examens" aria-controls="examens" aria-selected="false">Les examens</a>
     <a role="tab" id="t-reglement" href="#reglement" aria-controls="reglement" aria-selected="false">Règlement des études LEA</a>
     <a role="tab" id="t-contacts" href="#contacts" aria-controls="contacts" aria-selected="false">Contacts</a>
-    <a role="tab" id="t-bac-debouches" href="#bac-debouches" aria-controls="bac-debouches" aria-selected="false">Bac et débouchés</a>
   </div>
 </nav>
 
@@ -997,7 +1016,7 @@ html.cp-ouvert{overflow:hidden;}
 
     <ul class="liens"><li><a href="maquette-LEA-2027-CFVU-2026.pdf" download><span><span class="t">La maquette complète de la licence</span><span class="d">PDF · version CFVU 2026 · la maquette par compétence et la maquette classique, telles qu'elles ont été votées</span></span><span class="fl">PDF ↓</span></a></li><li><a href="guide-pedagogique-LEA-2027-etudiants.pdf" download><span><span class="t">Le guide pédagogique 2027</span><span class="d">PDF · le contenu de chaque cours, semestre par semestre : exercices types, notions, compétences évaluées. Chaque fiche indique la MCC prévue par la maquette ; l'enseignant confirmera les MCC en début de semestre.</span></span><span class="fl">PDF ↓</span></a></li></ul>
 
-    <div class="cp-bande"><p class="cp-bt">Les compétences du diplôme · cliquez pour voir composantes, niveaux, métiers</p><div class="cp-tuiles"><span class="cpill cp-tuile c1" role="button" tabindex="0"><b>C1</b><span>Conduire des échanges professionnels en langues étrangères</span><i>Voir la compétence →</i></span><span class="cpill cp-tuile c2" role="button" tabindex="0"><b>C2</b><span>Traduire un message</span><i>Voir la compétence →</i></span><span class="cpill cp-tuile c3" role="button" tabindex="0"><b>C3</b><span>Analyser une organisation</span><i>Voir la compétence →</i></span><span class="cpill cp-tuile c4mi" role="button" tabindex="0"><b>C4 · MI</b><span>Élaborer une stratégie marketing à l’export</span><i>Voir la compétence →</i></span><span class="cpill cp-tuile c4lch" role="button" tabindex="0"><b>C4 · CAPES</b><span>Exploiter les savoirs culturels hispanophones</span><i>Voir la compétence →</i></span><span class="cpill cp-tuile c5" role="button" tabindex="0"><b>C5</b><span>Construire son projet professionnel</span><i>Voir la compétence →</i></span></div></div>
+    <!-- sans-bande -->
 <div class="modes" role="group" aria-label="Ranger les enseignements">
       <span class="modes-t">Voir la maquette</span>
       <button type="button" class="mode" data-mode="sem" aria-pressed="true">par semestre</button>
@@ -1525,7 +1544,7 @@ html.cp-ouvert{overflow:hidden;}
 
     <div class="progbloc encart-onglet">
       <h4>Après le diplôme</h4>
-      <p class="note-tbl"><a class="renvoi bouton-onglet" href="#bac-debouches">Bac et débouchés →</a></p>
+      <p class="note-tbl"><a class="renvoi bouton-onglet" href="#specialite">Bac et débouchés →</a></p>
     </div>
     </div>
 
@@ -1558,7 +1577,7 @@ html.cp-ouvert{overflow:hidden;}
     </div>
 
     <div class="plis">
-      <details class="pli mi" open>
+      <details class="pli mi">
         <summary><span class="pk">Spé 1</span><span class="pt">Marketing International</span><span class="pr">Alternance sur S6 et S7 · soutenance en anglais</span></summary>
         <div class="pc">
           <dl class="faits">
@@ -1625,12 +1644,7 @@ html.cp-ouvert{overflow:hidden;}
         </div>
       </details>
 
-      <details class="pli mi large immersion">
-        <summary><span class="pk">Marketing International</span><span class="pt">L'alternance en entreprise</span><span class="pr">Semestres 6 et 7 · douze mois, du 1<sup>er</sup> juin au 31 mai · salarié et rémunéré</span></summary>
-        <div class="pc"><p class="cmeta"><span>96_0091</span><span>Stage</span><span>Coefficient 4</span><span class="comp c5" role="button" tabindex="0" title="Voir la compétence">Compétence C5</span></p><h5>Ce que l'alternance demande</h5><ul class="desc"><li>Les semestres 6 et 7 se déroulent <b>en alternance</b> : <b>deux jours par semaine à l'université, trois jours en entreprise</b>, et à temps plein pendant les périodes sans cours.</li><li>Le contrat couvre <b>douze mois, du 1<sup>er</sup> juin au 31 mai</b>. <b>On n'entre pas au semestre 6 dans cette spécialisation sans contrat signé.</b></li><li>Vous êtes <b>salarié de l'entreprise et rémunéré</b>, selon le code du travail de la Nouvelle-Calédonie.</li></ul><h5>Ce qu'il faut savoir avant de signer</h5><dl class="faits"><div><dt>Les jours à l'université</dt><dd><b>35 jours au semestre 6, 34 au semestre 7</b>, soit 69 jours sur l'année ; le reste du temps de travail se passe en entreprise.</dd></div><div><dt>Qui vous aide</dt><dd>Le <b>bureau de l'alternance</b> de l'UNC, à contacter <b>dès le semestre 4</b> : il vous aide à revoir votre CV et votre lettre de motivation, et à préparer vos candidatures.</dd></div><div><dt>Comment vous êtes évalué</dt><dd>Le <b>rapport d'alternance</b> porte une <b>note éliminatoire de 10/20</b> : rapport en français, résumé et soutenance <b>en anglais</b>. S'y ajoute la grille remplie par votre tuteur d'entreprise.</dd></div><div><dt>Si le contrat est rompu</dt><dd>La période effectuée est <b>invalidée</b>, sauf décision motivée du jury : prévenez la responsable pédagogique sans attendre.</dd></div></dl><p class="note-tbl"><a class="renvoi" href="#alternance">Tout sur l'alternance →</a></p></div>
-      </details>
-
-      <details class="pli ce" open>
+      <details class="pli ce">
         <summary><span class="pk">Spé 2</span><span class="pt">CAPES d'espagnol</span><span class="pr">Préparation du concours · stage d'observation au S6 · soutenance en espagnol</span></summary>
         <div class="pc">
           <dl class="faits">
@@ -1686,9 +1700,57 @@ html.cp-ouvert{overflow:hidden;}
         </div>
       </details>
 
-      <details class="pli ce large immersion">
-        <summary><span class="pk">CAPES d'espagnol</span><span class="pt">Le stage en établissement d'enseignement</span><span class="pr">Quatre semaines en collège ou en lycée · semestre 6 · l'INSPE vous le trouve</span></summary>
-        <div class="pc"><p class="cmeta"><span>Nouveau cours</span><span>Stage</span><span class="comp c4lch" role="button" tabindex="0" title="Voir la compétence">Compétence C4 CAPES Espagnol</span></p><h5>Ce que le stage demande</h5><ul class="desc"><li><b>Quatre semaines en collège ou en lycée</b>, jusqu'à 18 heures par semaine avec l'enseignant d'accueil.</li><li><b>Au semestre 6.</b></li><li>Sur place : <b>observer</b> la classe, les séquences et les relations dans l'établissement et, <b>si le tuteur vous sollicite, aider à concevoir une séance</b>.</li></ul><h5>Ce qu'il faut savoir avant de partir</h5><dl class="faits"><div><dt>Qui trouve le stage</dt><dd><b>L'INSPE.</b> Vous n'avez pas à le chercher : vous préparez une <b>lettre de motivation</b> que vous remettez à votre enseignant référent.</dd></div><div><dt>La convention</dt><dd><b>Une convention de stage est signée avant le premier jour.</b> Le modèle se télécharge sur l'ENT, rubrique Stage, ou sur Moodle.</dd></div><div><dt>Comment vous êtes évalué</dt><dd>Un <b>carnet de bord</b> de vos observations, puis un rapport en français, dont le résumé et la soutenance se font <b>en espagnol</b>.</dd></div></dl><p class="note-tbl">Source : texte de cadrage du stage CAPES d'espagnol, 2026. <a class="renvoi" href="#capes">Tout sur le CAPES d'espagnol →</a></p></div>
+        <details class="pli large mi">
+        <summary><span class="pk">Et après ?</span><span class="pt">Débouchés</span><span class="pr">Masters, écoles, métiers de l'international · taux d'insertion supérieur à 80 %</span></summary>
+        <div class="pc">
+          <div class="cols">
+            <div>
+              <h4>Poursuivre ses études à l'université</h4>
+              <ul>
+                <li><strong>Master MEEF espagnol</strong> (INSPE, UNC), vers le <strong>CAPES
+                  d'espagnol</strong> <a class="renvoi" href="#capes">CAPES →</a></li>
+                <li>Master Management (UNC)</li>
+                <li>Master Humanités – HIPSI (UNC)</li>
+                <li><strong>Master LEA</strong>, nombreuses spécialités selon l'université — commerce
+                  international, traduction, management interculturel
+                  <a class="renvoi" href="https://anlea.org/formation-lea/masters-lea/" target="_blank" rel="noopener">Catalogue ANLEA ↗</a></li>
+                <li>Master Commerce international et marketing export (CIME) — Université Paris 8</li>
+                <li>Master Affaires internationales</li>
+                <li>Master Communication internationale</li>
+                <li>Master Relations internationales — Université Paris 1 Panthéon-Sorbonne</li>
+              </ul>
+              <h4>Ailleurs</h4>
+              <ul>
+                <li><strong>IAE et écoles de commerce</strong> : marketing, gestion, finance, ressources
+                  humaines, gestion de projet, sciences politiques.</li>
+                <li><strong>Formations spécialisées</strong> : traduction, tourisme, journalisme.</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Travailler après la licence</h4>
+              <p>Secteurs : <strong>communication, marketing, import-export, logistique
+                internationale</strong>, administration des ventes à l'export, organisation de
+                manifestations internationales.</p>
+              <h4>Quelques métiers</h4>
+              <ul class="puces">
+                <li>Assistant(e) export / import</li>
+                <li>Chargé(e) de marketing international</li>
+                <li>Community manager bilingue</li>
+                <li>Chargé(e) d'études de marché</li>
+                <li>Logistique et supply chain internationale</li>
+                <li>Communication et relations publiques</li>
+                <li>Gestion de projets internationaux</li>
+                <li>Traduction et médiation interculturelle</li>
+              </ul>
+              <p><span class="chiffre-cle">Taux d'insertion supérieur à 80 %</span>
+                <span style="font-size:12px; color:var(--muted);">(source : LePoint.fr)</span></p>
+            </div>
+          </div>
+          <ul class="liens">
+            <li><a href="fiche-metier-LEA-marketing-international.pdf" target="_blank" rel="noopener"><span><span class="t">La fiche métier : Marketing International</span><span class="d">PDF · secteurs d'activité, codes ROME, métiers visés et compétences attestées</span></span><span class="fl">PDF ↗</span></a></li>
+            <li><a href="fiche-metier-LEA-CAPES-espagnol.pdf" target="_blank" rel="noopener"><span><span class="t">La fiche métier : CAPES d'espagnol</span><span class="d">PDF · secteurs d'activité, codes ROME, métiers visés et compétences attestées</span></span><span class="fl">PDF ↗</span></a></li>
+          </ul>
+        </div>
       </details>
     </div>
   </div>
@@ -1709,7 +1771,7 @@ html.cp-ouvert{overflow:hidden;}
     <ul class="liens" data-ajout="candidater"><li><a href="candidater-en-alternance.html" target="_blank" rel="noopener"><span><span class="t">Candidater en alternance — LEA</span><span class="d">Loïc Steffan · CV, lettre et profil LinkedIn, rythme hebdomadaire, missions à chercher, 14 prompts à copier</span></span><span class="fl">ouvrir ↗</span></a></li></ul>
 
     <div class="plis">
-      <details class="pli large pos" open>
+      <details class="pli large pos">
         <summary><span class="pk">Le stage et l'alternance</span><span class="pt">Trois mises en situation, une par année</span><span class="pr">Quand elle a lieu, ce qui est demandé, comment elle est évaluée</span></summary>
         <div class="pc">
           <div class="frisewrap"><div class="frise paliers">
@@ -1748,7 +1810,7 @@ html.cp-ouvert{overflow:hidden;}
         </div>
       </details>
 
-      <details class="pli pos large" open>
+      <details class="pli pos large">
         <summary><span class="pk">Qui vous aide ?</span><span class="pt">Le bureau de l'alternance, dès le semestre 4</span><span class="pr">Prenez contact très rapidement</span></summary>
         <div class="pc">
           <p>C'est le <strong>bureau de l'alternance</strong> de l'UNC qui vous accompagne dans votre
@@ -1951,13 +2013,7 @@ html.cp-ouvert{overflow:hidden;}
           10/20</strong>. Sans elle, le diplôme n'est pas délivré, quelles que soient les autres
           notes.</p></div>
       </details>
-      <details class="pli">
-        <summary><span class="pt">Le calendrier calédonien</span><span class="pr">Pourquoi l'alternance démarre le 1er juin</span></summary>
-        <div class="pc"><p>En Nouvelle-Calédonie, les semestres impairs se déroulent de février à juin
-          et les semestres pairs de juin à novembre. C'est pourquoi un contrat d'alternance qui
-          démarre le 1<sup>er</sup> juin s'aligne sur l'ouverture du semestre 6.</p></div>
-      </details>
-    </div>
+      </div>
   </div>
 </section>
 
@@ -1977,7 +2033,7 @@ html.cp-ouvert{overflow:hidden;}
     </div>
 
     <div class="plis">
-      <details class="pli ce large" open>
+      <details class="pli ce large">
         <summary><span class="pk">Qui vous aide ?</span><span class="pt">Le stage d'observation : c'est l'INSPE qui vous le trouve</span><span class="pr">Quatre semaines en collège ou en lycée · semestre 6</span></summary>
         <div class="pc">
           <dl class="faits">
@@ -2107,50 +2163,6 @@ html.cp-ouvert{overflow:hidden;}
             <li>Distribuer ou récupérer des documents, surveiller un devoir</li>
             <li>Accompagner ponctuellement un élève en difficulté : aide à la compréhension, reformulation</li>
           </ul>
-        </div>
-      </details>
-
-      <details class="pli ce">
-        <summary><span class="pt">Le rapport de la spé CAPES</span><span class="pr">Trois parties · Eduscol et CECRL obligatoires</span></summary>
-        <div class="pc">
-          <ul>
-            <li><b>Partie 1 — le cadre du stage</b> (5 pages au plus) : présentation du stage et de ses
-              objectifs, de l'établissement, du rôle des enseignants d'accueil ; la problématique et le plan.</li>
-            <li><b>Partie 2 — l'analyse des pratiques observées</b> (10 pages au moins) : niveaux et séquences
-              observés, interactions, comparaison des pratiques en anglais et en espagnol.</li>
-            <li><b>Partie 3 — la projection didactique</b> (10 pages au moins) : la séance que vous avez aidé
-              à concevoir et sa justification, puis le bilan personnel et vos orientations.</li>
-          </ul>
-          <p><b>Bibliographie</b> : Eduscol et CECRL obligatoires. <b>Annexes obligatoires</b> : plan de
-            l'établissement et organigramme, avec la place des enseignants d'accueil.</p>
-        </div>
-      </details>
-
-      <details class="pli ce">
-        <summary><span class="pt">Trouver votre axe de réflexion</span><span class="pr">Treize pistes, à appuyer sur ce que vous avez observé</span></summary>
-        <div class="pc">
-          <p>Choisissez un axe, et appuyez-le sur des exemples observés en classe et sur des lectures :</p>
-          <div class="cols">
-            <ul>
-              <li>La transmission des langues vivantes</li>
-              <li>L'efficacité des stratégies d'enseignement</li>
-              <li>L'adaptation aux élèves</li>
-              <li>L'ouverture culturelle</li>
-              <li>Les outils numériques dans l'apprentissage</li>
-            </ul>
-            <ul>
-              <li>La place de l'oral</li>
-              <li>L'individualisation et la différenciation</li>
-              <li>La motivation et l'engagement des élèves</li>
-              <li>L'évaluation, formative et sommative</li>
-            </ul>
-            <ul>
-              <li>L'enseignement en milieu plurilingue et multiculturel</li>
-              <li>Le rôle des interactions en classe</li>
-              <li>L'immersion et l'authenticité des supports</li>
-              <li>La gestion de la classe</li>
-            </ul>
-          </div>
         </div>
       </details>
 
@@ -2445,7 +2457,7 @@ html.cp-ouvert{overflow:hidden;}
       en collège ou en lycée. <strong>Spé Marketing International : au semestre 7</strong>, sur votre année
       d'alternance en entreprise.</p></div>
     <div class="plis">
-      <details class="pli ce" open>
+      <details class="pli ce">
         <summary><span class="pk">Semestre 6 · spé CAPES d'espagnol</span><span class="pt">Le rapport du stage d'observation</span><span class="pr">Plan en trois parties · résumé et soutenance en espagnol</span></summary>
         <div class="pc">
           <dl class="faits">
@@ -2454,7 +2466,7 @@ html.cp-ouvert{overflow:hidden;}
             <div><dt>Quand</dt><dd><b>Au semestre 6.</b></dd></div>
             <div><dt>Le plan</dt><dd><b>Trois parties</b> : le cadre du stage (5 pages au plus), l'analyse
               des pratiques observées (10 pages au moins), la projection didactique (10 pages au moins).
-              <a class="renvoi" href="#capes">Le détail, onglet CAPES →</a></dd></div>
+              Le détail est plus bas, encart « Le plan attendu, spé CAPES ».</dd></div>
             <div><dt>Le résumé</dt><dd>En <b>espagnol</b></dd></div>
             <div><dt>La soutenance</dt><dd>30 minutes, en <b>espagnol</b></dd></div>
             <div><dt>Votre tuteur</dt><dd>L'enseignant qui vous accueille en établissement remplit la grille
@@ -2463,7 +2475,7 @@ html.cp-ouvert{overflow:hidden;}
           </dl>
         </div>
       </details>
-      <details class="pli mi" open>
+      <details class="pli mi">
         <summary><span class="pk">Semestre 7 · spé Marketing International</span><span class="pt">Le rapport d'alternance</span><span class="pr">Plan en deux parties · résumé et soutenance en anglais</span></summary>
         <div class="pc">
           <dl class="faits">
@@ -2548,6 +2560,48 @@ html.cp-ouvert{overflow:hidden;}
             vaut 20 pages denses que 30 de remplissage.</p>
           <p>Au semestre 6, le rapport de la spé CAPES d'espagnol suit un autre plan, en trois parties.
             <a class="renvoi" href="#capes">Voir l'onglet CAPES →</a></p>
+        </div>
+      </details>
+      <details class="pli ce">
+        <summary><span class="pk">Semestre 6 · CAPES d'espagnol</span><span class="pt">Le plan attendu, spé CAPES</span><span class="pr">Trois parties · Eduscol et CECRL obligatoires</span></summary>
+        <div class="pc">
+          <ul>
+            <li><b>Partie 1 — le cadre du stage</b> (5 pages au plus) : présentation du stage et de ses
+              objectifs, de l'établissement, du rôle des enseignants d'accueil ; la problématique et le plan.</li>
+            <li><b>Partie 2 — l'analyse des pratiques observées</b> (10 pages au moins) : niveaux et séquences
+              observés, interactions, comparaison des pratiques en anglais et en espagnol.</li>
+            <li><b>Partie 3 — la projection didactique</b> (10 pages au moins) : la séance que vous avez aidé
+              à concevoir et sa justification, puis le bilan personnel et vos orientations.</li>
+          </ul>
+          <p><b>Bibliographie</b> : Eduscol et CECRL obligatoires. <b>Annexes obligatoires</b> : plan de
+            l'établissement et organigramme, avec la place des enseignants d'accueil.</p>
+        </div>
+      </details>
+      <details class="pli ce">
+        <summary><span class="pt">Trouver votre axe de réflexion</span><span class="pr">Treize pistes, à appuyer sur ce que vous avez observé</span></summary>
+        <div class="pc">
+          <p>Choisissez un axe, et appuyez-le sur des exemples observés en classe et sur des lectures :</p>
+          <div class="cols">
+            <ul>
+              <li>La transmission des langues vivantes</li>
+              <li>L'efficacité des stratégies d'enseignement</li>
+              <li>L'adaptation aux élèves</li>
+              <li>L'ouverture culturelle</li>
+              <li>Les outils numériques dans l'apprentissage</li>
+            </ul>
+            <ul>
+              <li>La place de l'oral</li>
+              <li>L'individualisation et la différenciation</li>
+              <li>La motivation et l'engagement des élèves</li>
+              <li>L'évaluation, formative et sommative</li>
+            </ul>
+            <ul>
+              <li>L'enseignement en milieu plurilingue et multiculturel</li>
+              <li>Le rôle des interactions en classe</li>
+              <li>L'immersion et l'authenticité des supports</li>
+              <li>La gestion de la classe</li>
+            </ul>
+          </div>
         </div>
       </details>
       <details class="pli">
@@ -2685,25 +2739,6 @@ html.cp-ouvert{overflow:hidden;}
         <div class="pc"><p><strong>L'absence à une épreuve entraîne la note de 0.</strong> Cela vaut pour
           toutes les évaluations, quelle qu'en soit la forme.
           <a class="renvoi" href="#examens">Le jour de l'épreuve →</a></p></div>
-      </details>
-      <details class="pli vig">
-        <summary><span class="pk">SAÉ</span><span class="pt">Absent à une étape d'une SAÉ</span><span class="pr">0/20 pour l'épreuve ; délai possible si l'absence est justifiée</span></summary>
-        <div class="pc"><ul>
-          <li>Tout <strong>retard</strong> ou toute <strong>absence injustifiée</strong> à une étape du
-            travail donne <strong>0/20</strong> à l'épreuve concernée.</li>
-          <li>Absence <strong>prolongée et justifiée</strong> : un délai supplémentaire, égal à la durée
-            de l'absence, peut vous être accordé. Faites-en la <strong>demande écrite</strong> à
-            l'enseignant responsable <strong>au plus tard sept jours</strong> après la première échéance
-            manquée.</li>
-        </ul>
-        <p><a class="renvoi" href="#sae">Les SAÉ →</a></p></div>
-      </details>
-      <details class="pli mi">
-        <summary><span class="pk">Alternance</span><span class="pt">Absent en cours ou en entreprise</span><span class="pr">Semestre non validé, voire exclusion du parcours</span></summary>
-        <div class="pc"><p>En alternance, vous devez être présent <strong>aux enseignements et en
-          entreprise</strong>. Des absences injustifiées peuvent entraîner la <strong>non-validation du
-          semestre</strong>, voire l'<strong>exclusion du parcours</strong>.
-          <a class="renvoi" href="#alternance">L'alternance →</a></p></div>
       </details>
       <details class="pli">
         <summary><span class="pk">AVR</span><span class="pt">L'accompagnement vers la réussite</span><span class="pr">Présence obligatoire, regardée par le jury</span></summary>
@@ -2946,13 +2981,6 @@ html.cp-ouvert{overflow:hidden;}
           l'heure</strong>. Seuls les documents indiqués sur le sujet sont autorisés ; <strong>sans
           indication, rien ne l'est</strong>.</p></div>
       </details>
-      <details class="pli dur">
-        <summary><span class="pk">Absences</span><span class="pt">Justifier sous 72 heures</span><span class="pr">Absence à une épreuve : 0</span></summary>
-        <div class="pc"><p><strong>Tous les cours sont obligatoires.</strong> Une absence se justifie par un
-          certificat officiel remis au secrétariat <strong>sous soixante-douze heures</strong> ; rien n'est
-          accepté au-delà. <strong>L'absence à une épreuve entraîne la note de 0.</strong>
-          <a class="renvoi" href="#bourses">Bourses et absences en cours →</a></p></div>
-      </details>
       <details class="pli">
         <summary><span class="pt">Après les résultats</span><span class="pr">Consulter ses copies, contester</span></summary>
         <div class="pc"><p>Vous pouvez <strong>consulter vos copies</strong> après les délibérations. Pour
@@ -2966,13 +2994,7 @@ html.cp-ouvert{overflow:hidden;}
           disciplinaire est saisie ; les sanctions vont de l'avertissement à l'exclusion définitive de tout
           établissement public d'enseignement supérieur.</p></div>
       </details>
-      <details class="pli vig">
-        <summary><span class="pk">Sur demande</span><span class="pt">Dispense d'assiduité</span><span class="pr">Elle ne dispense pas des épreuves</span></summary>
-        <div class="pc"><p>Une dispense d'assiduité vous libère des cours, <strong>pas des
-          épreuves</strong>, sauf aménagement prévu dans la décision.
-          <a class="renvoi" href="#bourses">Qui peut la demander, et quand →</a></p></div>
-      </details>
-    </div>
+      </div>
   </div>
 </section>
 
@@ -2987,22 +3009,7 @@ html.cp-ouvert{overflow:hidden;}
       s'applique à tous les étudiants de la licence. En cas de doute, c'est lui qui tranche.
       <button type="button" class="tout" style="margin-left:8px;">Tout déplier</button></p></div>
 
-    <div class="absences" role="note">
-      <span class="k">Absences</span>
-      <ul>
-        <li><span class="maj">TOUS</span> les cours sont obligatoires.</li>
-        <li>Les enseignants sont libres de sanctionner <span class="maj">TOUTE</span> absence injustifiée.</li>
-        <li><span class="maj">TOUTE</span> absence injustifiée peut entraîner la suspension de votre bourse d’études.</li>
-      </ul>
-      <p>Une absence se justifie par un certificat officiel — médical ou convocation — remis au secrétariat du département dans les soixante-douze heures ; aucun justificatif n’est accepté au-delà. L’absence à une épreuve entraîne la note de 0.</p>
-    </div>
-
     <div class="plis">
-      <details class="pli">
-        <summary><span class="pk">Article 1</span><span class="pt">Cadre légal</span><span class="pr">Un diplôme national</span></summary>
-        <div class="pc"><p>La licence est un diplôme national : elle confère les mêmes droits quel que soit
-          l'établissement qui la délivre.</p></div>
-      </details>
       <details class="pli">
         <summary><span class="pk">Article 2</span><span class="pt">Inscriptions</span><span class="pr">Inscription pédagogique obligatoire sur IPWeb</span></summary>
         <div class="pc"><p>L'inscription administrative est annuelle. L'<strong>inscription
@@ -3012,39 +3019,10 @@ html.cp-ouvert{overflow:hidden;}
           TD, entre les deux semestres, en fin d'année.</p></div>
       </details>
       <details class="pli">
-        <summary><span class="pk">Article 3</span><span class="pt">Organisation des études</span><span class="pr">Semestres, compétences, spé, SAÉ, stages</span></summary>
-        <div class="pc"><p>Sept semestres, 180 ECTS, cinq blocs de compétences, choix définitif de la spé en
-          S5, SAÉ, stage et alternance, projets tutorés. La présence aux dispositifs d'aide à la réussite
-          (AVR) est obligatoire.
-          <a class="renvoi" href="#specialite">Spé →</a> <a class="renvoi" href="#sae">SAÉ →</a></p></div>
-      </details>
-      <details class="pli">
-        <summary><span class="pk">Article 4</span><span class="pt">Présence et assiduité</span><span class="pr">Absences, bourse, dispense</span></summary>
-        <div class="pc"><p>Obligations de présence, règles propres aux SAÉ et à l'alternance, conséquences
-          sur la bourse, dispense d'assiduité, justification des absences sous 72 heures.
-          <a class="renvoi" href="#bourses">Bourses et absences en cours →</a></p></div>
-      </details>
-      <details class="pli">
-        <summary><span class="pk">Article 5</span><span class="pt">Modalités de contrôle</span><span class="pr">Contrôle continu et seconde chance</span></summary>
-        <div class="pc"><p>Contrôle continu, seconde chance, convocations, évaluation des SAÉ.
-          <a class="renvoi" href="#mcc">MCC →</a></p></div>
-      </details>
-      <details class="pli">
-        <summary><span class="pk">Article 6</span><span class="pt">Validation et compensation</span><span class="pr">UE, progression, note éliminatoire</span></summary>
-        <div class="pc"><p>Capitalisation des UE, report des notes, règles de progression, compensation par
-          compétence, note éliminatoire du stage et de l'alternance.
-          <a class="renvoi" href="#competences">Compétences →</a></p></div>
-      </details>
-      <details class="pli">
         <summary><span class="pk">Article 7</span><span class="pt">Parcours personnalisés</span><span class="pr">Mobilité, contrat pédagogique de réussite</span></summary>
         <div class="pc"><p>Au plus <strong>deux semestres de mobilité</strong> à l'étranger sur la licence,
           avec un contrat d'études. Le contrat pédagogique de réussite propose remédiation, AVR et
           entretiens individuels ; il se consulte sur l'ENT.</p></div>
-      </details>
-      <details class="pli">
-        <summary><span class="pk">Article 8</span><span class="pt">Charte des examens</span><span class="pr">Déroulement des épreuves, fraude, jurys</span></summary>
-        <div class="pc"><p>Organisation et déroulement des épreuves, fraude, jurys.
-          <a class="renvoi" href="#examens">Examens →</a></p></div>
       </details>
       <details class="pli">
         <summary><span class="pk">Article 9</span><span class="pt">Diplôme</span><span class="pr">Attestation, délais, bibliothèque</span></summary>
@@ -3110,133 +3088,14 @@ html.cp-ouvert{overflow:hidden;}
         <span class="nom">Conventions et justificatifs</span><br>
         Les grilles d'évaluation se téléchargent sur Moodle ; la convention de stage, sur Moodle ou sur l'ENT, rubrique Stage.</li>
     </ul>
-<div class="equipe-etu" id="equipe-2027"><h3>Vos enseignants en 2027</h3><p>L'équipe pressentie pour la rentrée 2027, par discipline. Elle peut encore évoluer d'ici la rentrée.</p><div class="equipe-disc"><div class="eq-groupe"><h4>Anglais</h4><ul><li>P. Christophe</li><li>M. David</li><li>G. Goyetche</li><li>E. Gros</li></ul></div><div class="eq-groupe"><h4>Espagnol</h4><ul><li>A. Arrighi</li><li>C. Hauré</li><li>F. Hidalgo</li><li>G. Jimeno</li><li>M.E. Merino</li><li>C. Muratori</li><li>L. Willay</li></ul></div><div class="eq-groupe"><h4>Japonais</h4><ul><li>N. Strzempek</li></ul></div><div class="eq-groupe"><h4>Français</h4><ul><li>V. Fernandez</li></ul></div><div class="eq-groupe"><h4>Matières d'application</h4><ul><li>R. Ancousture Lavie</li><li>M. Cavaillé</li><li>S. Colas</li><li>J.O. Greffe</li><li>C. Marchal</li><li>F. Morand</li><li>V. Roger</li><li>C. Servas</li><li>A. Servas</li><li>L. Steffan</li></ul></div></div></div>
+
 
     <div class="plis">
-      <details class="pli">
-        <summary><span class="pt">D'où viennent ces réponses</span><span class="pr">Règlement, charte, cadrages, maquette, ministère</span></summary>
-        <div class="pc"><ul>
-          <li>Règlement des études de la licence LEA, adopté en CFVU, version 2026</li>
-          <li>Charte des examens de licence de l'UNC</li>
-          <li>Textes de cadrage des stages de fin de licence, 2026</li>
-          <li><em>La licence LEA 2027</em> : programme et descriptifs des cours, SAÉ</li>
-          <li>Référentiel des MCC de l'UNC</li>
-          <li>Guide du rapport et de la soutenance 2026 ; documents à l'attention des tuteurs d'accueil, 2026</li>
-          <li>Fiche descriptive de la licence LEA Marketing International, site de l'UNC</li>
-          <li>devenirenseignant.gouv.fr et vice-rectorat de la Nouvelle-Calédonie : CAPES</li>
-          <li>Présentation des formations LLSH 2026, diapositives LEA : bac conseillés et débouchés</li>
-        </ul>
-        <p style="margin-top:8px;"><a class="renvoi" href="https://www.unc.nc/formations/licence-langues-etrangeres-appliquees-lea/" target="_blank" rel="noopener">La licence LEA sur le site de l'UNC ↗</a></p></div>
-      </details>
-      <details class="pli">
-        <summary><span class="pt">En cas de divergence</span><span class="pr">Les textes officiels font foi</span></summary>
-        <div class="pc"><p>Cette page est un document d'information. Elle ne remplace ni le règlement des
-          études, ni la charte des examens, ni les MCC votées en CFVU : <strong>ce sont ces textes qui font
-          foi</strong>. Certains calendriers sont fixés chaque année par le département et le bureau de
-          l'alternance.</p></div>
-      </details>
-    </div>
+      </div>
   </div>
 </section>
 
-<!-- =================== BAC ET DEBOUCHES =================== -->
-<section class="panneau" id="bac-debouches" data-accent="c5" role="tabpanel" aria-labelledby="t-bac-debouches">
-  <div class="wrap">
-    <div class="tete">
-      <h2><span class="eyeb">Avant et après la licence</span>Bac et débouchés</h2>
-      <button type="button" class="tout">Tout déplier</button>
-    </div>
 
-    <div class="plis">
-      <details class="pli large pos">
-        <summary><span class="pk">Avant d'entrer</span><span class="pt">Quel bac pour faire LEA ?</span><span class="pr">Tous les profils ont leur chance ; il faut deux langues solides et du goût pour l'économie</span></summary>
-        <div class="pc">
-          <p><strong>L'orientation choisie au lycée ne décide pas de la réussite en LEA.</strong></p>
-          <div class="cols">
-            <div>
-              <h4>Les bacs qui y mènent</h4>
-              <ul>
-                <li><strong>Bac général</strong>, en particulier avec les spécialités histoire-géographie,
-                  géopolitique et sciences politiques ; humanités, littérature et philosophie ; langues,
-                  littératures et cultures étrangères ; sciences économiques et sociales.</li>
-                <li><strong>Bac technologique STMG</strong> : un profil également adapté.</li>
-                <li><strong>Passerelles</strong> depuis un BTS (Commerce international, Management
-                  commercial opérationnel), un IUT ou une classe préparatoire : entrée possible
-                  <strong>en L2 ou en L3</strong>.</li>
-              </ul>
-              <p>L'entrée en première année se demande sur <strong>Parcoursup NC</strong>.</p>
-            </div>
-            <div>
-              <h4>Ce qu'il faut pour réussir</h4>
-              <ul>
-                <li>Un <strong>bon niveau dans les deux langues</strong> : anglais et espagnol.</li>
-                <li>Une <strong>aptitude</strong> et un certain <strong>intérêt pour les matières
-                  économiques</strong>.</li>
-              </ul>
-              <h4>LEA n'est pas une filière littéraire</h4>
-              <p>On n'y étudie pas la littérature : ne confondez pas LEA avec la licence LLCER anglais.
-                <strong>Ici, on n'étudie pas les langues : on les utilise.</strong> Les matières
-                d'application : traduction, économie, marketing, logistique, droit, communication,
-                interculturalité, gestion d'équipes.</p>
-            </div>
-          </div>
-        </div>
-      </details>
-      <details class="pli large mi">
-        <summary><span class="pk">Et après ?</span><span class="pt">Débouchés</span><span class="pr">Masters, écoles, métiers de l'international · taux d'insertion supérieur à 80 %</span></summary>
-        <div class="pc">
-          <div class="cols">
-            <div>
-              <h4>Poursuivre ses études à l'université</h4>
-              <ul>
-                <li><strong>Master MEEF espagnol</strong> (INSPE, UNC), vers le <strong>CAPES
-                  d'espagnol</strong> <a class="renvoi" href="#capes">CAPES →</a></li>
-                <li>Master Management (UNC)</li>
-                <li>Master Humanités – HIPSI (UNC)</li>
-                <li><strong>Master LEA</strong>, nombreuses spécialités selon l'université — commerce
-                  international, traduction, management interculturel
-                  <a class="renvoi" href="https://anlea.org/formation-lea/masters-lea/" target="_blank" rel="noopener">Catalogue ANLEA ↗</a></li>
-                <li>Master Commerce international et marketing export (CIME) — Université Paris 8</li>
-                <li>Master Affaires internationales</li>
-                <li>Master Communication internationale</li>
-                <li>Master Relations internationales — Université Paris 1 Panthéon-Sorbonne</li>
-              </ul>
-              <h4>Ailleurs</h4>
-              <ul>
-                <li><strong>IAE et écoles de commerce</strong> : marketing, gestion, finance, ressources
-                  humaines, gestion de projet, sciences politiques.</li>
-                <li><strong>Formations spécialisées</strong> : traduction, tourisme, journalisme.</li>
-              </ul>
-            </div>
-            <div>
-              <h4>Travailler après la licence</h4>
-              <p>Secteurs : <strong>communication, marketing, import-export, logistique
-                internationale</strong>, administration des ventes à l'export, organisation de
-                manifestations internationales.</p>
-              <h4>Quelques métiers</h4>
-              <ul class="puces">
-                <li>Assistant(e) export / import</li>
-                <li>Chargé(e) de marketing international</li>
-                <li>Community manager bilingue</li>
-                <li>Chargé(e) d'études de marché</li>
-                <li>Logistique et supply chain internationale</li>
-                <li>Communication et relations publiques</li>
-                <li>Gestion de projets internationaux</li>
-                <li>Traduction et médiation interculturelle</li>
-              </ul>
-              <p><span class="chiffre-cle">Taux d'insertion supérieur à 80 %</span>
-                <span style="font-size:12px; color:var(--muted);">(source : LePoint.fr)</span></p>
-            </div>
-          </div>
-          <ul class="liens">
-            <li><a href="fiche-metier-LEA-marketing-international.pdf" target="_blank" rel="noopener"><span><span class="t">La fiche métier : Marketing International</span><span class="d">PDF · secteurs d'activité, codes ROME, métiers visés et compétences attestées</span></span><span class="fl">PDF ↗</span></a></li>
-            <li><a href="fiche-metier-LEA-CAPES-espagnol.pdf" target="_blank" rel="noopener"><span><span class="t">La fiche métier : CAPES d'espagnol</span><span class="d">PDF · secteurs d'activité, codes ROME, métiers visés et compétences attestées</span></span><span class="fl">PDF ↗</span></a></li>
-          </ul>
-        </div>
-      </details>
-    </div>
-  </div>
-</section>
 
 </main>
 
@@ -3926,7 +3785,7 @@ window.MCC_ETU = {"14_0111": "MCC1 en 2026", "14_0122": "MCC1 en 2026", "11_0424
 window.COMP_INFO = {"c1": {"code": "C1", "titre": "Conduire des Échanges Professionnels en langues étrangères", "familles": "Anglais / LV2 ; à l'Oral et à l'Écrit", "ce": [["CE1", "En s'adaptant aux caractéristiques de son interlocuteur et/ou au contexte professionnel"], ["CE2", "En communiquant de façon claire, précise et fluide dans la langue cible"], ["CE3", "En comprenant des locuteurs natifs et/ou des documents authentiques dans un cadre professionnel"], ["CE4", "En structurant et en argumentant son propos de manière cohérente et adaptée à la situation professionnelle"], ["CE5", "En tenant compte des différences culturelles qui influencent l'échange professionnel"]], "niv": [{"tete": "L1", "titre": "Novice — Échanger des informations factuelles dans un cadre professionnel guidé (Bloom 1-2)", "app": ["Distinguer types de textes : niveaux de langue, registres, styles", "Respecter les normes sociales (règles d'adresse et de politesse, régulation des rapports sociaux)", "Mobiliser un vocabulaire de base adapté aux situations professionnelles courantes", "Restituer le sens d'un message oral produit par des locuteurs de variétés linguistiques différentes"]}, {"tete": "L2", "titre": "Intermédiaire — Conduire un échange argumenté sur des sujets professionnels courants (Bloom 3)", "app": ["Identifier et nommer les différences interculturelles qui influencent un échange professionnel", "Utiliser à bon escient des expressions idiomatiques courantes en tenant compte de leur dimension connotative", "Vérifier la compréhension de son interlocuteur et ajuster son discours en conséquence"]}, {"tete": "L3/L4", "titre": "Compétent — Gérer des échanges complexes, y compris en négociation ou médiation interculturelle (Bloom 4-6)", "app": ["Structurer et délivrer une présentation professionnelle argumentée devant un public, en maintenant l'intelligibilité et la cohérence du discours", "Adapter son registre et sa stratégie de communication au contexte professionnel, au support (oral/écrit) et à l'interlocuteur, dans au moins deux langues étrangères"]}]}, "c2": {"code": "C2", "titre": "Traduire un message d'une/dans une autre langue", "familles": "Traduction / Interprétation / Interface machine", "ce": [["CE1", "En employant les techniques fondamentales de la traduction"], ["CE2", "En produisant une traduction fidèle au sens du texte source, précise et idiomatique dans la langue cible"], ["CE3", "En intégrant les spécificités linguistiques, culturelles et stylistiques des langues source et cible"], ["CE4", "En utilisant les outils numériques adaptés"], ["CE5", "En produisant des textes de qualité et structurés adaptés au contexte et aux interlocuteurs"]], "niv": [{"tete": "L1", "titre": "Traduction guidée — Maîtrise au niveau de la phrase et du groupe verbal/nominal", "app": ["Utiliser le vocabulaire fondamental d'un champ professionnel dans les deux langues de travail", "Produire une traduction au niveau de la phrase", "Identifier les difficultés et les nuances d'une traduction au niveau de la phrase et du groupe verbal/nominal"]}, {"tete": "L2", "titre": "Traduction généraliste — Production d'une traduction respectant le style et l'esprit du texte", "app": ["Analyser les mécanismes stylistiques et sémantiques d'un texte source avant de le traduire", "Produire une traduction qui respecte le style, le sens et l'esprit du texte de départ", "Appliquer les techniques de base de la traduction (procédés notamment)"]}, {"tete": "L3/L4", "titre": "Traduction technique — Avec spécificités linguistiques, culturelles et contextuelles", "app": ["Mobiliser des savoirs thématiques spécialisés pour répondre aux exigences d'une traduction technique", "Mettre en œuvre des stratégies de contrôle qualité de ses traductions", "S'adapter à la typologie textuelle (phraséologie) et au profil du client/récepteur", "Mobiliser les principes généraux de la traduction — y compris l'adaptation culturelle et la transculturation — en tenant compte des contraintes techniques et contextuelles propres au projet"]}]}, "c3": {"code": "C3", "titre": "Analyser le fonctionnement et les enjeux d'une organisation dans ses contextes économique, institutionnel et culturel", "familles": "Gestion d'une organisation ; Projet collectif ; Mission de conseil", "ce": [["CE1", "En s'appuyant sur des outils d'analyse quantitatifs et qualitatifs pour évaluer des données internes et externes"], ["CE2", "En identifiant les leviers d'action possibles pour une organisation dans un environnement donné"], ["CE3", "En prenant en compte les dynamiques sociales, économiques, réglementaires et culturelles"], ["CE4", "En formulant des recommandations cohérentes, justifiées et adaptées au contexte"], ["CE5", "En mobilisant des sources et des données dans au moins deux langues étrangères"]], "niv": [{"tete": "L1", "titre": "Identification guidée — Du fonctionnement d'une organisation dans son environnement", "app": ["Décrire le fonctionnement d'une organisation en utilisant la terminologie et les concepts fondamentaux", "Situer les informations dans un contexte historique, géopolitique, socio-économique, culturel et légal", "Mobiliser des sources ou des exemples issus d'au moins deux contextes culturels ou linguistiques différents", "Utiliser les outils d'analyse des champs disciplinaires concernés (économie, droit, gestion) pour traiter une problématique"]}, {"tete": "L2", "titre": "Problématiser l'information — Identifier les risques et proposer des solutions", "app": ["Poser des questions sur un marché, un environnement, une culture, une pensée", "Identifier les risques d'une organisation dans son contexte pour tenter de les prévenir", "Proposer et comparer des solutions possibles aux difficultés identifiées dans l'environnement d'une organisation"]}, {"tete": "L3/L4", "titre": "Réaliser des choix éclairés et proposer des solutions", "app": ["Exploiter les données dans une perspective interculturelle et internationale pour formuler des orientations stratégiques éclairées", "Sélectionner avec un esprit critique diverses ressources pertinentes pour documenter un sujet de façon concise", "Exploiter les données afin de répondre à une problématique d'économie ou de gestion spécifique", "Évaluer la fiabilité et la pertinence d'une information en la confrontant à d'autres sources et données"]}]}, "c4mi": {"code": "C4 MI", "titre": "Aider à l'élaboration d'une stratégie marketing et commerciale adaptée à l'exportation dans des contextes internationaux et interculturels", "familles": "Gestion d'une organisation ; Projet export ; Mission de conseil ; Organismes publics", "ce": [["CE1", "En prenant en compte la variété et la complexité des marchés, des acteurs et des territoires"], ["CE2", "En utilisant les outils numériques et supports adaptés"], ["CE3", "En développant une réflexion analytique problématisée et structurée"], ["CE4", "En synthétisant les éléments clefs des ressources et supports utilisés"], ["CE5", "En contrôlant le respect des règles et des normes"]], "niv": [{"tete": "Niveau 1", "titre": "Novice (fin S4→S5) — Appliquer les outils d'analyse stratégique dans un cadre guidé", "app": ["Appliquer les outils d'analyse stratégique (SWOT, PESTEL, forces concurrentielles) à un cas d'étude encadré", "Adapter une offre commerciale aux attentes d'un segment international identifié", "Repérer les enjeux éthiques, économiques, sociaux et environnementaux liés à une implantation internationale", "Identifier et expliquer les notions de différenciation, d'avantage concurrentiel et de ciblage stratégique"]}, {"tete": "Niveau 2", "titre": "Compétent (L3/L4) — Concevoir, présenter et évaluer une stratégie export adaptée à un contexte donné", "app": ["Identifier les contraintes logistiques et d'approvisionnement dans un projet d'exportation", "Construire une offre ou une réponse commerciale export (à partir d'un brief, d'un marché cible, de données encadrées)", "Mettre en œuvre des indicateurs opérationnels (KPI) pour évaluer une stratégie commerciale", "Analyser le lien entre efficacité logistique et satisfaction client dans un contexte d'exportation", "Intégrer les enjeux de durabilité, fiabilité et conformité dans la chaîne de valeur"]}]}, "c4lch": {"code": "C4 CAPES Espagnol", "titre": "Exploiter les savoirs culturels et littéraires d'un espace linguistique donné à des fins d'analyse et de communication", "familles": "Projet touristique ; Projet citoyen ; Projet scolaire / CAPES", "ce": [["CE1", "En prenant en compte les spécificités culturelles et la diversité des récepteurs"], ["CE2", "En tenant compte de la langue source et de ses spécificités culturelles, lexicales, syntaxiques et sémantiques"], ["CE3", "En utilisant les outils numériques et supports adaptés"], ["CE4", "En développant une argumentation problématisée et structurée"], ["CE5", "En synthétisant les éléments clefs des ressources utilisées"]], "niv": [{"tete": "Niveau 1", "titre": "Intermédiaire (L3→L3/L4) — Analyser des documents culturels et littéraires dans un contexte connu", "app": ["Rechercher et mobiliser le vocabulaire d'un champ professionnel en langue étrangère", "Interpréter et interpréter des ressources en langues étrangères", "Distinguer les spécificités des systèmes linguistiques et culturels hispanophones et en rendre compte dans une analyse écrite ou orale", "Contextualiser un document historique ou civilisationnel en mobilisant des connaissances générales"]}, {"tete": "Niveau 2", "titre": "Compétent (L3/L4) — Produire des analyses et supports de communication exploitant les savoirs culturels et littéraires", "app": ["Mobiliser des connaissances approfondies des faits de civilisation à partir de sources fiables", "Concevoir et rédiger des supports de communication ou contenus pédagogiques en français ou en langues étrangères", "Élaborer des analyses de textes et de documents iconographiques à partir d'outils stylistiques et linguistiques", "Confronter les textes littéraires avec d'autres supports artistiques et culturels"]}]}, "c5": {"code": "C5", "titre": "Construire et mettre en œuvre son projet professionnel", "familles": "Enseignement ; Culture et Patrimoine ; Organisation nationale et/ou internationale ; Agence de traduction ou de communication", "ce": [["CE1", "En identifiant et valorisant ses compétences (se connaître)"], ["CE2", "En analysant les enjeux et les besoins du secteur professionnel visé (décrire le marché)"], ["CE3", "En respectant les codes culturels, les normes professionnelles et les principes éthiques (respecter les normes)"], ["CE4", "En travaillant en équipe et en réseau ainsi qu'en autonomie et responsabilité au service d'un projet"], ["CE5", "En adoptant une posture professionnelle en fonction du contexte (dimension comportementale/posturale)"]], "niv": [{"tete": "L1", "titre": "En tant qu'apprenant — Dans son rapport à ses études", "app": ["S'inscrire dans une démarche de développement professionnel en identifiant ses forces et ses faiblesses", "Considérer l'apprentissage des langues comme un outil au service d'une profession", "Identifier ses points forts et ses axes d'amélioration à partir d'un retour formatif", "Mettre en œuvre une méthode de travail adaptée aux exigences universitaires et professionnelles"]}, {"tete": "L2", "titre": "En tant que futur professionnel — Se situer dans un champ métier", "app": ["Se créer une représentation des professions cible", "Pratiquer une veille sur les champs professionnels et l'évolution des métiers", "Construire un projet professionnel en cohérence avec ses aspirations et ses potentialités", "S'inscrire dans une démarche de formation continue", "Développer une stratégie efficace d'insertion professionnelle (recherche de stage et d'emploi)"]}, {"tete": "L3/L4", "titre": "En tant qu'acteur responsable — Dans son rapport au milieu du travail", "app": ["Analyser ses actions en situation professionnelle, s'autoévaluer pour améliorer sa/une pratique", "Rédiger un rapport d'activité professionnelle en français et/ou en langue étrangère", "Apprécier une situation d'entreprise afin d'élaborer des problématiques pertinentes, argumentées et complexes", "Justifier ses choix et ses pratiques professionnelles en s'appuyant sur des référents théoriques"]}]}};
 window.COMP_MARCHE = {"c1": {"missions": ["Adapter son discours oral ou écrit (registre, niveau de langue, canal) selon l’interlocuteur et le contexte professionnel, dans au moins une langue étrangère", "Rédiger des documents professionnels en langue étrangère : emails, comptes rendus, notes de synthèse, à destination de clients, partenaires ou fournisseurs", "Conduire ou participer à une réunion, une négociation ou une présentation orale en langue étrangère avec des interlocuteurs professionnels", "Adapter son argumentaire ou ses supports de communication aux codes culturels de l’interlocuteur étranger", "Traiter et restituer des informations professionnelles en langue étrangère (oral ou écrit) au sein d’une équipe ou avec des partenaires"], "source": "D’après la grille de correspondance poste–compétences (alternance Marketing International, S6-S7)."}, "c2": {"missions": ["Traduire des supports commerciaux, contractuels ou promotionnels en respectant la terminologie professionnelle, le registre et l’esprit du texte source", "Adapter ou localiser des supports de communication pour un public étranger, en tenant compte des spécificités culturelles du marché cible", "Réécrire ou adapter une offre, un support promotionnel ou un contenu commercial pour un public de culture différente, en vérifiant la cohérence du message produit"], "source": "D’après la grille de correspondance poste–compétences (alternance Marketing International, S6-S7)."}, "c3": {"missions": ["Réaliser une étude de marché : segmentation, analyse concurrentielle, identification des opportunités et des risques, restitution structurée des résultats", "Produire une note de synthèse, un rapport d’analyse ou une veille argumentée pour appuyer une décision opérationnelle au sein de l’organisation", "Suivre des opérations d’import-export ou des flux logistiques internationaux en identifiant les contraintes réglementaires et les leviers d’optimisation", "Mettre en place ou alimenter un dispositif de veille stratégique (concurrentielle, réglementaire, sectorielle) et en restituer les enseignements de façon structurée", "Rédiger un rapport d’analyse ou un diagnostic à partir du terrain de l’alternance, en mobilisant des sources en français et en au moins une langue étrangère"], "source": "D’après la grille de correspondance poste–compétences (alternance Marketing International, S6-S7)."}, "c5": {"missions": ["Contribuer à la coordination et au suivi d’un projet en contexte international : planification, suivi des actions, reporting à la hiérarchie", "Identifier un enjeu stratégique ou opérationnel dans l’organisation et formuler une solution argumentée sous forme de note ou de rapport professionnel", "Rédiger le rapport d’alternance : problématique professionnelle ancrée dans le terrain, analyse des activités conduites, identification et valorisation des compétences développées"], "source": "D’après la grille de correspondance poste–compétences (alternance Marketing International, S6-S7)."}, "c4mi": {"missions": ["Contribuer à l’élaboration d’une stratégie d’entrée sur un marché étranger : analyse du contexte, ciblage, positionnement, plan d’action export", "Mobiliser des outils numériques pour construire ou évaluer une offre commerciale export : mettre en œuvre des indicateurs opérationnels et formuler des ajustements argumentés", "Construire une réflexion analytique sur un marché ou une stratégie export : à partir de données terrain, identifier les enjeux, structurer un argumentaire et présenter des choix justifiés", "Créer et diffuser des contenus de communication multilingues pour promouvoir une offre, un produit ou un territoire à l’international", "Participer à une mission d’export ou de prospection internationale : élaborer un argumentaire de vente, adapter l’offre au contexte culturel du marché cible", "Identifier et appliquer les contraintes réglementaires et logistiques d’un projet export : Incoterms, procédures douanières, normes de conformité"], "source": "D’après la grille de correspondance poste–compétences (alternance Marketing International, S6-S7). Métiers et codes ROME : fiche parcours Marketing International.", "metiers": ["Assistante ou assistant en commerce international", "Assistante ou assistant import-export", "Assistante ou assistant marketing et communication internationale", "Chargée ou chargé d’études de marché", "Assistante ou assistant chef de produit international", "Assistante ou assistant logistique et supply chain", "Assistante ou assistant en marketing digital et e-commerce", "Assistante ou assistant communication et relations publiques internationales", "Community manager spécialisé en marketing international", "Assistante ou assistant en gestion de projets événementiels internationaux", "Chargée ou chargé de veille et d’intelligence économique"], "rome": ["M1705 Marketing", "M1707 Stratégie commerciale", "D1402 Relation commerciale grands comptes et entreprises", "M1403 Études et prospectives socio-économiques", "M1101 Achats", "N1301 Conception et organisation de la chaîne logistique", "E1103 Communication", "E1104 Conception de contenus multimédias", "E1101 Animation de site multimédia", "E1108 Traduction, interprétariat"]}, "c4lch": {"missions": ["Observer le fonctionnement de l’établissement, la place de l’enseignant et les interactions entre les familles, l’enseignant et l’équipe pédagogique.", "Assister aux cours d’espagnol et d’anglais, analyser les objectifs d’apprentissage, la progression et les dispositifs d’évaluation, comprendre la gestion de classe.", "Accompagner ponctuellement des élèves en difficulté, reformuler une consigne, assister l’enseignant lors d’une évaluation.", "Concevoir une activité pédagogique en espagnol à partir d’une séquence observée, et la mettre en œuvre devant la classe si l’enseignant d’accueil l’autorise.", "Rédiger un rapport de stage en français et le soutenir en espagnol.", "Observer le fonctionnement d’un organisme d’accueil et rendre compte d’une mission, par exemple dans l’enseignement, la culture, le tourisme, la traduction ou la communication."], "source": "D’après la fiche parcours CAPES d’espagnol (missions types de stage, métiers, codes ROME).", "metiers": ["Professeure ou professeur d’espagnol en collège et en lycée (après admission au CAPES externe d’espagnol et formation en master)", "Enseignante ou enseignant contractuel d’espagnol", "Formatrice ou formateur en espagnol", "Médiatrice ou médiateur culturel (musées, archives, fondations)", "Guide accompagnatrice ou accompagnateur multilingue", "Assistante ou assistant de développement touristique", "Assistante ou assistant traducteur, traductrice ou traducteur-adaptateur junior", "Chargée ou chargé de communication interculturelle", "Rédactrice ou rédacteur de contenus multilingues", "Assistante ou assistant de projets culturels et événementiels"], "rome": ["K2107 Enseignement général du second degré", "K2111 Formation professionnelle", "K1602 Gestion de patrimoine culturel", "G1101 Accueil touristique", "G1201 Accompagnement de voyages, d’activités culturelles ou sportives", "E1108 Traduction, interprétariat", "E1103 Communication", "E1107 Organisation d’évènementiel"]}};
 (function(){
-  var SEL = '.cpill, .comp[role="button"], .comp-lien, .cp-l, .ue-tete';
+  var SEL = '.cpill, .comp[role="button"], .comp-lien, .cp-l, .ue-tete, .cp-tete';
   var NIV = {S1: 0, S2: 0, S3: 1, S4: 1, S5: 2, S6: 2, S7: 2};
   var voile = null, carte = null;
   function el(tag, cl, txt){ var e = document.createElement(tag); if (cl) { e.className = cl; } if (txt != null) { e.textContent = txt; } return e; }
@@ -4012,6 +3871,49 @@ window.COMP_MARCHE = {"c1": {"missions": ["Adapter son discours oral ou écrit (
     var p = ev.target.closest && ev.target.closest(SEL);
     if (p && (ev.key === 'Enter' || ev.key === ' ')) { ev.preventDefault(); ev.stopPropagation(); ouvrir(p); }
   }, true);
+})();
+</script>
+<script>/* lisibilite-etudiants (20/11/2026) : sur téléphone, chaque onglet s'ouvre en haut de l'écran ;
+   un seul encart ouvert à la fois, amené sous le bandeau. */
+(function(){
+  var petit = window.matchMedia('(max-width:760px)');
+  var nav = document.querySelector('nav.tabs, nav[aria-label="Rubriques"]');
+  function hautFixe(){
+    var h = 0;
+    Array.prototype.forEach.call(document.querySelectorAll('body *'), function(e){
+      if (e.offsetHeight > 0 && e.offsetHeight < 200) {
+        var st = getComputedStyle(e);
+        if ((st.position === 'sticky' || st.position === 'fixed') && e.getBoundingClientRect().top <= 1) { h = Math.max(h, e.getBoundingClientRect().bottom); }
+      }
+    });
+    return h;
+  }
+  document.addEventListener('click', function(ev){
+    var a = ev.target.closest && ev.target.closest('a[role="tab"], a.renvoi[href^="#"], .mm-r, .mm-pr, .mm-sv, nav.suite a');
+    if (!a || !petit.matches) { return; }
+    setTimeout(function(){
+      var p = document.querySelector('section.panneau:not([hidden])');
+      if (!p) { return; }
+      var y = p.getBoundingClientRect().top + window.pageYOffset - hautFixe() - 4;
+      window.scrollTo(0, Math.max(0, y));
+    }, 30);
+  });
+  document.addEventListener('click', function(ev){
+    var s = ev.target.closest && ev.target.closest('details.pli > summary');
+    if (!s) { return; }
+    var d = s.parentElement;
+    if (d.open) { return; }
+    var zone = d.closest('section.panneau') || d.parentElement;
+    Array.prototype.forEach.call(zone.querySelectorAll('details.pli'), function(x){
+      if (x !== d && x.open && !x.contains(d) && !d.contains(x)) { x.open = false; }
+    });
+    if (petit.matches) {
+      setTimeout(function(){
+        var y = d.getBoundingClientRect().top + window.pageYOffset - hautFixe() - 6;
+        if (Math.abs(d.getBoundingClientRect().top - hautFixe()) > 40) { window.scrollTo(0, Math.max(0, y)); }
+      }, 30);
+    }
+  });
 })();
 </script>
 </body>
