@@ -1030,6 +1030,8 @@ details.fl-profil > summary::-webkit-details-marker{display:none;}
 details.fl-profil[open] .fl-plus{display:none;}
 .fl-profil ul{margin:0 12px 6px; padding-left:18px; font-size:13.5px; color:var(--ink-2);}
 .fl-profil .fl-com{margin:0 12px 10px; font-size:13px; font-style:italic; color:var(--ink-2);}
+details.filprog.par-fil{margin-top:18px;}
+details.filprog.par-fil > .dedans > details.filprog{margin:8px 0 0;}
 .fo{margin-top:26px;}
 .fo-intro{font-size:13.5px; color:var(--ink-2); margin:0 0 10px;}
 .fo-tete, details.fo-l > summary{display:grid; grid-template-columns:86px minmax(0,1.5fr) minmax(0,1fr) minmax(0,1fr) 92px; gap:10px;
@@ -1228,8 +1230,7 @@ les notes ne se modifient plus en ligne.</li>
 <span class="fl">→</span>
 <div aria-expanded="false" class="et" data-codes="06_0621 06_0631 06_0333" role="button" tabindex="0"><span class="s">S7</span><span class="n">Intégrer et piloter une entreprise complète en concurrence</span><span class="d">La négociation internationale en anglais, le pilotage des opérations et la simulation de gestion, où les quatre fils se rejoignent sur une même entreprise en concurrence.</span><div class="mat"><span>Excellence opérationnelle</span><span>International strategy : negociation and pitching</span><span>Simulation de gestion</span></div></div>
 </div></div>
-<h5 style="margin-top:18px; font-family:Spectral,Georgia,serif; font-size:15px;">Les quatre fils, en détail</h5>
-<details class="filprog fil-gestion" id="pg-gestion"><summary><span class="n">Gestion</span><span class="cnt">2 étapes · 2 cours · 44 h</span></summary><div class="dedans">
+<details class="filprog par-fil fil-paliers" id="pg-par-fil"><summary><span class="n">Par fil</span><span class="cnt">Gestion · Marketing · Stratégie · Commerce international</span></summary><div class="dedans"><details class="filprog fil-gestion" id="pg-gestion"><summary><span class="n">Gestion</span><span class="cnt">2 étapes · 2 cours · 44 h</span></summary><div class="dedans">
 <div class="frisewrap"><div class="frise">
 <div aria-expanded="false" class="et" data-codes="05_0249" role="button" tabindex="0"><span class="s">S2</span><span class="n">Lire l'intérieur</span><span class="d">Compte de résultat, classement des coûts, marge et seuil de rentabilité.</span><div class="mat"><span>Analyse de gestion · 20 h</span></div></div>
 <span class="fl">→</span>
@@ -1266,6 +1267,7 @@ les notes ne se modifient plus en ligne.</li>
 <span class="fl">→</span>
 <div aria-expanded="false" class="et" data-codes="06_0631 06_0621" role="button" tabindex="0"><span class="s">S7</span><span class="n">Négocier et piloter</span><span class="d">Négociation internationale et pilotage des opérations.</span><div class="mat"><span>International strategy : negociation and pitching · 20 h</span><span>Excellence opérationnelle · 20 h</span></div></div>
 </div></div>
+</div></details>
 </div></details>
 </div>
 <p class="note-tbl">D'après la maquette référentiel LEA 2027 (section « Progression à suivre »).</p>
@@ -2411,6 +2413,7 @@ s'adresser à la responsable de la licence.</p>
       var c = document.getElementById(b.getAttribute('data-cible'));
       if (!c) { return; }
       if (c.tagName === 'DETAILS') { c.open = true; }
+      for (var pr = c.parentElement && c.parentElement.closest('details'); pr; pr = pr.parentElement && pr.parentElement.closest('details')) { pr.open = true; }
       var y = c.getBoundingClientRect().top + window.pageYOffset - hautFixe() - barre.offsetHeight - 14;
       window.scrollTo({top: y, behavior: 'smooth'});
     });
