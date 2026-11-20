@@ -1175,6 +1175,14 @@ html.cp-ouvert{overflow:hidden;}
 .semtete.cp-tete .cp-voir{font:600 12.5px/1 "IBM Plex Mono",monospace; color:#fff; background:var(--k); border-radius:999px; padding:5px 10px; white-space:nowrap;}
 .semtete.cp-tete.c1{--k:var(--c1);} .semtete.cp-tete.c2{--k:var(--c2);} .semtete.cp-tete.c3{--k:var(--c3);}
 .semtete.cp-tete.c4mi{--k:var(--c4mi);} .semtete.cp-tete.c4lch{--k:var(--c4lch);} .semtete.cp-tete.c5{--k:var(--c5);}
+/* sous-rubriques des fiches : « + », titre et pastille sur une ligne ; titre en minuscules, lisible */
+body .cb details.pg-pli > summary{display:grid; grid-template-columns:18px minmax(0,1fr) auto; align-items:baseline; column-gap:8px;
+  min-height:44px; padding:10px 4px; font:600 16.5px/1.35 "IBM Plex Sans",system-ui,sans-serif; letter-spacing:0; text-transform:none;}
+body .cb details.pg-pli > summary::before{width:auto; font:600 17px/1 "IBM Plex Mono",monospace;}
+body .cb details.pg-pli > summary .pg-nb{align-self:center; font:500 13.5px/1.6 "IBM Plex Mono",monospace;}
+body .cb .pg-tout{font:500 15.5px/1 "IBM Plex Sans",system-ui,sans-serif; padding:8px 14px; min-height:36px; border-radius:999px;
+  border:1px solid var(--line-2); background:var(--surface); color:var(--ink); cursor:pointer;}
+body .cb .pg-tout:hover{background:var(--ink); color:#fff; border-color:var(--ink);}
 /* couleurs-mes-cours:fin */
 /* confort-lecture:applique */
 /* grilles-editables:debut */
@@ -2289,7 +2297,7 @@ note de la DRH sur l'accueil des missionnaires, octobre 2024.</p>
     for (var e = cb.firstElementChild; e && e.tagName !== 'H5'; e = e.nextElementSibling) { tete.push(e); }
     if (tete.length) {
       var id = document.createElement('details'); id.className = 'pg-pli pg-id';
-      var si = document.createElement('summary'); si.textContent = 'Intitulé du Cours, UE, compétence, MCC';
+      var si = document.createElement('summary'); si.textContent = 'Intitulé du cours, UE, compétence, MCC';
       id.appendChild(si); cb.insertBefore(id, tete[0]);
       tete.forEach(function(x){ id.appendChild(x); });
     }
