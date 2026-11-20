@@ -833,6 +833,17 @@ body .cb details.pg-pli > summary .pg-nb{align-self:center; font:500 13.5px/1.6 
 body .cb .pg-tout{font:500 15.5px/1 "IBM Plex Sans",system-ui,sans-serif; padding:8px 14px; min-height:36px; border-radius:999px;
   border:1px solid var(--line-2); background:var(--surface); color:var(--ink); cursor:pointer;}
 body .cb .pg-tout:hover{background:var(--ink); color:#fff; border-color:var(--ink);}
+
+/* en-tête des fiches de cours : pastille, intitulé et code sur une ligne, l'intitulé se coupe proprement */
+body details.cours > summary{flex-wrap:nowrap; align-items:center;}
+body details.cours > summary .cpill{flex:0 0 auto;}
+body details.cours > summary .cn{flex:1 1 auto; min-width:0; text-wrap:balance;}
+body details.cours > summary .cm{flex:0 0 auto; white-space:nowrap;}
+@media (max-width:600px){
+  body details.cours > summary{flex-wrap:wrap;}
+  body details.cours > summary .cn{flex:1 1 60%;}
+  body details.cours > summary .cm{flex-basis:100%; padding-left:24px; white-space:normal;}
+}
 /* couleurs-mes-cours:fin */
 /* confort-lecture:applique */
 /* haut-de-page:debut */
@@ -845,6 +856,31 @@ body .cb .pg-tout:hover{background:var(--ink); color:#fff; border-color:var(--in
 .haut-page:hover, .haut-page:focus-visible{background:var(--ink, #1b2430); color:#fff; outline:none;}
 @media print{.haut-page{display:none;}}
 /* haut-de-page:fin */
+/* recherche:debut */
+.recherche{position:relative; max-width:1280px; margin:0 auto; padding:12px clamp(16px,3vw,40px) 10px;}
+.rech-lab{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0);}
+.rech-champ{position:relative; display:flex; align-items:center;}
+.rech-ico{position:absolute; left:14px; font-size:22px; line-height:1; color:var(--muted); pointer-events:none;}
+#rech{width:100%; min-height:48px; padding:10px 48px 10px 44px; font:400 17px/1.3 "IBM Plex Sans",system-ui,sans-serif; color:var(--ink);
+  border:1px solid var(--line-2, #cfd6df); border-radius:12px; background:var(--surface, #fff); box-shadow:0 1px 2px rgba(0,0,0,.04);}
+#rech:focus{outline:none; border-color:var(--ink); box-shadow:0 0 0 3px color-mix(in srgb, var(--ink) 18%, transparent);}
+.rech-kbd{position:absolute; right:12px; font:500 13px "IBM Plex Mono",monospace; color:var(--muted); border:1px solid var(--line-2, #cfd6df); border-radius:6px; padding:2px 7px;}
+#rech:focus ~ .rech-kbd, #rech:not(:placeholder-shown) ~ .rech-kbd{display:none;}
+.rech-res{position:absolute; z-index:80; left:clamp(16px,3vw,40px); right:clamp(16px,3vw,40px); top:calc(100% - 4px); max-height:min(70vh,560px); overflow:auto;
+  background:var(--surface, #fff); border:1px solid var(--line-2, #cfd6df); border-radius:12px; box-shadow:0 14px 34px rgba(0,0,0,.18); padding:6px;}
+.rech-nb, .rech-vide{margin:6px 10px; font:500 13px "IBM Plex Mono",monospace; color:var(--muted);}
+.rech-vide{font:400 16px "IBM Plex Sans",system-ui,sans-serif;}
+.rech-item{display:flex; flex-direction:column; gap:2px; width:100%; text-align:left; padding:10px 12px; border:0; border-radius:8px; background:none; cursor:pointer; font:inherit; color:var(--ink);}
+.rech-item:hover, .rech-item.actif{background:var(--surface-2, #f1f3f6);}
+.rech-ou{font:500 12.5px "IBM Plex Mono",monospace; color:var(--muted); text-transform:uppercase; letter-spacing:.04em;}
+.rech-ti{font:600 16.5px/1.3 "IBM Plex Sans",system-ui,sans-serif;}
+.rech-ex{font-size:15px; line-height:1.45; color:var(--ink-2, #3b4552);}
+.rech-ex mark{background:#fde68a; color:inherit; border-radius:2px; padding:0 1px;}
+.rech-eclair{animation:rech-eclair 2.2s ease-out;}
+@keyframes rech-eclair{0%,30%{box-shadow:0 0 0 4px #fbbf24;} 100%{box-shadow:0 0 0 0 transparent;}}
+@media (max-width:760px){ .recherche{padding:8px 12px;} .rech-kbd{display:none;} .rech-res{left:8px; right:8px;} }
+@media print{ .recherche{display:none;} }
+/* recherche:fin */
 /* confort-lecture:debut */
 body{line-height:1.6;}
 .intro p, .pc > p, .pc li, .consigne{max-width:78ch;}
@@ -3268,6 +3304,151 @@ window.MCC_ETU = {"14_0111": "MCC1 en 2026", "14_0122": "MCC1 en 2026", "11_0424
   });
 })();
 </script>
+<script>/* recherche (20/11/2026) : une barre de recherche en haut de la page, sur tout le contenu des rubriques */
+(function(){
+  var nav = document.querySelector('nav.tabs');
+  if (!nav || document.getElementById('rech')) { return; }
+  var boite = document.createElement('div');
+  boite.className = 'recherche'; boite.setAttribute('role', 'search');
+  boite.innerHTML = '<label for="rech" class="rech-lab">Rechercher dans la page</label>'
+    + '<div class="rech-champ"><span class="rech-ico" aria-hidden="true">⌕</span>'
+    + '<input id="rech" type="search" autocomplete="off" spellcheck="false" placeholder="Rechercher : un cours, une règle, un mot…" aria-controls="rech-res" aria-expanded="false">'
+    + '<kbd class="rech-kbd" aria-hidden="true">/</kbd></div>'
+    + '<div id="rech-res" class="rech-res" role="listbox" hidden></div>';
+  nav.parentNode.insertBefore(boite, nav);
+  var champ = boite.querySelector('#rech'), res = boite.querySelector('#rech-res'), index = null, actif = -1, trouves = [];
+  function norm(s){ return (s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[’']/g, "'"); }
+  function ech(t){ return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+  var EXCLU = '.vue-comp, .comppanel, #vue-comp, #vue-pratique, #vue-deb, #vue-obj, .cp-voile, #g-edit, .recherche, .tableau-maq';
+  function texte(el){
+    var c = el.cloneNode(true), s = c.querySelector(':scope > summary'); if (s) { s.remove(); }
+    Array.prototype.forEach.call(c.querySelectorAll('script, style, .g-bascule, .g-etus, .pg-tout'), function(x){ x.remove(); });
+    var w = document.createTreeWalker(c, NodeFilter.SHOW_TEXT), n, p = [];
+    while ((n = w.nextNode())) { p.push(n.nodeValue); }
+    return p.join(' ').replace(/\s+/g, ' ').replace(/ ([,.;:)])/g, '$1').trim();
+  }
+  function titreDe(d){
+    var s = d.querySelector(':scope > summary'); if (!s) { return ''; }
+    var pt = s.querySelector('.pt, .cn, .fl-nom, .n'); return (pt ? pt.textContent : s.textContent).replace(/\s+/g, ' ').trim();
+  }
+  function construire(){
+    index = []; var vus = {};
+    Array.prototype.forEach.call(document.querySelectorAll('section.panneau'), function(sec){
+      var tab = document.querySelector('a[role="tab"][href="#' + sec.id + '"]');
+      var rub = tab ? tab.textContent.trim() : sec.id;
+      var h2 = sec.querySelector('h2');
+      index.push({el: sec, sec: sec, rub: rub, titre: rub, genre: 'Rubrique', t: norm(rub + ' ' + (h2 ? h2.textContent : '')), brut: h2 ? h2.textContent.replace(/\s+/g, ' ').trim() : ''});
+      Array.prototype.forEach.call(sec.querySelectorAll('details.pli, details.cours, details.fl-fil, details.filprog'), function(d){
+        if (d.closest(EXCLU)) { return; }
+        var ti = titreDe(d); if (!ti) { return; }
+        var parent = d.parentElement && d.parentElement.closest('details.cours, details.pli');
+        if (parent && !d.classList.contains('cours')) { return; }   // les sous-encarts sont trouvés par leur fiche
+        var cle = sec.id + '|' + ti; if (vus[cle]) { return; } vus[cle] = 1;
+        var sp = d.closest('.sempanel[data-sem]');
+        var genre = d.classList.contains('cours') ? 'Fiche de cours' + (sp ? ' · ' + sp.getAttribute('data-sem') : '') : 'Encart';
+        var brut = texte(d);
+        index.push({el: d, sec: sec, rub: rub, titre: ti, genre: genre, t: norm(ti + ' ' + brut), tt: norm(ti), brut: brut});
+      });
+    });
+  }
+  function extrait(brut, mots){
+    var n = norm(brut), p = -1;
+    mots.forEach(function(m){ var r = new RegExp('(^|[^a-z0-9])' + m.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).exec(n); var q = r ? r.index + r[1].length : -1; if (q > -1 && (p < 0 || q < p)) { p = q; } });
+    if (p < 0) { p = 0; }
+    var a = Math.max(0, p - 60), b = Math.min(brut.length, p + 110);
+    var s = (a > 0 ? '…' : '') + brut.slice(a, b) + (b < brut.length ? '…' : '');
+    var h = ech(s);
+    mots.forEach(function(m){
+      if (m.length < 2) { return; }
+      var re = new RegExp('(^|[^A-Za-zÀ-ÿ0-9])(' + m.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').split('').map(function(c){
+        var v = {a: '[aàâä]', e: '[eéèêë]', i: '[iîï]', o: '[oôö]', u: '[uùûü]', c: '[cç]'}; return v[c] || c; }).join('') + ')', 'gi');
+      h = h.replace(re, '$1<mark>$2</mark>');
+    });
+    return h;
+  }
+  function chercher(){
+    var q = norm(champ.value).trim();
+    if (q.length < 2) { fermer(); return; }
+    if (!index) { construire(); }
+    var VIDES = ['de', 'du', 'des', 'la', 'le', 'les', 'un', 'une', 'et', 'en', 'au', 'aux', 'a', 'd', 'l', 'pour', 'sur', 'par', 'ou'];
+    var mots = q.replace(/[^a-z0-9' ]+/g, ' ').split(/[\s']+/).filter(function(m){ return m && VIDES.indexOf(m) < 0; });
+    if (!mots.length) { fermer(); return; }
+    var RE = mots.map(function(m){ return new RegExp('(^|[^a-z0-9])' + m.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')); });
+    trouves = index.filter(function(x){ return RE.every(function(r){ return r.test(x.t); }); }).map(function(x){
+      var s = 0, tt = x.tt || x.t;
+      RE.forEach(function(r){ if (r.test(tt)) { s += 10; } });
+      mots.forEach(function(m){ if (tt.indexOf(m) === 0) { s += 3; } });
+      if (x.genre === 'Rubrique') { s += 4; }
+      return {x: x, s: s};
+    }).sort(function(a, b){ return b.s - a.s; }).slice(0, 14).map(function(o){ return o.x; });
+    actif = -1;
+    if (!trouves.length) {
+      res.innerHTML = '<p class="rech-vide">Aucun résultat pour « ' + ech(champ.value.trim()) + ' ».</p>';
+    } else {
+      res.innerHTML = '<p class="rech-nb">' + trouves.length + (trouves.length > 13 ? '+' : '') + ' résultat' + (trouves.length > 1 ? 's' : '') + '</p>'
+        + trouves.map(function(x, i){
+          return '<button type="button" class="rech-item" role="option" data-i="' + i + '"><span class="rech-ou">' + ech(x.rub) + (x.genre !== 'Rubrique' ? ' · ' + ech(x.genre) : '') + '</span>'
+            + '<span class="rech-ti">' + ech(x.titre) + '</span>'
+            + (x.genre !== 'Rubrique' ? '<span class="rech-ex">' + extrait(x.brut, mots) + '</span>' : '') + '</button>';
+        }).join('');
+    }
+    res.hidden = false; champ.setAttribute('aria-expanded', 'true');
+  }
+  function fermer(){ res.hidden = true; res.innerHTML = ''; champ.setAttribute('aria-expanded', 'false'); actif = -1; }
+  function clic(sel){ var b = document.querySelector(sel); if (b) { b.click(); return true; } return false; }
+  function hautFixe(){
+    var h = nav.offsetHeight || 0;
+    var p = document.querySelector('section.panneau:not([hidden])');
+    var r = p && Array.prototype.filter.call(p.querySelectorAll('.rail'), function(x){ return x.offsetParent && getComputedStyle(x).position === 'sticky'; })[0];
+    return h + (r ? r.offsetHeight : 0);
+  }
+  function aller(x){
+    fermer(); champ.blur();
+    clic('a[role="tab"][href="#' + x.sec.id + '"]');
+    var el = x.el;
+    setTimeout(function(){
+      var va = el.closest('.vue-autre[data-vue]');
+      if (va && va.hidden) { clic('button.vue[data-vue="' + va.getAttribute('data-vue') + '"]'); }
+      var vm = el.closest('[id^="vue-"]');
+      if (vm && vm.hidden) { clic('button.mode[data-mode="' + vm.id.slice(4) + '"]'); }
+      var sp = el.closest('.sempanel[data-sem]');
+      if (sp && !va && !vm && el.closest('#cours')) { var bs = document.querySelector('button.vue[data-vue="sem"][aria-pressed="false"]'); if (bs) { bs.click(); } }
+      if (sp && sp.hidden) {
+        var z = sp.parentElement, b = null;
+        while (z && !b) { b = z.querySelector('button.semb[data-sem="' + sp.getAttribute('data-sem') + '"]'); z = z.parentElement; }
+        if (b) { b.click(); }
+      }
+      for (var d = el; d; d = d.parentElement) { if (d.tagName === 'DETAILS') { d.open = true; } }
+      setTimeout(function(){
+        var cible = el.tagName === 'SECTION' ? el : (el.querySelector(':scope > summary') || el);
+        var y = cible.getBoundingClientRect().top + window.pageYOffset - hautFixe() - 12;
+        window.scrollTo({top: Math.max(0, y), behavior: 'smooth'});
+        el.classList.add('rech-eclair'); setTimeout(function(){ el.classList.remove('rech-eclair'); }, 2200);
+      }, 120);
+    }, 60);
+  }
+  champ.addEventListener('input', function(){ clearTimeout(champ._t); champ._t = setTimeout(chercher, 120); });
+  champ.addEventListener('focus', function(){ if (champ.value.trim().length > 1) { chercher(); } });
+  champ.addEventListener('keydown', function(ev){
+    var items = res.querySelectorAll('.rech-item');
+    if (ev.key === 'ArrowDown' || ev.key === 'ArrowUp') {
+      if (!items.length) { return; } ev.preventDefault();
+      actif = (actif + (ev.key === 'ArrowDown' ? 1 : -1) + items.length) % items.length;
+      Array.prototype.forEach.call(items, function(b, i){ b.classList.toggle('actif', i === actif); b.setAttribute('aria-selected', i === actif); });
+      items[actif].scrollIntoView({block: 'nearest'});
+    } else if (ev.key === 'Enter') {
+      if (trouves.length) { ev.preventDefault(); aller(trouves[actif > -1 ? actif : 0]); }
+    } else if (ev.key === 'Escape') { fermer(); }
+  });
+  res.addEventListener('click', function(ev){ var b = ev.target.closest('.rech-item'); if (b) { aller(trouves[parseInt(b.getAttribute('data-i'), 10)]); } });
+  document.addEventListener('click', function(ev){ if (!boite.contains(ev.target)) { fermer(); } });
+  document.addEventListener('keydown', function(ev){
+    if (ev.key === '/' && !/INPUT|TEXTAREA|SELECT/.test((document.activeElement || {}).tagName || '') && !ev.ctrlKey && !ev.metaKey) {
+      ev.preventDefault(); window.scrollTo({top: 0, behavior: 'smooth'}); champ.focus();
+    }
+  });
+})();
+</script>
 
 <script>/* couleurs-mes-cours (19/11/2026) : la bulle de compétence d'une fiche s'ouvre sur la compétence */
 window.COMP_INFO = {"c1": {"code": "C1", "titre": "Conduire des Échanges Professionnels en langues étrangères", "familles": "Anglais / LV2 ; à l'Oral et à l'Écrit", "ce": [["CE1", "En s'adaptant aux caractéristiques de son interlocuteur et/ou au contexte professionnel"], ["CE2", "En communiquant de façon claire, précise et fluide dans la langue cible"], ["CE3", "En comprenant des locuteurs natifs et/ou des documents authentiques dans un cadre professionnel"], ["CE4", "En structurant et en argumentant son propos de manière cohérente et adaptée à la situation professionnelle"], ["CE5", "En tenant compte des différences culturelles qui influencent l'échange professionnel"]], "niv": [{"tete": "L1", "titre": "Novice — Échanger des informations factuelles dans un cadre professionnel guidé (Bloom 1-2)", "app": ["Distinguer types de textes : niveaux de langue, registres, styles", "Respecter les normes sociales (règles d'adresse et de politesse, régulation des rapports sociaux)", "Mobiliser un vocabulaire de base adapté aux situations professionnelles courantes", "Restituer le sens d'un message oral produit par des locuteurs de variétés linguistiques différentes"]}, {"tete": "L2", "titre": "Intermédiaire — Conduire un échange argumenté sur des sujets professionnels courants (Bloom 3)", "app": ["Identifier et nommer les différences interculturelles qui influencent un échange professionnel", "Utiliser à bon escient des expressions idiomatiques courantes en tenant compte de leur dimension connotative", "Vérifier la compréhension de son interlocuteur et ajuster son discours en conséquence"]}, {"tete": "L3/L4", "titre": "Compétent — Gérer des échanges complexes, y compris en négociation ou médiation interculturelle (Bloom 4-6)", "app": ["Structurer et délivrer une présentation professionnelle argumentée devant un public, en maintenant l'intelligibilité et la cohérence du discours", "Adapter son registre et sa stratégie de communication au contexte professionnel, au support (oral/écrit) et à l'interlocuteur, dans au moins deux langues étrangères"]}]}, "c2": {"code": "C2", "titre": "Traduire un message d'une/dans une autre langue", "familles": "Traduction / Interprétation / Interface machine", "ce": [["CE1", "En employant les techniques fondamentales de la traduction"], ["CE2", "En produisant une traduction fidèle au sens du texte source, précise et idiomatique dans la langue cible"], ["CE3", "En intégrant les spécificités linguistiques, culturelles et stylistiques des langues source et cible"], ["CE4", "En utilisant les outils numériques adaptés"], ["CE5", "En produisant des textes de qualité et structurés adaptés au contexte et aux interlocuteurs"]], "niv": [{"tete": "L1", "titre": "Traduction guidée — Maîtrise au niveau de la phrase et du groupe verbal/nominal", "app": ["Utiliser le vocabulaire fondamental d'un champ professionnel dans les deux langues de travail", "Produire une traduction au niveau de la phrase", "Identifier les difficultés et les nuances d'une traduction au niveau de la phrase et du groupe verbal/nominal"]}, {"tete": "L2", "titre": "Traduction généraliste — Production d'une traduction respectant le style et l'esprit du texte", "app": ["Analyser les mécanismes stylistiques et sémantiques d'un texte source avant de le traduire", "Produire une traduction qui respecte le style, le sens et l'esprit du texte de départ", "Appliquer les techniques de base de la traduction (procédés notamment)"]}, {"tete": "L3/L4", "titre": "Traduction technique — Avec spécificités linguistiques, culturelles et contextuelles", "app": ["Mobiliser des savoirs thématiques spécialisés pour répondre aux exigences d'une traduction technique", "Mettre en œuvre des stratégies de contrôle qualité de ses traductions", "S'adapter à la typologie textuelle (phraséologie) et au profil du client/récepteur", "Mobiliser les principes généraux de la traduction — y compris l'adaptation culturelle et la transculturation — en tenant compte des contraintes techniques et contextuelles propres au projet"]}]}, "c3": {"code": "C3", "titre": "Analyser le fonctionnement et les enjeux d'une organisation dans ses contextes économique, institutionnel et culturel", "familles": "Gestion d'une organisation ; Projet collectif ; Mission de conseil", "ce": [["CE1", "En s'appuyant sur des outils d'analyse quantitatifs et qualitatifs pour évaluer des données internes et externes"], ["CE2", "En identifiant les leviers d'action possibles pour une organisation dans un environnement donné"], ["CE3", "En prenant en compte les dynamiques sociales, économiques, réglementaires et culturelles"], ["CE4", "En formulant des recommandations cohérentes, justifiées et adaptées au contexte"], ["CE5", "En mobilisant des sources et des données dans au moins deux langues étrangères"]], "niv": [{"tete": "L1", "titre": "Identification guidée — Du fonctionnement d'une organisation dans son environnement", "app": ["Décrire le fonctionnement d'une organisation en utilisant la terminologie et les concepts fondamentaux", "Situer les informations dans un contexte historique, géopolitique, socio-économique, culturel et légal", "Mobiliser des sources ou des exemples issus d'au moins deux contextes culturels ou linguistiques différents", "Utiliser les outils d'analyse des champs disciplinaires concernés (économie, droit, gestion) pour traiter une problématique"]}, {"tete": "L2", "titre": "Problématiser l'information — Identifier les risques et proposer des solutions", "app": ["Poser des questions sur un marché, un environnement, une culture, une pensée", "Identifier les risques d'une organisation dans son contexte pour tenter de les prévenir", "Proposer et comparer des solutions possibles aux difficultés identifiées dans l'environnement d'une organisation"]}, {"tete": "L3/L4", "titre": "Réaliser des choix éclairés et proposer des solutions", "app": ["Exploiter les données dans une perspective interculturelle et internationale pour formuler des orientations stratégiques éclairées", "Sélectionner avec un esprit critique diverses ressources pertinentes pour documenter un sujet de façon concise", "Exploiter les données afin de répondre à une problématique d'économie ou de gestion spécifique", "Évaluer la fiabilité et la pertinence d'une information en la confrontant à d'autres sources et données"]}]}, "c4mi": {"code": "C4 MI", "titre": "Aider à l'élaboration d'une stratégie marketing et commerciale adaptée à l'exportation dans des contextes internationaux et interculturels", "familles": "Gestion d'une organisation ; Projet export ; Mission de conseil ; Organismes publics", "ce": [["CE1", "En prenant en compte la variété et la complexité des marchés, des acteurs et des territoires"], ["CE2", "En utilisant les outils numériques et supports adaptés"], ["CE3", "En développant une réflexion analytique problématisée et structurée"], ["CE4", "En synthétisant les éléments clefs des ressources et supports utilisés"], ["CE5", "En contrôlant le respect des règles et des normes"]], "niv": [{"tete": "Niveau 1", "titre": "Novice (fin S4→S5) — Appliquer les outils d'analyse stratégique dans un cadre guidé", "app": ["Appliquer les outils d'analyse stratégique (SWOT, PESTEL, forces concurrentielles) à un cas d'étude encadré", "Adapter une offre commerciale aux attentes d'un segment international identifié", "Repérer les enjeux éthiques, économiques, sociaux et environnementaux liés à une implantation internationale", "Identifier et expliquer les notions de différenciation, d'avantage concurrentiel et de ciblage stratégique"]}, {"tete": "Niveau 2", "titre": "Compétent (L3/L4) — Concevoir, présenter et évaluer une stratégie export adaptée à un contexte donné", "app": ["Identifier les contraintes logistiques et d'approvisionnement dans un projet d'exportation", "Construire une offre ou une réponse commerciale export (à partir d'un brief, d'un marché cible, de données encadrées)", "Mettre en œuvre des indicateurs opérationnels (KPI) pour évaluer une stratégie commerciale", "Analyser le lien entre efficacité logistique et satisfaction client dans un contexte d'exportation", "Intégrer les enjeux de durabilité, fiabilité et conformité dans la chaîne de valeur"]}]}, "c4lch": {"code": "C4 CAPES Espagnol", "titre": "Exploiter les savoirs culturels et littéraires d'un espace linguistique donné à des fins d'analyse et de communication", "familles": "Projet touristique ; Projet citoyen ; Projet scolaire / CAPES", "ce": [["CE1", "En prenant en compte les spécificités culturelles et la diversité des récepteurs"], ["CE2", "En tenant compte de la langue source et de ses spécificités culturelles, lexicales, syntaxiques et sémantiques"], ["CE3", "En utilisant les outils numériques et supports adaptés"], ["CE4", "En développant une argumentation problématisée et structurée"], ["CE5", "En synthétisant les éléments clefs des ressources utilisées"]], "niv": [{"tete": "Niveau 1", "titre": "Intermédiaire (L3→L3/L4) — Analyser des documents culturels et littéraires dans un contexte connu", "app": ["Rechercher et mobiliser le vocabulaire d'un champ professionnel en langue étrangère", "Interpréter et interpréter des ressources en langues étrangères", "Distinguer les spécificités des systèmes linguistiques et culturels hispanophones et en rendre compte dans une analyse écrite ou orale", "Contextualiser un document historique ou civilisationnel en mobilisant des connaissances générales"]}, {"tete": "Niveau 2", "titre": "Compétent (L3/L4) — Produire des analyses et supports de communication exploitant les savoirs culturels et littéraires", "app": ["Mobiliser des connaissances approfondies des faits de civilisation à partir de sources fiables", "Concevoir et rédiger des supports de communication ou contenus pédagogiques en français ou en langues étrangères", "Élaborer des analyses de textes et de documents iconographiques à partir d'outils stylistiques et linguistiques", "Confronter les textes littéraires avec d'autres supports artistiques et culturels"]}]}, "c5": {"code": "C5", "titre": "Construire et mettre en œuvre son projet professionnel", "familles": "Enseignement ; Culture et Patrimoine ; Organisation nationale et/ou internationale ; Agence de traduction ou de communication", "ce": [["CE1", "En identifiant et valorisant ses compétences (se connaître)"], ["CE2", "En analysant les enjeux et les besoins du secteur professionnel visé (décrire le marché)"], ["CE3", "En respectant les codes culturels, les normes professionnelles et les principes éthiques (respecter les normes)"], ["CE4", "En travaillant en équipe et en réseau ainsi qu'en autonomie et responsabilité au service d'un projet"], ["CE5", "En adoptant une posture professionnelle en fonction du contexte (dimension comportementale/posturale)"]], "niv": [{"tete": "L1", "titre": "En tant qu'apprenant — Dans son rapport à ses études", "app": ["S'inscrire dans une démarche de développement professionnel en identifiant ses forces et ses faiblesses", "Considérer l'apprentissage des langues comme un outil au service d'une profession", "Identifier ses points forts et ses axes d'amélioration à partir d'un retour formatif", "Mettre en œuvre une méthode de travail adaptée aux exigences universitaires et professionnelles"]}, {"tete": "L2", "titre": "En tant que futur professionnel — Se situer dans un champ métier", "app": ["Se créer une représentation des professions cible", "Pratiquer une veille sur les champs professionnels et l'évolution des métiers", "Construire un projet professionnel en cohérence avec ses aspirations et ses potentialités", "S'inscrire dans une démarche de formation continue", "Développer une stratégie efficace d'insertion professionnelle (recherche de stage et d'emploi)"]}, {"tete": "L3/L4", "titre": "En tant qu'acteur responsable — Dans son rapport au milieu du travail", "app": ["Analyser ses actions en situation professionnelle, s'autoévaluer pour améliorer sa/une pratique", "Rédiger un rapport d'activité professionnelle en français et/ou en langue étrangère", "Apprécier une situation d'entreprise afin d'élaborer des problématiques pertinentes, argumentées et complexes", "Justifier ses choix et ses pratiques professionnelles en s'appuyant sur des référents théoriques"]}]}};
@@ -3298,7 +3479,7 @@ window.COMP_MARCHE = {"c1": {"missions": ["Adapter son discours oral ou écrit (
     var ul = el('ul', 'cp-ce');
     d.ce.forEach(function(x){ var li = el('li'); li.appendChild(el('b', '', x[0])); li.appendChild(el('span', '', x[1])); ul.appendChild(li); });
     c.appendChild(ul);
-    c.appendChild(el('p', 'cp-h', 'Niveaux et apprentissages critiques'));
+    c.appendChild(el('p', 'cp-h', 'Niveaux et apprentissages critiques que l’enseignant doit évaluer dans sa matière'));
     var nv = el('div', 'cp-niv');
     d.niv.forEach(function(n, k){
       var dans = ici === k;
