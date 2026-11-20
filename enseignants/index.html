@@ -1204,6 +1204,42 @@ html.cp-ouvert{overflow:hidden;}
 .g-coef{margin:-2px 0 6px; font:600 12.5px "IBM Plex Mono",monospace; color:var(--c2); text-transform:uppercase;}
 @media (max-width:900px){ .g-e-niv{grid-template-columns:1fr;} }
 #g-edit:not([hidden]) ~ .bilan{position:static;}
+.g-mode{display:flex; flex-wrap:wrap; align-items:center; gap:8px 16px; margin:14px 0 6px; font-size:16px;}
+.g-mode .lab{font:600 12.5px "IBM Plex Mono",monospace; letter-spacing:.08em; text-transform:uppercase; color:var(--muted);}
+.g-mode label{display:inline-flex; align-items:center; gap:6px; padding:8px 14px; min-height:42px; border:1px solid var(--line-2); border-radius:999px; cursor:pointer; background:var(--surface);}
+.g-mode label:has(input:checked){background:var(--ink); color:#fff; border-color:var(--ink);}
+.g-mode input{accent-color:var(--ink);}
+.g-membres{margin:6px 0 12px; padding:12px 14px; border:1px solid var(--line); border-radius:10px; background:var(--surface);}
+.g-membres label{display:block; font:600 12.5px "IBM Plex Mono",monospace; text-transform:uppercase; color:var(--muted); margin-bottom:6px;}
+.g-membres textarea{width:100%; max-width:520px; min-height:110px; font:400 16px/1.5 "IBM Plex Sans",system-ui,sans-serif; padding:8px 10px; border:1px solid var(--line-2); border-radius:8px;}
+.g-membres p{margin:8px 0 0; font-size:15px; color:var(--ink-2); max-width:78ch;}
+.g-bascule{display:inline-flex; margin:2px 0 10px; border:1px solid var(--line-2); border-radius:999px; overflow:hidden;}
+.g-bascule button{font:inherit; font-size:14px; padding:6px 12px; min-height:36px; border:0; background:var(--surface); color:var(--ink-2); cursor:pointer;}
+.g-bascule button[aria-pressed="true"]{background:var(--c2); color:#fff;}
+.mode-grp .g-ce .g-grp{display:none;}
+.g-ce.par-etu .g-niv label{pointer-events:none; cursor:default;}
+.g-ce.par-etu .g-niv input{display:none;}
+.g-etus{display:grid; gap:6px; margin:10px 0 4px;}
+.g-etu{display:flex; flex-wrap:wrap; align-items:center; gap:6px 10px; padding:6px 8px; border-radius:8px; background:var(--surface-2, #f4f6f8);}
+.g-etu .nom{min-width:170px; font-weight:600; font-size:15.5px;}
+.g-etu .pas{display:flex; gap:6px;}
+.g-etu .pas label{display:inline-flex; align-items:center; justify-content:center; min-width:44px; min-height:40px; border:1px solid var(--line-2); border-radius:8px; cursor:pointer; font:600 15px "IBM Plex Mono",monospace; background:var(--surface);}
+.g-etu .pas input{position:absolute; opacity:0; pointer-events:none;}
+.g-etu .pas label:has(input:checked){background:var(--c2); color:#fff; border-color:var(--c2);}
+.g-etu .pas label:has(input[value="0"]:checked){background:#b42318; border-color:#b42318;}
+.g-vide{font-size:15px; color:var(--muted); margin:8px 0;}
+.bilan-grp{margin:12px 0; padding:14px 16px; border:1px solid var(--line); border-left:4px solid var(--c2); border-radius:10px; background:var(--surface);}
+.bilan-grp h3{margin:0 0 8px; font-size:19px;}
+.bilan-grp table{width:100%; border-collapse:collapse; font-size:16px;}
+.bilan-grp th, .bilan-grp td{text-align:left; padding:8px 10px; border-bottom:1px solid var(--line);}
+.bilan-grp th{font:600 12.5px "IBM Plex Mono",monospace; text-transform:uppercase; color:var(--muted);}
+.bilan-grp td.n{font:600 18px "IBM Plex Mono",monospace;}
+.bilan-grp .ok{color:#067647; font-weight:600;} .bilan-grp .ko{color:#b42318; font-weight:600;}
+.bilan-grp .detail{margin:8px 0 0; font-size:15px; color:var(--ink-2);}
+.bilan-grp button{margin-top:10px; font:inherit; font-size:15px; padding:8px 14px; min-height:42px; border-radius:999px; border:1px solid var(--ink); background:var(--ink); color:#fff; cursor:pointer;}
+.mode-grp #bilan, .mode-grp #g-copier, .mode-grp .ident label[for="g-etu"]{display:none;}
+@media print{ .g-mode, .g-membres textarea, .g-bascule, .bilan-grp button{display:none !important;} }
+
 @media print{ .g-versions, .g-edit{display:none !important;} }
 /* grilles-editables:fin */
 /* haut-de-page:debut */
@@ -1457,6 +1493,18 @@ Elle vous mandate pour produire une analyse et formuler des recommandations opé
   <span class="etat" id="g-v-etat" role="status"></span>
 </div>
 <div class="g-edit" id="g-edit" hidden></div>
+<div class="g-mode" id="g-mode" role="radiogroup" aria-label="Notation">
+  <span class="lab">Notation</span>
+  <label><input type="radio" name="g-mode" value="ind" checked> Un étudiant</label>
+  <label><input type="radio" name="g-mode" value="grp"> Un groupe</label>
+</div>
+<div class="g-membres" id="g-membres" hidden>
+  <label for="g-noms">Membres du groupe, un par ligne</label>
+  <textarea id="g-noms" placeholder="Nom Prénom&#10;Nom Prénom&#10;Nom Prénom"></textarea>
+  <p>Pour chaque composante, choisissez : <b>note commune au groupe</b> (un seul niveau pour tous) ou
+  <b>note pour chaque étudiant</b>. La note de chaque étudiant combine les deux.</p>
+</div>
+
 
 <div class="ident">
   <label for="g-etu">Étudiant<input id="g-etu" type="text" placeholder="Nom et prénom"></label>
@@ -2648,7 +2696,7 @@ note de la DRH sur l'accueil des missionnaires, octobre 2024.</p>
       var r = v.lignes[i] || {}, n = copie(l);
       if (r.niv) { n.niv = r.niv.slice(); }
       if (r.ind) { n.ind = r.ind.slice(); }
-      n.poids = r.poids || 1; n.on = r.on !== false;
+      n.poids = r.poids || 1; n.on = r.on !== false; n.mode = r.mode || 'ind';
       return n;
     }).filter(function(l){ return l.on; });
     if (!g.lignes.length) { return off; }
@@ -2679,7 +2727,9 @@ note de la DRH sur l'accueil des missionnaires, octobre 2024.</p>
       var r = v.lignes[i] || {}, on = r.on !== false, p = r.poids || 1, niv = r.niv || l.niv, ind = r.ind || l.ind;
       h += '<fieldset class="g-e-ce' + (on ? '' : ' off') + '" data-i="' + i + '"><h4>' + ech(l.ce) + '</h4>'
         + '<div class="g-e-reg"><label><input type="checkbox" class="g-e-on"' + (on ? ' checked' : '') + '> Évaluée dans ce devoir</label>'
-        + '<label>Coefficient <select class="g-e-p">' + [1, 2, 3].map(function(n){ return '<option' + (n === p ? ' selected' : '') + '>' + n + '</option>'; }).join('') + '</select></label></div>'
+        + '<label>Coefficient <select class="g-e-p">' + [1, 2, 3].map(function(n){ return '<option' + (n === p ? ' selected' : '') + '>' + n + '</option>'; }).join('') + '</select></label>'
+        + '<label>En groupe, notée <select class="g-e-mode"><option value="ind"' + (r.mode === 'grp' ? '' : ' selected') + '>pour chaque étudiant</option>'
+        + '<option value="grp"' + (r.mode === 'grp' ? ' selected' : '') + '>une fois pour le groupe</option></select></label></div>'
         + '<div class="g-e-niv">' + niv.map(function(t, j){
             return '<label>' + ech(off.entetes[j] || String(j)) + '<textarea class="g-e-n">' + ech(t) + '</textarea></label>'; }).join('') + '</div>'
         + '<label class="g-e-ind">Indicateurs observables, un par ligne<textarea class="g-e-i">' + ech(ind.join('\n')) + '</textarea></label></fieldset>';
@@ -2707,6 +2757,7 @@ note de la DRH sur l'accueil des missionnaires, octobre 2024.</p>
     var nom = (zone.querySelector('.g-e-nom').value || '').trim() || 'Ma version';
     var lignes = Array.prototype.map.call(zone.querySelectorAll('.g-e-ce'), function(f){
       return {on: f.querySelector('.g-e-on').checked, poids: parseInt(f.querySelector('.g-e-p').value, 10) || 1,
+        mode: f.querySelector('.g-e-mode').value,
         niv: Array.prototype.map.call(f.querySelectorAll('.g-e-n'), function(t){ return t.value.trim(); }),
         ind: f.querySelector('.g-e-i').value.split('\n').map(function(s){ return s.trim(); }).filter(Boolean)};
     });
@@ -2751,6 +2802,109 @@ note de la DRH sur l'accueil des missionnaires, octobre 2024.</p>
   });
   remplir();
   if (D.choix[sel.value]) { redessiner(); }
+})();
+</script>
+<script>/* grilles-groupe (20/11/2026) : noter un étudiant ou un groupe ; pour chaque composante,
+   note commune au groupe ou note propre à chaque étudiant ; note finale de chaque étudiant */
+(function(){
+  var sel = document.getElementById('sel-grille'), zone = document.getElementById('grille');
+  var noms = document.getElementById('g-noms'), boite = document.getElementById('g-membres');
+  var panneau = document.getElementById('grilles') || document.body;
+  if (!sel || !zone || !noms) { return; }
+  var mode = 'ind', modes = {}, notesEtu = {}, bil = null;
+  function ech(t){ return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+  function fr(v){ return (Math.round(v * 100) / 100).toString().replace('.', ','); }
+  function grille(){ var off = window.LEA_GRILLES[sel.value]; return window.LEA_GRILLE ? window.LEA_GRILLE(sel.value, off) : off; }
+  function membres(){ return noms.value.split('\n').map(function(x){ return x.trim(); }).filter(Boolean); }
+  function modeDe(i, g){ var k = sel.value + ':' + i; return modes[k] || (g.lignes[i] && g.lignes[i].mode) || 'ind'; }
+  function appliquer(){
+    panneau.classList.toggle('mode-grp', mode === 'grp');
+    boite.hidden = mode !== 'grp';
+    if (!bil) {
+      bil = document.createElement('div'); bil.className = 'bilan-grp'; bil.id = 'g-bilan-grp';
+      document.getElementById('bilan').insertAdjacentElement('afterend', bil);
+    }
+    bil.hidden = mode !== 'grp';
+    var g = grille(), m = membres(), cartes = zone.querySelectorAll('.g-ce');
+    Array.prototype.forEach.call(cartes, function(c, i){
+      var b = c.querySelector('.g-bascule'), e = c.querySelector('.g-etus');
+      if (b) { b.remove(); } if (e) { e.remove(); }
+      c.classList.remove('par-etu');
+      if (mode !== 'grp') { return; }
+      var md = modeDe(i, g);
+      var h4 = c.querySelector('h4');
+      var bs = document.createElement('div'); bs.className = 'g-bascule'; bs.setAttribute('role', 'group');
+      bs.innerHTML = '<button type="button" data-m="grp" aria-pressed="' + (md === 'grp') + '">Note commune au groupe</button>'
+        + '<button type="button" data-m="ind" aria-pressed="' + (md === 'ind') + '">Note pour chaque étudiant</button>';
+      bs.addEventListener('click', function(ev){
+        var bt = ev.target.closest('button'); if (!bt) { return; }
+        modes[sel.value + ':' + i] = bt.getAttribute('data-m'); appliquer();
+      });
+      h4.insertAdjacentElement('afterend', bs);
+      if (md !== 'ind') { return; }
+      c.classList.add('par-etu');
+      var et = document.createElement('div'); et.className = 'g-etus';
+      if (!m.length) { et.innerHTML = '<p class="g-vide">Indiquez les membres du groupe, plus haut, pour noter chacun.</p>'; }
+      m.forEach(function(nom){
+        var cle = sel.value + ':' + i + ':' + nom, v = notesEtu[cle];
+        et.innerHTML += '<div class="g-etu"><span class="nom">' + ech(nom) + '</span><span class="pas">'
+          + [0, 1, 2, 3, 4].map(function(k){
+              return '<label title="' + ech(g.entetes[k] || k) + '"><input type="radio" name="' + ech(cle) + '" value="' + k + '"'
+                + (v === k ? ' checked' : '') + ' data-cle="' + ech(cle) + '">' + k + '</label>'; }).join('')
+          + '</span></div>';
+      });
+      c.querySelector('.g-niv').insertAdjacentElement('afterend', et);
+    });
+    bilan();
+  }
+  function noteDe(nom, g){
+    var P = [], X = [];
+    g.lignes.forEach(function(l, i){
+      var x = null;
+      if (modeDe(i, g) === 'grp') { var r = zone.querySelector('input[name="ce' + i + '"]:checked'); x = r ? parseInt(r.value, 10) : null; }
+      else { var v = notesEtu[sel.value + ':' + i + ':' + nom]; x = (v === undefined) ? null : v; }
+      X.push(x); P.push(l.poids || 1);
+    });
+    var s = 0, mx = 0, n = 0, zero = false;
+    X.forEach(function(x, i){ if (x !== null) { s += x * P[i]; mx += 4 * P[i]; n++; if (x === 0) { zero = true; } } });
+    if (!n) { return null; }
+    var v = s * 20 / mx;
+    return {v: v, m: v >= 18 ? 'Excellent' : v >= 14 ? 'Très bien' : v >= 10 ? 'Bien' : v >= 7 ? 'Passable' : 'Insuffisant',
+            zero: zero, n: n, tot: X.length};
+  }
+  function bilan(){
+    if (mode !== 'grp' || !bil) { return; }
+    var g = grille(), m = membres();
+    var nG = g.lignes.filter(function(l, i){ return modeDe(i, g) === 'grp'; }).length;
+    if (!m.length) { bil.innerHTML = '<h3>Notes du groupe</h3><p class="detail">Indiquez les membres du groupe pour obtenir la note de chacun.</p>'; return; }
+    var lignes = m.map(function(nom){
+      var r = noteDe(nom, g);
+      return '<tr><td>' + ech(nom) + '</td><td class="n">' + (r ? fr(r.v) + ' / 20' : '—') + '</td><td>' + (r ? r.m : '') + '</td><td>'
+        + (r ? '<span class="' + (r.zero ? 'ko">Non validée : une composante à 0' : 'ok">Validée') + '</span>' + (r.n < r.tot ? ' · ' + r.n + ' sur ' + r.tot + ' notées' : '') : '') + '</td></tr>';
+    }).join('');
+    bil.innerHTML = '<h3>Notes du groupe</h3><table><thead><tr><th>Étudiant</th><th>Note</th><th>Mention</th><th>Compétence</th></tr></thead><tbody>'
+      + lignes + '</tbody></table><p class="detail">' + nG + ' composante' + (nG > 1 ? 's notées' : ' notée') + ' pour le groupe, '
+      + (g.lignes.length - nG) + ' pour chaque étudiant. Note de chaque étudiant : moyenne de toutes les composantes, coefficients compris, ramenée sur 20.</p>'
+      + '<button type="button" id="g-copier-grp">Copier les notes du groupe</button> <span class="etat" id="g-etat-grp" role="status"></span>';
+  }
+  document.addEventListener('change', function(ev){
+    var t = ev.target;
+    if (t.name === 'g-mode') { mode = t.value; appliquer(); return; }
+    if (t.getAttribute && t.getAttribute('data-cle')) { notesEtu[t.getAttribute('data-cle')] = parseInt(t.value, 10); bilan(); return; }
+    if (mode === 'grp' && t.matches && t.matches('#grille input[type="radio"][name^="ce"]')) { bilan(); }
+  });
+  noms.addEventListener('input', function(){ clearTimeout(noms._t); noms._t = setTimeout(appliquer, 300); });
+  new MutationObserver(function(){ if (mode === 'grp') { appliquer(); } }).observe(zone, {childList: true});
+  document.addEventListener('click', function(ev){
+    if (!ev.target || ev.target.id !== 'g-copier-grp') { return; }
+    var g = grille(), ev2 = document.getElementById('g-eval').value.trim(), ens = document.getElementById('g-ens').value.trim();
+    var txt = g.titre + ' — ' + g.sous + (ev2 ? '\nÉvaluation : ' + ev2 : '') + (ens ? '\nEnseignant : ' + ens : '') + '\n'
+      + membres().map(function(nom){ var r = noteDe(nom, g); return nom + ' : ' + (r ? fr(r.v) + ' / 20, ' + r.m + (r.zero ? ', compétence non validée' : ', compétence validée') : 'non noté'); }).join('\n');
+    var etat = document.getElementById('g-etat-grp');
+    (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject()).then(function(){ etat.textContent = 'Notes copiées.'; },
+      function(){ etat.textContent = 'Copie impossible ici : sélectionnez le tableau et copiez-le.'; });
+  });
+  document.getElementById('g-vider').addEventListener('click', function(){ notesEtu = {}; noms.value = ''; if (mode === 'grp') { appliquer(); } });
 })();
 </script>
 <script>/* haut-de-page (20/11/2026) : un bouton « Haut de page » apparaît dès qu'on a défilé */
