@@ -1,10 +1,12 @@
 /* Application « Licence LEA » : garde les pages en mémoire pour une consultation hors connexion.
    Réseau d'abord, pour que les étudiants voient toujours la dernière version quand ils sont connectés ;
    mémoire ensuite, quand il n'y a pas de réseau. Changer VERSION à chaque mise à jour importante. */
-const VERSION = 'faq-lea-2026-11-20-1409';
+const VERSION = 'faq-lea-2026-11-23-1050';
 const FICHIERS = [
   './index.html',
   './candidater-en-alternance.html',
+  './chercher-sur-linkedin.html',
+  './reviser-avec-lia-etudiant.html',
   './fiche-entreprise-stage-L1-LEA.docx',
   './fiche-entreprise-stage-L1-LEA.pdf',
   './fiche-entreprise-stage-L2-LEA.docx',

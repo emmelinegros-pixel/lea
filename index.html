@@ -618,7 +618,7 @@ a.renvoi.bouton-onglet:hover{background:var(--ink); color:#FFFFFF; border:0;}
 .equipe-etu{margin-top:28px;}
 /* menu-mobile:debut */
 .mm-barre, .mm-feuille, .mm-suite{display:none;}
-@media (max-width:760px){
+@media (max-width:1000px){
   nav.tabs .liste{display:none!important;}
   .mm-barre{display:flex; align-items:center; gap:10px; padding:8px 12px;}
   .mm-barre .mm-ou{flex:1; min-width:0;}
@@ -966,6 +966,87 @@ body{line-height:1.6;}
   details.pli > summary .pr{font-size:.82rem;}
 }
 /* lisibilite-etudiants:fin */
+/* barre-et-retour:debut (22/11/2026), page des étudiants : une seule barre collée (rubriques, retour, loupe) */
+html{scroll-padding-top:calc(var(--cm-haut, 64px) + 12px);}
+nav.tabs{display:flex; align-items:stretch;}
+nav.tabs .liste{flex:1 1 auto; min-width:0; margin:0;}
+.mm-barre{flex:1 1 auto; min-width:0;}
+.nav-outils{flex:0 0 auto; display:flex; align-items:center; gap:6px; padding:0 clamp(10px,2vw,24px) 0 8px;}
+.nav-outils button{font:inherit; font-size:14.5px; font-weight:500; display:inline-flex; align-items:center; gap:7px;
+  min-height:38px; padding:0 13px; border-radius:999px; border:1px solid var(--line-2); background:var(--surface);
+  color:var(--ink-2); cursor:pointer; white-space:nowrap;}
+.nav-outils button:hover{color:var(--ink); background:var(--surface-2);}
+.nav-outils .nav-ico{display:inline-flex; line-height:0;}
+.nav-outils kbd{font:500 12px "IBM Plex Mono",monospace; color:var(--muted); border:1px solid var(--line-2); border-radius:5px; padding:1px 6px;}
+.nav-retour{color:var(--ink)!important; border-color:var(--ink)!important;}
+.nav-loupe[aria-expanded="true"]{background:var(--ink)!important; color:var(--ground)!important; border-color:var(--ink)!important;}
+.nav-loupe[aria-expanded="true"] kbd{color:inherit; border-color:currentColor;}
+.recherche.rech-pop{position:absolute; top:100%; right:clamp(10px,2vw,24px); left:auto; z-index:40;
+  width:min(720px, calc(100vw - 20px)); max-width:none; margin:6px 0 0; padding:10px;
+  background:var(--surface); border:1px solid var(--line-2); border-radius:14px; box-shadow:0 14px 34px rgba(0,0,0,.2);}
+.recherche.rech-pop[hidden]{display:none;}
+.rech-pop .rech-res{position:static; margin-top:8px; max-height:min(64vh,520px); box-shadow:none; border:0; padding:0;}
+.rech-pop .rech-kbd{display:none;}
+.mm-barre .mm-l2{display:none;}
+@media (max-width:1000px){
+  .nav-outils{padding:0 10px 0 0; gap:6px;}
+  .nav-outils .nav-loupe-t, .nav-outils kbd, .nav-outils .nav-ret-t{display:none;}
+  .nav-outils button{min-width:44px; min-height:44px; justify-content:center; padding:0 10px;}
+  .recherche.rech-pop{left:8px; right:8px; width:auto;}
+}
+@media (max-width:480px){
+  .mm-barre{padding-right:4px;}
+  .mm-barre .mm-l1{display:none;} .mm-barre .mm-l2{display:inline;}
+  .mm-barre button{padding:10px 14px;}
+  .mm-barre{gap:8px; padding-left:10px;}
+  .mm-barre .mm-n{white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size:12px; letter-spacing:.03em;}
+}
+/* les douze rubriques restent toutes visibles : elles passent sur deux lignes plutôt que de sortir de l'écran */
+@media (min-width:1001px){
+  nav.tabs .liste{flex-wrap:wrap; overflow:visible; padding-inline:12px; row-gap:0;}
+  nav.tabs a{padding:9px 10px 8px; font-size:15px;}
+}
+@media (min-width:1001px) and (max-width:1500px){
+  .nav-outils .nav-loupe-t, .nav-outils kbd, .nav-outils .nav-ret-t{display:none;}
+  .nav-outils button{min-width:40px; justify-content:center; padding:0 10px;}
+}
+/* « Haut de page » ne cache plus le pied de page sur téléphone */
+@media (max-width:760px){
+  .haut-page{width:48px; padding:0; justify-content:center; font-size:0; right:12px; bottom:12px;}
+  .haut-page span{font-size:20px;}
+  footer .wrap{padding-bottom:84px;}
+}
+@media print{.nav-outils, .rech-pop{display:none!important;}}
+/* barre-et-retour:fin */
+
+/* accueil-cartes:debut (23/11/2026) : page des étudiants, accueil en cartes cliquables */
+.acces{display:grid; gap:8px; grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr)); margin-top:18px;}
+.acces a{display:flex; flex-direction:column; gap:2px; text-decoration:none; background:var(--surface); border:1px solid var(--line); border-radius:4px; padding:11px 14px;}
+.acces a:hover{border-color:var(--accent); background:var(--surface-2);}
+.acces b{font-family:Spectral,Georgia,serif; font-size:17.5px; font-weight:600; color:var(--ink);}
+.acces span{font-size:14px; color:var(--muted);}
+@media (max-width:520px){
+  .acces{grid-template-columns:1fr 1fr; gap:6px;}
+  .acces a{padding:9px 10px;}
+  .acces b{font-size:16px; line-height:1.2;}
+  .acces span{font-size:12.5px; line-height:1.25; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+}
+/* accueil-cartes:fin */
+
+
+/* ia-onglet:debut (23/11/2026) : onglet « Utilisation des IA » */
+.avis-ia{margin:16px 0 18px; background:var(--dur-bg); border:1px solid var(--dur); border-left-width:5px; border-radius:4px; padding:14px 18px;}
+.avis-ia p{margin:0 0 8px;}
+.avis-ia p:last-child{margin-bottom:0;}
+.avis-ia .avis-t{font-family:Spectral,Georgia,serif; font-size:21px; font-weight:600; line-height:1.25; color:var(--dur);}
+.avis-ia .avis-n{font-size:15px; color:var(--ink-2);}
+h3.ia-h{font-family:"IBM Plex Mono",monospace; font-size:12.5px; font-weight:500; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin:20px 0 8px;}
+a.ia-bouton{display:block; text-decoration:none; background:var(--ink); color:var(--ground); border-radius:6px; padding:16px 20px; margin:0 0 10px;}
+a.ia-bouton:hover{background:var(--ink-2);}
+a.ia-bouton .bt{display:block; font-family:Spectral,Georgia,serif; font-size:22px; font-weight:600;}
+a.ia-bouton .bd{display:block; font-size:14.5px; opacity:.85; margin-top:2px;}
+/* ia-onglet:fin */
+
 </style>
 </head>
 <body>
@@ -993,7 +1074,8 @@ body{line-height:1.6;}
 
 <nav class="tabs" aria-label="Rubriques">
   <div class="liste" role="tablist">
-    <a role="tab" id="t-licence" href="#licence" aria-controls="licence" aria-selected="true">La licence LEA</a>
+    <a role="tab" id="t-accueil" href="#accueil" aria-controls="accueil" aria-selected="true">Accueil</a>
+    <a role="tab" id="t-licence" href="#licence" aria-controls="licence" aria-selected="false">La licence LEA</a>
     <a role="tab" id="t-specialite" href="#specialite" aria-controls="specialite" aria-selected="false">Choisir sa spé en fin de S4</a>
     <a role="tab" id="t-alternance" href="#alternance" aria-controls="alternance" aria-selected="false">L'alternance</a>
     <a role="tab" id="t-capes" href="#capes" aria-controls="capes" aria-selected="false">Le CAPES d'espagnol</a>
@@ -1003,6 +1085,7 @@ body{line-height:1.6;}
     <a role="tab" id="t-competences" href="#competences" aria-controls="competences" aria-selected="false">Compétences et UE</a>
     <a role="tab" id="t-mcc" href="#mcc" aria-controls="mcc" aria-selected="false">Les MCC</a>
     <a role="tab" id="t-examens" href="#examens" aria-controls="examens" aria-selected="false">Les examens</a>
+    <a role="tab" id="t-ia" href="#ia" aria-controls="ia" aria-selected="false">Utilisation des IA</a>
     <a role="tab" id="t-reglement" href="#reglement" aria-controls="reglement" aria-selected="false">Règlement des études LEA</a>
     <a role="tab" id="t-contacts" href="#contacts" aria-controls="contacts" aria-selected="false">Contacts</a>
   </div>
@@ -1010,8 +1093,17 @@ body{line-height:1.6;}
 
 <main>
 
+<section class="panneau" id="accueil" data-accent="c1" role="tabpanel" aria-labelledby="t-accueil">
+  <div class="wrap">
+    <div class="tete">
+      <h2><span class="eyeb">Accueil</span>Les rubriques de la page</h2>
+    </div>
+    <div class="acces"><a href="#licence"><b>La licence LEA</b><span>Sept semestres, quatre niveaux</span></a><a href="#specialite"><b>Choisir sa spé en fin de S4</b><span>La bifurcation</span></a><a href="#alternance"><b>L'alternance</b><span>Spé Marketing International</span></a><a href="#capes"><b>Le CAPES d'espagnol</b><span>Spé CAPES d'espagnol</span></a><a href="#sae"><b>Les SAÉ</b><span>Situations d'apprentissage et d'évaluation</span></a><a href="#rapport"><b>Rapport et soutenance</b><span>L'exercice final</span></a><a href="#bourses"><b>Bourses et absences en cours</b><span>Présence et assiduité</span></a><a href="#competences"><b>Compétences et UE</b><span>L'approche par compétences</span></a><a href="#mcc"><b>Les MCC</b><span>Modalités de contrôle</span></a><a href="#examens"><b>Les examens</b><span>Charte des examens</span></a><a href="#ia"><b>Utilisation des IA</b><span>La règle de la licence LEA</span></a><a href="#reglement"><b>Règlement des études LEA</b><span>Le texte qui fait foi</span></a><a href="#contacts"><b>Contacts</b><span>Pour aller plus loin</span></a></div>
+  </div>
+</section>
+
 <!-- =================== LA LICENCE =================== -->
-<section class="panneau" id="licence" data-accent="c1" role="tabpanel" aria-labelledby="t-licence">
+<section class="panneau" id="licence" data-accent="c1" role="tabpanel" hidden aria-labelledby="t-licence">
   <div class="wrap">
     <div class="tete">
       <h2><span class="eyeb">La licence LEA</span>Sept semestres, quatre niveaux</h2>
@@ -1024,58 +1116,7 @@ body{line-height:1.6;}
         en économie et en commerce international.</p>
     </div>
 
-    <div class="plis">
-      <details class="pli large pos">
-        <summary><span class="pk">Un exemple de cours</span><span class="pt">Civilisation US — 12 h CM et 12 h TD</span><span class="pr">Ce qu'on vous demande vraiment en fin de semestre</span></summary>
-        <div class="pc">
-          <p>Semestre 3 (L2), compétence C1, coefficient 2. Ce cours introduit la civilisation
-            américaine — fondation des États-Unis, mouvements migratoires, valeurs, rituels, symboles et
-            rêve américain — pour nourrir la compréhension des codes culturels de l'un des principaux
-            partenaires économiques mondiaux.</p>
-          <p><strong>Contrairement à la licence LLCER Anglais, on ne vous demandera pas de dissertation ni
-            de commentaire de texte de civilisation.</strong> On vous demande de mobiliser ces
-            connaissances pour aider, en situation, à l'élaboration de décisions stratégiques — c'est
-            toute la différence entre étudier une culture et s'en servir.</p>
-          <h4>L'épreuve de fin de semestre : une mission de conseil</h4>
-          <p>Mise en situation : vous êtes <strong>consultant·e junior</strong> dans une agence de
-            développement international. Trois entreprises françaises fictives — un fabricant de vélos
-            électriques, une marque de cosmétiques naturels, un cabinet d'architecture — veulent
-            s'implanter aux États-Unis et vous soumettent chacune une déclaration stratégique. Pour
-            chaque client, vous devez <strong>identifier ce qui, dans son raisonnement, est inexact ou
-            risqué</strong>, et formuler une recommandation professionnelle en anglais, appuyée sur des
-            données chiffrées et sourcées.</p>
-          <div class="cols">
-            <div>
-              <h4>Un exemple de déclaration client</h4>
-              <p style="font-style:italic;">« On vise Chicago pour notre implantation commerciale. C'est
-                une ville connue pour sa culture cycliste, au cœur du Midwest — et puis c'est une grande
-                métropole, les gens y ont du pouvoir d'achat. »</p>
-              <p>Ce qu'il faut voir : Chicago appartient au <b>Rust Belt</b> (population en déclin,
-                fiscalité des entreprises parmi les plus lourdes du pays) ; Austin, au Texas, dans le
-                <b>Sun Belt</b>, offre un profil bien plus adapté à une marque premium — revenu médian
-                plus élevé, 0 % d'impôt sur les sociétés, marché du vélo électrique en forte
-                croissance.</p>
-            </div>
-            <div>
-              <h4>Ce qui est noté</h4>
-              <ul>
-                <li><b>Mobilisation du cours</b> — les notions (Sun Belt/Rust Belt, checks and balances,
-                  melting pot/salad bowl…) nommées, définies, et utilisées pour analyser, pas seulement
-                  citées</li>
-                <li><b>Données chiffrées</b> — au moins trois par réponse, intégrées dans l'analyse,
-                  sourcées</li>
-                <li><b>Pertinence</b> — une recommandation adaptée à ce client précis, jamais une réponse
-                  générique</li>
-                <li><b>Anglais professionnel</b> — registre consultatif : <i>the data suggests… we
-                  therefore recommend…</i></li>
-              </ul>
-            </div>
-          </div>
-          <p class="note-tbl">D'après le mock exam de révision du cours Civilisation américaine, Dr
-            Emmeline Gros, UNC.</p>
-        </div>
-      </details>
-    </div>
+    
 
     <ul class="liens"><li><a href="maquette-LEA-2027-CFVU-2026.pdf" download><span><span class="t">La maquette complète de la licence</span><span class="d">PDF · version CFVU 2026 · la maquette par compétence et la maquette classique, telles qu'elles ont été votées</span></span><span class="fl">PDF ↓</span></a></li><li><a href="guide-pedagogique-LEA-2027-etudiants.pdf" download><span><span class="t">Le guide pédagogique 2027</span><span class="d">PDF · le contenu de chaque cours, semestre par semestre : exercices types, notions, compétences évaluées. Chaque fiche indique la MCC prévue par la maquette ; l'enseignant confirmera les MCC en début de semestre.</span></span><span class="fl">PDF ↓</span></a></li></ul>
 
@@ -1085,6 +1126,7 @@ body{line-height:1.6;}
       <button type="button" class="mode" data-mode="sem" aria-pressed="true">par semestre</button>
       <button type="button" class="mode" data-mode="comp" aria-pressed="false">par compétence</button>
       <button type="button" class="mode" data-mode="prog" aria-pressed="false">par progression</button>
+      <button type="button" class="mode" data-mode="exemple" aria-pressed="false">par un exemple</button>
       <button type="button" class="mode" data-mode="pratique" aria-pressed="false">par la pratique réelle</button>
       <button type="button" class="mode" data-mode="deb" aria-pressed="false">par les débouchés</button>
       <button type="button" class="mode" data-mode="obj" aria-pressed="false">par objectif</button>
@@ -1530,6 +1572,61 @@ body{line-height:1.6;}
 <p class="note-tbl">D'après la maquette référentiel LEA 2027 (section « Progression à suivre »).</p>
 </div>
 
+    <div id="vue-exemple" hidden>
+    <div class="plis">
+      <details class="pli large pos" open>
+        <summary><span class="pk">Un exemple de cours</span><span class="pt">Civilisation US — 12 h CM et 12 h TD</span><span class="pr">Ce qu'on vous demande vraiment en fin de semestre</span></summary>
+        <div class="pc">
+          <p>Semestre 3 (L2), compétence C1, coefficient 2. Ce cours introduit la civilisation
+            américaine — fondation des États-Unis, mouvements migratoires, valeurs, rituels, symboles et
+            rêve américain — pour nourrir la compréhension des codes culturels de l'un des principaux
+            partenaires économiques mondiaux.</p>
+          <p><strong>Contrairement à la licence LLCER Anglais, on ne vous demandera pas de dissertation ni
+            de commentaire de texte de civilisation.</strong> On vous demande de mobiliser ces
+            connaissances pour aider, en situation, à l'élaboration de décisions stratégiques — c'est
+            toute la différence entre étudier une culture et s'en servir.</p>
+          <h4>L'épreuve de fin de semestre : une mission de conseil</h4>
+          <p>Mise en situation : vous êtes <strong>consultant·e junior</strong> dans une agence de
+            développement international. Trois entreprises françaises fictives — un fabricant de vélos
+            électriques, une marque de cosmétiques naturels, un cabinet d'architecture — veulent
+            s'implanter aux États-Unis et vous soumettent chacune une déclaration stratégique. Pour
+            chaque client, vous devez <strong>identifier ce qui, dans son raisonnement, est inexact ou
+            risqué</strong>, et formuler une recommandation professionnelle en anglais, appuyée sur des
+            données chiffrées et sourcées.</p>
+          <div class="cols">
+            <div>
+              <h4>Un exemple de déclaration client</h4>
+              <p style="font-style:italic;">« On vise Chicago pour notre implantation commerciale. C'est
+                une ville connue pour sa culture cycliste, au cœur du Midwest — et puis c'est une grande
+                métropole, les gens y ont du pouvoir d'achat. »</p>
+              <p>Ce qu'il faut voir : Chicago appartient au <b>Rust Belt</b> (population en déclin,
+                fiscalité des entreprises parmi les plus lourdes du pays) ; Austin, au Texas, dans le
+                <b>Sun Belt</b>, offre un profil bien plus adapté à une marque premium — revenu médian
+                plus élevé, 0 % d'impôt sur les sociétés, marché du vélo électrique en forte
+                croissance.</p>
+            </div>
+            <div>
+              <h4>Ce qui est noté</h4>
+              <ul>
+                <li><b>Mobilisation du cours</b> — les notions (Sun Belt/Rust Belt, checks and balances,
+                  melting pot/salad bowl…) nommées, définies, et utilisées pour analyser, pas seulement
+                  citées</li>
+                <li><b>Données chiffrées</b> — au moins trois par réponse, intégrées dans l'analyse,
+                  sourcées</li>
+                <li><b>Pertinence</b> — une recommandation adaptée à ce client précis, jamais une réponse
+                  générique</li>
+                <li><b>Anglais professionnel</b> — registre consultatif : <i>the data suggests… we
+                  therefore recommend…</i></li>
+              </ul>
+            </div>
+          </div>
+          <p class="note-tbl">D'après le mock exam de révision du cours Civilisation américaine, Dr
+            Emmeline Gros, UNC.</p>
+        </div>
+      </details>
+    </div>
+    </div>
+
     <div id="vue-pratique" hidden>
 
       <div class="progbloc">
@@ -1831,7 +1928,7 @@ body{line-height:1.6;}
         alternance entre l'UNC et une entreprise, sous <strong>contrat unique d'alternance</strong> de douze mois, <strong>du 1<sup>er</sup> juin de l'année N au
         31 mai de l'année N+1</strong>. On n'entre pas en S6 dans cette spé sans contrat signé.</p>
     </div>
-    <ul class="liens" data-ajout="candidater"><li><a href="candidater-en-alternance.html" target="_blank" rel="noopener"><span><span class="t">Candidater en alternance — LEA</span><span class="d">Loïc Steffan · CV, lettre et profil LinkedIn, rythme hebdomadaire, missions à chercher, 14 prompts à copier</span></span><span class="fl">ouvrir ↗</span></a></li></ul>
+    <ul class="liens" data-ajout="candidater"><li><a href="candidater-en-alternance.html" target="_blank" rel="noopener"><span><span class="t">Candidater en alternance — LEA</span><span class="d">Loïc Steffan · CV, lettre et profil LinkedIn, rythme hebdomadaire, missions à chercher, 14 prompts à copier</span></span><span class="fl">ouvrir ↗</span></a></li><li><a href="chercher-sur-linkedin.html" target="_blank" rel="noopener"><span><span class="t">Chercher sur LinkedIn : les bonnes personnes, les alertes</span><span class="d">Trouver la ou le responsable d'une entreprise, faire une recherche précise, créer une alerte Emploi</span></span><span class="fl">ouvrir ↗</span></a></li></ul>
 
     <div class="plis">
       <details class="pli large pos">
@@ -1849,7 +1946,7 @@ body{line-height:1.6;}
       </details>
 
       <details class="pli">
-        <summary><span class="pk">Toutes années</span><span class="pt">Où chercher</span><span class="pr">Entreprises qui accueillent des étudiants LEA en Nouvelle-Calédonie</span></summary>
+        <summary><span class="pk">Toutes années</span><span class="pt">Où chercher</span><span class="pr">Entreprises qui accueillent des étudiants LEA en Nouvelle-Calédonie, et pistes pour candidater</span></summary>
         <div class="pc">
           <h4>Transport, logistique, commerce international</h4>
           <p>Transam (Nouméa) · GEODIS (Nouville, Nouméa) · SIFA Logistics (ZAC Panda) · SOPAC (Nouméa) · Aircalin (Tontouta) · Ballande SAS · BCS Import (Nouméa) · NCT&amp;I.</p>
@@ -1857,9 +1954,60 @@ body{line-height:1.6;}
           <p>SLN — Société Le Nickel (Nouméa) · Prony Resources · Isotechnic (Ducos) · Agence Calédonienne de l'Énergie · ONFI · Synverdev.</p>
           <h4>Médias, communication, services</h4>
           <p>France Télévisions Publicité NC · Canal+ Calédonie · OPT · Bamyr-NC (Nouméa) · Connectic System · Boniface ACMA · SICA NC · CEA · PRNC.</p>
+          <p class="note-tbl">Source : maquette de la licence LEA 2027, « Le stage et l'alternance ».</p>
+
+          <h4>Des entreprises à contacter en plus</h4>
+          <p>Les noms et adresses viennent de sources publiques (annuaire de Nouvelle-Calédonie Tourisme, liste officielle des agences de voyage agréées, annuaires professionnels). <b>Aucune de ces sources ne dit qu'une entreprise recrute des alternants</b> : ce sont des destinataires de candidatures spontanées. La liste officielle des agences de voyage date en outre de février 2023.</p>
+          <p><b>Un précédent : Tropic Travel</b> (agence de voyages, 2 rue Jean-François Cherrier, Green Valley, Nouméa, tél. 28 89 89, <a href="mailto:tropic@tropic-travel.nc">tropic@tropic-travel.nc</a>) a déjà accueilli une alternante de la licence.</p>
+
+          <h4>Transport, tourisme et voyages</h4>
+          <p><b>Agences de voyages agréées</b> (liste officielle, 07/02/2023) : Pacifique Lagon (1 rue d'Ypres) · Asia Voyages (22 rue Anatole France) · Agence de voyages Jean Brock (14 rue Georges Clémenceau) · Voyagence (9 rue d'Austerlitz) · T.P.V. (33 rue de Sébastopole) · Axxess Travel (22 rue Duquesne, Quartier Latin) · Amac Voyages (26 rue Georges Clémenceau, et centre commercial Téari).</p>
+          <p><b>Agences réceptives</b> (elles organisent les séjours de clients étrangers sur place ; l'anglais y est un outil de travail quotidien) : Authentik Caledonia · Axxess Travel · Creation Events · Noumea Discovery · Pacifique Lagon Voyages · Promenade Tours · Toutazimut – Tours guidés (Yaté) · Transat Tours.</p>
+          <p><b>Agences maritimes</b> (escales de navires, dont les croisiéristes) : A.M.R.P.P · Agence Maritime Ballande · Kenua (elle se présente comme assurant la liaison avec les navires de croisière) · Nouméa Yacht Services · SATO SAS.</p>
+          <p><b>Transport et services aux voyageurs</b> : Air Calédonie · Air Alizé · Nouméa Excursions · Foord Location · SIXT · Point Rouge Tontouta · Taxis de Nouméa · navettes aéroport (Arc en Ciel Services, Bourail Shuttle Service).</p>
+          <p><b>Hôtellerie de Nouméa</b> : Hilton Nouméa La Promenade Residences (109 Promenade Roger Laroque) · DoubleTree by Hilton Nouméa Îlot Maître Resort · Le Méridien · Ramada Hotel &amp; Suites Nouméa (7 rue Louis Blériot) · Château Royal Beach Resort &amp; Spa · Sheraton Deva (Bourail).</p>
+          <p><b>Autres pistes</b> : Port autonome de la Nouvelle-Calédonie (il recense les escales de paquebots) · Aircalin (compagnie internationale, absente de l'annuaire consulté, ajoutée parce que c'est la compagnie du territoire).</p>
+
+          <h4>Import-export, distribution et commerce</h4>
+          <ul>
+            <li><b>Team France Export Nouvelle-Calédonie</b> : dispositif d'appui à l'export réunissant la CCI-NC, Business France et Bpifrance ; Business France est installée à la CCI, +687 24 42 89.</li>
+            <li><b>Maxitour</b> : grossiste, 50 route de l'Anse Vata (Trianon).</li>
+            <li><b>Primex</b> : grossiste, 4 rue Ange Berlioz (Trianon).</li>
+            <li><b>Promotop</b> : grossiste, lot 26 route de la Ziza, Païta.</li>
+            <li><b>Société d'Importation Frigorifique NC</b> : commerce de gros alimentaire.</li>
+            <li><b>SICA NC</b> : aliments pour animaux d'élevage, fabrication et export dans le Pacifique.</li>
+            <li><b>Provenderie Saint-Vincent</b> : aliments pour crevettes.</li>
+          </ul>
+          <p>L'annuaire <a href="https://www.1012.nc/" target="_blank" rel="noopener">1012.nc</a> renvoie 62 résultats pour « import-export, sociétés de commerce international » : c'est la source à dépouiller pour aller plus loin.</p>
+
+          <h4>Agriculture, pêche et produits locaux</h4>
+          <ul>
+            <li><b>SOPAC</b> (Société des Producteurs Aquacoles Calédoniens) : coopérative de producteurs de crevettes, cinq producteurs certifiés ASC.</li>
+            <li><b>Centre technique aquacole</b> (Boulouparis) : co-acteur de la filière crevette, Province Nord.</li>
+            <li><b>Iaora Export</b> : pêche et déshydrate la bêche-de-mer pour l'exporter.</li>
+            <li><b>Société d'élevage aquacole de la Ouenghi</b> (Boulouparis) : élevage d'holothuries.</li>
+            <li><b>NATIV-NC</b> : projets sur le santal, la vanille et le miel (« Terroirs d'Océanie », objectif export), boutique en ligne des producteurs, « Pacific Cosmetic Valley ».</li>
+            <li><b>Chambre d'agriculture et de la pêche de NC</b> : réseau « Bienvenue à la ferme » (dont produits de cerf).</li>
+          </ul>
+          <p>Pour la vanille de Boulouparis et le cerf, il n'a été trouvé que des structures d'appui, pas d'entreprises identifiées : à chercher auprès de la mairie de Boulouparis et de la Chambre d'agriculture.</p>
+
+          <h4>Développement et projets</h4>
+          <p>ADECAL Technopole (agence de développement économique de la NC : pôle marin, pôle innovation) · Province Sud, direction du développement économique et du tourisme (DDET) · Nord Avenir (pôle agro, Province Nord) · French Tech Nouvelle-Calédonie · CCI-NC.</p>
+
+          <h4>Services, entretien et équipement</h4>
+          <p>Aucune source fiable ne liste des entreprises de ce secteur. Cherchez dans les annuaires <a href="https://www.1012.nc/" target="_blank" rel="noopener">1012.nc</a> et Plan.nc.</p>
+
+          <h4>Où chercher d'autres entreprises</h4>
+          <ul>
+            <li>Annuaire pro de Nouvelle-Calédonie Tourisme (hébergements, prestataires d'activités, événements) : <a href="https://www.nouvellecaledonie.travel/pro/annuaire/" target="_blank" rel="noopener">nouvellecaledonie.travel/pro/annuaire/</a></li>
+            <li>CCI-NC : page « Recruter un(e) alternant(e)/stagiaire » et job dating alternance organisé avec l'EGC (surveiller la prochaine édition).</li>
+            <li><a href="https://www.pointa.nc/" target="_blank" rel="noopener">pointa.nc</a> : offre de formation en alternance du territoire.</li>
+            <li>MEDEF NC, rubrique alternance.</li>
+            <li>Annuaires <a href="https://www.1012.nc/" target="_blank" rel="noopener">1012.nc</a> et Plan.nc : recherche par secteur.</li>
+          </ul>
+
           <h4>Vos deux interlocuteurs</h4>
           <p><b>Angela Leclerc</b>, conseillère formation continue et alternance, Pôle Alternance et Formation Continue de l'UNC — pour le contrat, le calendrier et la mise en relation. <b>Emmeline Gros</b>, responsable de la licence LEA — pour les missions, le rapport et la soutenance.</p>
-          <p class="note-tbl">Source : maquette de la licence LEA 2027, « Le stage et l'alternance ».</p>
         </div>
       </details>
 
@@ -1921,6 +2069,12 @@ body{line-height:1.6;}
         </div>
       </details>
 
+      <details class="pli">
+        <summary><span class="pt">Le calendrier calédonien</span><span class="pr">Pourquoi l'alternance démarre le 1er juin</span></summary>
+        <div class="pc"><p>En Nouvelle-Calédonie, les semestres impairs se déroulent de février à juin
+          et les semestres pairs de juin à novembre. C'est pourquoi un contrat d'alternance qui
+          démarre le 1<sup>er</sup> juin s'aligne sur l'ouverture du semestre 6.</p></div>
+      </details>
       <details class="pli">
         <summary><span class="pt">Le calendrier de la recherche</span><span class="pr">Du S4 à la soutenance, en six étapes</span></summary>
         <div class="pc">
@@ -3061,6 +3215,31 @@ body{line-height:1.6;}
   </div>
 </section>
 
+<!-- =================== UTILISATION DES IA =================== -->
+<section class="panneau" id="ia" data-accent="dur" role="tabpanel" aria-labelledby="t-ia">
+  <div class="wrap">
+    <div class="tete">
+      <h2><span class="eyeb">La règle de la licence LEA</span>Utilisation des IA</h2>
+    </div>
+
+    <div class="avis-ia" role="note">
+      <p class="avis-t">Toute utilisation des IA pour un devoir ou un projet doit être déclarée.</p>
+      <p>L'IA n'est permise que pour un devoir où l'enseignant l'a <strong>explicitement autorisée, par écrit</strong>. Dans ce cas, vous déclarez votre usage à chaque devoir : <strong>quel outil, pour quoi faire, ce que vous avez vérifié vous-même</strong>.</p>
+      <p>Si l'enseignant ne l'a pas autorisée, <strong>tout recours à l'IA est formellement interdit</strong>.</p>
+      <p class="avis-n">Il ne s'agit pas d'interdire l'IA, mais de la replacer dans un cadre où vous restez l'auteur de votre raisonnement.</p>
+    </div>
+
+    <h3 class="ia-h">Réviser</h3>
+    <a class="ia-bouton" href="reviser-avec-lia-etudiant.html" target="_blank" rel="noopener"><span class="bt">Réviser vos cours avec les IA</span><span class="bd">Loïc Steffan · de vos supports de cours à l'épreuve blanche, huit fiches ↗</span></a>
+
+    <h3 class="ia-h">Postuler à une alternance ou à un stage</h3>
+    <ul class="liens">
+      <li><a href="candidater-en-alternance.html" target="_blank" rel="noopener"><span><span class="t">Postuler avec les IA : CV, lettre et profil LinkedIn</span><span class="d">Loïc Steffan · 14 prompts à copier, constructeur de demande (alternance, stage ou candidature spontanée)</span></span><span class="fl">ouvrir ↗</span></a></li>
+      <li><a href="chercher-sur-linkedin.html" target="_blank" rel="noopener"><span><span class="t">Chercher sur LinkedIn : les bonnes personnes, les alertes</span><span class="d">Trouver la ou le responsable d'une entreprise, faire une recherche précise, créer une alerte Emploi</span></span><span class="fl">ouvrir ↗</span></a></li>
+    </ul>
+  </div>
+</section>
+
 <!-- =================== REGLEMENT =================== -->
 <section class="panneau" id="reglement" data-accent="c2" role="tabpanel" aria-labelledby="t-reglement">
   <div class="wrap">
@@ -3182,7 +3361,7 @@ body{line-height:1.6;}
   var compbs = Array.prototype.slice.call(document.querySelectorAll('#vue-comp button.compb'));
   var comppanels = Array.prototype.slice.call(document.querySelectorAll('#vue-comp .comppanel'));
   var modes = Array.prototype.slice.call(document.querySelectorAll('button.mode'));
-  var vues = {sem: document.getElementById('vue-sem'), comp: document.getElementById('vue-comp'), prog: document.getElementById('vue-prog'), pratique: document.getElementById('vue-pratique'), deb: document.getElementById('vue-deb'), obj: document.getElementById('vue-obj')};
+  var vues = {sem: document.getElementById('vue-sem'), comp: document.getElementById('vue-comp'), prog: document.getElementById('vue-prog'), exemple: document.getElementById('vue-exemple'), pratique: document.getElementById('vue-pratique'), deb: document.getElementById('vue-deb'), obj: document.getElementById('vue-obj')};
 
   function showSem(sem){
     sembs.forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.sem === sem ? 'true' : 'false'); });
@@ -3198,7 +3377,7 @@ body{line-height:1.6;}
     modes.forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.mode === mode ? 'true' : 'false'); });
     vues.sem.hidden = mode !== 'sem';
     vues.comp.hidden = mode !== 'comp';
-    vues.prog.hidden = mode !== 'prog';
+    vues.prog.hidden = mode !== 'prog'; vues.exemple.hidden = mode !== 'exemple';
     vues.pratique.hidden = mode !== 'pratique';
     vues.deb.hidden = mode !== 'deb';
     vues.obj.hidden = mode !== 'obj';
@@ -3211,6 +3390,17 @@ body{line-height:1.6;}
     if (window.pageYOffset > y) { window.scrollTo(0, Math.max(0, y)); }
   }
 
+  /* 22/11/2026 : chaque changement de rubrique ajoute une étape d'historique,
+     le bouton Retour du navigateur revient donc à la rubrique précédente (voir « barre-et-retour ») */
+  function adresse(h, remplacer){
+    var H = window.LEA_HIST;
+    if (H && H.muet) { return; }
+    if (location.hash === '#' + h) { return; }
+    try {
+      if (H && !remplacer) { H.pousser(h); }
+      else { history.replaceState(history.state, '', '#' + h); }
+    } catch (e) {}
+  }
   function showTab(id, opts){
     opts = opts || {};
     if (ids.indexOf(id) < 0) { id = ids[0]; }
@@ -3221,9 +3411,7 @@ body{line-height:1.6;}
       panels[i].hidden = !on;
       if (on && opts.focus) { t.focus(); }
     });
-    if (opts.hash !== false) {
-      try { history.replaceState(null, '', '#' + id); } catch (e) {}
-    }
+    if (opts.hash !== false) { adresse(id, opts.remplacer); }
     if (opts.scroll !== false) { remonter(); }
   }
 
@@ -3366,12 +3554,14 @@ body{line-height:1.6;}
   function depuisAdresse(){
     var h = (location.hash || '').slice(1);
     var m = /^sem-(S[1-7])$/.exec(h);
-    if (m) { showVue('sem'); showSem(m[1]); showTab('licence', {scroll: false}); return; }
+    if (m) { showVue('sem'); showSem(m[1]); showTab('licence', {scroll: false, remplacer: true}); return; }
     var mc = /^comp-(C[0-9A-Z]+)$/.exec(h);
-    if (mc) { showVue('comp'); showComp(mc[1]); showTab('licence', {scroll: false}); return; }
+    if (mc) { showVue('comp'); showComp(mc[1]); showTab('licence', {scroll: false, remplacer: true}); return; }
     showTab(h, {hash: false, scroll: false});
   }
   window.addEventListener('hashchange', depuisAdresse);
+  window.LEA_SHOWTAB = function(){ depuisAdresse(); };
+  window.LEA_SHOWVUE = showVue;
 
   showSem('S1');
   showComp('C1');
@@ -3959,6 +4149,8 @@ window.MCC_ETU = {"14_0111": "MCC1 en 2026", "14_0122": "MCC1 en 2026", "11_0424
   }
   function aller(x){
     fermer(); champ.blur();
+    if (window.LEA_RECH_FERMER) { window.LEA_RECH_FERMER(); }
+    if (window.LEA_HIST) { window.LEA_HIST.jalon(); }   // Retour ramène là où l'on était avant la recherche
     clic('a[role="tab"][href="#' + x.sec.id + '"]');
     var el = x.el;
     setTimeout(function(){
@@ -3999,7 +4191,7 @@ window.MCC_ETU = {"14_0111": "MCC1 en 2026", "14_0122": "MCC1 en 2026", "11_0424
   document.addEventListener('click', function(ev){ if (!boite.contains(ev.target)) { fermer(); } });
   document.addEventListener('keydown', function(ev){
     if (ev.key === '/' && !/INPUT|TEXTAREA|SELECT/.test((document.activeElement || {}).tagName || '') && !ev.ctrlKey && !ev.metaKey) {
-      ev.preventDefault(); window.scrollTo({top: 0, behavior: 'smooth'}); champ.focus();
+      ev.preventDefault(); if (window.LEA_RECH_OUVRIR) { window.LEA_RECH_OUVRIR(); } else { champ.focus(); }
     }
   });
 })();
@@ -4088,11 +4280,13 @@ window.COMP_MARCHE = {"c1": {"missions": ["Adapter son discours oral ou écrit (
   });
   document.addEventListener('click', function(ev){
     var p = ev.target.closest && ev.target.closest(SEL);
+    if (p && p.closest('.cp-carte')) { return; }
     if (p) { ev.preventDefault(); ev.stopPropagation(); ouvrir(p); }
   }, true);
   document.addEventListener('keydown', function(ev){
     if (ev.key === 'Escape' && carte) { fermer(); return; }
     var p = ev.target.closest && ev.target.closest(SEL);
+    if (p && p.closest('.cp-carte')) { return; }
     if (p && (ev.key === 'Enter' || ev.key === ' ')) { ev.preventDefault(); ev.stopPropagation(); ouvrir(p); }
   }, true);
 })();
@@ -4138,6 +4332,174 @@ window.COMP_MARCHE = {"c1": {"missions": ["Adapter son discours oral ou écrit (
       }, 30);
     }
   });
+})();
+</script>
+<script>/* barre-et-retour (22/11/2026), page des étudiants
+   1. une seule barre collée en haut : les rubriques, un bouton « ← Retour », une loupe qui ouvre la recherche ;
+   2. le bouton Retour du navigateur revient à la rubrique (ou la vue) précédente, à l'endroit où l'on lisait ;
+   3. sur téléphone, Retour referme d'abord le menu, la fiche ou la bulle ouverte. */
+(function(){
+  var nav = document.querySelector('nav.tabs');
+  if (!nav || !window.history || !history.pushState) { return; }
+  var html = document.documentElement;
+  try { history.scrollRestoration = 'manual'; } catch (e) {}
+
+  /* ---------- la barre ---------- */
+  var outils = document.createElement('div');
+  outils.className = 'nav-outils';
+  outils.innerHTML = '<button type="button" class="nav-retour" hidden><span class="nav-ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></span><span class="nav-ret-t">Retour</span></button>'
+    + '<button type="button" class="nav-loupe" aria-expanded="false" aria-controls="rech-pop" aria-label="Rechercher dans la page (touche /)">'
+    + '<span class="nav-ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 20 20"/></svg></span><span class="nav-loupe-t">Rechercher</span><kbd aria-hidden="true">/</kbd></button>';
+  nav.appendChild(outils);
+  var btnRetour = outils.querySelector('.nav-retour'), loupe = outils.querySelector('.nav-loupe');
+  var bm = nav.querySelector('.mm-barre button');
+  if (bm) { bm.innerHTML = '<span class="mm-l1">Toutes les rubriques</span><span class="mm-l2">Rubriques</span>'; }
+
+  /* la recherche quitte le haut de page et s'ouvre sous la barre */
+  var boite = document.querySelector('.recherche'), champ = document.getElementById('rech'), res = document.getElementById('rech-res');
+  if (boite && champ) {
+    boite.id = 'rech-pop'; boite.classList.add('rech-pop'); boite.hidden = true;
+    nav.appendChild(boite);
+    var ouvrirRech = function(){
+      boite.hidden = false; loupe.setAttribute('aria-expanded', 'true');
+      champ.focus({preventScroll: true});
+      try { champ.select(); } catch (e) {}
+    };
+    var fermerRech = function(rendre){
+      boite.hidden = true; loupe.setAttribute('aria-expanded', 'false');
+      if (res) { res.hidden = true; }
+      champ.setAttribute('aria-expanded', 'false');
+      if (rendre) { loupe.focus({preventScroll: true}); }
+    };
+    window.LEA_RECH_OUVRIR = ouvrirRech;
+    window.LEA_RECH_FERMER = function(){ fermerRech(false); };
+    loupe.addEventListener('click', function(){ if (boite.hidden) { ouvrirRech(); } else { fermerRech(true); } });
+    champ.addEventListener('keydown', function(ev){ if (ev.key === 'Escape') { ev.preventDefault(); fermerRech(true); } });
+    document.addEventListener('click', function(ev){
+      if (!boite.hidden && !boite.contains(ev.target) && !loupe.contains(ev.target)) { fermerRech(false); }
+    });
+  } else {
+    loupe.hidden = true;
+  }
+
+  /* ---------- l'historique ---------- */
+  var pos = {}, compteur = 0, ignorer = 0;
+  var H = window.LEA_HIST = {muet: false, restaure: false, fusion: false};
+  function cle(){ return Date.now().toString(36) + '-' + (compteur++); }
+  function etat(){ var s = history.state; return (s && s.lea) ? s : null; }
+  function propre(t){ return (t || '').replace(/\s+/g, ' ').trim(); }
+  function nomCourant(){
+    var t = nav.querySelector('[role="tab"][aria-selected="true"]'), n = t ? propre(t.textContent) : '';
+    var v = vueActive();
+    if (t && t.id === 't-licence' && v && v.getAttribute('data-mode') !== 'sem') { n += ' (' + propre(v.textContent) + ')'; }
+    return n;
+  }
+  function vueActive(){ return document.querySelector('#licence button.mode[aria-pressed="true"]'); }
+  function nommer(){
+    setTimeout(function(){
+      var s = etat();
+      var v = vueActive();
+      if (s && !s.ov) { history.replaceState(Object.assign({}, s, {nom: nomCourant(), vue: v ? v.getAttribute('data-mode') : ''}), '', location.href); }
+      maj();
+    }, 0);
+  }
+  var s0 = etat();
+  if (!s0) { s0 = {lea: 1, n: 0, k: cle(), de: ''}; history.replaceState(s0, '', location.href); }
+  pos[s0.k] = window.pageYOffset;
+
+  H.pousser = function(h){
+    var s = etat() || s0;
+    var neuf = {lea: 1, n: s.n + 1, k: cle(), de: s.nom || ''};
+    if (H.fusion) { neuf.n = s.n; neuf.k = s.k; neuf.de = s.de; history.replaceState(neuf, '', '#' + h); }
+    else if (s.ov) { neuf.n = s.n; history.replaceState(neuf, '', '#' + h); }   // choisie dans le menu encore ouvert
+    else { history.pushState(neuf, '', '#' + h); }
+    nommer();
+  };
+  /* un résultat de recherche : une étape, même si l'on reste dans la même rubrique */
+  H.jalon = function(){
+    var s = etat() || s0;
+    var neuf = {lea: 1, n: s.n + 1, k: cle(), de: s.nom || '', nom: s.nom};
+    pos[neuf.k] = window.pageYOffset;
+    history.pushState(neuf, '', location.href);
+    H.fusion = true;
+    clearTimeout(H._f);
+    H._f = setTimeout(function(){ H.fusion = false; nommer(); }, 900);
+    maj();
+  };
+  window.addEventListener('scroll', function(){
+    var s = etat();
+    if (s && !H.restaure) { pos[s.k] = window.pageYOffset; }
+  }, {passive: true});
+
+  function restaurer(s){
+    H.muet = true; H.restaure = true;
+    try {
+      if (window.LEA_SHOWTAB) { window.LEA_SHOWTAB((location.hash || '').slice(1), {hash: false, scroll: false}); }
+      var l = document.getElementById('licence'), v = vueActive();   // la façon de lire la maquette n'a pas d'adresse propre
+      if (s && s.vue && l && !l.hidden && v && v.getAttribute('data-mode') !== s.vue && window.LEA_SHOWVUE) { window.LEA_SHOWVUE(s.vue); }
+    }
+    finally { H.muet = false; }
+    var y = s ? pos[s.k] : undefined;
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){
+      if (typeof y !== 'number') {   // étape inconnue (page rechargée) : début du contenu
+        var m = document.querySelector('main');
+        y = m ? Math.max(0, m.getBoundingClientRect().top + window.pageYOffset - nav.offsetHeight) : 0;
+        if (window.pageYOffset < y) { y = window.pageYOffset; }
+      }
+      html.style.scrollBehavior = 'auto';
+      window.scrollTo(0, y);
+      html.style.scrollBehavior = '';
+      H.restaure = false;
+      maj();
+    }); });
+  }
+
+  /* menu des rubriques (téléphone), fiche en volet, bulle de compétence : Retour les referme */
+  function surcouche(){
+    return document.body.classList.contains('mm-ouvert') || html.classList.contains('pg-ouvert') || html.classList.contains('cp-ouvert');
+  }
+  var etaitOuvert = surcouche();
+  if (window.MutationObserver) {
+    var mo = new MutationObserver(function(){
+      var o = surcouche();
+      if (o === etaitOuvert) { return; }
+      etaitOuvert = o;
+      var s = etat() || s0;
+      if (o) { history.pushState(Object.assign({}, s, {n: s.n + 1, ov: 1}), '', location.href); }
+      else if (s.ov) { ignorer++; history.back(); }   // refermée par son bouton : on retire l'étape
+      maj();
+    });
+    mo.observe(html, {attributes: true, attributeFilter: ['class']});
+    mo.observe(document.body, {attributes: true, attributeFilter: ['class']});
+  }
+
+  window.addEventListener('popstate', function(){
+    if (ignorer > 0) { ignorer--; maj(); return; }
+    var s = etat();
+    if (surcouche()) {
+      document.body.dispatchEvent(new KeyboardEvent('keydown', {key: 'Escape', bubbles: true}));
+      maj(); return;
+    }
+    var avant = dernierN;
+    restaurer(s);
+    if (s && s.ov) { ignorer++; if (s.n > avant) { history.forward(); } else { history.back(); } }   // surcouche déjà refermée : on saute l'étape
+  });
+
+  /* ---------- le bouton « ← Retour » ---------- */
+  var dernierN = 0;
+  function maj(){
+    var s = etat(), on = !!(s && s.n > 0 && !s.ov);
+    if (s) { dernierN = s.n; }
+    btnRetour.hidden = !on;
+    if (on) {
+      var de = s.de || 'la rubrique précédente';
+      btnRetour.title = 'Revenir à : ' + de;
+      btnRetour.setAttribute('aria-label', 'Revenir à : ' + de);
+    }
+  }
+  btnRetour.addEventListener('click', function(){ history.back(); });
+  document.addEventListener('click', function(ev){ if (ev.target.closest && ev.target.closest('#licence button.mode')) { nommer(); } });
+  nommer();
 })();
 </script>
 </body>

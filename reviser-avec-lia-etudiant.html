@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Réviser avec l'IA : de ses supports de cours à l'épreuve blanche</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Public+Sans:wght@400;600;700&display=swap');
+
+  :root{
+    --board:#fafaf8; --frame:#9aa0a6; --ink:#2b2b2b;
+    --rouge:#c3312f; --bleu:#2b5ba8; --vert:#2e8b6e; --noir:#3a3a3a;
+    --violet:#7a4a9e; --orange:#c96f1e; --turquoise:#0f7f7f; --panel:#ffffff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto} *{transition:none!important;animation:none!important}}
+  body{font-family:'Public Sans',system-ui,-apple-system,sans-serif;background:var(--board);color:var(--ink);line-height:1.55;padding:1.5rem 1rem 4rem}
+  .board{max-width:1020px;margin:0 auto;background:#fff;border:8px solid #e8e9eb;outline:2px solid var(--frame);border-radius:6px;padding:2.2rem 1.6rem 2.6rem;box-shadow:0 10px 30px rgba(0,0,0,.08)}
+  header{margin-bottom:1.8rem}
+  h1{font-family:'Caveat',cursive;font-size:clamp(2rem,5vw,2.9rem);color:var(--rouge);line-height:1.1}
+  h1 .souligne{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='8' viewBox='0 0 120 8'%3E%3Cpath d='M2 5 Q30 2 60 5 T118 4' stroke='%23c3312f' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:bottom;background-size:100% 8px;padding-bottom:6px}
+  .exergue{margin-top:1rem;font-family:'Caveat',cursive;font-size:clamp(1.3rem,3vw,1.6rem);color:var(--noir);line-height:1.25}
+  .exergue .attribution{display:block;font-size:1.05rem;color:#999;margin-top:.1rem}
+  .sous-titre{margin-top:.7rem;font-size:.95rem;color:#555;max-width:68ch}
+  .mode-emploi{margin-top:.9rem;font-family:'Caveat',cursive;font-size:1.15rem;color:var(--bleu)}
+  h2.section{font-family:'Caveat',cursive;font-size:clamp(1.5rem,3.5vw,1.95rem);color:var(--noir);margin:0 0 .3rem}
+  .intro-section{font-size:.92rem;color:#555;max-width:68ch;margin-bottom:1rem}
+  section.bloc{margin-top:2.6rem;padding-top:1.5rem;border-top:3px dashed #d5d8dc}
+
+  /* encadrés */
+  .regle{margin:1.1rem 0;padding:.9rem 1.1rem;background:#fdf4ec;border-left:5px solid var(--orange);border-radius:0 10px 10px 0}
+  .regle .etiquette{display:block;font-family:'Caveat',cursive;font-size:1.25rem;font-weight:700;color:var(--orange);margin-bottom:.15rem}
+  .avert{margin:1.1rem 0;padding:.9rem 1.1rem;background:#fbeeee;border-left:5px solid var(--rouge);border-radius:0 10px 10px 0}
+  .avert .etiquette{display:block;font-family:'Caveat',cursive;font-size:1.25rem;font-weight:700;color:var(--rouge);margin-bottom:.15rem}
+  .renvoi{margin-top:.7rem;padding:.55rem .8rem;background:#eef2f8;border-left:4px solid var(--bleu);border-radius:0 8px 8px 0;font-size:.85rem;color:#33465c}
+  .renvoi strong{color:var(--bleu)}
+
+  /* zones */
+  .zones{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:.8rem;margin-top:.9rem}
+  .zone{border:2.5px solid var(--zc,var(--noir));border-radius:255px 15px 225px 15px / 15px 225px 15px 255px;padding:.8rem 1rem;background:#fdfdfc}
+  .zone h3{font-family:'Caveat',cursive;font-size:1.3rem;color:var(--zc,var(--noir));margin-bottom:.2rem}
+  .zone p{font-size:.86rem;color:#444}
+  .zone code{font-size:.82rem;background:#f2f3f5;padding:0 .25rem;border-radius:4px}
+
+  /* DAG */
+  .cadre-svg{overflow-x:auto;border:1.5px dashed #d5d8dc;border-radius:12px;background:#fdfdfc;padding:.6rem;margin-top:.8rem}
+  .cadre-svg svg{display:block;margin:0 auto;min-width:880px;max-width:1000px;height:auto}
+  .noeud{cursor:pointer}
+  .noeud rect{fill:#fff;stroke:var(--nc,var(--noir));stroke-width:2.5;rx:14}
+  .noeud:hover rect{stroke-width:4}
+  .noeud:focus{outline:none}
+  .noeud:focus-visible rect{stroke:var(--bleu);stroke-width:4}
+  .noeud text{font-family:'Public Sans',sans-serif;font-size:13px;font-weight:600;fill:var(--ink);pointer-events:none}
+  .noeud .sub{font-size:10px;font-weight:400;fill:#7a8087}
+  .noeud .num{font-family:'Caveat',cursive;font-size:17px;font-weight:700;fill:#fff}
+  .noeud .pastille{fill:var(--nc,var(--noir))}
+  .noeud.fait rect{fill:#eef7f2;stroke-dasharray:5 4}
+  .noeud.fait text{fill:#7d8a84}
+  .noeud .coche{display:none;font-size:15px;fill:var(--vert);font-weight:700}
+  .noeud.fait .coche{display:block}
+  .arete{fill:none;stroke:#b9bec4;stroke-width:2;marker-end:url(#fleche)}
+  .arete.critique{stroke:var(--rouge);stroke-width:3.4;marker-end:url(#flecheR)}
+  .arete.differee{stroke-dasharray:7 5;stroke:#a7adb4}
+  .legende-svg{font-family:'Caveat',cursive;font-size:1.05rem;color:#777;text-align:center;margin-top:.4rem}
+  .cles{display:flex;flex-wrap:wrap;gap:.9rem;margin-top:.7rem;font-size:.83rem;color:#555;align-items:center}
+  .cles span{display:inline-flex;align-items:center;gap:.35rem}
+  .cles i{display:inline-block;width:26px;height:0;border-top:3px solid #b9bec4}
+  .cles i.c{border-top:3.4px solid var(--rouge)}
+  .cles i.d{border-top:3px dashed #a7adb4}
+
+  /* fiches */
+  .fiche{margin-top:1.4rem;border:1.5px solid #e3e5e8;border-left:6px solid var(--fc,var(--noir));border-radius:0 12px 12px 0;background:#fdfdfc;padding:1rem 1.2rem;scroll-margin-top:1rem}
+  .fiche.cible{animation:surligne 1.4s ease}
+  @keyframes surligne{0%{background:#fff7d6}100%{background:#fdfdfc}}
+  .fiche-entete{display:flex;align-items:flex-start;gap:.7rem;flex-wrap:wrap}
+  .fiche .numero{flex:0 0 auto;width:2rem;height:2rem;border-radius:50%;background:var(--fc,var(--noir));color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Caveat',cursive;font-weight:700;font-size:1.25rem}
+  .fiche h3{font-family:'Caveat',cursive;font-size:1.5rem;color:var(--fc,var(--noir));line-height:1.1;flex:1 1 60%}
+  .badges{display:flex;gap:.35rem;flex-wrap:wrap;margin:.35rem 0 .5rem}
+  .badge{font-size:.74rem;font-weight:600;border-radius:999px;padding:.12rem .6rem;border:1.5px solid #d5d8dc;color:#666;background:#fff}
+  .badge.temps{border-color:#c9cdd3}
+  .badge.critique{border-color:var(--rouge);color:var(--rouge)}
+  .badge.attendre{border-color:var(--turquoise);color:var(--turquoise)}
+  .badge.depend{border-color:#c9cdd3;color:#777}
+  .fiche h4{font-family:'Caveat',cursive;font-size:1.15rem;color:#555;margin:.85rem 0 .2rem}
+  .fiche p{font-size:.91rem;margin-bottom:.5rem}
+  .fiche ul{margin:.2rem 0 .5rem 1.15rem;font-size:.9rem}
+  .fiche li{margin-bottom:.18rem}
+  .fini{margin-top:.7rem;padding:.55rem .8rem;background:#f0f7f3;border-radius:8px;font-size:.87rem;color:#2f5c4a}
+  .fini strong{color:var(--vert)}
+  .piege{margin-top:.5rem;padding:.55rem .8rem;background:#fbf1ee;border-radius:8px;font-size:.87rem;color:#7d3b30}
+  .piege strong{color:var(--rouge)}
+  .fait-ligne{margin-top:.8rem;font-size:.84rem;color:#777;display:flex;align-items:center;gap:.4rem}
+  .fait-ligne input{width:1.05rem;height:1.05rem;accent-color:var(--vert)}
+
+  /* blocs à copier */
+  .copiable{position:relative;margin:.4rem 0 .6rem}
+  .copiable pre{background:#2f3237;color:#e9edf1;border-radius:10px;padding:.85rem 1rem;font-size:.8rem;line-height:1.5;overflow-x:auto;white-space:pre;font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+  .copiable.prompt pre{background:#f6f4fb;color:#2c2338;border:1.5px solid #ded5ee;white-space:pre-wrap}
+  .copiable button{position:absolute;top:.45rem;right:.45rem;font:inherit;font-size:.72rem;font-weight:600;border:none;border-radius:6px;padding:.2rem .55rem;cursor:pointer;background:rgba(255,255,255,.85);color:#333}
+  .copiable.prompt button{background:var(--violet);color:#fff}
+  .copiable button:hover{filter:brightness(1.08)}
+  .etiq-bloc{font-size:.76rem;font-weight:700;letter-spacing:.03em;text-transform:uppercase;color:#8a8f96;margin-bottom:.2rem}
+  .arbo pre{background:#fdfdfc;color:#3a3a3a;border:1.5px dashed #d5d8dc;white-space:pre}
+
+  /* chrono */
+  .chrono{display:grid;gap:.5rem;margin-top:.8rem}
+  .chrono div{display:grid;grid-template-columns:5.2rem 1fr;gap:.7rem;align-items:baseline;background:#fdfdfc;border:1.5px solid #e3e5e8;border-radius:10px;padding:.5rem .8rem}
+  .chrono b{font-family:'Caveat',cursive;font-size:1.2rem;color:var(--bleu)}
+  .chrono span{font-size:.88rem}
+
+  .pasfaire{list-style:none;display:grid;gap:.5rem;margin-top:.8rem}
+  .pasfaire li{background:#fdfdfc;border:1.5px solid #f0dcd8;border-radius:10px;padding:.55rem .85rem;font-size:.89rem}
+  .pasfaire li b{color:var(--rouge)}
+
+  .actions-globales{margin-top:1rem}
+  .actions-globales button{font:inherit;font-size:.8rem;font-weight:600;background:none;border:1.5px solid var(--frame);border-radius:999px;padding:.35rem .9rem;cursor:pointer;color:#555;margin-right:.5rem}
+  .actions-globales button:hover{border-color:var(--ink);color:var(--ink)}
+  #compteur{font-size:.8rem;color:#777}
+
+  footer{max-width:1020px;margin:1.4rem auto 0;font-size:.8rem;color:#888;text-align:center}
+  @media (max-width:600px){.board{padding:1.4rem 1rem 1.8rem}}
+  @media print{
+    body{padding:0;background:#fff}
+    .board{border:none;outline:none;box-shadow:none;max-width:none}
+    .actions-globales,.fait-ligne,.copiable button{display:none}
+    .fiche{break-inside:avoid;page-break-inside:avoid}
+  }
+
+  .terme{font:inherit;background:none;border:none;padding:0;color:inherit;font-weight:600;
+    cursor:help;border-bottom:2px dotted var(--bleu);position:relative}
+  .terme::after{content:attr(data-def);position:absolute;left:50%;transform:translateX(-50%);
+    bottom:calc(100% + 9px);width:min(280px,74vw);background:var(--ink);color:#fff;
+    font-size:.78rem;font-weight:400;line-height:1.45;padding:.55rem .75rem;border-radius:8px;
+    text-align:left;opacity:0;pointer-events:none;transition:opacity .15s ease;z-index:20}
+  .terme::before{content:"";position:absolute;left:50%;transform:translateX(-50%);
+    bottom:calc(100% + 3px);border:6px solid transparent;border-top-color:var(--ink);
+    opacity:0;transition:opacity .15s ease;z-index:20}
+  .terme:hover::after,.terme:focus::after,.terme:hover::before,.terme:focus::before{opacity:1}
+  .terme:focus-visible{outline:2px solid var(--bleu);outline-offset:2px}
+  .glossaire{margin-top:2.6rem;padding-top:1.5rem;border-top:3px dashed #d5d8dc}
+  .glossaire dl{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:.8rem 1.2rem;margin-top:.9rem}
+  .glossaire dl > div{background:#fdfdfc;border:1.5px solid #e3e5e8;border-radius:10px;padding:.6rem .8rem}
+  .glossaire dt{font-weight:700;color:var(--rouge);font-size:.9rem}
+  .glossaire dd{font-size:.84rem;color:#444;margin-top:.15rem}
+  .branches{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.7rem;margin:.7rem 0}
+  .branche{border:2px solid var(--bc,var(--noir));border-radius:10px;padding:.7rem .85rem;background:#fff}
+  .branche h5{font-family:'Caveat',cursive;font-size:1.2rem;color:var(--bc,var(--noir));margin-bottom:.2rem}
+  .branche p{font-size:.86rem;margin-bottom:.35rem}
+  .branche .vers{font-size:.8rem;color:#777;font-style:italic;margin:0}
+  @media print{.terme::after,.terme::before{display:none}}
+</style>
+
+
+<style id="pia-style">
+.pia-nav,.pia-suite,.pia-haut{font-family:'Public Sans',system-ui,-apple-system,sans-serif;box-sizing:border-box}
+.pia-nav *,.pia-suite *{box-sizing:border-box}
+.pia-nav{position:sticky;top:0;z-index:9999;display:flex;align-items:center;gap:.15rem;
+  padding:.45rem .7rem;background:var(--pia-fond);border-bottom:1px solid var(--pia-bord);
+  box-shadow:0 1px 6px rgba(0,0,0,.06);overflow-x:auto;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
+.pia-nav::-webkit-scrollbar{height:4px}
+.pia-nav::-webkit-scrollbar-thumb{background:var(--pia-bord);border-radius:4px}
+.pia-marque{font-weight:700;font-size:.82rem;color:var(--pia-encre);text-decoration:none;
+  white-space:nowrap;padding:.3rem .6rem .3rem .2rem;margin-right:.3rem;
+  border-right:1px solid var(--pia-bord);flex:0 0 auto}
+.pia-marque:hover{color:var(--pia-actif)}
+.pia-lien{display:inline-flex;align-items:center;gap:.38rem;white-space:nowrap;flex:0 0 auto;
+  font-size:.8rem;font-weight:600;color:var(--pia-doux);text-decoration:none;
+  padding:.34rem .6rem;border-radius:999px;border:1.5px solid transparent;transition:background .12s,color .12s,border-color .12s}
+.pia-lien:hover{color:var(--pia-encre);background:var(--pia-survol)}
+.pia-lien:focus-visible{outline:2px solid var(--pia-actif);outline-offset:2px}
+.pia-lien[aria-current="page"]{color:var(--pia-encre);border-color:var(--pia-bord);background:var(--pia-survol)}
+.pia-pastille{width:.5rem;height:.5rem;border-radius:50%;background:var(--pia-c);flex:0 0 auto}
+.pia-progres{position:fixed;top:0;left:0;height:3px;width:0;z-index:10000;
+  background:linear-gradient(90deg,#c3312f,#c96f1e);transition:width .1s linear}
+.pia-suite{max-width:1020px;margin:2rem auto 0;padding:0 1rem;display:grid;
+  grid-template-columns:1fr 1fr;gap:.7rem}
+.pia-suite a{display:block;text-decoration:none;padding:.7rem .9rem;border-radius:12px;
+  border:1.5px solid var(--pia-bord);background:var(--pia-fond);color:var(--pia-encre)}
+.pia-suite a:hover{border-color:var(--pia-actif)}
+.pia-suite .pia-sens{display:block;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--pia-doux);margin-bottom:.15rem}
+.pia-suite .pia-titre{font-size:.88rem;font-weight:600;line-height:1.3}
+.pia-suite .pia-droite{text-align:right}
+.pia-suite .pia-vide{border:1.5px dashed var(--pia-bord);border-radius:12px;opacity:.35}
+.pia-haut{position:fixed;right:1rem;bottom:1rem;z-index:9998;display:none;
+  width:2.6rem;height:2.6rem;border-radius:50%;border:1.5px solid var(--pia-bord);
+  background:var(--pia-fond);color:var(--pia-encre);font-size:1.1rem;cursor:pointer;
+  box-shadow:0 3px 10px rgba(0,0,0,.14)}
+.pia-haut.pia-visible{display:block}
+.pia-haut:hover{border-color:var(--pia-actif)}
+@media (max-width:620px){.pia-suite{grid-template-columns:1fr}.pia-suite .pia-droite{text-align:left}}
+@media print{.pia-nav,.pia-suite,.pia-haut,.pia-progres{display:none !important}}
+</style>
+<style id="pia-vars">:root{--pia-fond:#fffefb;--pia-bord:#d9dce1;--pia-encre:#2b2b2b;--pia-doux:#6d7480;--pia-survol:#f2f3f5;--pia-actif:#2b5ba8}</style>
+<style id="lea-adapt">
+.pia-nav,.pia-suite,.pia-haut{display:none !important}
+#lea-retour{margin:0 0 14px;font-family:'Public Sans',system-ui,sans-serif;font-size:15px}
+</style>
+</head>
+<body>
+<p id="lea-retour"><a href="./#ia" onclick="if(window.opener){window.close();return false;}">← Retour à la page des étudiants</a></p>
+
+<!--pia-debut-->
+<div class="pia-progres" aria-hidden="true"></div>
+<nav class="pia-nav" aria-label="Navigation entre les pages du parcours">
+  <a class="pia-marque" href="index.html">Travailler avec l'IA</a>
+  <a class="pia-lien" href="index.html" title="Accueil des six pages"><span class="pia-pastille" style="--pia-c:#3a3a3a"></span>Accueil</a>
+  <a class="pia-lien" href="schemaiainteractifv13.html" title="Travailler avec l'IA : du besoin au résultat reproductible"><span class="pia-pastille" style="--pia-c:#c96f1e"></span>Le parcours</a>
+  <a class="pia-lien" href="travailler-avec-l-ia-lea-unc.html" title="Travailler avec l'IA — Licence LEA"><span class="pia-pastille" style="--pia-c:#c96f1e"></span>LEA</a>
+  <a class="pia-lien" href="comprendre-llm-leg-lea.html" title="Grand livre — Comprendre un LLM sans le croire sur parole"><span class="pia-pastille" style="--pia-c:#c96f1e"></span>Comprendre un LLM</a>
+  <a class="pia-lien" href="format-engineering-chunk.html" title="Chunk ou bloc unique : la fenêtre de contexte"><span class="pia-pastille" style="--pia-c:#0f7f7f"></span>Démo contexte</a>
+  <a class="pia-lien" href="par-ou-commencer-corpus.html" title="Par où commencer ? Du vrac au corpus interrogeable"><span class="pia-pastille" style="--pia-c:#2e8b6e"></span>Par où commencer</a>
+  <a class="pia-lien" href="mettre-a-jour-un-cours.html" title="Mettre à jour un cours : du support daté au bulletin de santé"><span class="pia-pastille" style="--pia-c:#2e8b6e"></span>Mettre à jour</a>
+  <a class="pia-lien" href="reviser-avec-lia-etudiant.html" aria-current="page" title="Réviser avec l'IA : jusqu'à l'épreuve blanche"><span class="pia-pastille" style="--pia-c:#2e8b6e"></span>Réviser</a>
+</nav>
+<!--/pia-debut-->
+<div class="board">
+  <header>
+    <h1><span class="souligne">Réviser avec l'IA</span> : de ses supports de cours à l'épreuve blanche</h1>
+    <p class="exergue">« Relire, c'est reconnaître. Réviser, c'est retrouver. »</p>
+    <p class="sous-titre">Version étudiante du parcours pratique. Elle part du même point — une pile de documents — mais le problème est inversé. Un enseignant doit <strong>inventer</strong> un classement pour un fonds accumulé sur quinze ans. Vous, vous en <strong>recevez</strong> un : le plan du cours est déjà votre classement. Votre <span class="terme" tabindex="0" data-def="L&#x27;ensemble des documents qu&#x27;on décide de traiter comme un tout. Ce qui n&#x27;y est pas n&#x27;existe pas pour l&#x27;IA — elle ne le devinera pas.">corpus</span> est petit, homogène, ordonné, et votre contrainte n'est pas sa taille, c'est <strong>une date d'examen</strong>.</p>
+    <p class="sous-titre">Le nœud terminal change donc lui aussi. Pour un enseignant, réussir c'est « le corpus répond avec ses sources ». Pour vous, ce serait un contresens : un corpus qui répond bien est le risque, pas le but. Réussir, ici, c'est <strong>traiter un sujet correctement, l'IA fermée</strong>. Tout ce qui précède n'est qu'un dispositif d'entraînement.</p>
+    <p class="mode-emploi">→ Cliquez un nœud pour aller à sa fiche. Survolez les mots soulignés en pointillés ; le glossaire est en bas de page.</p>
+    <div class="actions-globales">
+      <button type="button" id="btn-imprimer">Imprimer / PDF</button>
+      <button type="button" id="btn-reset">Décocher tout</button>
+      <span id="compteur" aria-live="polite">0 / 8 nœuds terminés</span>
+    </div>
+  </header>
+
+  <div class="avert">
+    <span class="etiquette">Les trois pièges, avant tout le reste</span>
+    <p><strong>La référence inventée.</strong> Un modèle produit des numéros d'arrêts et d'articles au bon format, avec la bonne juridiction et une date crédible — et parfois entièrement faux. C'est ce qu'on appelle une <span class="terme" tabindex="0" data-def="Réponse plausible et fausse, produite avec le même aplomb qu&#x27;une réponse juste. En droit, elle prend surtout la forme d&#x27;une référence inventée.">hallucination</span> : une réponse plausible et fausse, produite avec le même aplomb qu'une réponse juste. Votre enseignant la voit d'un coup d'œil ; vous, non. Recopiée dans une copie, elle coûte plus cher qu'une lacune assumée.</p>
+    <p><strong>L'IA qui répond à votre place.</strong> Lire une explication claire donne une sensation de maîtrise que la salle d'examen dément. Tant que c'est elle qui parle, vous ne mesurez rien. D'où l'inversion du nœud 7 : elle interroge, vous répondez.</p>
+    <p><strong>L'intégrité.</strong> Ce qui est autorisé varie selon l'établissement, l'enseignant et l'épreuve : renseignez-vous avant, pas après. Et gardez la trace de ce que vous avez fait faire — un travail honnête produit cette trace sans effort. La question utile n'est pas « ai-je le droit ? » mais « que puis-je démontrer avoir fait moi-même ? ».</p>
+  </div>
+
+  <section class="bloc" id="graphe">
+    <h2 class="section">Le parcours</h2>
+    <p class="intro-section">Huit nœuds, un après-midi pour les cinq premiers, puis trois séances espacées. Le <span class="terme" tabindex="0" data-def="La plus longue chaîne de tâches qui dépendent les unes des autres. Tout retard sur elle retarde la fin ; un retard ailleurs, non.">chemin critique</span> passe par les fiches et l'interrogation ; repérer les trous et vérifier les références sont deux branches qui se font pendant.</p>
+    <div class="cadre-svg">
+      <svg viewBox="0 0 920 850" role="img" aria-labelledby="titre-dag">
+        <title id="titre-dag">Parcours de révision en huit étapes, jusqu'à l'épreuve blanche</title>
+        <defs>
+          <marker id="fleche" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b9bec4"/></marker>
+          <marker id="flecheR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c3312f"/></marker>
+        </defs>
+        <g stroke="#ececee" stroke-width="1.5">
+          <line x1="14" y1="120" x2="906" y2="120"/>
+          <line x1="14" y1="480" x2="906" y2="480"/>
+          <line x1="14" y1="720" x2="906" y2="720"/>
+        </g>
+        <path class="arete critique" d="M460,86 C460,114.35 460,120.65 460,149"/>
+        <path class="arete critique" d="M460,206 C460,234.35 460,240.65 460,269"/>
+        <path class="arete " d="M460,326 C460,354.35 258.5,360.65 258.5,389"/>
+        <path class="arete critique" d="M460,326 C460,408.35 460,426.65 460,509"/>
+        <path class="arete " d="M258.5,446 C258.5,474.35 460,480.65 460,509"/>
+        <path class="arete " d="M460,566 C460,594.35 661.5,600.65 661.5,629"/>
+        <path class="arete critique" d="M460,566 C460,594.35 320.5,600.65 320.5,629"/>
+        <path class="arete differee" d="M661.5,686 C661.5,714.35 460,720.65 460,749"/>
+        <path class="arete critique" d="M320.5,686 C320.5,714.35 460,720.65 460,749"/>
+        <path class="arete differee" d="M355,86 C40,300 40,720 355,749"/>
+        <g font-family="Caveat, cursive" font-size="16" fill="#b3b8be" paint-order="stroke" stroke="#fdfdfc" stroke-width="5" stroke-linejoin="round">
+          <text x="16" y="114">rassembler</text>
+          <text x="16" y="474">fabriquer</text>
+          <text x="16" y="714">prouver</text>
+        </g>
+        <g class="noeud" data-fiche="f1" tabindex="0" role="button" aria-label="Nœud 1 : Poser l'épreuve" style="--nc:var(--orange)">
+          <rect x="355" y="34" width="210" height="52"/>
+          <circle class="pastille" cx="375" cy="60" r="13"/>
+          <text class="num" x="375" y="66" text-anchor="middle">1</text>
+          <text x="396" y="58">Poser l'épreuve</text>
+          <text class="sub" x="396" y="74">format, date, barème</text>
+          <text class="coche" x="548" y="52" text-anchor="end">✓</text>
+        </g>
+        <g class="noeud" data-fiche="f2" tabindex="0" role="button" aria-label="Nœud 2 : Rassembler ses supports" style="--nc:var(--bleu)">
+          <rect x="355" y="154" width="210" height="52"/>
+          <circle class="pastille" cx="375" cy="180" r="13"/>
+          <text class="num" x="375" y="186" text-anchor="middle">2</text>
+          <text x="396" y="178">Rassembler ses supports</text>
+          <text class="sub" x="396" y="194">les siens, et eux seuls</text>
+          <text class="coche" x="548" y="172" text-anchor="end">✓</text>
+        </g>
+        <g class="noeud" data-fiche="f3" tabindex="0" role="button" aria-label="Nœud 3 : Reconstituer le plan" style="--nc:var(--bleu)">
+          <rect x="355" y="274" width="210" height="52"/>
+          <circle class="pastille" cx="375" cy="300" r="13"/>
+          <text class="num" x="375" y="306" text-anchor="middle">3</text>
+          <text x="396" y="298">Reconstituer le plan</text>
+          <text class="sub" x="396" y="314">le classement existe déjà</text>
+          <text class="coche" x="548" y="292" text-anchor="end">✓</text>
+        </g>
+        <g class="noeud" data-fiche="f4" tabindex="0" role="button" aria-label="Nœud 4 : Repérer les trous" style="--nc:var(--bleu)">
+          <rect x="153.5" y="394" width="210" height="52"/>
+          <circle class="pastille" cx="173.5" cy="420" r="13"/>
+          <text class="num" x="173.5" y="426" text-anchor="middle">4</text>
+          <text x="194.5" y="418">Repérer les trous</text>
+          <text class="sub" x="194.5" y="434">ce qui n'est pas écrit</text>
+          <text class="coche" x="346.5" y="412" text-anchor="end">✓</text>
+        </g>
+        <g class="noeud" data-fiche="f5" tabindex="0" role="button" aria-label="Nœud 5 : Fabriquer les fiches" style="--nc:var(--violet)">
+          <rect x="355" y="514" width="210" height="52"/>
+          <circle class="pastille" cx="375" cy="540" r="13"/>
+          <text class="num" x="375" y="546" text-anchor="middle">5</text>
+          <text x="396" y="538">Fabriquer les fiches</text>
+          <text class="sub" x="396" y="554">un gabarit constant</text>
+          <text class="coche" x="548" y="532" text-anchor="end">✓</text>
+        </g>
+        <g class="noeud" data-fiche="f6" tabindex="0" role="button" aria-label="Nœud 6 : Vérifier avant d'apprendre" style="--nc:var(--violet)">
+          <rect x="556.5" y="634" width="210" height="52"/>
+          <circle class="pastille" cx="576.5" cy="660" r="13"/>
+          <text class="num" x="576.5" y="666" text-anchor="middle">6</text>
+          <text x="597.5" y="658">Vérifier avant d'apprendre</text>
+          <text class="sub" x="597.5" y="674">les références, surtout</text>
+          <text class="coche" x="749.5" y="652" text-anchor="end">✓</text>
+        </g>
+        <g class="noeud" data-fiche="f7" tabindex="0" role="button" aria-label="Nœud 7 : Se faire interroger" style="--nc:var(--vert)">
+          <rect x="215.5" y="634" width="210" height="52"/>
+          <circle class="pastille" cx="235.5" cy="660" r="13"/>
+          <text class="num" x="235.5" y="666" text-anchor="middle">7</text>
+          <text x="256.5" y="658">Se faire interroger</text>
+          <text class="sub" x="256.5" y="674">l'IA questionne, vous répondez</text>
+          <text class="coche" x="408.5" y="652" text-anchor="end">✓</text>
+        </g>
+        <g class="noeud" data-fiche="f8" tabindex="0" role="button" aria-label="Nœud 8 : Épreuve blanche" style="--nc:var(--rouge)">
+          <rect x="355" y="754" width="210" height="52"/>
+          <circle class="pastille" cx="375" cy="780" r="13"/>
+          <text class="num" x="375" y="786" text-anchor="middle">8</text>
+          <text x="396" y="778">Épreuve blanche</text>
+          <text class="sub" x="396" y="794">chrono, IA fermée</text>
+          <text class="coche" x="548" y="772" text-anchor="end">✓</text>
+        </g>
+      </svg>
+      <p class="legende-svg">le format de l'épreuve décide de tout, jusqu'à l'épreuve blanche</p>
+    </div>
+    <div class="cles">
+      <span><i class="c"></i> chemin critique</span>
+      <span><i></i> branche parallèle</span>
+      <span><i class="d"></i> rappel : l'épreuve blanche prend le format posé au nœud 1</span>
+    </div>
+  </section>
+
+  <section class="bloc" id="fiches">
+    <h2 class="section">Les huit fiches</h2>
+    <p class="intro-section">Les blocs violets sont des <span class="terme" tabindex="0" data-def="La consigne donnée au modèle. Ce qui la rend efficace n&#x27;est pas sa tournure, c&#x27;est ce qu&#x27;elle interdit et les documents qu&#x27;on y joint.">prompts</span> à copier tels quels ; les blocs sombres sont des gabarits.</p>
+
+    <article class="fiche" id="f1" style="--fc:var(--orange)">
+      <div class="fiche-entete"><div class="numero">1</div><h3>Poser l'épreuve et la date</h3></div>
+      <div class="badges"><span class="badge temps">15 min</span><span class="badge critique">chemin critique</span><span class="badge depend">dépend de : rien</span></div>
+      <p>Tout le reste en découle, et rien ne se décide sans ça. <strong>Quelle épreuve, quand, sous quelle forme, notée comment.</strong> Une révision se règle sur ce qu'on vous demandera de produire, pas sur ce qu'il y a à savoir.</p>
+      <ul><li><strong>Cas pratique</strong> — ce qui compte est la méthode : qualifier les faits, trouver la règle, l'appliquer, conclure. Les fiches devront porter des régimes applicables, pas des exposés.</li><li><strong>Dissertation</strong> — ce qui compte est la problématique et le plan. Les fiches devront porter des débats, des oppositions, des évolutions.</li><li><strong>QCM ou questions courtes</strong> — ce qui compte est la précision : définitions exactes, conditions cumulatives, délais.</li><li><strong>Oral</strong> — ce qui compte est la restitution à voix haute, en temps contraint. C'est le nœud 7 qui devient l'essentiel.</li></ul>
+      <div class="regle">
+        <span class="etiquette">Le temps disponible est une donnée, pas une variable</span>
+        <p>Trois semaines et trois jours ne donnent pas le même parcours. À trois jours, on saute les nœuds 3 et 4 et on va droit aux fiches sur les seuls chapitres tombables. Écrire le temps disponible en tête empêche de découvrir au dernier moment qu'on a passé quatre heures à ranger.</p>
+      </div>
+      <div class="fini"><strong>Fini quand :</strong> une ligne écrite : <em>épreuve, date, format, barème, temps de révision disponible</em>.</div>
+      <div class="piege"><strong>Piège :</strong> commencer par « faire des fiches » sans savoir sur quoi on sera évalué. C'est le meilleur moyen de produire un beau classeur inutile.</div>
+      <label class="fait-ligne"><input type="checkbox" data-noeud="f1"> nœud terminé</label>
+    </article>
+
+    <article class="fiche" id="f2" style="--fc:var(--bleu)">
+      <div class="fiche-entete"><div class="numero">2</div><h3>Rassembler ses supports — et seulement les siens</h3></div>
+      <div class="badges"><span class="badge temps">20 min</span><span class="badge critique">chemin critique</span><span class="badge depend">dépend de : 1</span></div>
+      <p>Le cours qui compte est <strong>celui qui a été fait</strong>, pas le meilleur cours du monde sur le sujet. Un polycopié trouvé en ligne, un cours d'une autre université, une fiche vendue par un site : tout cela peut être excellent et vous desservir, parce que le plan, les exemples, la terminologie et les points insistés ne seront pas ceux de votre enseignant.</p>
+      <p>On rassemble donc, dans un seul dossier : le CM sous toutes ses formes (diapos, polycopié, enregistrement), les documents de TD et leurs corrigés, ses propres notes prises en cours, et la plaquette ou le syllabus s'il en existe un.</p>
+      <div class="copiable arbo">
+        <div class="etiq-bloc">un dossier, pas plus</div>
+        <button type="button" class="btn-copier">Copier</button>
+        <pre>revisions-obligations\
+├─ cours\            les diapos et le polycopié, tels que donnés
+├─ td\               sujets, documents, corrigés
+├─ mes-notes\        ce que vous avez écrit vous-même
+└─ fiches\           ce que vous allez produire</pre>
+      </div>
+      <div class="avert">
+        <span class="etiquette">Un ajout extérieur, à une seule condition</span>
+        <p>Le manuel explicitement recommandé par l'enseignant fait exception : il fait partie du cours. Tout le reste attend le nœud 4, et n'entre qu'en bouchant un trou identifié.</p>
+      </div>
+      <div class="fini"><strong>Fini quand :</strong> les quatre dossiers existent, et tous vos supports sont dedans. Les notes manuscrites photographiées comptent.</div>
+      <div class="piege"><strong>Piège :</strong> remplacer ses notes de cours par un résumé produit par l'IA « pour gagner du temps ». Vos notes portent ce que l'enseignant a insisté, répété, ou annoncé comme tombable. C'est exactement l'information qui n'est nulle part ailleurs.</div>
+      <label class="fait-ligne"><input type="checkbox" data-noeud="f2"> nœud terminé</label>
+    </article>
+
+    <article class="fiche" id="f3" style="--fc:var(--bleu)">
+      <div class="fiche-entete"><div class="numero">3</div><h3>Reconstituer le plan du cours</h3></div>
+      <div class="badges"><span class="badge temps">30 min</span><span class="badge critique">chemin critique</span><span class="badge depend">dépend de : 2</span></div>
+      <p>Voici la grande différence avec le travail d'un enseignant qui range son fonds documentaire : <strong>votre classement existe déjà.</strong> C'est le plan du cours. Il ne s'invente pas, il se reconstitue — et il est souvent implicite, éparpillé entre des titres de diapos et des annonces orales.</p>
+      <p>Ce plan devient l'ossature de tout le reste : une fiche par point du plan, une question de révision par point, un chapitre de l'épreuve blanche par grande partie.</p>
+      <div class="copiable prompt">
+        <div class="etiq-bloc">prompt à copier (joindre les diapos et le polycopié)</div>
+        <button type="button" class="btn-copier">Copier</button>
+        <pre>Voici les supports d'un cours de droit (diapositives et polycopié).
+
+Reconstitue le plan du cours, tel qu'il est, sans le réorganiser :
+- respecte l'ordre et la numérotation d'origine ;
+- descends jusqu'au troisième niveau quand il existe ;
+- pour chaque point, indique où il se trouve (diapo n°, page) ;
+- signale entre crochets les titres que tu as dû DÉDUIRE parce qu'ils
+  n'étaient pas écrits explicitement.
+
+Tu ne reformules aucun intitulé, tu ne fusionnes rien, tu n'ajoutes aucune
+partie qui te semblerait manquante : ce plan est celui de mon enseignant,
+pas le plan idéal de la matière.
+
+Rends `plan.md`, une ligne par point.</pre>
+      </div>
+      <div class="fini"><strong>Fini quand :</strong> <code>plan.md</code> existe et vous pouvez suivre le cours entier dessus, du début à la fin, sans trou dans la numérotation.</div>
+      <div class="piege"><strong>Piège :</strong> accepter un plan « amélioré » par l'IA. Le jour de l'épreuve, c'est le plan de l'enseignant qui sert de grille de correction.</div>
+      <label class="fait-ligne"><input type="checkbox" data-noeud="f3"> nœud terminé</label>
+    </article>
+
+    <article class="fiche" id="f4" style="--fc:var(--bleu)">
+      <div class="fiche-entete"><div class="numero">4</div><h3>Repérer les trous</h3></div>
+      <div class="badges"><span class="badge temps">30 min</span><span class="badge depend">dépend de : 3</span><span class="badge">branche parallèle</span></div>
+      <p>Un cours donné n'est jamais un cours complet : il renvoie au manuel, il annonce « on verra ça en TD », il comporte des diapos à compléter, et il contient des choses dites qui ne sont écrites nulle part. Ces trous sont exactement là où les questions d'examen se logent.</p>
+      <ul><li>Les diapos qui annoncent sans développer (<em>« nous verrons »</em>, <em>« cf. manuel »</em>, une diapo au titre seul).</li><li>Les points du plan pour lesquels vos notes sont vides ou illisibles.</li><li>Les corrigés de TD qui mobilisent une notion absente du CM.</li><li>Les renvois à un arrêt ou à un texte cité sans être reproduit.</li></ul>
+      <div class="regle">
+        <span class="etiquette">Où l'on comble un trou, dans l'ordre</span>
+        <p><strong>L'enseignant</strong> d'abord — une question posée en fin de cours ou par courriel coûte deux minutes et lève l'ambiguïté. <strong>Le manuel recommandé</strong> ensuite. <strong>Les camarades et le corrigé de TD</strong> ensuite. <strong>L'IA en dernier</strong>, et jamais pour une référence : elle peut vous expliquer une notion de première année, elle ne peut pas vous dire ce que votre enseignant attend.</p>
+      </div>
+      <div class="fini"><strong>Fini quand :</strong> la liste des trous est écrite, chacun avec la source où vous irez le combler. Une liste vide veut dire que la relecture a été superficielle.</div>
+      <div class="piege"><strong>Piège :</strong> demander à l'IA de « compléter les parties manquantes du cours ». Elle produira un texte plausible, cohérent, bien écrit — et sans rapport avec ce qui sera corrigé.</div>
+      <label class="fait-ligne"><input type="checkbox" data-noeud="f4"> nœud terminé</label>
+    </article>
+
+    <article class="fiche" id="f5" style="--fc:var(--violet)">
+      <div class="fiche-entete"><div class="numero">5</div><h3>Fabriquer les fiches, à partir de ses supports seulement</h3></div>
+      <div class="badges"><span class="badge temps">2 à 4 h</span><span class="badge critique">chemin critique</span><span class="badge depend">dépend de : 3 et 4</span></div>
+      <p>Une fiche par point du plan. Toujours la même structure, parce qu'une structure constante est ce qui rend la révision rapide et l'oubli visible.</p>
+      <div class="copiable">
+        <div class="etiq-bloc">le gabarit d'une fiche</div>
+        <button type="button" class="btn-copier">Copier</button>
+        <pre># [Notion] — point 2.1.3 du plan
+**Définition** : la formulation du cours, mot à mot.
+**Conditions** : les conditions cumulatives, numérotées.
+**Régime** : ce qui se produit quand elles sont réunies, en trois lignes.
+**Référence clé** : l'article ou l'arrêt cité EN COURS (et rien d'autre).
+**Le piège** : la confusion classique, la distinction voisine.
+**Ma question** : la question que je me poserai pour vérifier que je sais.</pre>
+      </div>
+      <div class="copiable prompt">
+        <div class="etiq-bloc">prompt à copier (joindre le plan, le cours, et le point à ficher)</div>
+        <button type="button" class="btn-copier">Copier</button>
+        <pre>Voici mon plan de cours, mes supports, et le point 2.1.3 à traiter.
+
+Produis une fiche de révision selon ce gabarit exact : Définition,
+Conditions, Régime, Référence clé, Le piège, Ma question.
+
+Règles absolues :
+- tu n'utilises QUE mes documents joints. Rien de ta propre connaissance,
+  même si tu es certain que c'est juste ;
+- la définition reprend les mots du cours, tu ne la reformules pas ;
+- la référence clé est celle qui figure dans mes supports. Si aucune n'y
+  figure, tu écris « aucune référence dans le cours » — tu n'en proposes
+  pas une que tu connaîtrais ;
+- si une partie du gabarit n'est pas couverte par mes documents, tu écris
+  MANQUE et tu t'arrêtes là. Tu ne combles pas.
+
+Une fiche tient sur une page. Si elle déborde, c'est que le point du plan
+doit être coupé en deux : dis-le-moi au lieu de compresser.</pre>
+      </div>
+      <div class="fini"><strong>Fini quand :</strong> chaque point du plan a sa fiche, et chaque <code>MANQUE</code> a été traité — comblé au nœud 4, ou assumé.</div>
+      <div class="piege"><strong>Piège :</strong> lire les fiches produites et se sentir prêt. Une fiche lue n'est pas une fiche sue : c'est le nœud 7 qui fait la différence, et lui seul.</div>
+      <label class="fait-ligne"><input type="checkbox" data-noeud="f5"> nœud terminé</label>
+    </article>
+
+    <article class="fiche" id="f6" style="--fc:var(--violet)">
+      <div class="fiche-entete"><div class="numero">6</div><h3>Vérifier avant d'apprendre</h3></div>
+      <div class="badges"><span class="badge temps">30 min</span><span class="badge depend">dépend de : 5</span><span class="badge">branche parallèle</span></div>
+      <p>Une référence apprise est très difficile à désapprendre. Or c'est précisément là que l'IA se trompe le mieux : elle produit des numéros d'arrêts et d'articles parfaitement crédibles, du bon format, avec la bonne juridiction et une date vraisemblable — et parfois entièrement faux.</p>
+      <div class="regle">
+        <span class="etiquette">La règle qui vous protège en une phrase</span>
+        <p><strong>Toute référence qui n'a pas été vue dans le cours, dans le corrigé de TD ou sur <span class="terme" tabindex="0" data-def="Le service public de diffusion du droit : textes consolidés, versions successives, dates d&#x27;entrée en vigueur. La source qui fait foi.">Légifrance</span> est présumée fausse, et ne se recopie pas dans une copie.</strong></p>
+      </div>
+      <p>On vérifie donc, avant d'apprendre, les seules choses qui se vérifient : que l'article existe et porte bien ce numéro, que l'arrêt existe à cette date, que le chiffre ou le délai est le bon. Un quart d'heure sur Légifrance pour l'ensemble d'un cours, et le doute disparaît.</p>
+      <div class="fini"><strong>Fini quand :</strong> les références des fiches ont été retrouvées dans le cours ou sur une source officielle. Celles qui restent introuvables sont barrées, pas apprises.</div>
+      <div class="piege"><strong>Piège :</strong> « c'est sûrement bon, l'IA l'a pris dans mon cours ». Elle a peut-être complété. Le contrôle prend quinze minutes ; une référence inventée dans une copie coûte beaucoup plus.</div>
+      <div class="renvoi"><strong>Renvoi :</strong> la page <em>Mettre à jour un cours</em> décrit la même vérification, en plus systématique, du point de vue de l'enseignant.</div>
+      <label class="fait-ligne"><input type="checkbox" data-noeud="f6"> nœud terminé</label>
+    </article>
+
+    <article class="fiche" id="f7" style="--fc:var(--vert)">
+      <div class="fiche-entete"><div class="numero">7</div><h3>Se faire interroger, ne pas se faire répondre</h3></div>
+      <div class="badges"><span class="badge">3 séances</span><span class="badge critique">chemin critique</span><span class="badge depend">dépend de : 5</span></div>
+      <p>C'est le nœud qui fait la différence entre réviser et relire. Le principe tient en une inversion : <strong>l'IA pose les questions, vous répondez.</strong> Tant que c'est elle qui parle, vous ne mesurez rien — la sensation de comprendre en lisant est notoirement trompeuse.</p>
+      <div class="copiable prompt">
+        <div class="etiq-bloc">prompt à copier (joindre vos fiches)</div>
+        <button type="button" class="btn-copier">Copier</button>
+        <pre>Voici mes fiches de révision. Interroge-moi.
+
+Déroulé imposé :
+- une seule question à la fois, et tu attends ma réponse ;
+- tu ne donnes JAMAIS la réponse avant que j'aie répondu, même si je te
+  le demande, même si je réponds « je ne sais pas » — dans ce cas tu me
+  donnes un indice, et tu reposes la question autrement ;
+- après ma réponse, tu compares avec ma fiche, tu me dis ce qui manque
+  et tu cites la fiche d'où vient la correction ;
+- tu alternes : définition, conditions, cas d'application, piège ;
+- toutes les cinq questions, tu me dis où j'en suis : ce qui est acquis,
+  ce qui est fragile, ce qui n'est pas su du tout.
+
+Commence par les points que je vais te dire, et ne sors jamais de mes fiches.</pre>
+      </div>
+      <div class="regle">
+        <span class="etiquette">Trois séances espacées valent dix séances d'affilée</span>
+        <p>Deux mécanismes font tout le travail ici, et aucun des deux n'est la relecture. La <span class="terme" tabindex="0" data-def="Se forcer à retrouver l&#x27;information de mémoire, au lieu de la relire. Beaucoup plus coûteux sur le moment, beaucoup plus efficace ensuite.">restitution active</span> : se forcer à retrouver de mémoire, ce qui coûte sur le moment et paie ensuite. La <span class="terme" tabindex="0" data-def="Répartir les passages de révision sur plusieurs jours plutôt que de les enchaîner. L&#x27;espacement fait plus pour la mémoire que la durée totale.">révision espacée</span> : une première passe sur tout, une deuxième à deux ou trois jours d'intervalle sur ce qui était fragile, une troisième la veille sur ce qui résiste encore. Ce sont les deux résultats les mieux établis de la psychologie de l'apprentissage, et ils sont antérieurs à l'IA de plusieurs décennies.</p>
+      </div>
+      <div class="fini"><strong>Fini quand :</strong> vous répondez juste, de mémoire, sur l'essentiel du plan — et vous savez nommer les deux ou trois points qui restent fragiles.</div>
+      <div class="renvoi"><strong>Renvoi :</strong> la page <em>Travailler avec l'IA — LEA</em> donne un prompt de fabrication de QCM avec traçabilité à la page : il complète très bien l'interrogation orale décrite ici, sur les matières où le QCM est le format de l'épreuve.</div>
+      <div class="piege"><strong>Piège :</strong> demander à l'IA de vous « expliquer encore une fois ». Une explication de plus donne la sensation d'avancer sans rien changer à ce que vous saurez restituer. Si un point ne rentre pas, on retourne au cours, pas à une nouvelle explication.</div>
+      <label class="fait-ligne"><input type="checkbox" data-noeud="f7"> nœud terminé</label>
+    </article>
+
+    <article class="fiche" id="f8" style="--fc:var(--rouge)">
+      <div class="fiche-entete"><div class="numero">8</div><h3>L'épreuve blanche, sans IA</h3></div>
+      <div class="badges"><span class="badge temps">2 à 4 h</span><span class="badge critique">chemin critique</span><span class="badge depend">dépend de : 7 et 1</span></div>
+      <p>Le nœud terminal, et le seul qui prouve quelque chose. Un sujet du format de l'épreuve — cas pratique, dissertation, questions —, dans les conditions réelles : <strong>le temps imparti, sans notes si l'épreuve est sans documents, et l'IA fermée.</strong></p>
+      <p>Le sujet peut venir d'une annale, d'un TD non corrigé, ou être produit par l'IA à partir du plan et des fiches. La provenance importe peu : ce qui compte est de composer sans assistance.</p>
+      <div class="copiable prompt">
+        <div class="etiq-bloc">prompt à copier — pour fabriquer le sujet, puis pour le corriger</div>
+        <button type="button" class="btn-copier">Copier</button>
+        <pre>[AVANT] À partir de mon plan de cours et de mes fiches, écris un sujet de
+cas pratique du niveau et du format de mon épreuve. Ne donne AUCUNE
+indication de correction, aucun plan, aucun indice : seulement l'énoncé.
+Tu ne mobilises que des notions présentes dans mes fiches.
+
+[APRÈS, dans une nouvelle conversation] Voici l'énoncé, ma copie, et mes
+fiches. Corrige :
+- ce qui est juste, ce qui est faux, ce qui est absent ;
+- pour chaque manque, la fiche qui contenait la réponse ;
+- la méthode : ai-je qualifié, appliqué, conclu ?
+- une note indicative et les trois points à retravailler en priorité.
+Tu corriges à partir de mes fiches et de mon cours, pas de ta connaissance
+générale du droit : si quelque chose te paraît faux mais figure dans mon
+cours, tu me le signales sans le corriger.</pre>
+      </div>
+      <div class="fini"><strong>Fini quand :</strong> la copie est écrite, corrigée, et les trois points prioritaires sont retravaillés au nœud 7. Si la note est très en deçà de l'objectif, c'est la révision qui reprend — pas la veille de l'épreuve, et c'est bien pour ça qu'on fait l'épreuve blanche tôt.</div>
+      <div class="piege"><strong>Piège :</strong> composer avec l'IA ouverte « juste pour vérifier un point ». L'épreuve blanche ne mesure alors plus rien, et elle donne en prime une confiance qui ne survivra pas à la salle d'examen.</div>
+      <label class="fait-ligne"><input type="checkbox" data-noeud="f8"> nœud terminé</label>
+    </article>
+  </section>
+
+  <section class="bloc" id="calendrier">
+    <h2 class="section">Trois semaines avant, trois jours avant</h2>
+    <p class="intro-section">Le parcours ne se déroule pas au même rythme selon le temps disponible. Ce qu'on garde, ce qu'on sacrifie.</p>
+    <div class="chrono">
+      <div><b>J−21</b><span>Nœuds 1 à 3 en un après-midi. Le plan reconstitué est ce qui rend tout le reste rapide.</span></div>
+      <div><b>J−14</b><span>Nœuds 4 et 5 : les trous, puis les fiches. C'est le gros du travail, et il se fait par chapitres.</span></div>
+      <div><b>J−10</b><span>Nœud 6 : un quart d'heure de vérification des références. Puis première séance d'interrogation.</span></div>
+      <div><b>J−7</b><span>Épreuve blanche. Tôt, pour qu'un mauvais résultat serve encore à quelque chose.</span></div>
+      <div><b>J−3</b><span>Deuxième interrogation, sur les seuls points fragiles. Correction de l'épreuve blanche relue.</span></div>
+      <div><b>J−1</b><span>Troisième passage, court, sur ce qui résiste. Rien de neuf ce jour-là.</span></div>
+    </div>
+    <div class="regle">
+      <span class="etiquette">S'il ne reste que trois jours</span>
+      <p>On saute les nœuds 3 et 4, on fiche uniquement les chapitres tombables, et on va directement au nœud 7 : se faire interroger. Une heure d'interrogation vaut trois heures de relecture, et c'est encore plus vrai quand le temps manque.</p>
+    </div>
+  </section>
+
+  <section class="bloc glossaire" id="glossaire">
+    <h2 class="section">Glossaire</h2>
+    <p class="intro-section">Tous les mots soulignés en pointillés dans la page, réunis. Ils se survolent aussi là où ils apparaissent.</p>
+    <dl>
+      <div><dt>chemin critique</dt><dd>La plus longue chaîne de tâches qui dépendent les unes des autres. Tout retard sur elle retarde la fin ; un retard ailleurs, non.</dd></div>
+      <div><dt>corpus</dt><dd>L&#x27;ensemble des documents qu&#x27;on décide de traiter comme un tout. Ce qui n&#x27;y est pas n&#x27;existe pas pour l&#x27;IA — elle ne le devinera pas.</dd></div>
+      <div><dt>hallucination</dt><dd>Réponse plausible et fausse, produite avec le même aplomb qu&#x27;une réponse juste. En droit, elle prend surtout la forme d&#x27;une référence inventée.</dd></div>
+      <div><dt>Légifrance</dt><dd>Le service public de diffusion du droit : textes consolidés, versions successives, dates d&#x27;entrée en vigueur. La source qui fait foi.</dd></div>
+      <div><dt>prompt</dt><dd>La consigne donnée au modèle. Ce qui la rend efficace n&#x27;est pas sa tournure, c&#x27;est ce qu&#x27;elle interdit et les documents qu&#x27;on y joint.</dd></div>
+      <div><dt>restitution active</dt><dd>Se forcer à retrouver l&#x27;information de mémoire, au lieu de la relire. Beaucoup plus coûteux sur le moment, beaucoup plus efficace ensuite.</dd></div>
+      <div><dt>révision espacée</dt><dd>Répartir les passages de révision sur plusieurs jours plutôt que de les enchaîner. L&#x27;espacement fait plus pour la mémoire que la durée totale.</dd></div>
+    </dl>
+  </section>
+</div>
+<footer>Compagnon pratique du parcours « Travailler avec l'IA ». Page autonome : hors ligne, imprimable, sans installation.</footer>
+
+<script>
+(function(){
+  var noeuds = document.querySelectorAll('.noeud');
+  function versFiche(id){
+    var f = document.getElementById(id);
+    if(!f) return;
+    f.scrollIntoView({behavior:'smooth', block:'start'});
+    f.classList.remove('cible');
+    void f.offsetWidth;
+    f.classList.add('cible');
+  }
+  noeuds.forEach(function(n){
+    n.addEventListener('click', function(){ versFiche(n.dataset.fiche); });
+    n.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); versFiche(n.dataset.fiche); }
+    });
+  });
+
+  var cases = document.querySelectorAll('.fait-ligne input[type=checkbox]');
+  var compteur = document.getElementById('compteur');
+  function majCompteur(){
+    var n = document.querySelectorAll('.fait-ligne input:checked').length;
+    compteur.textContent = n + ' / 8 nœud' + (n > 1 ? 's terminés' : ' terminé');
+  }
+  cases.forEach(function(c){
+    c.addEventListener('change', function(){
+      var g = document.querySelector('.noeud[data-fiche="' + c.dataset.noeud + '"]');
+      if(g) g.classList.toggle('fait', c.checked);
+      majCompteur();
+    });
+  });
+  document.getElementById('btn-reset').addEventListener('click', function(){
+    cases.forEach(function(c){ c.checked = false; });
+    noeuds.forEach(function(n){ n.classList.remove('fait'); });
+    majCompteur();
+  });
+  document.getElementById('btn-imprimer').addEventListener('click', function(){ window.print(); });
+
+  document.querySelectorAll('.btn-copier').forEach(function(b){
+    b.addEventListener('click', function(){
+      var pre = b.parentElement.querySelector('pre');
+      if(!pre) return;
+      var txt = pre.textContent;
+      var fini = function(){ var a = b.textContent; b.textContent = 'Copié ✓'; setTimeout(function(){ b.textContent = a; }, 1600); };
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(txt).then(fini, function(){ secours(txt, fini); });
+      } else { secours(txt, fini); }
+    });
+  });
+  function secours(txt, fini){
+    var t = document.createElement('textarea');
+    t.value = txt; t.style.position = 'fixed'; t.style.opacity = '0';
+    document.body.appendChild(t); t.select();
+    try { document.execCommand('copy'); fini(); } catch(e) {}
+    document.body.removeChild(t);
+  }
+  majCompteur();
+})();
+</script>
+<!--pia-pied-->
+<div class="pia-suite">
+  <a class="" href="mettre-a-jour-un-cours.html"><span class="pia-sens">Précédent</span><span class="pia-titre">← Mettre à jour un cours : du support daté au bulletin de santé</span></a>
+  <div class="pia-vide"></div>
+</div>
+<button class="pia-haut" type="button" aria-label="Revenir en haut de la page">↑</button>
+
+<script id="pia-script">
+(function(){
+  var b=document.querySelector('.pia-progres'), h=document.querySelector('.pia-haut');
+  function maj(){
+    var d=document.documentElement, max=(d.scrollHeight-d.clientHeight)||1;
+    if(b) b.style.width=Math.min(100,(d.scrollTop||document.body.scrollTop)/max*100)+'%';
+    if(h) h.classList.toggle('pia-visible',(d.scrollTop||document.body.scrollTop)>600);
+  }
+  document.addEventListener('scroll',maj,{passive:true}); window.addEventListener('resize',maj); maj();
+  if(h) h.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+  var n=document.querySelector('.pia-nav');
+  if(n){ // neutralise le rembourrage du body pour que la barre file d'un bord a l'autre
+    var cs=getComputedStyle(document.body);
+    n.style.marginTop='-'+cs.paddingTop; n.style.marginLeft='-'+cs.paddingLeft;
+    n.style.marginRight='-'+cs.paddingRight; n.style.marginBottom=cs.paddingTop;
+  }
+  var a=document.querySelector('.pia-nav [aria-current="page"]');
+  if(a && a.scrollIntoView) a.scrollIntoView({block:'nearest',inline:'nearest'});
+})();
+</script>
+<!--/pia-pied--></body>
+</html>
