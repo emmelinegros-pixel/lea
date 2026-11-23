@@ -42,8 +42,23 @@ footer{border-top:1px solid var(--line); background:var(--surface); color:var(--
 footer p{margin:0 0 4px;}
 @media (max-width:520px){ .plaque .l-unc{max-height:42px;} .plaque .l-anlea{max-height:30px;} h2{font-size:22px;} }
 </style>
+<style id="lea-rub-css">
+.lea-rub{position:sticky;top:0;z-index:10000;display:flex;align-items:center;gap:.15rem;margin:0;padding:.45rem .7rem;
+  background:#fffefb;border-bottom:1px solid #d9dce1;box-shadow:0 1px 6px rgba(0,0,0,.06);overflow-x:auto;
+  scrollbar-width:thin;-webkit-overflow-scrolling:touch;font-family:'Public Sans','IBM Plex Sans',system-ui,-apple-system,sans-serif;box-sizing:border-box}
+.lea-rub *{box-sizing:border-box}
+.lea-rub a{display:inline-flex;align-items:center;white-space:nowrap;flex:0 0 auto;font-size:.8rem;font-weight:600;color:#6d7480;
+  text-decoration:none;padding:.34rem .6rem;border-radius:999px;border:1.5px solid transparent}
+.lea-rub .lea-pt{display:inline-block;width:.5rem;height:.5rem;border-radius:50%;margin-right:.4rem;flex:0 0 auto}
+.lea-rub a:hover{color:#2b2b2b;background:#f2f3f5}
+.lea-rub a:focus-visible{outline:2px solid #2b5ba8;outline-offset:2px}
+.lea-rub a.lea-marque{font-weight:700;color:#2b2b2b;border-right:1px solid #d9dce1;border-radius:0;padding:.3rem .7rem .3rem .2rem;margin-right:.3rem}
+.lea-rub a[aria-current="page"]{color:#2b2b2b;border-color:#d9dce1;background:#f2f3f5}
+@media print{.lea-rub{display:none !important}}
+</style>
 </head>
 <body>
+<nav class="lea-rub" aria-label="Rubriques de la page des étudiants"><a class="lea-marque" href="index.html">← Licence LEA</a><a href="index.html#accueil"><i class="lea-pt" style="background:#0F6FA8"></i>Accueil</a><a href="index.html#licence"><i class="lea-pt" style="background:#0F6FA8"></i>La licence LEA</a><a href="index.html#specialite"><i class="lea-pt" style="background:#B4650A"></i>Choisir sa spé en fin de S4</a><a href="index.html#alternance"><i class="lea-pt" style="background:#1F56A0"></i>L'alternance</a><a href="index.html#capes"><i class="lea-pt" style="background:#8D3A62"></i>Le CAPES d'espagnol</a><a href="index.html#sae"><i class="lea-pt" style="background:#0E6B60"></i>Les SAÉ</a><a href="index.html#rapport"><i class="lea-pt" style="background:#6A4A9C"></i>Rapport et soutenance</a><a href="index.html#bourses"><i class="lea-pt" style="background:#9C2F2F"></i>Bourses et absences en cours</a><a href="index.html#competences"><i class="lea-pt" style="background:#0F6FA8"></i>Compétences et UE</a><a href="index.html#mcc"><i class="lea-pt" style="background:#0E6B60"></i>Les MCC</a><a href="index.html#examens"><i class="lea-pt" style="background:#9C2F2F"></i>Les examens</a><a href="index.html#ia"><i class="lea-pt" style="background:#9C2F2F"></i>Utilisation des IA</a><a href="index.html#reglement"><i class="lea-pt" style="background:#6A4A9C"></i>Règlement des études LEA</a><a href="index.html#contacts"><i class="lea-pt" style="background:#B4650A"></i>Contacts</a></nav>
 <header class="top">
   <div class="wrap">
     <div class="plaque">
@@ -53,7 +68,6 @@ footer p{margin:0 0 4px;}
       </div>
     <p class="eyebrow">Alternance · Licence LEA</p>
     <h1>Chercher sur LinkedIn</h1>
-    <a class="retour" id="retour" href="./#alternance">← Retour à la page des étudiants</a>
   </div>
 </header>
 <main>
@@ -74,7 +88,7 @@ footer p{margin:0 0 4px;}
     <li>En haut des résultats, cliquez sur l'onglet <strong>Personnes</strong>. Les filtres les plus utilisés apparaissent en haut ; les autres sont dans <strong>Tous les filtres</strong>.</li>
     <li>Ajoutez dans vos mots-clés le nom de l'entreprise et le lieu (<code>Nouméa</code> ou <code>Nouvelle-Calédonie</code>), ou servez-vous du filtre de lieu s'il vous est proposé : les filtres affichés dépendent de votre compte.</li>
   </ol>
-  <p>Si vous avez déjà le nom d'une personne (une page d'entreprise, un article, un ancien de la formation), tapez-le : la recherche d'un profil par son nom dans la barre de recherche ne compte pas dans la limite décrite plus bas.</p>
+  <p>Si vous avez déjà le nom d'une personne (une page d'entreprise, un article, un ancien de la formation), tapez-le dans la barre de recherche.</p>
 </section>
 
 <section>
@@ -100,29 +114,11 @@ footer p{margin:0 0 4px;}
 
 <section>
   <h2><span class="n">4</span>Partir de l'entreprise</h2>
-  <p>Cherchez le nom de l'entreprise dans la barre de recherche et ouvrez sa Page LinkedIn. Son onglet <strong>Personnes</strong> affiche les membres qui y travaillent. Gardez en tête que consulter des profils par cet onglet compte dans la limite mensuelle (voir ci-dessous).</p>
+  <p>Cherchez le nom de l'entreprise dans la barre de recherche et ouvrez sa Page LinkedIn. Son onglet <strong>Personnes</strong> affiche les membres qui y travaillent.</p>
 </section>
 
 <section>
-  <h2><span class="n">5</span>La limite d'un compte gratuit</h2>
-  <p>LinkedIn limite chaque mois les recherches de profils des comptes gratuits. Un avertissement s'affiche quand vous approchez de la limite, mais il peut ne pas s'afficher si vous la dépassez trop vite. LinkedIn ne peut ni afficher le nombre exact de recherches qu'il vous reste ni relever la limite sur demande. Elle est remise à zéro le premier jour de chaque mois.</p>
-  <h3>Ce qui compte dans la limite</h3>
-  <ul>
-    <li>Rechercher des profils.</li>
-    <li>Consulter des profils par « Les personnes qui ont consulté ce profil ont également consulté… ».</li>
-    <li>Afficher des profils par l'onglet Personnes d'une Page d'entreprise.</li>
-  </ul>
-  <h3>Ce qui ne compte pas</h3>
-  <ul>
-    <li>Rechercher un profil par son nom avec la barre de recherche.</li>
-    <li>Consulter vos relations de 1er niveau.</li>
-    <li>Rechercher des offres d'emploi sur la page Emplois.</li>
-  </ul>
-  <p>Mieux vaut donc choisir quelques entreprises et quelques personnes que parcourir des profils au hasard : c'est aussi ce que demande la page de Loïc pour les notes d'invitation.</p>
-</section>
-
-<section>
-  <h2><span class="n">6</span>Créer une alerte Emploi</h2>
+  <h2><span class="n">5</span>Créer une alerte Emploi</h2>
   <p>Une alerte vous prévient des nouvelles offres qui correspondent à votre recherche. Vous choisissez la fréquence (quotidienne ou hebdomadaire) et le moyen : e-mail, notification dans l'application, ou les deux.</p>
   <h3>À partir d'une recherche</h3>
   <ol>
@@ -140,18 +136,6 @@ footer p{margin:0 0 4px;}
   <div class="note"><p>Une alerte porte sur des offres. Une entreprise qui n'en publie aucune peut quand même recevoir votre candidature spontanée : c'est la voie décrite dans la rubrique « Où chercher » de la page des étudiants.</p></div>
 </section>
 
-<section class="src">
-  <h2>Sources</h2>
-  <p>Pages d'aide de LinkedIn, consultées le 23/11/2026. Les menus et les noms des boutons changent : si ce que vous voyez diffère, cherchez le mot équivalent ou lisez la page d'aide.</p>
-  <ul>
-    <li><a href="https://www.linkedin.com/help/linkedin/answer/a523136?lang=fr" target="_blank" rel="noopener">Rechercher sur LinkedIn</a></li>
-    <li><a href="https://www.linkedin.com/help/linkedin/answer/a524335?lang=fr" target="_blank" rel="noopener">Utiliser la recherche booléenne sur LinkedIn</a></li>
-    <li><a href="https://www.linkedin.com/help/linkedin/answer/a564226?lang=fr" target="_blank" rel="noopener">Limite d'usage commercial</a></li>
-    <li><a href="https://www.linkedin.com/help/linkedin/answer/a511279?lang=fr" target="_blank" rel="noopener">Alertes Emploi sur LinkedIn</a></li>
-    <li><a href="https://www.linkedin.com/help/linkedin/answer/a554166?lang=fr" target="_blank" rel="noopener">Créer des alertes Emploi pour des entreprises spécifiques</a></li>
-  </ul>
-</section>
-
 </div>
 </main>
 <footer>
@@ -160,14 +144,5 @@ footer p{margin:0 0 4px;}
     <p>Page mise à jour le 23 novembre 2026.</p>
   </div>
 </footer>
-<script>
-(function(){
-  var a = document.getElementById('retour');
-  if (!a) { return; }
-  a.addEventListener('click', function(e){
-    if (window.opener || history.length > 1) { try { e.preventDefault(); if (window.opener) { window.close(); } else { history.back(); } } catch (x) {} }
-  });
-})();
-</script>
 </body>
 </html>
