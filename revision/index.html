@@ -140,6 +140,7 @@ b.hl{font-weight:700;color:var(--navy);border-bottom:2px dotted var(--blue);curs
 </aside>
 </div></main>
 
+<script src="jargon.js"></script>
 <script>
 {
 /* ---------- FAMILIES ---------- */
@@ -383,6 +384,8 @@ function spkShow(fb,s,r){
  const v=r.pct>=90?["model","✓ CLEAR"]:r.pct>=60?["trap","⚠ ALMOST"]:["wrong","✗ AGAIN"];
  fb.innerHTML=`<div class="pill ${v[0]}"><b>${v[1]} · ${r.pct}%</b><span>${html}</span></div><div class="pill note"><b>Heard</b><span>${esc(r.said)}</span></div>${r.pct<90?`<div class="pill remember"><b>Tip</b><span>Écoutez (▶), puis redites les mots en rouge, lentement.</span></div>`:""}`;
 }
+function jargonIn(text){const L=window.JARGON||[];const t=String(text||"");return L.filter(([w])=>new RegExp("(^|[^A-Za-z])"+w.replace(/[.*+?^${}()|[\]\\]/g,"\\$&").replace(/[- ]/g,"[- ]")+"(s|es)?(?=[^A-Za-z]|$)","i").test(t)).filter((x,i,a)=>!(x[0]==="quadrant"&&a.some(y=>y[0]==="top-right quadrant")))}
+function jargonHTML(list){return `<div class="pill remember"><b>Vocabulaire technique</b><span>${list.map(([w,f,e])=>`<b>${esc(w)}</b> = ${esc(f)} <span class="small">(${esc(e)})</span>`).join("<br>")}</span></div>`}
 function roundView(){if(!R)return home();if(R.i>=R.items.length)return end(true);show()}
 function practice(it){R={items:[it],i:0,score:0,miss:[],single:true};go(roundView)}
 
@@ -400,7 +403,7 @@ function show(){
  if(it.t==="spot")body=`<p class="q spotq"><span class="sx">✗</span> ${it.q.split(" ").map((w,k)=>`<button type="button" class="wd" data-k="${k}">${esc(w)}</button>`).join(" ")}</p>`;
  stage.innerHTML=head+`<div class="card"><div class="cardhead"><b>${R.single?"Exercise":`Exercise ${R.i+1} of 10`}</b><span>${it.relance?"Same trap, new sentence · ":""}${esc(FAM[it.f].n)}</span></div><div class="cardbody">
  <p class="small">${kind}${it.src?` · source : ${esc(it.src)}`:""}</p>${aub}${body}
- <div class="act"><button class="btn" id="check" type="button">Check</button><button class="btn ghost" id="hint" type="button">Hint</button><button class="btn ghost" id="conf" type="button">≠ À ne pas confondre</button><button class="btn ghost" id="skip" type="button">${it.t==="spot"?"Voir la correction":"I don't know"}</button>${R.single?"":`<button class="btn ghost" id="pass" type="button">Next →</button>`}</div>
+ <div class="act"><button class="btn" id="check" type="button">Check</button><button class="btn ghost" id="hint" type="button">Hint</button><button class="btn ghost" id="conf" type="button">≠ À ne pas confondre</button>${jargonIn(it.q).length?'<button class="btn ghost" id="jarg" type="button">Vocabulaire technique</button>':""}<button class="btn ghost" id="skip" type="button">${it.t==="spot"?"Voir la correction":"I don't know"}</button>${R.single?"":`<button class="btn ghost" id="pass" type="button">Next →</button>`}</div>
  <div class="fb" id="fb"></div><div id="bonusbox"></div></div></div>`;
  wire(it);
 }
@@ -417,6 +420,7 @@ function wire(it){
  const addPill=(cls,lab,txt)=>{document.getElementById("fb").insertAdjacentHTML("beforeend",`<div class="pill ${cls}"><b>${lab}</b><span>${esc(txt)}</span></div>`)};
  hb.onclick=()=>{R.hinted=true;hb.disabled=true;addPill("remember","Hint",it.hq)};
  cb.onclick=()=>{R.hinted=true;cb.disabled=true;addPill("trap","≠ À ne pas confondre",it.nc)};
+ const jb=document.getElementById("jarg");if(jb)jb.onclick=()=>{jb.disabled=true;document.getElementById("fb").insertAdjacentHTML("beforeend",jargonHTML(jargonIn(it.q)))};
  if(it.t==="mc")stage.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{stage.querySelectorAll(".opt").forEach(x=>x.classList.remove("on"));b.classList.add("on");st.mc=+b.dataset.k});
  if(it.t==="spot"){st.sp=[];stage.querySelectorAll(".wd").forEach(b=>b.onclick=()=>{const k=+b.dataset.k,i=st.sp.indexOf(k);if(i>=0){st.sp.splice(i,1);b.classList.remove("on")}else{if(st.sp.length>=it.a.length){const o=st.sp.shift();stage.querySelector(`.wd[data-k="${o}"]`).classList.remove("on")}st.sp.push(k);b.classList.add("on")}})}
  if(it.t==="type"){const inp=document.getElementById("ans");inp.focus();inp.onkeydown=e=>{if(e.key==="Enter")check.click()}}
@@ -493,6 +497,7 @@ function grade(it,given,skipped){
   `${skipped?"":`<div class="pill wrong"><b>✗ WRONG</b><span>${esc(shown)}</span></div>`}<div class="pill model"><b>✓ MODEL</b><span>${esc(it.m)}</span></div>`)+
   `<button class="linkbtn" type="button" id="saym">▶ Hear the sentence</button><div class="pill note"><b>Explication</b><span>${esc(it.w)}</span></div><div class="pill remember"><b>Rappel de cours</b><span>${esc(it.h2)}</span></div>`+(it.gs?`<button class="btn ghost" id="gsbtn" type="button">Sheet: ${esc(GS.find(g=>g.id===it.gs).title)}</button>`:"");
  if(it.gs)document.getElementById("gsbtn").onclick=()=>openGS(it.gs);
+ {const jl=jargonIn(it.m+" "+it.q);if(jl.length){document.getElementById("fb").insertAdjacentHTML("beforeend",'<button class="btn ghost" id="jarg2" type="button">Vocabulaire technique</button>');const j2=document.getElementById("jarg2");j2.onclick=()=>{j2.outerHTML=jargonHTML(jl)}}}
  document.getElementById("saym").onclick=()=>it.au?playClip(`audio/pron/${it.id}.mp3`,it.au,false):speak(it.m.replace(/\s*\/[^/]*\/\s*/g," "),false);
  stage.querySelectorAll(".tile,.opt,.gap,.wd,#ans,#hint,#conf").forEach(e=>{e.disabled=true;e.style.pointerEvents="none"});
  bonus(document.getElementById("bonusbox"),it.m,it.fr);
@@ -593,7 +598,7 @@ function listenView(p){
  <p class="hint" id="noaudio" hidden>No audio in this browser.</p>
  ${p.qs.map((q,i)=>`<div class="qblock"><p class="q">${i+1}. ${esc(q.q)}</p><div class="opts">${LR.order[i].map(([o,k])=>`<button type="button" class="opt${LR.pick[i]===k?" on":""}" data-q="${i}" data-k="${k}">${esc(o)}</button>`).join("")}</div>
  <button class="linkbtn" type="button" data-ex="${i}">Script for this question</button><div id="lx${i}"></div><div class="fb" id="lf${i}"></div></div>`).join("")}
- <div class="act" id="lact"><button class="btn" id="lcheck" type="button">Check my answers</button><button class="btn ghost" id="lfull" type="button">Full script</button><button class="btn ghost" id="lskip" type="button">Next →</button></div><div id="fullbox"></div>
+ <div class="act" id="lact"><button class="btn" id="lcheck" type="button">Check my answers</button>${jargonIn(p.text+" "+p.title).length?'<button class="btn ghost" id="ljarg" type="button">Vocabulaire technique</button>':""}<button class="btn ghost" id="lfull" type="button">Full script</button><button class="btn ghost" id="lskip" type="button">Next →</button></div><div id="jargbox"></div><div id="fullbox"></div>
  <div id="trbox"></div><div id="bonusbox"></div></div></div>`;
  const sl=document.getElementById("slow");
  document.getElementById("play").onclick=async()=>{LR.plays++;document.getElementById("plays").textContent=`Played ${LR.plays} time${LR.plays>1?"s":""}`;const ok=await playClip(`audio/lp/${p.id}.mp3`,p.text,LR.slow);if(!ok)document.getElementById("noaudio").hidden=false};
@@ -608,6 +613,7 @@ function listenView(p){
  if(lfull)lfull.onclick=()=>{const fb=document.getElementById("fullbox");if(fb.innerHTML){fb.innerHTML="";return}
   fb.innerHTML=`<div class="transcript"><p class="small"><b>Full script</b></p>${esc(p.text).replace(/\n/g,"<br>")}<br><button class="linkbtn" type="button" id="sayfull">▶ Hear the full script</button></div>`;
   document.getElementById("sayfull").onclick=()=>playClip(`audio/lp/${p.id}.mp3`,p.text,LR.slow)};
+ const lj=document.getElementById("ljarg");if(lj)lj.onclick=()=>{const b=document.getElementById("jargbox");b.innerHTML=b.innerHTML?"":jargonHTML(jargonIn(p.text+" "+p.title))};
  const lsk=document.getElementById("lskip");
  if(lsk)lsk.onclick=()=>{stopAudio();const L=lpPool();const k=L.indexOf(p);const nx=L[(k+1)%L.length]||LP[(LP.indexOf(p)+1)%LP.length];LR=null;go(()=>listenView(nx))};
  document.getElementById("lcheck").onclick=()=>{
@@ -698,10 +704,11 @@ function searchView(raw){
    const h2=hit(p.text,q)||hit(p.title,q);if(h2)out.push({k:"Listening",t:`<b>${esc(p.title)}</b><br>${h2}`,f:()=>openListening(p)});
   });
   GS.forEach(g=>{const txt=[g.title,...g.rows.flat(),...g.keys.map(k=>k[2]),...g.uses.map(k=>k[1]+" "+k[2]),...g.learn.flat()].join(" · ");const hh=hit(g.title,q)||hit(txt,q);if(hh)out.push({k:"Grammar sheet",t:`<b>${esc(g.title)}</b><br>${hh}`,f:()=>openGS(g.id)})});
+ (window.JARGON||[]).forEach(([t,f,e])=>{if(fold(t).includes(q)||fold(f).includes(q))out.push({k:"Business word",t:`<b>${esc(t)}</b> = ${esc(f)} <span class="small">(${esc(e)})</span>`,f:null})});
  GLO.forEach(([t,g])=>{if(fold(t).includes(q)||(q.length>=4&&fold(t).startsWith(q.slice(0,-1))))out.push({k:"Grammar word",t:`<b>${esc(t)}</b> = ${esc(g)}`,f:null})});
  I.forEach(it=>{const h3=hit(it.m,q)||hit(it.q||"",q)||hit(it.fr||"",q)||hit(it.w,q)||hit(it.h2,q)||hit(FAM[it.f].n,q);if(h3)out.push({k:"Exercise",t:`${h3} <span class="small">· ${esc(FAM[it.f].n)}</span>`,f:()=>practice(it)})});
  }
- const order=["Grammar word","Grammar sheet","Vocabulary","Sentence to learn","Listening","Exercise"];
+ const order=["Grammar word","Business word","Grammar sheet","Vocabulary","Sentence to learn","Listening","Exercise"];
  out.sort((a,b)=>order.indexOf(a.k)-order.indexOf(b.k));
  const shown=out.slice(0,40);
  stage.innerHTML=`<div class="card"><div class="cardhead"><b>Search</b><span>« ${esc(raw)} » · ${out.length} result${out.length>1?"s":""}</span></div><div class="cardbody">
