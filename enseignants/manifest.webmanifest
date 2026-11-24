@@ -1,0 +1,17 @@
+{
+  "id": "/lea/enseignants/",
+  "name": "Espace enseignants de la licence LEA",
+  "short_name": "LEA enseignants",
+  "description": "Cours, grilles, MCC, règles du diplôme, dossier administratif et contacts : l'espace de l'équipe enseignante de la licence LEA de l'Université de la Nouvelle-Calédonie.",
+  "lang": "fr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#F6F7F9",
+  "theme_color": "#3B1F4D",
+  "icons": [
+    { "src": "icone-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icone-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icone-masquable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

@@ -5,6 +5,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Espace enseignants LEA</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#3B1F4D">
+<link rel="icon" type="image/png" href="icone-192.png">
+<link rel="apple-touch-icon" href="icone-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="LEA enseignants">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Spectral:ital,wght@0,300;0,500;0,600;1,400&display=swap">
@@ -1378,6 +1385,13 @@ nav.tabs .liste{flex:1 1 auto; min-width:0; margin:0;}
 @media print{.nav-outils, .rech-pop{display:none!important;}}
 /* barre-et-retour:fin */
 </style>
+<style>
+/* application enseignants (25/11/2026) : le bouton « Installer sur mon téléphone » */
+.installer{flex-basis:100%;display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin-top:10px;}
+#btn-installer{font:inherit;font-size:15px;font-weight:600;color:var(--ground);background:var(--ink);border:0;border-radius:999px;padding:9px 18px;cursor:pointer;}
+#btn-installer:hover{opacity:.9;}
+.installer p{margin:0;font-size:15px;color:var(--ink-2);}
+</style>
 </head>
 <body>
 <header class="top">
@@ -1390,8 +1404,11 @@ nav.tabs .liste{flex:1 1 auto; min-width:0; margin:0;}
       <p class="eyebrow">Université de la Nouvelle-Calédonie · Département LEA</p>
       <h1>Espace enseignants de la licence LEA</h1>
     </div>
-    
-  </div>
+    <div class="installer" id="installer" hidden>
+      <button type="button" id="btn-installer">Installer sur mon téléphone</button>
+      <p id="aide-ios" hidden>Sur iPhone : touchez <b>Partager</b>, puis <b>Sur l’écran d’accueil</b>.</p>
+    </div>
+</div>
 </header>
 <nav class="tabs" aria-label="Rubriques"><div class="liste" role="tablist"><div class="g g-accueil" role="presentation"><span class="g-t" aria-hidden="true">Accueil</span><div class="g-l" role="presentation"><a role="tab" id="t-demarrer" href="#demarrer" aria-controls="demarrer" aria-selected="true" data-accent="c1">Démarrer</a><a role="tab" id="t-profil" href="#profil" aria-controls="profil" aria-selected="false" data-accent="c5">Le profil LEA</a></div></div><div class="g" role="presentation"><span class="g-t" aria-hidden="true">Enseigner</span><div class="g-l" role="presentation"><a role="tab" id="t-cours" href="#cours" aria-controls="cours" aria-selected="false" data-accent="c1">Mes cours</a></div></div><div class="g" role="presentation"><span class="g-t" aria-hidden="true">Évaluer</span><div class="g-l" role="presentation"><a role="tab" id="t-grilles" href="#grilles" aria-controls="grilles" aria-selected="false" data-accent="c2">Les grilles</a><a role="tab" id="t-mcc" href="#mcc" aria-controls="mcc" aria-selected="false" data-accent="c3">Les MCC</a><a role="tab" id="t-groupesnotes" href="#groupesnotes" aria-controls="groupesnotes" aria-selected="false" data-accent="c5">GroupesNotes</a><a role="tab" id="t-regles" href="#regles" aria-controls="regles" aria-selected="false" data-accent="dur">Les règles du diplôme</a></div></div><div class="g" role="presentation"><span class="g-t" aria-hidden="true">Administratif</span><div class="g-l" role="presentation"><a role="tab" id="t-vacataires" href="#vacataires" aria-controls="vacataires" aria-selected="false" data-accent="c4mi">Mon dossier</a><a role="tab" id="t-outils" href="#outils" aria-controls="outils" aria-selected="false" data-accent="c2">Outils et photocopies</a><a role="tab" id="t-contacts" href="#contacts" aria-controls="contacts" aria-selected="false" data-accent="c5">Contacts</a><a role="tab" id="t-documents" href="#documents" aria-controls="documents" aria-selected="false" data-accent="c4lch">Documents</a></div></div></div></nav>
 <main><section class="panneau" id="demarrer" data-accent="c1" role="tabpanel" aria-labelledby="t-demarrer"><div class="wrap">
@@ -3457,6 +3474,39 @@ window.COMP_MARCHE = {"c1": {"missions": ["Adapter son discours oral ou écrit (
   }
   btnRetour.addEventListener('click', function(){ history.back(); });
   nommer();
+})();
+</script>
+<script>
+/* application enseignants (25/11/2026) : service worker et bouton « Installer sur mon téléphone » */
+(function () {
+  if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('service-worker.js').catch(function () {});
+    });
+  }
+  var bloc = document.getElementById('installer');
+  var bouton = document.getElementById('btn-installer');
+  var aideIOS = document.getElementById('aide-ios');
+  var dejaInstallee = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+  if (!bloc || dejaInstallee) { return; }
+  var invite = null;
+  window.addEventListener('beforeinstallprompt', function (ev) {
+    ev.preventDefault();
+    invite = ev;
+    bloc.hidden = false;
+  });
+  var estIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) ||
+               (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  if (estIOS) { bloc.hidden = false; }
+  bouton.addEventListener('click', function () {
+    if (invite) {
+      invite.prompt();
+      invite.userChoice.then(function () { invite = null; bloc.hidden = true; });
+    } else {
+      aideIOS.hidden = false;
+    }
+  });
+  window.addEventListener('appinstalled', function () { bloc.hidden = true; });
 })();
 </script>
 </body>
