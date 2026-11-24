@@ -1,155 +1,1355 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Réviser avec l'IA : de ses supports de cours à l'épreuve blanche</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Utiliser les IA, côté étudiant — Loïc Steffan</title>
+<meta name="author" content="Loïc Steffan">
+<meta name="description" content="Neuf besoins réels d'étudiants et d'enseignants de la licence LEA, un prompt par besoin, et un benchmark de quatre outils.">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Public+Sans:wght@400;600;700&display=swap');
+/* =========================================================================
+   STEFFAN UI — feuille de style unique
+   Extraite des pages HTML autonomes de Loïc Steffan (2026).
+   Tout est préfixé « sf- » / « --sf-* » pour ne jamais entrer en collision
+   avec du CSS collé depuis une ancienne page.
 
-  :root{
-    --board:#fafaf8; --frame:#9aa0a6; --ink:#2b2b2b;
-    --rouge:#c3312f; --bleu:#2b5ba8; --vert:#2e8b6e; --noir:#3a3a3a;
-    --violet:#7a4a9e; --orange:#c96f1e; --turquoise:#0f7f7f; --panel:#ffffff;
+   SOMMAIRE
+     01. Jetons (variables CSS)  — couleurs, typo, rayons, ombres, espaces
+     02. Mode sombre
+     03. Ambiances (cours / rapport / console / tableau / lagon)
+     04. Réinitialisation + base typographique
+     05. Structure de page (bandeau, sommaire, sections, pied de page)
+     06. Boutons, puces, badges, liens
+     07. Cartes et grilles
+     08. Encadrés (note, définition, avertissement, exemple, rappel)
+     09. Duo « en simple / en savant »
+     10. Chaîne, frise, étapes
+     11. Tableaux (+ tableau de journal comptable)
+     12. Onglets
+     13. Accordéon / dépliant
+     14. Exercice à corrigé masqué
+     15. Quiz — QCM
+     16. Progression, jauge, tuile de chiffre, compteur
+     17. Recherche, filtre, surlignage
+     18. Infobulle (terme défini) et modale
+     19. Graphiques (SVG) — marques, légende, infobulle
+     20. Schéma « tableau blanc » (SVG interactif)
+     21. Utilitaires
+     22. Impression
+     23. Mouvement réduit
+   ========================================================================= */
+
+
+/* =========================================================================
+   01. JETONS
+   Couleurs relevées dans les fichiers sources (aucune n'est inventée).
+   La palette « série » est celle des cours CM (fonctions : production,
+   commerciale, comptable, RH, logistique). Elle a été validée : bandes de
+   clarté, plancher de chroma, séparation daltonisme et contraste, en clair
+   comme en sombre. NE PAS la remplacer par les couleurs d'ambiance.
+   ========================================================================= */
+:root{
+  color-scheme: light;
+
+  /* --- Surfaces et encre (famille « cours », la plus utilisée) --- */
+  --sf-plan:        #f4f4f1;   /* fond de page */
+  --sf-surface:     #fcfcfb;   /* fond de carte */
+  --sf-surface-2:   #f0efec;   /* fond enfoncé : en-tête de tableau, champ */
+  --sf-encre:       #0b0b0b;   /* texte principal */
+  --sf-encre-2:     #52514e;   /* texte secondaire */
+  --sf-attenue:     #898781;   /* texte tertiaire, légendes */
+  --sf-trait:       #e1e0d9;   /* filets, bordures */
+  --sf-halo:        rgba(11,11,11,.10);
+
+  /* --- Accent --- */
+  --sf-accent:      #2a78d6;
+  --sf-accent-encre:#184f95;   /* accent lisible en texte sur fond clair */
+
+  /* --- Palette catégorielle (graphiques, familles, pastilles) ---
+     Ordre figé. On ne « boucle » jamais : au-delà de 5 séries, on regroupe
+     en « Autres » ou on éclate en petits multiples. */
+  --sf-serie-1: #2a78d6;  /* bleu    — production */
+  --sf-serie-2: #eb6834;  /* orange  — commerciale */
+  --sf-serie-3: #1baf7a;  /* vert    — comptable / financière */
+  --sf-serie-4: #4a3aa7;  /* violet  — ressources humaines */
+  --sf-serie-5: #e34948;  /* rouge   — logistique */
+
+  /* --- Statuts (réservés : jamais utilisés comme 6e série) --- */
+  --sf-bon:      #0ca30c;
+  --sf-alerte:   #fab219;
+  --sf-serieux:  #ec835a;
+  --sf-critique: #d03b3b;
+
+  /* --- Encres et fonds d'état (dérivés des statuts, lisibles en texte) ---
+     Ces jetons existent pour que les badges, les réponses de quiz et les
+     écarts chiffrés restent lisibles dans TOUTES les ambiances, y compris
+     l'ambiance sombre « console ». */
+  --sf-encre-bon:      #0a5c0a;
+  --sf-encre-alerte:   #7a5600;
+  --sf-encre-serieux:  #8a3b16;
+  --sf-encre-critique: #8f1f1f;
+  --sf-fond-bon:       #e6f6ea;
+  --sf-fond-critique:  #fdeaea;
+  --sf-piste:          #cde2fb;   /* fond des barres de progression et jauges */
+  --sf-credit:         #b0430f;   /* colonne crédit du journal comptable */
+
+  /* --- Surlignage de recherche --- */
+  --sf-marque-fond:  #ffe58a;
+  --sf-marque-encre: #3a2c00;
+
+  /* --- Rampe séquentielle bleue (magnitude continue) --- */
+  --sf-bleu-100:#cde2fb; --sf-bleu-250:#86b6ef; --sf-bleu-400:#3987e5;
+  --sf-bleu-450:#2a78d6; --sf-bleu-550:#1c5cab; --sf-bleu-600:#184f95;
+  --sf-bleu-700:#0d366b;
+
+  /* --- Typographie --- */
+  --sf-sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --sf-serif: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --sf-mono: ui-monospace, Menlo, Consolas, "SF Mono", monospace;
+  --sf-manuscrite: "Caveat", "Segoe Script", cursive;
+  --sf-corps: var(--sf-sans);
+  --sf-titres: var(--sf-sans);
+
+  /* Échelle typographique (relevée dans les sources, arrondie) */
+  --sf-t-xs:  11.5px;
+  --sf-t-sm:  12.5px;
+  --sf-t-md:  14px;
+  --sf-t-base:15.5px;
+  --sf-t-lg:  18px;
+  --sf-t-h3:  18px;
+  --sf-t-h2:  clamp(22px, 3.4vw, 30px);
+  --sf-t-h1:  clamp(28px, 5vw, 42px);
+  --sf-t-hero:clamp(38px, 7vw, 60px);
+  --sf-interligne: 1.6;
+
+  /* --- Rayons --- */
+  --sf-r-xs: 6px;
+  --sf-r-sm: 9px;
+  --sf-r-md: 12px;
+  --sf-r-lg: 14px;
+  --sf-r-xl: 16px;
+  --sf-r-pilule: 999px;
+
+  /* --- Ombres --- */
+  --sf-ombre: 0 1px 2px rgba(11,11,11,.06), 0 8px 24px rgba(11,11,11,.06);
+  --sf-ombre-forte: 0 10px 30px rgba(0,0,0,.08);
+
+  /* --- Espacements (pas de 4px) --- */
+  --sf-e-1: 4px;  --sf-e-2: 8px;  --sf-e-3: 12px; --sf-e-4: 16px;
+  --sf-e-5: 22px; --sf-e-6: 32px; --sf-e-7: 52px; --sf-e-8: 80px;
+
+  /* --- Gabarit --- */
+  --sf-largeur: 940px;        /* colonne de lecture */
+  --sf-largeur-large: 1040px; /* tableaux de bord */
+  --sf-haut-bandeau: 72px;
+}
+
+
+/* =========================================================================
+   02. MODE SOMBRE
+   Mécanisme repris des cours CM : attribut data-theme sur <html>.
+   Le bloc data-theme l'emporte dans les deux sens (une page peut être
+   forcée en clair même si le système est en sombre).
+   ========================================================================= */
+@media (prefers-color-scheme: dark){
+  :root:where(:not([data-theme="light"])){
+    color-scheme: dark;
+    --sf-plan:#0d0d0d; --sf-surface:#1a1a19; --sf-surface-2:#232321;
+    --sf-encre:#ffffff; --sf-encre-2:#c3c2b7; --sf-attenue:#898781;
+    --sf-trait:#2c2c2a; --sf-halo:rgba(255,255,255,.12);
+    --sf-accent:#3987e5; --sf-accent-encre:#86b6ef;
+    --sf-serie-1:#3987e5; --sf-serie-2:#d95926; --sf-serie-3:#199e70;
+    --sf-serie-4:#9085e9; --sf-serie-5:#e66767;
+    --sf-encre-bon:#7ee27e; --sf-encre-alerte:#ffd579;
+    --sf-encre-serieux:#f5b193; --sf-encre-critique:#f59191;
+    --sf-fond-bon:#0d2a14; --sf-fond-critique:#2a0d0d;
+    --sf-piste:#12233d; --sf-credit:#f0a072;
+    --sf-marque-fond:#5a4a00; --sf-marque-encre:#ffe58a;
+    --sf-ombre: 0 1px 2px rgba(0,0,0,.4), 0 10px 30px rgba(0,0,0,.5);
+    --sf-ombre-forte: 0 10px 30px rgba(0,0,0,.55);
   }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto} *{transition:none!important;animation:none!important}}
-  body{font-family:'Public Sans',system-ui,-apple-system,sans-serif;background:var(--board);color:var(--ink);line-height:1.55;padding:1.5rem 1rem 4rem}
-  .board{max-width:1020px;margin:0 auto;background:#fff;border:8px solid #e8e9eb;outline:2px solid var(--frame);border-radius:6px;padding:2.2rem 1.6rem 2.6rem;box-shadow:0 10px 30px rgba(0,0,0,.08)}
-  header{margin-bottom:1.8rem}
-  h1{font-family:'Caveat',cursive;font-size:clamp(2rem,5vw,2.9rem);color:var(--rouge);line-height:1.1}
-  h1 .souligne{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='8' viewBox='0 0 120 8'%3E%3Cpath d='M2 5 Q30 2 60 5 T118 4' stroke='%23c3312f' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:bottom;background-size:100% 8px;padding-bottom:6px}
-  .exergue{margin-top:1rem;font-family:'Caveat',cursive;font-size:clamp(1.3rem,3vw,1.6rem);color:var(--noir);line-height:1.25}
-  .exergue .attribution{display:block;font-size:1.05rem;color:#999;margin-top:.1rem}
-  .sous-titre{margin-top:.7rem;font-size:.95rem;color:#555;max-width:68ch}
-  .mode-emploi{margin-top:.9rem;font-family:'Caveat',cursive;font-size:1.15rem;color:var(--bleu)}
-  h2.section{font-family:'Caveat',cursive;font-size:clamp(1.5rem,3.5vw,1.95rem);color:var(--noir);margin:0 0 .3rem}
-  .intro-section{font-size:.92rem;color:#555;max-width:68ch;margin-bottom:1rem}
-  section.bloc{margin-top:2.6rem;padding-top:1.5rem;border-top:3px dashed #d5d8dc}
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --sf-plan:#0d0d0d; --sf-surface:#1a1a19; --sf-surface-2:#232321;
+  --sf-encre:#ffffff; --sf-encre-2:#c3c2b7; --sf-attenue:#898781;
+  --sf-trait:#2c2c2a; --sf-halo:rgba(255,255,255,.12);
+  --sf-accent:#3987e5; --sf-accent-encre:#86b6ef;
+  --sf-serie-1:#3987e5; --sf-serie-2:#d95926; --sf-serie-3:#199e70;
+  --sf-serie-4:#9085e9; --sf-serie-5:#e66767;
+  --sf-encre-bon:#7ee27e; --sf-encre-alerte:#ffd579;
+  --sf-encre-serieux:#f5b193; --sf-encre-critique:#f59191;
+  --sf-fond-bon:#0d2a14; --sf-fond-critique:#2a0d0d;
+  --sf-piste:#12233d; --sf-credit:#f0a072;
+  --sf-marque-fond:#5a4a00; --sf-marque-encre:#ffe58a;
+  --sf-ombre: 0 1px 2px rgba(0,0,0,.4), 0 10px 30px rgba(0,0,0,.5);
+  --sf-ombre-forte: 0 10px 30px rgba(0,0,0,.55);
+}
 
-  /* encadrés */
-  .regle{margin:1.1rem 0;padding:.9rem 1.1rem;background:#fdf4ec;border-left:5px solid var(--orange);border-radius:0 10px 10px 0}
-  .regle .etiquette{display:block;font-family:'Caveat',cursive;font-size:1.25rem;font-weight:700;color:var(--orange);margin-bottom:.15rem}
-  .avert{margin:1.1rem 0;padding:.9rem 1.1rem;background:#fbeeee;border-left:5px solid var(--rouge);border-radius:0 10px 10px 0}
-  .avert .etiquette{display:block;font-family:'Caveat',cursive;font-size:1.25rem;font-weight:700;color:var(--rouge);margin-bottom:.15rem}
-  .renvoi{margin-top:.7rem;padding:.55rem .8rem;background:#eef2f8;border-left:4px solid var(--bleu);border-radius:0 8px 8px 0;font-size:.85rem;color:#33465c}
-  .renvoi strong{color:var(--bleu)}
 
-  /* zones */
-  .zones{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:.8rem;margin-top:.9rem}
-  .zone{border:2.5px solid var(--zc,var(--noir));border-radius:255px 15px 225px 15px / 15px 225px 15px 255px;padding:.8rem 1rem;background:#fdfdfc}
-  .zone h3{font-family:'Caveat',cursive;font-size:1.3rem;color:var(--zc,var(--noir));margin-bottom:.2rem}
-  .zone p{font-size:.86rem;color:#444}
-  .zone code{font-size:.82rem;background:#f2f3f5;padding:0 .25rem;border-radius:4px}
+/* =========================================================================
+   03. AMBIANCES
+   Une ambiance ne change que le « décor » (surfaces, accent de titre,
+   polices). Elle ne touche JAMAIS --sf-serie-* : les graphiques gardent
+   la palette validée, quelle que soit l'ambiance.
+   Usage : <body data-ambiance="rapport">
+   ========================================================================= */
 
-  /* DAG */
-  .cadre-svg{overflow-x:auto;border:1.5px dashed #d5d8dc;border-radius:12px;background:#fdfdfc;padding:.6rem;margin-top:.8rem}
-  .cadre-svg svg{display:block;margin:0 auto;min-width:880px;max-width:1000px;height:auto}
-  .noeud{cursor:pointer}
-  .noeud rect{fill:#fff;stroke:var(--nc,var(--noir));stroke-width:2.5;rx:14}
-  .noeud:hover rect{stroke-width:4}
-  .noeud:focus{outline:none}
-  .noeud:focus-visible rect{stroke:var(--bleu);stroke-width:4}
-  .noeud text{font-family:'Public Sans',sans-serif;font-size:13px;font-weight:600;fill:var(--ink);pointer-events:none}
-  .noeud .sub{font-size:10px;font-weight:400;fill:#7a8087}
-  .noeud .num{font-family:'Caveat',cursive;font-size:17px;font-weight:700;fill:#fff}
-  .noeud .pastille{fill:var(--nc,var(--noir))}
-  .noeud.fait rect{fill:#eef7f2;stroke-dasharray:5 4}
-  .noeud.fait text{fill:#7d8a84}
-  .noeud .coche{display:none;font-size:15px;fill:var(--vert);font-weight:700}
-  .noeud.fait .coche{display:block}
-  .arete{fill:none;stroke:#b9bec4;stroke-width:2;marker-end:url(#fleche)}
-  .arete.critique{stroke:var(--rouge);stroke-width:3.4;marker-end:url(#flecheR)}
-  .arete.differee{stroke-dasharray:7 5;stroke:#a7adb4}
-  .legende-svg{font-family:'Caveat',cursive;font-size:1.05rem;color:#777;text-align:center;margin-top:.4rem}
-  .cles{display:flex;flex-wrap:wrap;gap:.9rem;margin-top:.7rem;font-size:.83rem;color:#555;align-items:center}
-  .cles span{display:inline-flex;align-items:center;gap:.35rem}
-  .cles i{display:inline-block;width:26px;height:0;border-top:3px solid #b9bec4}
-  .cles i.c{border-top:3.4px solid var(--rouge)}
-  .cles i.d{border-top:3px dashed #a7adb4}
+/* --- « rapport » : feuille blanche posée sur un fond gris, corps en serif.
+       Source : rapport_Etienne_complet.html, rapport_decisions_coutumieres.html */
+[data-ambiance="rapport"]{
+  --sf-plan:#eef1f5; --sf-surface:#ffffff; --sf-surface-2:#f8fafc;
+  --sf-encre:#1f2937; --sf-encre-2:#374151; --sf-attenue:#6b7280;
+  --sf-trait:#e5e7eb;
+  --sf-accent:#1d4ed8; --sf-accent-encre:#1d4ed8;
+  --sf-corps: var(--sf-serif);
+  --sf-titres: var(--sf-serif);
+  --sf-largeur: 880px;
+  --sf-interligne: 1.62;
+  --sf-t-base: 16.5px;
+}
+[data-ambiance="rapport"] .sf-page{
+  background:var(--sf-surface);
+  padding: 60px 66px;
+  box-shadow:0 1px 40px rgba(0,0,0,.08);
+}
+[data-ambiance="rapport"] .sf-h2{
+  padding-top:18px; border-top:2px solid var(--sf-encre);
+}
+@media (max-width:640px){
+  [data-ambiance="rapport"] .sf-page{padding:30px 18px}
+}
 
-  /* fiches */
-  .fiche{margin-top:1.4rem;border:1.5px solid #e3e5e8;border-left:6px solid var(--fc,var(--noir));border-radius:0 12px 12px 0;background:#fdfdfc;padding:1rem 1.2rem;scroll-margin-top:1rem}
-  .fiche.cible{animation:surligne 1.4s ease}
-  @keyframes surligne{0%{background:#fff7d6}100%{background:#fdfdfc}}
-  .fiche-entete{display:flex;align-items:flex-start;gap:.7rem;flex-wrap:wrap}
-  .fiche .numero{flex:0 0 auto;width:2rem;height:2rem;border-radius:50%;background:var(--fc,var(--noir));color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Caveat',cursive;font-weight:700;font-size:1.25rem}
-  .fiche h3{font-family:'Caveat',cursive;font-size:1.5rem;color:var(--fc,var(--noir));line-height:1.1;flex:1 1 60%}
-  .badges{display:flex;gap:.35rem;flex-wrap:wrap;margin:.35rem 0 .5rem}
-  .badge{font-size:.74rem;font-weight:600;border-radius:999px;padding:.12rem .6rem;border:1.5px solid #d5d8dc;color:#666;background:#fff}
-  .badge.temps{border-color:#c9cdd3}
-  .badge.critique{border-color:var(--rouge);color:var(--rouge)}
-  .badge.attendre{border-color:var(--turquoise);color:var(--turquoise)}
-  .badge.depend{border-color:#c9cdd3;color:#777}
-  .fiche h4{font-family:'Caveat',cursive;font-size:1.15rem;color:#555;margin:.85rem 0 .2rem}
-  .fiche p{font-size:.91rem;margin-bottom:.5rem}
-  .fiche ul{margin:.2rem 0 .5rem 1.15rem;font-size:.9rem}
-  .fiche li{margin-bottom:.18rem}
-  .fini{margin-top:.7rem;padding:.55rem .8rem;background:#f0f7f3;border-radius:8px;font-size:.87rem;color:#2f5c4a}
-  .fini strong{color:var(--vert)}
-  .piege{margin-top:.5rem;padding:.55rem .8rem;background:#fbf1ee;border-radius:8px;font-size:.87rem;color:#7d3b30}
-  .piege strong{color:var(--rouge)}
-  .fait-ligne{margin-top:.8rem;font-size:.84rem;color:#777;display:flex;align-items:center;gap:.4rem}
-  .fait-ligne input{width:1.05rem;height:1.05rem;accent-color:var(--vert)}
+/* --- « console » : tableau de bord sombre.
+       Source : dscg-2026-dashboard.html, index.html, ue1-droit.html */
+[data-ambiance="console"]{
+  color-scheme: dark;
+  --sf-plan:#0f1420; --sf-surface:#171e2e; --sf-surface-2:#1e2740;
+  --sf-encre:#e8ecf5; --sf-encre-2:#c3cadb; --sf-attenue:#95a1bd;
+  --sf-trait:#2a3550;
+  --sf-accent:#5b8cff; --sf-accent-encre:#8fb0ff;
+  --sf-accent-2:#8b6cff;         /* uniquement pour les dégradés décoratifs */
+  --sf-encre-bon:#7be5b8; --sf-encre-alerte:#ffcf7a;
+  --sf-encre-serieux:#f5b193; --sf-encre-critique:#ff9d9d;
+  --sf-fond-bon:#173a2c; --sf-fond-critique:#3a1f27;
+  --sf-piste:#12233d; --sf-credit:#f0a072;
+  --sf-marque-fond:#3a3117; --sf-marque-encre:#ffcf7a;
+  --sf-largeur: var(--sf-largeur-large);
+  --sf-ombre: 0 1px 2px rgba(0,0,0,.4), 0 10px 30px rgba(0,0,0,.45);
+}
+[data-ambiance="console"] body,
+body[data-ambiance="console"]{
+  background:linear-gradient(160deg,#0d1119,#111a2e 60%,#0d1119);
+}
 
-  /* blocs à copier */
-  .copiable{position:relative;margin:.4rem 0 .6rem}
-  .copiable pre{background:#2f3237;color:#e9edf1;border-radius:10px;padding:.85rem 1rem;font-size:.8rem;line-height:1.5;overflow-x:auto;white-space:pre;font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
-  .copiable.prompt pre{background:#f6f4fb;color:#2c2338;border:1.5px solid #ded5ee;white-space:pre-wrap}
-  .copiable button{position:absolute;top:.45rem;right:.45rem;font:inherit;font-size:.72rem;font-weight:600;border:none;border-radius:6px;padding:.2rem .55rem;cursor:pointer;background:rgba(255,255,255,.85);color:#333}
-  .copiable.prompt button{background:var(--violet);color:#fff}
-  .copiable button:hover{filter:brightness(1.08)}
-  .etiq-bloc{font-size:.76rem;font-weight:700;letter-spacing:.03em;text-transform:uppercase;color:#8a8f96;margin-bottom:.2rem}
-  .arbo pre{background:#fdfdfc;color:#3a3a3a;border:1.5px dashed #d5d8dc;white-space:pre}
+/* --- « tableau » : planche façon tableau blanc, titres manuscrits.
+       Source : schema-ia-interactif-v12.html, travailler-avec-lia-trans-outils.html,
+       carte-des-organes.html. Nécessite les polices Caveat + Public Sans (CDN). */
+[data-ambiance="tableau"]{
+  --sf-plan:#fafaf8; --sf-surface:#ffffff; --sf-surface-2:#fdfdfc;
+  --sf-encre:#2b2b2b; --sf-encre-2:#555555; --sf-attenue:#898781;
+  --sf-trait:#e3e5e8;
+  --sf-cadre:#9aa0a6;
+  --sf-accent:#2b5ba8; --sf-accent-encre:#2b5ba8;
+  --sf-rouge-craie:#c3312f; --sf-vert-craie:#2e8b6e; --sf-violet-craie:#7a4a9e;
+  --sf-orange-craie:#c96f1e; --sf-turquoise-craie:#0f7f7f;
+  --sf-corps: "Public Sans", system-ui, -apple-system, sans-serif;
+  --sf-titres: var(--sf-manuscrite);
+  --sf-largeur: 980px;
+}
+[data-ambiance="tableau"] .sf-page{
+  background:#fff;
+  border:8px solid #e8e9eb;
+  outline:2px solid var(--sf-cadre);
+  border-radius:var(--sf-r-xs);
+  padding:2.2rem 1.6rem 2.6rem;
+  box-shadow:var(--sf-ombre-forte);
+}
+[data-ambiance="tableau"] .sf-h1{color:var(--sf-rouge-craie);line-height:1.1}
+[data-ambiance="tableau"] .sf-h2{color:var(--sf-accent)}
 
-  /* chrono */
-  .chrono{display:grid;gap:.5rem;margin-top:.8rem}
-  .chrono div{display:grid;grid-template-columns:5.2rem 1fr;gap:.7rem;align-items:baseline;background:#fdfdfc;border:1.5px solid #e3e5e8;border-radius:10px;padding:.5rem .8rem}
-  .chrono b{font-family:'Caveat',cursive;font-size:1.2rem;color:var(--bleu)}
-  .chrono span{font-size:.88rem}
+/* --- « lagon » : ambiance calédonienne du second cerveau microéconomie.
+       Source : Microeconomie_Second_Cerveau_Index.html.
+       Nécessite Fraunces + Inter + IBM Plex Mono (CDN). */
+[data-ambiance="lagon"]{
+  --sf-plan:#F2F6F6; --sf-surface:#FFFFFF; --sf-surface-2:#EAF0EE;
+  --sf-encre:#0C2A33; --sf-encre-2:#3C5A64; --sf-attenue:#52707A;
+  --sf-trait:#DBE6E6;
+  --sf-accent:#0E8C9C; --sf-accent-encre:#083A45;
+  --sf-lagon:#0E8C9C; --sf-lagon-profond:#0A4F5C; --sf-lagon-encre:#083A45;
+  --sf-hibiscus:#D63A6A; --sf-or:#C98A2B; --sf-or-profond:#9A6512;
+  --sf-or-doux:#F6ECD8; --sf-sable:#EAF0EE;
+  --sf-corps: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --sf-titres: "Fraunces", Georgia, serif;
+}
+[data-ambiance="lagon"] .sf-h1,
+[data-ambiance="lagon"] .sf-h2,
+[data-ambiance="lagon"] .sf-h3{color:var(--sf-lagon-encre)}
 
-  .pasfaire{list-style:none;display:grid;gap:.5rem;margin-top:.8rem}
-  .pasfaire li{background:#fdfdfc;border:1.5px solid #f0dcd8;border-radius:10px;padding:.55rem .85rem;font-size:.89rem}
-  .pasfaire li b{color:var(--rouge)}
 
-  .actions-globales{margin-top:1rem}
-  .actions-globales button{font:inherit;font-size:.8rem;font-weight:600;background:none;border:1.5px solid var(--frame);border-radius:999px;padding:.35rem .9rem;cursor:pointer;color:#555;margin-right:.5rem}
-  .actions-globales button:hover{border-color:var(--ink);color:var(--ink)}
-  #compteur{font-size:.8rem;color:#777}
+/* =========================================================================
+   04. RÉINITIALISATION + BASE TYPOGRAPHIQUE
+   ========================================================================= */
+*, *::before, *::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--sf-plan);
+  color:var(--sf-encre);
+  font-family:var(--sf-corps);
+  font-size:var(--sf-t-base);
+  line-height:var(--sf-interligne);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+img, svg, video{max-width:100%}
+.sf-h1{font-family:var(--sf-titres);font-size:var(--sf-t-h1);line-height:1.08;letter-spacing:-.025em;margin:.3em 0 .2em}
+.sf-h2{font-family:var(--sf-titres);font-size:var(--sf-t-h2);line-height:1.15;letter-spacing:-.02em;margin:.1em 0 .5em}
+.sf-h3{font-family:var(--sf-titres);font-size:var(--sf-t-h3);letter-spacing:-.01em;margin:1.4em 0 .3em}
+.sf-h4{font-size:var(--sf-t-md);text-transform:uppercase;letter-spacing:.05em;color:var(--sf-attenue);margin:1.4em 0 .4em}
+.sf-lead{font-size:var(--sf-t-lg);color:var(--sf-encre-2);max-width:64ch}
+.sf-texte{max-width:70ch}
+.sf-petit{font-size:var(--sf-t-md);color:var(--sf-encre-2)}
+.sf-attenue{color:var(--sf-attenue)}
+a{color:var(--sf-accent-encre)}
+code, .sf-code{
+  font-family:var(--sf-mono);font-size:.86em;
+  background:var(--sf-surface-2);padding:1px 6px;
+  border-radius:var(--sf-r-xs);border:1px solid var(--sf-trait);
+}
+pre.sf-bloc-code{
+  font-family:var(--sf-mono);font-size:13px;line-height:1.5;
+  background:var(--sf-surface-2);border:1px solid var(--sf-trait);
+  border-radius:var(--sf-r-md);padding:14px 16px;overflow:auto;
+}
+mark, .sf-marque{background:var(--sf-marque-fond);color:var(--sf-marque-encre);padding:0 1px;border-radius:2px}
 
-  footer{max-width:1020px;margin:1.4rem auto 0;font-size:.8rem;color:#888;text-align:center}
-  @media (max-width:600px){.board{padding:1.4rem 1rem 1.8rem}}
-  @media print{
-    body{padding:0;background:#fff}
-    .board{border:none;outline:none;box-shadow:none;max-width:none}
-    .actions-globales,.fait-ligne,.copiable button{display:none}
-    .fiche{break-inside:avoid;page-break-inside:avoid}
+/* Focus visible partout : c'était la lacune la plus fréquente des sources. */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible{
+  outline:2px solid var(--sf-accent);
+  outline-offset:2px;
+  border-radius:var(--sf-r-xs);
+}
+
+
+/* =========================================================================
+   05. STRUCTURE DE PAGE
+   ========================================================================= */
+.sf-page{max-width:var(--sf-largeur);margin:0 auto;padding:0 20px var(--sf-e-8)}
+
+/* Bandeau collant : marque + recherche + actions */
+.sf-bandeau{
+  position:sticky;top:0;z-index:40;
+  background:color-mix(in srgb, var(--sf-plan) 88%, transparent);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--sf-trait);
+}
+.sf-bandeau-in{
+  max-width:var(--sf-largeur);margin:0 auto;padding:12px 20px;
+  display:flex;gap:14px;align-items:center;flex-wrap:wrap;
+}
+.sf-marqueur{font-weight:700;letter-spacing:-.01em;font-size:15px;white-space:nowrap}
+.sf-marqueur small{display:block;font-weight:500;color:var(--sf-attenue);font-size:var(--sf-t-xs);letter-spacing:0}
+.sf-bandeau-actions{margin-left:auto;display:flex;gap:8px;align-items:center}
+
+/* Hero */
+.sf-hero{padding:44px 0 8px}
+.sf-surtitre{
+  color:var(--sf-accent-encre);font-weight:700;font-size:var(--sf-t-sm);
+  letter-spacing:.08em;text-transform:uppercase;
+}
+
+/* Sections numérotées */
+.sf-section{scroll-margin-top:var(--sf-haut-bandeau);margin-top:var(--sf-e-7)}
+.sf-oeil{
+  display:flex;align-items:center;gap:10px;color:var(--sf-attenue);
+  font-size:var(--sf-t-sm);text-transform:uppercase;letter-spacing:.07em;
+  font-weight:700;margin-bottom:6px;
+}
+.sf-oeil .sf-n{
+  display:grid;place-items:center;min-width:24px;height:24px;padding:0 6px;
+  border-radius:7px;background:var(--sf-accent);color:#fff;font-size:13px;
+}
+.sf-oeil .sf-filet{flex:1;height:1px;background:var(--sf-trait)}
+
+/* Sommaire (statique ou généré par data-sf-sommaire) */
+.sf-sommaire{
+  background:var(--sf-surface);border:1px solid var(--sf-trait);
+  border-radius:var(--sf-r-lg);padding:16px 20px;margin-top:var(--sf-e-5);
+}
+.sf-sommaire h2, .sf-sommaire .sf-titre{
+  margin:0 0 8px;font-size:var(--sf-t-sm);text-transform:uppercase;
+  letter-spacing:.07em;color:var(--sf-attenue);font-weight:700;
+}
+.sf-sommaire ol{margin:0;padding-left:1.1em;counter-reset:none}
+.sf-sommaire li{margin:4px 0}
+.sf-sommaire a{color:inherit;text-decoration:none;border-bottom:1px solid transparent}
+.sf-sommaire a:hover{border-bottom-color:var(--sf-accent)}
+.sf-sommaire a[aria-current="true"]{color:var(--sf-accent-encre);font-weight:600}
+
+/* Pied de page */
+.sf-pied{
+  margin-top:64px;border-top:1px solid var(--sf-trait);padding-top:22px;
+  color:var(--sf-encre-2);font-size:var(--sf-t-md);
+}
+.sf-pied a{color:var(--sf-accent-encre)}
+
+/* Halo d'arrivée après un saut d'ancre */
+.sf-halo-anim{animation:sf-halo 1.6s ease}
+@keyframes sf-halo{
+  0%,100%{box-shadow:0 0 0 0 transparent}
+  18%{box-shadow:0 0 0 4px color-mix(in srgb, var(--sf-accent) 45%, transparent)}
+}
+
+
+/* =========================================================================
+   06. BOUTONS, PUCES, BADGES
+   ========================================================================= */
+.sf-btn{
+  display:inline-flex;align-items:center;gap:7px;
+  border:1px solid var(--sf-trait);background:var(--sf-surface);color:var(--sf-encre);
+  border-radius:var(--sf-r-sm);padding:8px 14px;
+  font:inherit;font-size:var(--sf-t-md);font-weight:600;line-height:1.2;
+  cursor:pointer;text-decoration:none;
+}
+.sf-btn:hover{border-color:var(--sf-attenue)}
+.sf-btn[aria-pressed="true"], .sf-btn.sf-actif{
+  background:var(--sf-accent);color:#fff;border-color:transparent;
+}
+.sf-btn--principal{background:var(--sf-accent);color:#fff;border-color:transparent}
+.sf-btn--principal:hover{filter:brightness(1.06);border-color:transparent}
+.sf-btn--discret{background:transparent;color:var(--sf-encre-2)}
+.sf-btn--icone{padding:8px 10px}
+
+/* Segments (groupe de boutons exclusifs, style « pilule ») */
+.sf-segments{display:flex;gap:6px;flex-wrap:wrap;margin:var(--sf-e-3) 0}
+.sf-segment{
+  border:1px solid var(--sf-trait);background:var(--sf-surface);color:var(--sf-encre-2);
+  border-radius:var(--sf-r-pilule);padding:7px 14px;
+  font:inherit;font-size:13.5px;font-weight:600;cursor:pointer;
+}
+.sf-segment[aria-pressed="true"], .sf-segment.sf-actif{
+  background:var(--sf-accent);color:#fff;border-color:transparent;
+}
+
+/* Puces / chips */
+.sf-puces{display:flex;gap:8px;flex-wrap:wrap;margin-top:var(--sf-e-4)}
+.sf-puce{
+  font-size:var(--sf-t-sm);border:1px solid var(--sf-trait);background:var(--sf-surface);
+  border-radius:var(--sf-r-pilule);padding:5px 11px;color:var(--sf-encre-2);
+}
+
+/* Badges de statut : couleur + libellé, jamais la couleur seule */
+.sf-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:var(--sf-t-xs);font-weight:700;letter-spacing:.02em;
+  padding:3px 10px;border-radius:var(--sf-r-pilule);
+  border:1px solid transparent;
+}
+.sf-badge::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;flex:none}
+.sf-badge--bon     {color:var(--sf-encre-bon);     background:color-mix(in srgb, var(--sf-bon) 14%, var(--sf-surface));      border-color:color-mix(in srgb, var(--sf-bon) 40%, transparent)}
+.sf-badge--alerte  {color:var(--sf-encre-alerte);  background:color-mix(in srgb, var(--sf-alerte) 20%, var(--sf-surface));   border-color:color-mix(in srgb, var(--sf-alerte) 45%, transparent)}
+.sf-badge--serieux {color:var(--sf-encre-serieux); background:color-mix(in srgb, var(--sf-serieux) 18%, var(--sf-surface));  border-color:color-mix(in srgb, var(--sf-serieux) 45%, transparent)}
+.sf-badge--critique{color:var(--sf-encre-critique);background:color-mix(in srgb, var(--sf-critique) 14%, var(--sf-surface)); border-color:color-mix(in srgb, var(--sf-critique) 40%, transparent)}
+.sf-badge--neutre  {color:var(--sf-encre-2);       background:var(--sf-surface-2);border-color:var(--sf-trait)}
+
+
+/* =========================================================================
+   07. CARTES ET GRILLES
+   ========================================================================= */
+.sf-carte{
+  background:var(--sf-surface);border:1px solid var(--sf-trait);
+  border-radius:var(--sf-r-xl);padding:var(--sf-e-5);box-shadow:var(--sf-ombre);
+}
+.sf-carte--plate{box-shadow:none}
+.sf-carte-titre{margin:0 0 6px;font-size:var(--sf-t-lg);font-weight:700;display:flex;align-items:center;gap:8px}
+
+/* Carte cliquable (sommaire d'un ensemble de pages) */
+a.sf-carte{display:block;text-decoration:none;color:inherit;transition:transform .12s, border-color .12s}
+a.sf-carte:hover{transform:translateY(-3px);border-color:var(--sf-accent)}
+
+.sf-grille{display:grid;gap:14px;margin-top:var(--sf-e-3)}
+.sf-grille--2{grid-template-columns:repeat(2, minmax(0,1fr))}
+.sf-grille--3{grid-template-columns:repeat(3, minmax(0,1fr))}
+.sf-grille--4{grid-template-columns:repeat(4, minmax(0,1fr))}
+.sf-grille--auto{grid-template-columns:repeat(auto-fit, minmax(220px,1fr))}
+@media (max-width:760px){
+  .sf-grille--3, .sf-grille--4{grid-template-columns:repeat(2, minmax(0,1fr))}
+}
+@media (max-width:560px){
+  .sf-grille--2, .sf-grille--3, .sf-grille--4{grid-template-columns:1fr}
+}
+
+/* Mini-cartes en ligne (3 idées côte à côte) */
+.sf-mini{
+  border:1px solid var(--sf-trait);border-radius:var(--sf-r-md);
+  padding:13px 15px;background:var(--sf-surface);
+}
+.sf-mini .sf-mini-titre{font-weight:700;font-size:14.5px;margin-bottom:3px;display:flex;align-items:center;gap:7px}
+.sf-mini p{font-size:13px;color:var(--sf-encre-2);margin:0}
+
+
+/* =========================================================================
+   08. ENCADRÉS
+   Cinq variantes relevées : note (filet d'accent), définition, exemple,
+   avertissement, rappel. Chacune porte une étiquette écrite : jamais
+   d'information portée par la seule couleur.
+   ========================================================================= */
+.sf-encadre{
+  margin:1.3em 0;padding:16px 20px;border-radius:var(--sf-r-md);
+  border:1px solid var(--sf-trait);background:var(--sf-surface-2);
+  font-size:15px;
+}
+.sf-encadre > :first-child{margin-top:0}
+.sf-encadre > :last-child{margin-bottom:0}
+.sf-encadre-etiquette{
+  display:block;font-family:var(--sf-mono);font-size:10.5px;
+  letter-spacing:.1em;text-transform:uppercase;font-weight:700;
+  margin-bottom:6px;color:var(--sf-encre-2);
+}
+.sf-encadre--definition{
+  background:color-mix(in srgb, var(--sf-serie-3) 8%, var(--sf-surface));
+  border-color:color-mix(in srgb, var(--sf-serie-3) 30%, var(--sf-trait));
+}
+.sf-encadre--definition .sf-encadre-etiquette{color:color-mix(in srgb, var(--sf-serie-3) 78%, var(--sf-encre))}
+.sf-encadre--exemple{
+  background:color-mix(in srgb, var(--sf-alerte) 12%, var(--sf-surface));
+  border-color:color-mix(in srgb, var(--sf-alerte) 38%, var(--sf-trait));
+}
+.sf-encadre--exemple .sf-encadre-etiquette{color:color-mix(in srgb, var(--sf-alerte) 55%, var(--sf-encre))}
+.sf-encadre--avertissement{
+  background:color-mix(in srgb, var(--sf-critique) 9%, var(--sf-surface));
+  border-color:color-mix(in srgb, var(--sf-critique) 32%, var(--sf-trait));
+  border-left:4px solid var(--sf-critique);
+}
+.sf-encadre--avertissement .sf-encadre-etiquette{color:color-mix(in srgb, var(--sf-critique) 78%, var(--sf-encre))}
+.sf-encadre--rappel{
+  background:color-mix(in srgb, var(--sf-serie-4) 8%, var(--sf-surface));
+  border-color:color-mix(in srgb, var(--sf-serie-4) 28%, var(--sf-trait));
+}
+.sf-encadre--rappel .sf-encadre-etiquette{color:color-mix(in srgb, var(--sf-serie-4) 80%, var(--sf-encre))}
+.sf-encadre--methode{
+  background:color-mix(in srgb, var(--sf-accent) 8%, var(--sf-surface));
+  border-color:color-mix(in srgb, var(--sf-accent) 30%, var(--sf-trait));
+}
+.sf-encadre--methode .sf-encadre-etiquette{color:var(--sf-accent-encre)}
+
+/* Note discrète : simple filet vertical, pas de fond */
+.sf-note{
+  font-size:var(--sf-t-md);color:var(--sf-encre-2);
+  border-left:3px solid var(--sf-accent);
+  padding:4px 0 4px 14px;margin:14px 0;background:none;
+}
+
+
+/* =========================================================================
+   09. DUO « EN SIMPLE / EN SAVANT »
+   Brique signature des cours CM : la même idée dite deux fois.
+   ========================================================================= */
+.sf-duo{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:var(--sf-e-3)}
+@media (max-width:680px){.sf-duo{grid-template-columns:1fr}}
+.sf-duo-face{
+  border:1px solid var(--sf-trait);border-radius:var(--sf-r-lg);
+  padding:16px 18px;background:var(--sf-surface);
+}
+.sf-duo-face .sf-etiquette{
+  font-size:var(--sf-t-xs);font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+  color:var(--sf-attenue);margin-bottom:4px;display:flex;align-items:center;gap:6px;
+}
+.sf-duo-face p{margin:.2em 0;font-size:var(--sf-t-base)}
+.sf-duo-face--simple{
+  background:linear-gradient(180deg, color-mix(in srgb, var(--sf-serie-3) 8%, var(--sf-surface)), var(--sf-surface));
+}
+.sf-duo-face--simple .sf-etiquette{color:color-mix(in srgb, var(--sf-serie-3) 75%, var(--sf-encre))}
+.sf-duo-face--savant .sf-etiquette{color:var(--sf-accent-encre)}
+
+
+/* =========================================================================
+   10. CHAÎNE, FRISE, ÉTAPES
+   ========================================================================= */
+/* Chaîne horizontale de boîtes reliées par des flèches */
+.sf-chaine{display:flex;gap:8px;align-items:stretch;overflow:auto;padding:6px 2px 10px;margin-top:var(--sf-e-3)}
+.sf-chaine-boite{
+  border:1px solid var(--sf-trait);border-radius:var(--sf-r-md);
+  padding:10px 14px;background:var(--sf-surface);min-width:140px;
+  box-shadow:var(--sf-ombre);
+}
+.sf-chaine-boite .sf-cn{display:block;font-weight:700;font-size:14.5px}
+.sf-chaine-boite .sf-cd{display:block;font-size:12px;color:var(--sf-attenue);margin-top:3px;line-height:1.35}
+.sf-chaine-fleche{display:flex;align-items:center;color:var(--sf-accent);font-size:20px;flex:none}
+
+/* Frise verticale numérotée */
+.sf-frise{position:relative;padding-left:2.4rem;margin-top:var(--sf-e-4)}
+.sf-frise::before{
+  content:"";position:absolute;left:1rem;top:.8rem;bottom:.8rem;
+  width:0;border-left:3px dashed var(--sf-trait);
+}
+.sf-etape{margin-bottom:var(--sf-e-6);position:relative}
+.sf-etape:last-child{margin-bottom:0}
+.sf-etape-puce{
+  position:absolute;left:-2.4rem;top:.1rem;
+  width:2rem;height:2rem;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:1rem;color:#fff;
+  background:var(--sf-etape-couleur, var(--sf-accent));
+  box-shadow:0 2px 4px rgba(0,0,0,.2);
+}
+.sf-etape-titre{font-family:var(--sf-titres);font-size:var(--sf-t-lg);margin:0 0 .1em;color:var(--sf-etape-couleur, var(--sf-encre))}
+.sf-etape-question{font-size:var(--sf-t-md);color:var(--sf-attenue);font-style:italic;margin:0 0 .8em}
+
+
+/* =========================================================================
+   11. TABLEAUX
+   ========================================================================= */
+.sf-tableau-cadre{
+  overflow:auto;border:1px solid var(--sf-trait);border-radius:var(--sf-r-lg);
+  background:var(--sf-surface);box-shadow:var(--sf-ombre);margin-top:var(--sf-e-3);
+}
+table.sf-tableau{width:100%;border-collapse:collapse;font-size:14.5px}
+.sf-tableau th, .sf-tableau td{
+  text-align:left;padding:10px 13px;border-bottom:1px solid var(--sf-trait);vertical-align:top;
+}
+.sf-tableau thead th{
+  position:sticky;top:0;background:var(--sf-surface-2);
+  font-size:12px;text-transform:uppercase;letter-spacing:.04em;
+  color:var(--sf-encre-2);z-index:1;font-weight:700;
+}
+.sf-tableau tbody tr:last-child td{border-bottom:0}
+.sf-tableau tbody tr[hidden]{display:none}
+.sf-tableau .sf-nb{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.sf-tableau tr.sf-total td{
+  border-top:2px solid var(--sf-trait);font-weight:700;background:var(--sf-surface-2);
+}
+.sf-tableau caption{
+  caption-side:top;text-align:left;padding:10px 13px;
+  font-size:var(--sf-t-sm);color:var(--sf-attenue);
+}
+/* En-tête triable */
+.sf-tableau th[data-sf-tri]{cursor:pointer;user-select:none}
+.sf-tableau th[data-sf-tri]::after{content:" ↕";opacity:.35;font-size:.85em}
+.sf-tableau th[aria-sort="ascending"]::after{content:" ↑";opacity:1}
+.sf-tableau th[aria-sort="descending"]::after{content:" ↓";opacity:1}
+
+/* Journal comptable (débit / crédit) */
+.sf-journal{
+  border:1px solid var(--sf-trait);border-radius:var(--sf-r-lg);background:var(--sf-surface);
+  box-shadow:var(--sf-ombre);overflow:hidden;margin-top:var(--sf-e-3);
+}
+.sf-journal-tete{
+  display:flex;align-items:center;gap:10px;padding:11px 15px;
+  background:var(--sf-surface-2);border-bottom:1px solid var(--sf-trait);font-size:13.5px;
+}
+.sf-journal-tete .sf-jt{font-weight:700}
+.sf-journal-tete .sf-jd{color:var(--sf-attenue);font-size:var(--sf-t-sm)}
+.sf-journal table{width:100%;border-collapse:collapse;font-size:14px}
+.sf-journal th, .sf-journal td{padding:9px 13px;border-bottom:1px solid var(--sf-trait);text-align:left}
+.sf-journal thead th{background:var(--sf-surface-2);font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--sf-encre-2)}
+.sf-journal td.sf-compte{font-family:var(--sf-mono);color:var(--sf-accent-encre);white-space:nowrap;width:1%}
+.sf-journal td.sf-debit {text-align:right;color:var(--sf-accent-encre);font-variant-numeric:tabular-nums;font-weight:600}
+.sf-journal td.sf-credit{text-align:right;color:var(--sf-credit);font-variant-numeric:tabular-nums;font-weight:600}
+.sf-journal tr.sf-ligne-credit td.sf-libelle{padding-left:34px;color:var(--sf-encre-2)}
+.sf-journal tr.sf-total td{border-top:2px solid var(--sf-trait);font-weight:700;background:var(--sf-surface-2)}
+.sf-journal .sf-pj{padding:8px 15px;font-size:12px;color:var(--sf-attenue);border-top:1px dashed var(--sf-trait)}
+
+
+/* =========================================================================
+   12. ONGLETS
+   Balisage ARIA complet : role="tablist" / "tab" / "tabpanel".
+   ========================================================================= */
+.sf-onglets{
+  display:flex;gap:6px;flex-wrap:wrap;
+  background:var(--sf-surface-2);border:1px solid var(--sf-trait);
+  border-radius:var(--sf-r-md);padding:4px;width:fit-content;max-width:100%;
+  margin-top:var(--sf-e-4);
+}
+.sf-onglet{
+  border:0;background:transparent;color:var(--sf-encre-2);
+  padding:9px 16px;border-radius:var(--sf-r-sm);
+  font:inherit;font-size:var(--sf-t-md);font-weight:600;
+  cursor:pointer;white-space:nowrap;
+  transition:background .15s, color .15s;
+}
+.sf-onglet:hover{color:var(--sf-encre)}
+.sf-onglet[aria-selected="true"]{
+  background:var(--sf-surface);color:var(--sf-encre);
+  box-shadow:0 0 0 1px var(--sf-trait) inset;
+}
+.sf-panneau{margin-top:var(--sf-e-4)}
+.sf-panneau[hidden]{display:none}
+
+
+/* =========================================================================
+   13. ACCORDÉON / DÉPLIANT
+   ========================================================================= */
+.sf-accordeon{margin-top:var(--sf-e-3)}
+.sf-accordeon-actions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:var(--sf-e-3)}
+.sf-depliant{
+  border:1px solid var(--sf-trait);border-radius:var(--sf-r-md);
+  background:var(--sf-surface);margin-bottom:8px;overflow:hidden;
+}
+.sf-depliant-tete{
+  display:flex;align-items:center;gap:9px;width:100%;
+  border:0;background:var(--sf-surface);color:var(--sf-encre);
+  padding:12px 16px;font:inherit;font-size:15px;font-weight:600;
+  text-align:left;cursor:pointer;
+}
+.sf-depliant-tete:hover{background:var(--sf-surface-2)}
+.sf-depliant-tete .sf-chevron{
+  margin-left:auto;flex:none;font-size:11px;color:var(--sf-attenue);
+  transition:transform .2s;
+}
+.sf-depliant-tete[aria-expanded="true"] .sf-chevron{transform:rotate(90deg)}
+.sf-depliant-corps{padding:2px 16px 16px;border-top:1px solid var(--sf-trait)}
+.sf-depliant-corps[hidden]{display:none}
+.sf-depliant-corps > :first-child{margin-top:12px}
+
+/* Variante « carte manuscrite » de l'ambiance tableau */
+[data-ambiance="tableau"] .sf-depliant{
+  border:2.5px solid var(--sf-etape-couleur, var(--sf-encre));
+  border-radius:255px 15px 225px 15px / 15px 225px 15px 255px;
+}
+[data-ambiance="tableau"] .sf-depliant-tete[aria-expanded="true"]{
+  background:var(--sf-etape-couleur, var(--sf-encre));color:#fff;
+}
+
+
+/* =========================================================================
+   14. EXERCICE À CORRIGÉ MASQUÉ
+   ========================================================================= */
+.sf-exercice{
+  margin:1.5em 0;border:1px solid color-mix(in srgb, var(--sf-alerte) 35%, var(--sf-trait));
+  border-radius:var(--sf-r-lg);overflow:hidden;
+  background:color-mix(in srgb, var(--sf-alerte) 4%, var(--sf-surface));
+}
+.sf-exercice-tete{
+  display:flex;align-items:center;gap:9px;padding:13px 18px;
+  background:color-mix(in srgb, var(--sf-alerte) 14%, var(--sf-surface));
+  font-weight:700;font-size:15.5px;
+}
+.sf-exercice-tete .sf-etiquette{
+  font-family:var(--sf-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  /* Fond de statut fixe + encre foncée : lisible en clair comme en sombre. */
+  color:#3a2c00;background:var(--sf-alerte);padding:3px 10px;border-radius:var(--sf-r-pilule);flex:none;
+}
+.sf-exercice-corps{padding:14px 18px 4px}
+.sf-exercice-corps > :first-child{margin-top:0}
+.sf-reveler{
+  display:flex;align-items:center;gap:7px;
+  margin:4px 18px 16px;padding:9px 15px;
+  border:1px solid var(--sf-trait);border-radius:var(--sf-r-sm);
+  background:var(--sf-surface);color:var(--sf-encre);
+  font:inherit;font-size:13.5px;font-weight:600;cursor:pointer;
+}
+.sf-reveler:hover{border-color:var(--sf-attenue)}
+.sf-reveler .sf-chevron{transition:transform .2s;font-size:10px}
+.sf-reveler[aria-expanded="true"] .sf-chevron{transform:rotate(90deg)}
+.sf-corrige{
+  padding:4px 18px 16px;margin:0 18px 16px;
+  border-top:1px dashed color-mix(in srgb, var(--sf-alerte) 35%, var(--sf-trait));
+}
+.sf-corrige[hidden]{display:none}
+.sf-corrige-etiquette{
+  display:block;font-family:var(--sf-mono);font-size:10.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--sf-encre-alerte);margin:12px 0 4px;font-weight:700;
+}
+
+
+/* =========================================================================
+   15. QUIZ — QCM
+   ========================================================================= */
+.sf-quiz{margin-top:var(--sf-e-3)}
+.sf-question{
+  border:1px solid var(--sf-trait);border-radius:var(--sf-r-lg);
+  padding:16px 18px;background:var(--sf-surface);margin-top:var(--sf-e-3);
+}
+.sf-question-enonce{font-weight:600;margin:0 0 10px}
+.sf-options{display:flex;gap:8px;flex-wrap:wrap}
+.sf-option{
+  border:1px solid var(--sf-trait);background:var(--sf-surface-2);color:var(--sf-encre);
+  border-radius:var(--sf-r-sm);padding:9px 14px;
+  font:inherit;font-size:var(--sf-t-md);cursor:pointer;text-align:left;
+}
+.sf-option:hover:not(:disabled){border-color:var(--sf-attenue)}
+.sf-option:disabled{cursor:default}
+.sf-option.sf-juste{background:var(--sf-fond-bon);border-color:var(--sf-bon);color:var(--sf-encre-bon);font-weight:600}
+.sf-option.sf-faux {background:var(--sf-fond-critique);border-color:var(--sf-critique);color:var(--sf-encre-critique)}
+.sf-option.sf-juste::before{content:"✓ ";font-weight:800}
+.sf-option.sf-faux::before {content:"✗ ";font-weight:800}
+.sf-retour{margin-top:10px;font-size:var(--sf-t-md);color:var(--sf-encre-2)}
+.sf-retour[hidden]{display:none}
+.sf-score{margin-top:14px;font-weight:600}
+
+
+/* =========================================================================
+   16. PROGRESSION, JAUGE, TUILE DE CHIFFRE, COMPTEUR
+   ========================================================================= */
+/* Barre de progression : la piste est un pas clair de la même rampe */
+.sf-progression{
+  height:9px;background:var(--sf-piste);border:1px solid var(--sf-trait);
+  border-radius:var(--sf-r-md);overflow:hidden;margin:var(--sf-e-3) 0;
+}
+.sf-progression-remplissage{
+  height:100%;width:0;background:var(--sf-accent);
+  border-radius:var(--sf-r-md);transition:width .35s cubic-bezier(.2,.7,.3,1);
+}
+
+/* Jauge avec seuils (stable / chargé / saturé) */
+.sf-jauge{
+  background:var(--sf-surface);border:1px solid var(--sf-trait);
+  border-radius:var(--sf-r-md);padding:16px 18px;margin-top:var(--sf-e-3);
+}
+.sf-jauge-tete{
+  display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px;
+  font-size:12px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--sf-attenue);margin-bottom:10px;font-weight:700;
+}
+.sf-jauge-etat{font-weight:800}
+.sf-jauge-etat[data-etat="ok"]{color:var(--sf-accent-encre)}
+.sf-jauge-etat[data-etat="attention"]{color:var(--sf-encre-alerte)}
+.sf-jauge-etat[data-etat="depasse"]{color:var(--sf-encre-critique)}
+.sf-jauge-piste{
+  position:relative;height:22px;background:var(--sf-piste);
+  border:1px solid var(--sf-trait);border-radius:var(--sf-r-xs);overflow:hidden;
+}
+.sf-jauge-remplissage{
+  position:absolute;inset:0 auto 0 0;width:0;border-radius:var(--sf-r-xs);
+  background:var(--sf-accent);
+  transition:width .5s cubic-bezier(.4,0,.2,1), background .3s;
+}
+.sf-jauge-remplissage[data-etat="attention"]{background:var(--sf-alerte)}
+.sf-jauge-remplissage[data-etat="depasse"]{background:var(--sf-critique)}
+.sf-jauge-valeur{font-family:var(--sf-mono);font-variant-numeric:tabular-nums}
+
+/* Tuile de chiffre (KPI) */
+.sf-tuiles{display:grid;grid-template-columns:repeat(auto-fit, minmax(150px,1fr));gap:14px;margin:var(--sf-e-5) 0 var(--sf-e-2)}
+.sf-tuile{
+  background:var(--sf-surface);border:1px solid var(--sf-trait);
+  border-radius:var(--sf-r-md);padding:15px 16px;
+}
+.sf-tuile-libelle{font-size:var(--sf-t-sm);color:var(--sf-attenue);margin:0 0 6px}
+.sf-tuile-valeur{font-size:28px;font-weight:700;line-height:1;color:var(--sf-encre);margin:0}
+.sf-tuile-ecart{font-size:var(--sf-t-md);margin:6px 0 0;color:var(--sf-encre-2)}
+.sf-tuile-ecart[data-sens="hausse"]{color:var(--sf-encre-bon)}
+.sf-tuile-ecart[data-sens="baisse"]{color:var(--sf-encre-critique)}
+
+/* Chiffre héros : un seul par page */
+.sf-heros-chiffre{
+  font-family:var(--sf-sans);font-size:clamp(44px,8vw,68px);
+  font-weight:700;line-height:1;letter-spacing:-.03em;margin:0;
+}
+
+/* Compteur à rebours */
+.sf-compteur{display:flex;gap:14px;flex-wrap:wrap;margin-top:6px}
+.sf-compteur-case{
+  background:var(--sf-surface-2);border:1px solid var(--sf-trait);
+  border-radius:var(--sf-r-md);padding:12px 16px;min-width:78px;text-align:center;
+}
+.sf-compteur-case b{display:block;font-size:1.9rem;color:var(--sf-accent-encre);font-variant-numeric:tabular-nums;line-height:1.1}
+.sf-compteur-case span{font-size:.72rem;color:var(--sf-attenue);text-transform:uppercase;letter-spacing:.5px}
+
+
+/* =========================================================================
+   17. RECHERCHE, FILTRE, SURLIGNAGE
+   ========================================================================= */
+.sf-recherche{position:relative;flex:1;min-width:220px}
+.sf-recherche input{
+  width:100%;padding:9px 12px 9px 34px;
+  border:1px solid var(--sf-trait);border-radius:var(--sf-r-md);
+  background:var(--sf-surface);color:var(--sf-encre);
+  font:inherit;font-size:var(--sf-t-md);
+}
+.sf-recherche .sf-loupe{
+  position:absolute;left:11px;top:50%;transform:translateY(-50%);
+  color:var(--sf-attenue);font-size:15px;pointer-events:none;
+}
+.sf-resultats{
+  position:absolute;top:calc(100% + 6px);left:0;right:0;
+  background:var(--sf-surface);border:1px solid var(--sf-trait);
+  border-radius:var(--sf-r-md);box-shadow:var(--sf-ombre);
+  max-height:60vh;overflow:auto;z-index:50;
+}
+.sf-resultats[hidden]{display:none}
+.sf-resultat{
+  display:block;padding:10px 14px;border-bottom:1px solid var(--sf-trait);
+  cursor:pointer;text-decoration:none;color:inherit;
+}
+.sf-resultat:last-child{border-bottom:0}
+.sf-resultat:hover, .sf-resultat.sf-actif{background:var(--sf-surface-2)}
+.sf-resultat .sf-cat{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--sf-attenue)}
+.sf-resultat .sf-titre{font-weight:600}
+.sf-resultat .sf-extrait{font-size:13px;color:var(--sf-encre-2)}
+.sf-resultats-vide{padding:14px;color:var(--sf-attenue);font-size:var(--sf-t-md)}
+
+/* Barre de filtre au-dessus d'un tableau ou d'une liste de cartes */
+.sf-barre-filtre{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:6px 0 12px}
+.sf-barre-filtre input[type="search"], .sf-barre-filtre input[type="text"]{
+  flex:1;min-width:200px;padding:9px 12px;
+  border:1px solid var(--sf-trait);border-radius:var(--sf-r-md);
+  background:var(--sf-surface);color:var(--sf-encre);font:inherit;font-size:var(--sf-t-md);
+}
+.sf-compte-filtre{font-size:var(--sf-t-sm);color:var(--sf-attenue)}
+[hidden].sf-filtrable{display:none !important}
+
+/* Champ de formulaire générique */
+.sf-champ label{
+  display:block;font-size:12px;text-transform:uppercase;letter-spacing:.04em;
+  color:var(--sf-attenue);font-weight:700;margin-bottom:5px;
+}
+.sf-champ input, .sf-champ select, .sf-champ textarea{
+  width:100%;padding:8px 10px;
+  border:1px solid var(--sf-trait);border-radius:var(--sf-r-sm);
+  background:var(--sf-surface);color:var(--sf-encre);font:inherit;font-size:14.5px;
+}
+.sf-champs{display:grid;grid-template-columns:repeat(auto-fit, minmax(150px,1fr));gap:14px}
+
+
+/* =========================================================================
+   18. INFOBULLE (TERME DÉFINI) ET MODALE
+   ========================================================================= */
+.sf-terme{
+  font:inherit;background:none;border:0;padding:0;
+  color:inherit;font-weight:600;cursor:help;
+  border-bottom:2px dotted var(--sf-accent);
+  position:relative;
+}
+.sf-terme::after{
+  content:attr(data-sf-def);
+  position:absolute;left:50%;transform:translateX(-50%);
+  bottom:calc(100% + 9px);width:min(280px, 72vw);
+  background:var(--sf-encre);color:var(--sf-plan);
+  font-size:.78rem;font-weight:400;line-height:1.45;
+  padding:.55rem .75rem;border-radius:var(--sf-r-sm);text-align:left;
+  opacity:0;pointer-events:none;transition:opacity .15s ease;z-index:60;
+}
+.sf-terme::before{
+  content:"";position:absolute;left:50%;transform:translateX(-50%);
+  bottom:calc(100% + 3px);
+  border:6px solid transparent;border-top-color:var(--sf-encre);
+  opacity:0;transition:opacity .15s ease;z-index:60;
+}
+.sf-terme:hover::after, .sf-terme:focus-visible::after,
+.sf-terme:hover::before, .sf-terme:focus-visible::before{opacity:1}
+
+/* Modale — repose sur <dialog> natif */
+dialog.sf-modale{
+  border:1px solid var(--sf-trait);border-radius:var(--sf-r-xl);
+  background:var(--sf-surface);color:var(--sf-encre);
+  padding:0;max-width:min(620px, 92vw);box-shadow:var(--sf-ombre-forte);
+}
+dialog.sf-modale::backdrop{background:rgba(11,11,11,.45)}
+.sf-modale-tete{
+  display:flex;align-items:center;gap:10px;padding:14px 18px;
+  border-bottom:1px solid var(--sf-trait);background:var(--sf-surface-2);
+}
+.sf-modale-tete h2, .sf-modale-tete .sf-titre{margin:0;font-size:var(--sf-t-lg);font-weight:700}
+.sf-modale-fermer{margin-left:auto}
+.sf-modale-corps{padding:18px}
+
+
+/* =========================================================================
+   19. GRAPHIQUES (SVG)
+   Règles appliquées : barres ≤ 24 px, extrémité arrondie 4 px côté valeur
+   et carrée sur la ligne de base, écart de 2 px en couleur de fond entre
+   marques voisines, grille en filet plein d'un pas de gris, légende dès
+   2 séries, étiquette directe seulement sur l'extrême, texte en encre
+   (jamais en couleur de série), infobulle au survol, tableau de données
+   conservé sous le graphique (vue « tableau »).
+   ========================================================================= */
+.sf-figure{margin:var(--sf-e-5) 0}
+.sf-figure figcaption{
+  font-size:var(--sf-t-sm);color:var(--sf-attenue);margin-top:8px;
+}
+.sf-graphe{
+  position:relative;background:var(--sf-surface);
+  border:1px solid var(--sf-trait);border-radius:var(--sf-r-lg);
+  padding:16px 18px;box-shadow:var(--sf-ombre);
+}
+.sf-graphe-titre{margin:0 0 2px;font-size:var(--sf-t-base);font-weight:700}
+.sf-graphe-sstitre{margin:0 0 12px;font-size:var(--sf-t-md);color:var(--sf-attenue)}
+.sf-graphe svg{display:block;width:100%;height:auto;overflow:visible}
+.sf-graphe .sf-axe{stroke:var(--sf-trait);stroke-width:1;fill:none}
+.sf-graphe .sf-grille-h{stroke:var(--sf-trait);stroke-width:1;fill:none}
+.sf-graphe text{
+  font:600 10.5px var(--sf-sans);
+  fill:var(--sf-encre-2);                /* jamais la couleur de série */
+}
+.sf-graphe .sf-etiq-valeur{font-weight:700;fill:var(--sf-encre)}
+.sf-graphe .sf-barre{transition:opacity .12s}
+.sf-graphe .sf-barre:hover{opacity:.82}
+.sf-graphe .sf-ligne{fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.sf-graphe .sf-point{stroke:var(--sf-surface);stroke-width:2}
+
+/* Légende — obligatoire dès 2 séries */
+.sf-legende{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;font-size:var(--sf-t-sm);color:var(--sf-encre-2)}
+.sf-legende-item{display:flex;align-items:center;gap:6px}
+.sf-legende-pastille{width:13px;height:13px;border-radius:3px;flex:none}
+
+/* Infobulle de graphique */
+.sf-graphe-bulle{
+  position:absolute;pointer-events:none;z-index:20;
+  background:var(--sf-encre);color:var(--sf-plan);
+  font-size:12.5px;line-height:1.4;padding:7px 10px;border-radius:var(--sf-r-xs);
+  box-shadow:var(--sf-ombre);white-space:nowrap;transform:translate(-50%, -120%);
+}
+.sf-graphe-bulle[hidden]{display:none}
+.sf-graphe-bulle b{font-variant-numeric:tabular-nums}
+
+/* Vue « tableau » repliée sous le graphique */
+.sf-vue-tableau{margin-top:12px}
+.sf-vue-tableau > summary{
+  cursor:pointer;font-size:var(--sf-t-sm);color:var(--sf-attenue);
+  text-transform:uppercase;letter-spacing:.05em;font-weight:700;
+}
+.sf-vue-tableau table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:10px}
+.sf-vue-tableau th, .sf-vue-tableau td{padding:6px 10px;border-bottom:1px solid var(--sf-trait);text-align:left}
+.sf-vue-tableau td.sf-nb, .sf-vue-tableau th.sf-nb{text-align:right;font-variant-numeric:tabular-nums}
+
+/* Barres en ligne (comparaison légère, sans SVG) */
+.sf-barres{display:grid;grid-template-columns:auto 1fr auto;gap:8px 14px;align-items:center;font-size:var(--sf-t-md)}
+.sf-barres .sf-lbl{color:var(--sf-encre-2);font-weight:600}
+.sf-barres .sf-piste{position:relative;height:22px;background:var(--sf-surface-2);border-radius:var(--sf-r-xs);overflow:hidden}
+.sf-barres .sf-remplissage{
+  position:absolute;top:0;left:0;height:100%;
+  border-radius:0 4px 4px 0;background:var(--sf-serie-1);
+  transition:width .4s cubic-bezier(.2,.7,.3,1);
+}
+.sf-barres .sf-val{font-variant-numeric:tabular-nums;color:var(--sf-encre);font-weight:700}
+
+/* Pastilles de série, à poser à côté d'un libellé */
+.sf-pastille{display:inline-block;width:11px;height:11px;border-radius:3px;vertical-align:baseline}
+.sf-s1{background:var(--sf-serie-1)} .sf-s2{background:var(--sf-serie-2)}
+.sf-s3{background:var(--sf-serie-3)} .sf-s4{background:var(--sf-serie-4)}
+.sf-s5{background:var(--sf-serie-5)}
+
+
+/* =========================================================================
+   20. SCHÉMA « TABLEAU BLANC » (SVG interactif)
+   ========================================================================= */
+.sf-schema{
+  background:var(--sf-surface);border:1px solid var(--sf-trait);
+  border-radius:var(--sf-r-lg);padding:14px;box-shadow:var(--sf-ombre);
+}
+.sf-schema svg{display:block;width:100%;height:auto}
+.sf-noeud{cursor:pointer}
+.sf-noeud rect, .sf-noeud circle{
+  fill:var(--sf-surface);stroke:var(--sf-noeud-couleur, var(--sf-accent));stroke-width:2;
+}
+.sf-noeud text{fill:var(--sf-encre);font:600 12px var(--sf-corps);text-anchor:middle}
+.sf-noeud:hover rect, .sf-noeud:hover circle{fill:color-mix(in srgb, var(--sf-noeud-couleur, var(--sf-accent)) 10%, var(--sf-surface))}
+.sf-noeud[aria-pressed="true"] rect, .sf-noeud[aria-pressed="true"] circle{fill:var(--sf-noeud-couleur, var(--sf-accent))}
+.sf-noeud[aria-pressed="true"] text{fill:#fff}
+.sf-lien{stroke:var(--sf-trait);stroke-width:2;fill:none}
+.sf-lien--actif{stroke:var(--sf-accent)}
+
+
+/* =========================================================================
+   21. UTILITAIRES
+   ========================================================================= */
+.sf-flex{display:flex;gap:var(--sf-e-2);flex-wrap:wrap;align-items:center}
+.sf-entre{display:flex;justify-content:space-between;align-items:center;gap:var(--sf-e-3);flex-wrap:wrap}
+.sf-centre{text-align:center}
+.sf-droite{text-align:right}
+.sf-mt-0{margin-top:0}   .sf-mt-2{margin-top:var(--sf-e-2)}
+.sf-mt-4{margin-top:var(--sf-e-4)} .sf-mt-6{margin-top:var(--sf-e-6)}
+.sf-mb-0{margin-bottom:0}
+.sf-liste-nue{list-style:none;padding:0;margin:0}
+.sf-liste-cochee{list-style:none;padding:0;margin:0}
+.sf-liste-cochee li{display:flex;gap:11px;padding:9px 0;border-bottom:1px solid var(--sf-trait);font-size:var(--sf-t-base)}
+.sf-liste-cochee li:last-child{border-bottom:0}
+.sf-liste-cochee li::before{content:"✓";color:var(--sf-serie-3);font-weight:800;flex:none}
+.sf-invisible{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;
+}
+.sf-lien-evitement{
+  position:absolute;left:-9999px;top:0;z-index:100;
+  background:var(--sf-accent);color:#fff;padding:10px 16px;border-radius:0 0 var(--sf-r-sm) 0;
+}
+.sf-lien-evitement:focus{left:0}
+
+
+/* =========================================================================
+   22. IMPRESSION
+   Absent de TOUS les fichiers sources — c'est la principale lacune.
+   Objectif : une page qui s'imprime en document propre, sans chrome,
+   sans fond sombre, avec les contenus repliés dépliés et les URL visibles.
+   ========================================================================= */
+@media print{
+  /* Les jetons sont remis à plat sur TOUS les porteurs possibles : la racine,
+     le thème sombre, et chacune des ambiances — sinon une page en ambiance
+     « console » s'imprime en blanc sur blanc (le navigateur n'imprime pas les
+     fonds mais garde la couleur du texte). */
+  :root,
+  :root[data-theme="dark"],
+  [data-ambiance="cours"],
+  [data-ambiance="rapport"],
+  [data-ambiance="console"],
+  [data-ambiance="tableau"],
+  [data-ambiance="lagon"]{
+    color-scheme: light !important;
+    --sf-plan:#ffffff; --sf-surface:#ffffff; --sf-surface-2:#f4f4f1;
+    --sf-encre:#000000; --sf-encre-2:#333333; --sf-attenue:#555555;
+    --sf-trait:#bbbbbb;
+    --sf-accent:#184f95; --sf-accent-encre:#184f95;
+    --sf-encre-bon:#0a5c0a; --sf-encre-alerte:#7a5600;
+    --sf-encre-serieux:#8a3b16; --sf-encre-critique:#8f1f1f;
+    --sf-fond-bon:#e6f6ea; --sf-fond-critique:#fdeaea;
+    --sf-piste:#e4e4e0; --sf-credit:#b0430f;
+    --sf-marque-fond:#ffe58a; --sf-marque-encre:#3a2c00;
+    --sf-ombre:none; --sf-ombre-forte:none;
+  }
+  @page{margin:16mm 14mm}
+  html, body{
+    background:#fff !important;color:#000 !important;
+    font-size:11pt;line-height:1.45;
+  }
+  /* Les ambiances posent des règles plus spécifiques : on les neutralise. */
+  .sf-page,
+  [data-ambiance="rapport"] .sf-page,
+  [data-ambiance="tableau"] .sf-page{
+    max-width:none !important;padding:0 !important;
+    box-shadow:none !important;background:#fff !important;
+    border:0 !important;outline:0 !important;
   }
 
-  .terme{font:inherit;background:none;border:none;padding:0;color:inherit;font-weight:600;
-    cursor:help;border-bottom:2px dotted var(--bleu);position:relative}
-  .terme::after{content:attr(data-def);position:absolute;left:50%;transform:translateX(-50%);
-    bottom:calc(100% + 9px);width:min(280px,74vw);background:var(--ink);color:#fff;
-    font-size:.78rem;font-weight:400;line-height:1.45;padding:.55rem .75rem;border-radius:8px;
-    text-align:left;opacity:0;pointer-events:none;transition:opacity .15s ease;z-index:20}
-  .terme::before{content:"";position:absolute;left:50%;transform:translateX(-50%);
-    bottom:calc(100% + 3px);border:6px solid transparent;border-top-color:var(--ink);
-    opacity:0;transition:opacity .15s ease;z-index:20}
-  .terme:hover::after,.terme:focus::after,.terme:hover::before,.terme:focus::before{opacity:1}
-  .terme:focus-visible{outline:2px solid var(--bleu);outline-offset:2px}
-  .glossaire{margin-top:2.6rem;padding-top:1.5rem;border-top:3px dashed #d5d8dc}
-  .glossaire dl{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:.8rem 1.2rem;margin-top:.9rem}
-  .glossaire dl > div{background:#fdfdfc;border:1.5px solid #e3e5e8;border-radius:10px;padding:.6rem .8rem}
-  .glossaire dt{font-weight:700;color:var(--rouge);font-size:.9rem}
-  .glossaire dd{font-size:.84rem;color:#444;margin-top:.15rem}
-  .branches{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.7rem;margin:.7rem 0}
-  .branche{border:2px solid var(--bc,var(--noir));border-radius:10px;padding:.7rem .85rem;background:#fff}
-  .branche h5{font-family:'Caveat',cursive;font-size:1.2rem;color:var(--bc,var(--noir));margin-bottom:.2rem}
-  .branche p{font-size:.86rem;margin-bottom:.35rem}
-  .branche .vers{font-size:.8rem;color:#777;font-style:italic;margin:0}
-  @media print{.terme::after,.terme::before{display:none}}
+  /* Chrome à retirer */
+  .sf-bandeau, .sf-recherche, .sf-resultats, .sf-barre-filtre,
+  .sf-accordeon-actions, .sf-reveler, .sf-bandeau-actions,
+  .sf-lien-evitement, .sf-graphe-bulle, .sf-modale,
+  [data-sf-theme], [data-sf-impression], .sf-ne-pas-imprimer{
+    display:none !important;
+  }
+
+  /* Tout ce qui est masqué à l'écran devient visible sur papier */
+  .sf-corrige[hidden], .sf-depliant-corps[hidden],
+  .sf-panneau[hidden], .sf-retour[hidden]{display:block !important}
+  .sf-vue-tableau{display:block !important}
+  .sf-vue-tableau > summary{list-style:none}
+  details{display:block !important}
+  details > *{display:revert !important}
+
+  /* Onglets : on imprime tous les panneaux, chacun précédé de son intitulé */
+  .sf-onglets{display:none !important}
+
+  /* Ne pas couper les briques en deux */
+  .sf-carte, .sf-encadre, .sf-question, .sf-exercice, .sf-journal,
+  .sf-tuile, .sf-graphe, .sf-depliant, .sf-duo-face, .sf-etape{
+    break-inside:avoid; page-break-inside:avoid;
+    box-shadow:none !important;
+  }
+  .sf-section, .sf-h2{break-after:avoid; page-break-after:avoid}
+  .sf-h1, .sf-h2, .sf-h3{break-after:avoid}
+  table, figure{break-inside:avoid}
+  thead{display:table-header-group}
+  .sf-tableau thead th{position:static}
+
+  /* Les liens externes montrent leur adresse */
+  .sf-page a[href^="http"]::after{
+    content:" (" attr(href) ")";
+    font-size:9pt;color:#555;word-break:break-all;
+  }
+  /* Sauf dans les listes de navigation, où ce serait illisible */
+  .sf-sommaire a[href]::after, .sf-pied a[href]::after{content:""}
+
+  /* Aplats trop clairs : on force le rendu des fonds utiles */
+  .sf-encadre, .sf-tuile, .sf-badge, .sf-option.sf-juste, .sf-option.sf-faux{
+    -webkit-print-color-adjust:exact; print-color-adjust:exact;
+  }
+}
+
+
+/* =========================================================================
+   23. MOUVEMENT RÉDUIT
+   ========================================================================= */
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *, *::before, *::after{
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+  }
+}
+
+/* ================= couche site ================= */
+/* ================= couche site — posée sur les jetons steffan-ui ================= */
+html{scroll-behavior:smooth}
+body{font-size:16.5px}
+.sf-page{max-width:1120px}
+.sf-lead{font-size:1.14rem;line-height:1.55;color:var(--sf-encre-2)}
+.sf-texte,.sf-encadre p,.sf-carte p{font-size:1rem}
+
+/* --- bandeau institutionnel --- */
+.st-tete{display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+  padding:26px 0 18px;border-bottom:1px solid var(--sf-trait)}
+.st-logo{display:flex;align-items:center;gap:16px}
+.st-logo img{height:78px;width:auto;display:block}
+.st-logo{padding-right:20px;border-right:1px solid var(--sf-trait)}
+.st-lockup{line-height:1.15}
+.st-lockup .n{display:block;font-size:14px;font-weight:700;color:#1F4E79;letter-spacing:.01em}
+.st-lockup .n2{display:block;font-size:11px;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--sf-attenue);margin-top:4px}
+.st-auteur{margin-left:auto;text-align:right;font-size:12.5px;line-height:1.5;color:var(--sf-encre-2)}
+.st-auteur b{display:block;font-size:14.5px;color:var(--sf-encre);letter-spacing:.02em}
+
+/* --- navigation collante --- */
+.st-nav{position:sticky;top:0;z-index:40;background:rgba(244,244,241,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--sf-trait);margin-bottom:8px}
+.st-nav-in{max-width:1120px;margin:0 auto;padding:9px 20px;display:flex;gap:4px;
+  flex-wrap:wrap;align-items:center}
+.st-nav a{font-size:13.5px;font-weight:600;text-decoration:none;color:var(--sf-encre-2);
+  padding:7px 12px;border-radius:999px;white-space:nowrap;transition:.15s}
+.st-nav a:hover{background:var(--sf-surface-2);color:var(--sf-encre)}
+.st-nav a.actif{background:var(--sf-encre);color:var(--sf-plan)}
+.st-nav .sep{width:1px;height:20px;background:var(--sf-trait);margin:0 6px}
+
+/* --- hero --- */
+.st-hero{padding:44px 0 26px}
+.st-punch{margin:22px 0 8px;padding:20px 26px;border-left:6px solid var(--sf-accent);
+  background:var(--sf-surface-2);border-radius:0 var(--sf-r-md) var(--sf-r-md) 0}
+.st-punch p{margin:0;font-size:1.42rem;line-height:1.32;font-weight:600;color:var(--sf-encre)}
+.st-punch .sub{margin-top:9px;font-size:1rem;font-weight:400;color:var(--sf-encre-2)}
+
+/* --- fiche besoin --- */
+.st-fiche{margin:26px 0;border:1px solid var(--sf-trait);border-radius:var(--sf-r-lg);
+  background:var(--sf-surface);overflow:hidden;scroll-margin-top:70px}
+.st-fiche-tete{padding:16px 24px;background:var(--sf-surface-2);border-bottom:1px solid var(--sf-trait);
+  display:flex;gap:14px;align-items:baseline;flex-wrap:wrap}
+.st-lettre{display:grid;place-items:center;width:30px;height:30px;flex:0 0 30px;border-radius:50%;
+  background:var(--sf-encre);color:var(--sf-plan);font-weight:800;font-size:15px;align-self:center}
+.st-fiche--prof .st-lettre{background:#1F4E79}
+.st-fiche-tete h3{margin:0;font-size:1.16rem;line-height:1.3;flex:1 1 260px}
+.st-fiche-corps{padding:20px 24px 24px}
+.st-rate{margin:0 0 14px;padding:11px 16px;border-left:4px solid var(--sf-critique);
+  background:var(--sf-fond-critique);border-radius:0 var(--sf-r-sm) var(--sf-r-sm) 0;font-size:.97rem}
+.st-rate b{color:var(--sf-encre-critique)}
+.st-verif{margin:14px 0 0;padding:11px 16px;border-left:4px solid var(--sf-bon);
+  background:var(--sf-fond-bon);border-radius:0 var(--sf-r-sm) var(--sf-r-sm) 0;font-size:.97rem}
+.st-verif b{color:var(--sf-encre-bon)}
+.st-outil{margin-top:12px;font-size:.9rem;color:var(--sf-encre-2)}
+.st-outil b{color:var(--sf-encre)}
+
+/* --- blocs de prompt --- */
+.st-prompt{position:relative;margin:14px 0}
+.st-prompt pre{margin:0;padding:42px 22px 20px;background:var(--sf-encre);color:#f2f1ec;
+  border-radius:var(--sf-r-md);overflow-x:auto}
+.st-prompt code{font-family:var(--sf-mono);font-size:13.5px;line-height:1.72;white-space:pre-wrap;
+  overflow-wrap:anywhere;color:inherit;background:none;padding:0;border:0;border-radius:0}
+.st-prompt .et{position:absolute;top:12px;left:22px;font-family:var(--sf-mono);font-size:10.5px;
+  letter-spacing:.13em;text-transform:uppercase;color:#8e8d85}
+.st-copier{position:absolute;top:8px;right:10px;z-index:2;background:rgba(255,255,255,.12);
+  color:#f2f1ec;border-color:rgba(255,255,255,.26);font-size:12px}
+.st-copier:hover{background:rgba(255,255,255,.24)}
+.st-gabarit pre{padding:24px 26px}
+.st-gabarit code{font-size:15px;line-height:1.85;white-space:pre}
+.st-gabarit mark{background:var(--sf-alerte);color:#2a1f00;padding:2px 5px;border-radius:3px;font-weight:600}
+
+/* --- cartes outils --- */
+.st-outils{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));margin:20px 0}
+.st-outil-carte{border:1px solid var(--sf-trait);border-radius:var(--sf-r-lg);background:var(--sf-surface);
+  padding:20px;display:flex;flex-direction:column;gap:10px}
+.st-marque{display:flex;align-items:center;gap:11px}
+.st-marque svg{width:38px;height:38px;flex:0 0 38px;border-radius:9px}
+.st-marque>span:last-child{display:flex;flex-direction:column;gap:2px;min-width:0}
+.st-marque .nom{display:block;font-weight:700;font-size:1.04rem;line-height:1.2}
+.st-marque .ed{display:block;font-size:11.5px;color:var(--sf-attenue);text-transform:uppercase;letter-spacing:.06em}
+.st-outil-carte dl{margin:0;font-size:.92rem;line-height:1.5}
+.st-outil-carte dt{font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;
+  color:var(--sf-attenue);margin-top:10px;font-weight:700}
+.st-outil-carte dd{margin:2px 0 0}
+.st-fort dd{color:var(--sf-encre)}
+.st-faible dd{color:var(--sf-encre-critique)}
+
+/* --- divers --- */
+.st-sources{columns:2;column-gap:26px;font-size:.94rem;line-height:1.55}
+.st-sources li{break-inside:avoid;margin-bottom:9px}
+@media(max-width:720px){.st-sources{columns:1}}
+.st-regles{margin:18px 0;padding-left:0;list-style:none;counter-reset:r}
+.st-regles li{counter-increment:r;position:relative;margin:13px 0 13px 50px;font-size:1.05rem;line-height:1.5}
+.st-regles li::before{content:counter(r);position:absolute;left:-50px;top:-2px;width:33px;height:33px;
+  display:grid;place-items:center;border-radius:50%;background:var(--sf-encre);color:var(--sf-plan);
+  font-weight:700;font-size:.98rem}
+.st-trou{border:2px dashed var(--sf-alerte);border-radius:var(--sf-r-md);padding:16px 20px;
+  background:#fffaf0;margin:16px 0;font-size:.96rem}
+.st-trou b{color:var(--sf-encre-alerte)}
+.sf-section{padding-top:34px;scroll-margin-top:64px}
+.sf-h3{margin-top:26px}
+.sf-pied{margin-top:52px;padding-top:20px;border-top:1px solid var(--sf-trait);color:var(--sf-encre-2)}
+.st-tableau-cadre{overflow-x:auto;margin:18px 0}
+.st-tableau-cadre table{min-width:760px;font-size:.9rem}
+
+/* --- régimes de réponse --- */
+.st-regime{border-top:4px solid var(--sf-trait)}
+.st-regime--1{border-top-color:var(--sf-critique)}
+.st-regime--2{border-top-color:var(--sf-alerte)}
+.st-regime--3{border-top-color:var(--sf-bon)}
+
+/* --- carte des savoirs --- */
+.st-carte-savoirs{display:flex;gap:12px;margin:20px 0}
+.st-axe-y{display:flex;flex-direction:column;justify-content:space-between;align-items:center;
+  padding:14px 0;font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--sf-attenue);font-weight:700;flex:0 0 22px}
+.st-axe-y span{writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap}
+.st-colonne{flex:1;display:flex;flex-direction:column;gap:9px;min-width:0}
+.st-axe-x{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;text-align:center;
+  font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--sf-attenue);font-weight:700}
+.st-quadrants{display:grid;gap:12px;grid-template-columns:repeat(2,1fr)}
+.st-q{border:1px solid var(--sf-trait);border-radius:var(--sf-r-md);padding:16px 18px;
+  background:var(--sf-surface)}
+.st-q p{font-size:.94rem;line-height:1.5;margin:0 0 8px}
+.st-q-tag{font-size:10.5px!important;letter-spacing:.08em;text-transform:uppercase;font-weight:700;
+  color:var(--sf-attenue);margin-bottom:3px!important}
+.st-q-nom{font-size:1.05rem!important;font-weight:700;color:var(--sf-encre);margin-bottom:8px!important}
+.st-q--vert{border-left:5px solid var(--sf-bon)}
+.st-q--orange{border-left:5px solid var(--sf-alerte)}
+.st-q--rouge{border-left:5px solid var(--sf-critique)}
+.st-q--noir{border-left:5px solid var(--sf-encre)}
+
+/* --- typologie des exercices --- */
+.st-exo{border-top:4px solid var(--sf-trait)}
+.st-exo--ok{border-top-color:var(--sf-bon)}
+.st-exo--mid{border-top-color:var(--sf-alerte)}
+.st-exo--ko{border-top-color:var(--sf-critique)}
+.st-exo--new{border-top-color:var(--sf-accent)}
+
+/* --- triangle --- */
+.st-figure{margin:24px 0 10px;text-align:center}
+.st-triangle{width:100%;max-width:840px;height:auto;display:block;margin:0 auto}
+.st-figure figcaption{margin-top:8px;text-align:center}
+
+@media(max-width:860px){
+  .st-figure{overflow-x:auto;text-align:left}
+  .st-triangle{min-width:620px}
+}
+@media(max-width:820px){
+  .st-carte-savoirs{flex-direction:column;gap:8px}
+  .st-axe-y{display:none}
+  .st-axe-x{display:none}
+  .st-quadrants{grid-template-columns:1fr}
+}
+
+@media(max-width:760px){
+  .st-nav-in{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;
+    scrollbar-width:none;padding:7px 14px}
+  .st-nav-in::-webkit-scrollbar{display:none}
+  .st-nav a{font-size:12.5px;padding:6px 10px}
+  .st-logo{padding-right:0;border-right:0}
+  .st-logo img{height:62px}
+  .st-auteur{margin-left:0;text-align:left;margin-top:12px;width:100%}
+  .st-fiche-tete,.st-fiche-corps{padding-left:16px;padding-right:16px}
+  .st-prompt pre{padding:40px 14px 16px}
+  .st-prompt code{font-size:12.5px}
+}
+@media print{
+  .st-nav,.st-copier{display:none}
+  .sf-corrige,.sf-depliant-corps{display:block!important}
+  .st-prompt pre{background:#fff;color:#000;border:1px solid #999}
+  .st-fiche{break-inside:avoid}
+}
+
 </style>
+
+
+
 
 
 <style id="pia-style">
@@ -193,431 +1393,395 @@
 @media print{.pia-nav,.pia-suite,.pia-haut,.pia-progres{display:none !important}}
 </style>
 <style id="pia-vars">:root{--pia-fond:#fffefb;--pia-bord:#d9dce1;--pia-encre:#2b2b2b;--pia-doux:#6d7480;--pia-survol:#f2f3f5;--pia-actif:#2b5ba8}</style>
+<style id="lea-plier">
+details.st-fiche > summary{list-style:none;cursor:pointer;position:relative;padding-right:52px}
+details.st-fiche > summary::-webkit-details-marker{display:none}
+details.st-fiche > summary::after{content:"+";position:absolute;right:18px;top:50%;transform:translateY(-50%);font-size:24px;line-height:1;color:var(--sf-attenue,#6b7280)}
+details.st-fiche[open] > summary::after{content:"–"}
+details.st-fiche:not([open]) > summary{border-bottom:0}
+details.st-fiche > summary:hover{background:var(--sf-surface-2,#f0efec)}
+</style>
 </head>
-<body>
+<body data-ambiance="cours">
 <!--pia-debut-->
 <div class="pia-progres" aria-hidden="true"></div>
-<nav class="pia-nav" aria-label="Rubriques de la page des étudiants"><a class="pia-marque" href="index.html">← Licence LEA</a><a class="pia-lien" href="index.html#accueil"><span class="pia-pastille" style="--pia-c:#0F6FA8"></span>Accueil</a><a class="pia-lien" href="index.html#licence"><span class="pia-pastille" style="--pia-c:#0F6FA8"></span>La licence LEA</a><a class="pia-lien" href="index.html#specialite"><span class="pia-pastille" style="--pia-c:#B4650A"></span>Choisir sa spé en fin de S4</a><a class="pia-lien" href="index.html#alternance"><span class="pia-pastille" style="--pia-c:#1F56A0"></span>L'alternance</a><a class="pia-lien" href="index.html#capes"><span class="pia-pastille" style="--pia-c:#8D3A62"></span>Le CAPES d'espagnol</a><a class="pia-lien" href="index.html#sae"><span class="pia-pastille" style="--pia-c:#0E6B60"></span>Les SAÉ</a><a class="pia-lien" href="index.html#rapport"><span class="pia-pastille" style="--pia-c:#6A4A9C"></span>Rapport et soutenance</a><a class="pia-lien" href="index.html#bourses"><span class="pia-pastille" style="--pia-c:#9C2F2F"></span>Bourses et absences en cours</a><a class="pia-lien" href="index.html#competences"><span class="pia-pastille" style="--pia-c:#0F6FA8"></span>Compétences et UE</a><a class="pia-lien" href="index.html#mcc"><span class="pia-pastille" style="--pia-c:#0E6B60"></span>Les MCC</a><a class="pia-lien" href="index.html#examens"><span class="pia-pastille" style="--pia-c:#9C2F2F"></span>Les examens</a><a class="pia-lien" href="index.html#ia"><span class="pia-pastille" style="--pia-c:#9C2F2F"></span>Utilisation des IA</a><a class="pia-lien" href="index.html#reglement"><span class="pia-pastille" style="--pia-c:#6A4A9C"></span>Règlement des études LEA</a><a class="pia-lien" href="index.html#contacts"><span class="pia-pastille" style="--pia-c:#B4650A"></span>Contacts</a></nav>
+<nav class="pia-nav" aria-label="Rubriques de la page des étudiants"><a class="pia-marque" href="index.html">← Licence LEA</a><a class="pia-lien" href="index.html#accueil"><span class="pia-pastille" style="--pia-c:#0F6FA8"></span>Accueil</a><a class="pia-lien" href="index.html#licence"><span class="pia-pastille" style="--pia-c:#0F6FA8"></span>La licence LEA</a><a class="pia-lien" href="index.html#specialite"><span class="pia-pastille" style="--pia-c:#B4650A"></span>Choisir sa spé en fin de S4</a><a class="pia-lien" href="index.html#alternance"><span class="pia-pastille" style="--pia-c:#1F56A0"></span>L'alternance</a><a class="pia-lien" href="index.html#capes"><span class="pia-pastille" style="--pia-c:#8D3A62"></span>Le CAPES d'espagnol</a><a class="pia-lien" href="index.html#sae"><span class="pia-pastille" style="--pia-c:#0E6B60"></span>Les SAÉ</a><a class="pia-lien" href="index.html#rapport"><span class="pia-pastille" style="--pia-c:#6A4A9C"></span>Rapport et soutenance</a><a class="pia-lien" href="index.html#bourses"><span class="pia-pastille" style="--pia-c:#9C2F2F"></span>Bourses et absences en cours</a><a class="pia-lien" href="index.html#competences"><span class="pia-pastille" style="--pia-c:#0F6FA8"></span>Compétences et UE</a><a class="pia-lien" href="index.html#valider"><span class="pia-pastille" style="--pia-c:#0E6B60"></span>Valider son année</a><a class="pia-lien" href="index.html#mcc"><span class="pia-pastille" style="--pia-c:#0E6B60"></span>Les MCC</a><a class="pia-lien" href="index.html#examens"><span class="pia-pastille" style="--pia-c:#9C2F2F"></span>Les examens</a><a class="pia-lien" href="index.html#ia"><span class="pia-pastille" style="--pia-c:#9C2F2F"></span>Utilisation des IA</a><a class="pia-lien" href="index.html#reglement"><span class="pia-pastille" style="--pia-c:#6A4A9C"></span>Règlement des études LEA</a><a class="pia-lien" href="index.html#contacts"><span class="pia-pastille" style="--pia-c:#B4650A"></span>Contacts</a></nav>
 <!--/pia-debut-->
-<div class="board">
-  <header>
-    <h1><span class="souligne">Réviser avec l'IA</span> : de ses supports de cours à l'épreuve blanche</h1>
-    <p class="exergue">« Relire, c'est reconnaître. Réviser, c'est retrouver. »</p>
-    <p class="sous-titre">Version étudiante du parcours pratique. Elle part du même point — une pile de documents — mais le problème est inversé. Un enseignant doit <strong>inventer</strong> un classement pour un fonds accumulé sur quinze ans. Vous, vous en <strong>recevez</strong> un : le plan du cours est déjà votre classement. Votre <span class="terme" tabindex="0" data-def="L&#x27;ensemble des documents qu&#x27;on décide de traiter comme un tout. Ce qui n&#x27;y est pas n&#x27;existe pas pour l&#x27;IA — elle ne le devinera pas.">corpus</span> est petit, homogène, ordonné, et votre contrainte n'est pas sa taille, c'est <strong>une date d'examen</strong>.</p>
-    <p class="sous-titre">Le nœud terminal change donc lui aussi. Pour un enseignant, réussir c'est « le corpus répond avec ses sources ». Pour vous, ce serait un contresens : un corpus qui répond bien est le risque, pas le but. Réussir, ici, c'est <strong>traiter un sujet correctement, l'IA fermée</strong>. Tout ce qui précède n'est qu'un dispositif d'entraînement.</p>
-    <p class="mode-emploi">→ Cliquez un nœud pour aller à sa fiche. Survolez les mots soulignés en pointillés ; le glossaire est en bas de page.</p>
-    <div class="actions-globales">
-      <button type="button" id="btn-imprimer">Imprimer / PDF</button>
-      <button type="button" id="btn-reset">Décocher tout</button>
-      <span id="compteur" aria-live="polite">0 / 8 nœuds terminés</span>
+<nav aria-label="Sommaire" class="st-nav"><div class="st-nav-in"><a href="#etudiant">Côté étudiant</a><a href="#e-a">Réviser</a><a href="#e-b">Problématique</a><a href="#e-c">Fiches</a><a href="#e-d">Anti-générique</a><a href="#e-e">CV</a></div></nav>
+
+<div class="sf-page">
+<section class="sf-section" id="etudiant">
+  <p class="sf-surtitre">Utiliser les IA</p>
+  <h2 class="sf-h2">Côté étudiant</h2>
+  <p class="sf-lead">Cinq besoins réels, du partiel de janvier au premier entretien d'embauche. Pour chacun&nbsp;: ce qui rate quand on demande naïvement, le prompt à copier, et le point à vérifier avant de s'en servir.</p>
+
+  <!-- A -->
+  <details class="st-fiche" id="e-a"><summary class="st-fiche-tete"><span class="st-lettre">A</span>
+      <h3>Réviser un cours, se fabriquer des QCM et des exercices corrigés</h3></summary><div class="st-fiche-corps">
+      <p class="st-rate"><b>Ce qui rate&nbsp;:</b> «&nbsp;fais-moi un QCM sur le marketing&nbsp;». Le modèle interroge alors sa mémoire, pas votre cours. Vous révisez un programme qui n'est pas le vôtre, avec des réponses parfois fausses, et vous vous entraînez sur des questions dont la bonne réponse est presque toujours la première et la plus longue — biais que votre cerveau apprend au lieu du contenu.</p>
+
+      <p class="sf-texte">La règle est simple&nbsp;: <b>on ne révise jamais sur la mémoire du modèle, on révise sur son propre cours déposé.</b> Joignez le polycopié, le diaporama, vos notes. Puis exigez la traçabilité&nbsp;: chaque question doit pouvoir être rattachée à une page.</p>
+
+      <div class="st-prompt">
+        <span class="et">Prompt · fabriquer un QCM de révision</span>
+        <button class="sf-btn sf-btn--discret st-copier" type="button">Copier</button>
+        <pre><code>Je joins le cours [intitulé] et le diaporama. Ce sont mes seules sources.
+
+LIVRABLE     20 questions à choix multiple, quatre réponses, une seule correcte.
+PÉRIMÈTRE    uniquement ce qui figure dans les documents joints.
+HORS SUJET   tout ce que tu sais sur ce thème et qui n'est pas dans mes documents.
+             Si une question est répondable sans avoir lu le cours, elle est hors sujet
+             et tu la remplaces.
+SOURCE       les documents joints, exclusivement. Pour chaque question, indique entre
+             crochets la section ou la page dont elle est tirée.
+POSTURE      chaque mauvaise réponse doit correspondre à une confusion réellement
+             plausible pour quelqu'un qui a mal compris ; dis laquelle en une ligne.
+             Signale les questions dont tu n'es pas certain plutôt que de les lisser.
+CE QUE JE NE VEUX PAS
+             pas de réponse absurde ; pas de bonne réponse plus longue que la moyenne
+             des trois autres ; pas de question dont l'énoncé contient la réponse.
+TÂCHE        10 questions de restitution, 5 de compréhension appliquée, 5 difficiles.
+             Donne d'abord les 20 questions seules. Je réponds. Tu corriges ensuite,
+             en m'expliquant pour chaque erreur ce que je n'ai pas compris.</code></pre>
+      </div>
+
+      <p class="sf-texte">Pour un <b>exercice corrigé</b>, la variante décisive tient en une ligne&nbsp;: interdire la correction immédiate.</p>
+
+      <div class="st-prompt">
+        <span class="et">Prompt · s'entraîner sans se faire mâcher le travail</span>
+        <button class="sf-btn sf-btn--discret st-copier" type="button">Copier</button>
+        <pre><code>À partir du cours joint, propose-moi un exercice du même type que ceux du partiel.
+
+Tu ne donnes pas le corrigé. Jamais, même si je te le demande.
+Je cherche, je te donne ma réponse, et alors seulement tu corriges.
+Si je me trompe, tu me donnes un indice et non la réponse ; à la deuxième
+tentative seulement, tu corriges en nommant l'erreur de raisonnement.
+Tu ne me félicites pas. Tu comptes.
+
+Après cinq exercices, tu t'arrêtes et tu me dis lesquelles des notions du cours
+je ne maîtrise pas, et dans quel ordre les retravailler avant le partiel.</code></pre>
+      </div>
+
+      <p class="st-verif"><b>À vérifier avant de s'en servir&nbsp;:</b> prenez trois questions au hasard et retrouvez le passage du cours. Si vous n'y arrivez pas, la question est inventée. Un QCM de révision faux est pire que pas de révision du tout&nbsp;: vous mémorisez l'erreur.</p>
+      <p class="st-outil"><b>Outil conseillé&nbsp;:</b> Gemini Notebook (ex-NotebookLM), parce qu'il ne répond qu'à partir des documents déposés et cite le passage. Un assistant généraliste convient aussi, à condition de joindre les fichiers.</p>
     </div>
-  </header>
+  </details>
 
-  <div class="avert">
-    <span class="etiquette">Les trois pièges, avant tout le reste</span>
-    <p><strong>La référence inventée.</strong> Un modèle produit des numéros d'arrêts et d'articles au bon format, avec la bonne juridiction et une date crédible — et parfois entièrement faux. C'est ce qu'on appelle une <span class="terme" tabindex="0" data-def="Réponse plausible et fausse, produite avec le même aplomb qu&#x27;une réponse juste. En droit, elle prend surtout la forme d&#x27;une référence inventée.">hallucination</span> : une réponse plausible et fausse, produite avec le même aplomb qu'une réponse juste. Votre enseignant la voit d'un coup d'œil ; vous, non. Recopiée dans une copie, elle coûte plus cher qu'une lacune assumée.</p>
-    <p><strong>L'IA qui répond à votre place.</strong> Lire une explication claire donne une sensation de maîtrise que la salle d'examen dément. Tant que c'est elle qui parle, vous ne mesurez rien. D'où l'inversion du nœud 7 : elle interroge, vous répondez.</p>
-    <p><strong>L'intégrité.</strong> Ce qui est autorisé varie selon l'établissement, l'enseignant et l'épreuve : renseignez-vous avant, pas après. Et gardez la trace de ce que vous avez fait faire — un travail honnête produit cette trace sans effort. La question utile n'est pas « ai-je le droit ? » mais « que puis-je démontrer avoir fait moi-même ? ».</p>
-  </div>
+  <!-- B -->
+  <details class="st-fiche" id="e-b"><summary class="st-fiche-tete"><span class="st-lettre">B</span>
+      <h3>Affiner une problématique de stage, de SAÉ ou de rapport d'alternance — et trouver les textes qui font foi</h3></summary><div class="st-fiche-corps">
+      <p class="st-rate"><b>Ce qui rate&nbsp;:</b> le mémoire survolé. Il ne vient pas d'un manque de travail mais de <b>mots vagues laissés dans la problématique</b>. «&nbsp;Analyser l'impact du digital sur la performance de l'entreprise&nbsp;» — quatre mots flous en douze&nbsp;: impact, digital, performance, entreprise. Le modèle, comme le jury, comblera chacun à sa façon. Une IA répond à n'importe quelle question, même mal posée, <b>sans jamais le signaler</b>.</p>
 
-  <section class="bloc" id="graphe">
-    <h2 class="section">Le parcours</h2>
-    <p class="intro-section">Huit nœuds, un après-midi pour les cinq premiers, puis trois séances espacées. Le <span class="terme" tabindex="0" data-def="La plus longue chaîne de tâches qui dépendent les unes des autres. Tout retard sur elle retarde la fin ; un retard ailleurs, non.">chemin critique</span> passe par les fiches et l'interrogation ; repérer les trous et vérifier les références sont deux branches qui se font pendant.</p>
-    <div class="cadre-svg">
-      <svg viewBox="0 0 920 850" role="img" aria-labelledby="titre-dag">
-        <title id="titre-dag">Parcours de révision en huit étapes, jusqu'à l'épreuve blanche</title>
-        <defs>
-          <marker id="fleche" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b9bec4"/></marker>
-          <marker id="flecheR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c3312f"/></marker>
-        </defs>
-        <g stroke="#ececee" stroke-width="1.5">
-          <line x1="14" y1="120" x2="906" y2="120"/>
-          <line x1="14" y1="480" x2="906" y2="480"/>
-          <line x1="14" y1="720" x2="906" y2="720"/>
-        </g>
-        <path class="arete critique" d="M460,86 C460,114.35 460,120.65 460,149"/>
-        <path class="arete critique" d="M460,206 C460,234.35 460,240.65 460,269"/>
-        <path class="arete " d="M460,326 C460,354.35 258.5,360.65 258.5,389"/>
-        <path class="arete critique" d="M460,326 C460,408.35 460,426.65 460,509"/>
-        <path class="arete " d="M258.5,446 C258.5,474.35 460,480.65 460,509"/>
-        <path class="arete " d="M460,566 C460,594.35 661.5,600.65 661.5,629"/>
-        <path class="arete critique" d="M460,566 C460,594.35 320.5,600.65 320.5,629"/>
-        <path class="arete differee" d="M661.5,686 C661.5,714.35 460,720.65 460,749"/>
-        <path class="arete critique" d="M320.5,686 C320.5,714.35 460,720.65 460,749"/>
-        <path class="arete differee" d="M355,86 C40,300 40,720 355,749"/>
-        <g font-family="Caveat, cursive" font-size="16" fill="#b3b8be" paint-order="stroke" stroke="#fdfdfc" stroke-width="5" stroke-linejoin="round">
-          <text x="16" y="114">rassembler</text>
-          <text x="16" y="474">fabriquer</text>
-          <text x="16" y="714">prouver</text>
-        </g>
-        <g class="noeud" data-fiche="f1" tabindex="0" role="button" aria-label="Nœud 1 : Poser l'épreuve" style="--nc:var(--orange)">
-          <rect x="355" y="34" width="210" height="52"/>
-          <circle class="pastille" cx="375" cy="60" r="13"/>
-          <text class="num" x="375" y="66" text-anchor="middle">1</text>
-          <text x="396" y="58">Poser l'épreuve</text>
-          <text class="sub" x="396" y="74">format, date, barème</text>
-          <text class="coche" x="548" y="52" text-anchor="end">✓</text>
-        </g>
-        <g class="noeud" data-fiche="f2" tabindex="0" role="button" aria-label="Nœud 2 : Rassembler ses supports" style="--nc:var(--bleu)">
-          <rect x="355" y="154" width="210" height="52"/>
-          <circle class="pastille" cx="375" cy="180" r="13"/>
-          <text class="num" x="375" y="186" text-anchor="middle">2</text>
-          <text x="396" y="178">Rassembler ses supports</text>
-          <text class="sub" x="396" y="194">les siens, et eux seuls</text>
-          <text class="coche" x="548" y="172" text-anchor="end">✓</text>
-        </g>
-        <g class="noeud" data-fiche="f3" tabindex="0" role="button" aria-label="Nœud 3 : Reconstituer le plan" style="--nc:var(--bleu)">
-          <rect x="355" y="274" width="210" height="52"/>
-          <circle class="pastille" cx="375" cy="300" r="13"/>
-          <text class="num" x="375" y="306" text-anchor="middle">3</text>
-          <text x="396" y="298">Reconstituer le plan</text>
-          <text class="sub" x="396" y="314">le classement existe déjà</text>
-          <text class="coche" x="548" y="292" text-anchor="end">✓</text>
-        </g>
-        <g class="noeud" data-fiche="f4" tabindex="0" role="button" aria-label="Nœud 4 : Repérer les trous" style="--nc:var(--bleu)">
-          <rect x="153.5" y="394" width="210" height="52"/>
-          <circle class="pastille" cx="173.5" cy="420" r="13"/>
-          <text class="num" x="173.5" y="426" text-anchor="middle">4</text>
-          <text x="194.5" y="418">Repérer les trous</text>
-          <text class="sub" x="194.5" y="434">ce qui n'est pas écrit</text>
-          <text class="coche" x="346.5" y="412" text-anchor="end">✓</text>
-        </g>
-        <g class="noeud" data-fiche="f5" tabindex="0" role="button" aria-label="Nœud 5 : Fabriquer les fiches" style="--nc:var(--violet)">
-          <rect x="355" y="514" width="210" height="52"/>
-          <circle class="pastille" cx="375" cy="540" r="13"/>
-          <text class="num" x="375" y="546" text-anchor="middle">5</text>
-          <text x="396" y="538">Fabriquer les fiches</text>
-          <text class="sub" x="396" y="554">un gabarit constant</text>
-          <text class="coche" x="548" y="532" text-anchor="end">✓</text>
-        </g>
-        <g class="noeud" data-fiche="f6" tabindex="0" role="button" aria-label="Nœud 6 : Vérifier avant d'apprendre" style="--nc:var(--violet)">
-          <rect x="556.5" y="634" width="210" height="52"/>
-          <circle class="pastille" cx="576.5" cy="660" r="13"/>
-          <text class="num" x="576.5" y="666" text-anchor="middle">6</text>
-          <text x="597.5" y="658">Vérifier avant d'apprendre</text>
-          <text class="sub" x="597.5" y="674">les références, surtout</text>
-          <text class="coche" x="749.5" y="652" text-anchor="end">✓</text>
-        </g>
-        <g class="noeud" data-fiche="f7" tabindex="0" role="button" aria-label="Nœud 7 : Se faire interroger" style="--nc:var(--vert)">
-          <rect x="215.5" y="634" width="210" height="52"/>
-          <circle class="pastille" cx="235.5" cy="660" r="13"/>
-          <text class="num" x="235.5" y="666" text-anchor="middle">7</text>
-          <text x="256.5" y="658">Se faire interroger</text>
-          <text class="sub" x="256.5" y="674">l'IA questionne, vous répondez</text>
-          <text class="coche" x="408.5" y="652" text-anchor="end">✓</text>
-        </g>
-        <g class="noeud" data-fiche="f8" tabindex="0" role="button" aria-label="Nœud 8 : Épreuve blanche" style="--nc:var(--rouge)">
-          <rect x="355" y="754" width="210" height="52"/>
-          <circle class="pastille" cx="375" cy="780" r="13"/>
-          <text class="num" x="375" y="786" text-anchor="middle">8</text>
-          <text x="396" y="778">Épreuve blanche</text>
-          <text class="sub" x="396" y="794">chrono, IA fermée</text>
-          <text class="coche" x="548" y="772" text-anchor="end">✓</text>
-        </g>
-      </svg>
-      <p class="legende-svg">le format de l'épreuve décide de tout, jusqu'à l'épreuve blanche</p>
+      <p class="sf-texte">Un sujet est un territoire&nbsp;; une question est un itinéraire. Le premier geste n'est pas de chercher, c'est d'écrire sa question et de la faire attaquer.</p>
+
+      <div class="st-prompt">
+        <span class="et">Prompt · faire attaquer sa problématique</span>
+        <button class="sf-btn sf-btn--discret st-copier" type="button">Copier</button>
+        <pre><code>Voici la problématique de mon [rapport de stage / SAÉ / rapport d'alternance] :
+« ... »
+
+Contexte : [structure d'accueil, secteur, ce que j'y ai réellement fait, durée].
+
+Tu ne la reformules pas et tu ne la valides pas. Tu fais quatre choses, dans l'ordre :
+
+1. Tu relèves TOUS les mots que deux lecteurs pourraient comprendre différemment.
+   Pour chacun, tu proposes trois interprétations possibles et tu me demandes
+   laquelle est la mienne. Ne passe pas à la suite avant ma réponse.
+
+2. Tu me dis quel type de question j'ai posé : factuelle, exploratoire,
+   comparative, explicative ou prospective. Et tu me dis ce que ce type
+   m'oblige à produire comme matériau.
+
+3. Tu me montres à quoi ressemblerait une réponse générique à ma question —
+   celle qu'on pourrait écrire sans avoir mis les pieds dans la structure.
+   Si elle est écrivable, ma question est mal posée : dis-le franchement.
+
+4. Tu me proposes trois reformulations plus étroites, chacune avec ce qu'elle
+   m'obligerait à aller chercher sur le terrain, et ce qu'elle m'interdirait
+   de traiter.</code></pre>
+      </div>
+
+      <p class="sf-texte">Reste la matière normative. C'est là que le risque est le plus élevé, parce que l'erreur y est invisible&nbsp;: un texte abrogé cité comme en vigueur, ou une règle métropolitaine appliquée à la Nouvelle-Calédonie, se présentent exactement comme une réponse juste.</p>
+
+      <div class="st-trou">
+        <b>Le piège calédonien, à connaître avant tout stage.</b> La Nouvelle-Calédonie a son <b>propre code du travail</b> (Lp.), distinct du code métropolitain, et sa propre réglementation douanière. Aucun modèle de langue ne fait spontanément cette distinction&nbsp;: interrogé sur une durée de préavis ou un régime d'importation, il vous répondra métropole avec assurance. <b>Nommez toujours la juridiction dans votre question, et vérifiez sur juridoc.gouv.nc.</b>
+      </div>
+
+      <div class="st-prompt">
+        <span class="et">Prompt · aller chercher un texte qui fait foi</span>
+        <button class="sf-btn sf-btn--discret st-copier" type="button">Copier</button>
+        <pre><code>J'ai besoin du texte applicable à : [question précise].
+Juridiction : [Nouvelle-Calédonie / France métropolitaine / Union européenne].
+Date à laquelle je me place : [date].
+
+Tu ne me donnes pas la règle. Tu me donnes le chemin pour la trouver.
+
+1. Quel corpus est compétent ici (code, convention collective, délibération
+   du Congrès, règlement européen, arrêté) et pourquoi celui-là plutôt qu'un autre.
+2. Le nom exact du texte et, si tu le connais, la référence de l'article —
+   en signalant explicitement si tu n'es pas sûr.
+3. Le site officiel où le vérifier, et ce que je dois regarder en arrivant :
+   la date de dernière modification et la mention d'abrogation.
+4. Les trois erreurs les plus courantes sur cette question précise,
+   notamment toute confusion entre juridictions.
+
+Ne me donne aucun numéro d'article dont tu n'es pas certain. Écris « à vérifier »
+plutôt que d'inventer une référence qui aura l'air juste.</code></pre>
+      </div>
+
+      <h4 class="sf-h4">Où vérifier, selon le terrain de stage</h4>
+      <ul class="st-sources">
+        <li><b>Droit du travail en Nouvelle-Calédonie</b> — <code>juridoc.gouv.nc</code> et le site de la DTE-NC. Jamais Légifrance seul.</li>
+        <li><b>Droit métropolitain et européen</b> — <code>legifrance.gouv.fr</code>, <code>eur-lex.europa.eu</code>, <code>travail-emploi.gouv.fr</code>.</li>
+        <li><b>Douanes, transit, port</b> — code des douanes de Nouvelle-Calédonie, tarif douanier en vigueur, <code>douane.gouv.fr</code> pour le cadre métropolitain, Incoterms® 2020 (Chambre de commerce internationale, texte payant&nbsp;: ne pas se fier à une paraphrase d'IA).</li>
+        <li><b>Normes métier et qualité</b> — la norme elle-même (ISO, AFNOR) fait foi&nbsp;; son résumé en ligne ne fait pas foi. La BU de l'UNC peut donner accès.</li>
+        <li><b>Langues et niveaux</b> — le CECRL et son volume complémentaire, sur le site du Conseil de l'Europe. Les descripteurs sont publics&nbsp;: citez-les, ne les paraphrasez pas.</li>
+        <li><b>Stage d'observation en établissement, CAPES</b> — le <i>Bulletin officiel</i> de l'Éducation nationale (<code>education.gouv.fr/bo</code>) et les programmes disciplinaires en vigueur à la date du stage.</li>
+        <li><b>Données économiques calédoniennes</b> — ISEE, IEOM, comptes des collectivités. Chiffres datés, sources primaires.</li>
+      </ul>
+
+      <p class="st-verif"><b>À vérifier avant de s'en servir&nbsp;:</b> toute référence, date, chiffre ou citation produite par une IA se vérifie sur sa source primaire avant d'entrer dans le rapport. Si la vérification est impossible, l'information n'entre pas. Une référence inventée dans un mémoire est repérée en trente secondes par un jury.</p>
+      <p class="st-outil"><b>Outil conseillé&nbsp;:</b> Perplexity pour repérer les pistes — en ouvrant chaque source citée, car l'étude du Tow Center le donne à 37&nbsp;% de réponses incorrectes, et c'est le meilleur des huit moteurs testés. Puis le site officiel, toujours, pour la version qui fait foi.</p>
     </div>
-    <div class="cles">
-      <span><i class="c"></i> chemin critique</span>
-      <span><i></i> branche parallèle</span>
-      <span><i class="d"></i> rappel : l'épreuve blanche prend le format posé au nœud 1</span>
+  </details>
+
+  <!-- C -->
+  <details class="st-fiche" id="e-c"><summary class="st-fiche-tete"><span class="st-lettre">C</span>
+      <h3>Se fabriquer des fiches, des visuels, et son propre second cerveau</h3></summary><div class="st-fiche-corps">
+      <p class="st-rate"><b>Ce qui rate&nbsp;:</b> «&nbsp;résume-moi ce cours&nbsp;». On obtient un texte plus court où tout se vaut&nbsp;— et un résumé lu n'est pas un savoir retenu. Le tri, c'est-à-dire décider ce qui est essentiel, est précisément le travail qui fait apprendre. Le déléguer, c'est payer pour ne pas apprendre.</p>
+
+      <p class="sf-texte">La bonne demande ne dit pas «&nbsp;résume&nbsp;», elle dit <b>«&nbsp;hiérarchise et justifie&nbsp;»</b> — puis vous laisse trancher.</p>
+
+      <div class="st-prompt">
+        <span class="et">Prompt · trier l'essentiel dans un support de cours</span>
+        <button class="sf-btn sf-btn--discret st-copier" type="button">Copier</button>
+        <pre><code>Voici mon cours de [matière]. Je prépare [le partiel / une SAÉ / un oral].
+
+Tu ne le résumes pas. Tu le tries, en trois colonnes :
+
+  À SAVOIR PAR CŒUR   ce qui sera exigible tel quel (définitions, formules,
+                      dates, termes techniques en langue)
+  À SAVOIR MOBILISER  ce qu'il faudra appliquer à un cas nouveau
+  À SITUER SEULEMENT  ce dont il suffit de savoir que ça existe
+
+Pour chaque élément, une ligne de justification : pourquoi cette colonne
+et pas une autre, au vu du type d'évaluation annoncé.
+
+Ensuite, tu me signales les trois notions du cours dont les autres dépendent :
+celles qui, mal comprises, font rater tout le reste.
+
+Enfin, tu me poses cinq questions qui me permettront de vérifier moi-même
+si ton classement est juste. Je ne veux pas te croire sur parole.</code></pre>
+      </div>
+
+      <div class="st-prompt">
+        <span class="et">Prompt · transformer un passage dense en schéma</span>
+        <button class="sf-btn sf-btn--discret st-copier" type="button">Copier</button>
+        <pre><code>Voici un passage de mon cours : « ... »
+
+Avant de dessiner quoi que ce soit, dis-moi quelles familles de représentation
+conviendraient à ce contenu, et pourquoi : chaîne d'étapes, arbre de décision,
+matrice à deux axes, flux entre acteurs, chronologie, hiérarchie emboîtée.
+
+Écarte celles qui ne conviennent pas, en disant ce qu'elles feraient perdre.
+Puis propose la structure retenue en texte hiérarchisé, que je pourrai coller
+dans un outil de schéma. Ne me donne pas d'image : donne-moi la structure.</code></pre>
+      </div>
+
+      <div class="sf-encadre sf-encadre--methode">
+        <span class="sf-encadre-etiquette">Le second cerveau, en trois règles</span>
+        <p>Une idée par fiche. Un titre qui dit l'idée, pas le thème. Un format ouvert — du texte simple, du <code>.md</code>, jamais un format propriétaire dont vous ne sortirez plus.</p>
+        <p class="sf-mb-0">Le classement compte autant que le contenu&nbsp;: une fiche qu'on ne retrouve pas n'existe pas. Et c'est aussi ce qui rend le corpus exploitable par une IA — une fiche courte et bien titrée est bien mieux retrouvée qu'un long document fourre-tout. <b>La réversibilité donne le droit d'être lent&nbsp;:</b> ce que vous écrivez en L1 vous servira encore en alternance.</p>
+      </div>
+
+      <p class="st-verif"><b>À vérifier avant de s'en servir&nbsp;:</b> relisez la colonne «&nbsp;à savoir par cœur&nbsp;». Si vous n'êtes pas d'accord avec un classement, c'est bon signe — c'est que vous avez compris le cours. La discussion avec la machine vaut mieux que son verdict.</p>
+      <p class="st-outil"><b>Outil conseillé&nbsp;:</b> Napkin pour passer d'un paragraphe à un schéma — en sachant que l'export réutilisable (SVG) est payant, et que le schéma peut être faux sans en avoir l'air. Un éditeur de texte simple suffit pour les fiches.</p>
     </div>
-  </section>
+  </details>
 
-  <section class="bloc" id="fiches">
-    <h2 class="section">Les huit fiches</h2>
-    <p class="intro-section">Les blocs violets sont des <span class="terme" tabindex="0" data-def="La consigne donnée au modèle. Ce qui la rend efficace n&#x27;est pas sa tournure, c&#x27;est ce qu&#x27;elle interdit et les documents qu&#x27;on y joint.">prompts</span> à copier tels quels ; les blocs sombres sont des gabarits.</p>
+  <!-- D -->
+  <details class="st-fiche" id="e-d"><summary class="st-fiche-tete"><span class="st-lettre">D</span>
+      <h3>Éviter le document générique, et éviter qu'elle vous donne toujours raison</h3></summary><div class="st-fiche-corps">
+      <p class="st-rate"><b>Ce qui rate&nbsp;:</b> deux défauts distincts, souvent confondus. Le <b>générique</b> vient de ce que vous n'avez pas dit&nbsp;: le modèle comble chaque silence par la moyenne de son corpus, et cette moyenne s'appelle «&nbsp;il est important de noter que&nbsp;». La <b>complaisance</b> est autre chose&nbsp;: ces systèmes sont entraînés à satisfaire, donc à valider. Demandez «&nbsp;qu'est-ce que tu penses de mon idée&nbsp;?&nbsp;» et vous obtiendrez une approbation argumentée, quelle que soit l'idée.</p>
 
-    <article class="fiche" id="f1" style="--fc:var(--orange)">
-      <div class="fiche-entete"><div class="numero">1</div><h3>Poser l'épreuve et la date</h3></div>
-      <div class="badges"><span class="badge temps">15 min</span><span class="badge critique">chemin critique</span><span class="badge depend">dépend de : rien</span></div>
-      <p>Tout le reste en découle, et rien ne se décide sans ça. <strong>Quelle épreuve, quand, sous quelle forme, notée comment.</strong> Une révision se règle sur ce qu'on vous demandera de produire, pas sur ce qu'il y a à savoir.</p>
-      <ul><li><strong>Cas pratique</strong> — ce qui compte est la méthode : qualifier les faits, trouver la règle, l'appliquer, conclure. Les fiches devront porter des régimes applicables, pas des exposés.</li><li><strong>Dissertation</strong> — ce qui compte est la problématique et le plan. Les fiches devront porter des débats, des oppositions, des évolutions.</li><li><strong>QCM ou questions courtes</strong> — ce qui compte est la précision : définitions exactes, conditions cumulatives, délais.</li><li><strong>Oral</strong> — ce qui compte est la restitution à voix haute, en temps contraint. C'est le nœud 7 qui devient l'essentiel.</li></ul>
-      <div class="regle">
-        <span class="etiquette">Le temps disponible est une donnée, pas une variable</span>
-        <p>Trois semaines et trois jours ne donnent pas le même parcours. À trois jours, on saute les nœuds 3 et 4 et on va droit aux fiches sur les seuls chapitres tombables. Écrire le temps disponible en tête empêche de découvrir au dernier moment qu'on a passé quatre heures à ranger.</p>
+      <p class="sf-texte"><b>Contre le générique&nbsp;:</b> imposer une singularité que le corpus ne contient pas. Un lieu, une contrainte, un document, un chiffre. Plus votre cas est situé, moins la réponse moyenne peut passer.</p>
+
+      <div class="st-prompt">
+        <span class="et">Prompt · sortir du générique</span>
+        <button class="sf-btn sf-btn--discret st-copier" type="button">Copier</button>
+        <pre><code>Avant d'écrire, fais un test : rédige en trois lignes la réponse la plus banale
+que l'on pourrait donner à ma demande sans rien savoir de ma situation.
+Montre-la-moi. C'est exactement ce que je ne veux pas.
+
+Maintenant, pour t'en éloigner, pose-moi les questions dont tu as besoin sur :
+mon terrain précis, mes contraintes, les documents dont je dispose,
+ce que mon lecteur sait déjà et ce qui le surprendrait.
+Trois questions maximum, les plus discriminantes.
+
+Ensuite seulement, écris. Et pour chaque paragraphe, demande-toi :
+« cette phrase pourrait-elle figurer telle quelle dans le travail
+d'un autre étudiant sur un autre sujet ? »
+Si oui, réécris-la ou supprime-la.
+
+Proscrit : « il est important de noter », « dans un monde en constante évolution »,
+« force est de constater », toute énumération de trois adjectifs,
+toute conclusion qui se contente de résumer l'introduction.</code></pre>
       </div>
-      <div class="fini"><strong>Fini quand :</strong> une ligne écrite : <em>épreuve, date, format, barème, temps de révision disponible</em>.</div>
-      <div class="piege"><strong>Piège :</strong> commencer par « faire des fiches » sans savoir sur quoi on sera évalué. C'est le meilleur moyen de produire un beau classeur inutile.</div>
-      <label class="fait-ligne"><input type="checkbox" data-noeud="f1"> nœud terminé</label>
-    </article>
 
-    <article class="fiche" id="f2" style="--fc:var(--bleu)">
-      <div class="fiche-entete"><div class="numero">2</div><h3>Rassembler ses supports — et seulement les siens</h3></div>
-      <div class="badges"><span class="badge temps">20 min</span><span class="badge critique">chemin critique</span><span class="badge depend">dépend de : 1</span></div>
-      <p>Le cours qui compte est <strong>celui qui a été fait</strong>, pas le meilleur cours du monde sur le sujet. Un polycopié trouvé en ligne, un cours d'une autre université, une fiche vendue par un site : tout cela peut être excellent et vous desservir, parce que le plan, les exemples, la terminologie et les points insistés ne seront pas ceux de votre enseignant.</p>
-      <p>On rassemble donc, dans un seul dossier : le CM sous toutes ses formes (diapos, polycopié, enregistrement), les documents de TD et leurs corrigés, ses propres notes prises en cours, et la plaquette ou le syllabus s'il en existe un.</p>
-      <div class="copiable arbo">
-        <div class="etiq-bloc">un dossier, pas plus</div>
-        <button type="button" class="btn-copier">Copier</button>
-        <pre>revisions-obligations\
-├─ cours\            les diapos et le polycopié, tels que donnés
-├─ td\               sujets, documents, corrigés
-├─ mes-notes\        ce que vous avez écrit vous-même
-└─ fiches\           ce que vous allez produire</pre>
+      <p class="sf-texte"><b>Contre la complaisance&nbsp;:</b> ne jamais demander un avis. Demander une réfutation, et rendre le désaccord obligatoire. La formulation qui change tout n'est pas «&nbsp;confirme mon intuition&nbsp;» mais «&nbsp;teste mon hypothèse, et commence par ce qui la réfute&nbsp;».</p>
+
+      <div class="st-prompt">
+        <span class="et">Prompt · obtenir une contradiction utile</span>
+        <button class="sf-btn sf-btn--discret st-copier" type="button">Copier</button>
+        <pre><code>Voici mon raisonnement : « ... »
+
+Tu ne me dis pas s'il est bon. Tu joues le rôle du membre de jury
+le plus exigeant et le moins bienveillant, celui qui cherche la faille.
+
+1. L'objection la plus forte qu'on puisse m'opposer, formulée sèchement.
+2. Le point où mon raisonnement suppose quelque chose que je n'ai pas démontré.
+3. Un contre-exemple qui le mettrait en difficulté.
+4. Ce qu'un spécialiste du domaine trouverait naïf dans ma formulation.
+
+Tu ne termines pas par un encouragement. Tu ne dis pas que c'est « un bon début ».
+Si tu ne trouves rien à redire, dis-le, mais dis aussi ce que tu as cherché
+et où tu as cherché — pour que je puisse juger si ta recherche était sérieuse.</code></pre>
       </div>
-      <div class="avert">
-        <span class="etiquette">Un ajout extérieur, à une seule condition</span>
-        <p>Le manuel explicitement recommandé par l'enseignant fait exception : il fait partie du cours. Tout le reste attend le nœud 4, et n'entre qu'en bouchant un trou identifié.</p>
+
+      <div class="sf-encadre sf-encadre--avertissement">
+        <span class="sf-encadre-etiquette">Le test qui coûte deux minutes</span>
+        <p class="sf-mb-0">Posez la même question dans les deux sens&nbsp;: «&nbsp;pourquoi X est-il vrai&nbsp;?&nbsp;» puis «&nbsp;pourquoi X est-il faux&nbsp;?&nbsp;». Si vous obtenez deux réponses également convaincantes, vous venez de mesurer la complaisance de l'outil sur ce sujet — et vous savez qu'aucune des deux ne vous dispense d'aller vérifier.</p>
       </div>
-      <div class="fini"><strong>Fini quand :</strong> les quatre dossiers existent, et tous vos supports sont dedans. Les notes manuscrites photographiées comptent.</div>
-      <div class="piege"><strong>Piège :</strong> remplacer ses notes de cours par un résumé produit par l'IA « pour gagner du temps ». Vos notes portent ce que l'enseignant a insisté, répété, ou annoncé comme tombable. C'est exactement l'information qui n'est nulle part ailleurs.</div>
-      <label class="fait-ligne"><input type="checkbox" data-noeud="f2"> nœud terminé</label>
-    </article>
 
-    <article class="fiche" id="f3" style="--fc:var(--bleu)">
-      <div class="fiche-entete"><div class="numero">3</div><h3>Reconstituer le plan du cours</h3></div>
-      <div class="badges"><span class="badge temps">30 min</span><span class="badge critique">chemin critique</span><span class="badge depend">dépend de : 2</span></div>
-      <p>Voici la grande différence avec le travail d'un enseignant qui range son fonds documentaire : <strong>votre classement existe déjà.</strong> C'est le plan du cours. Il ne s'invente pas, il se reconstitue — et il est souvent implicite, éparpillé entre des titres de diapos et des annonces orales.</p>
-      <p>Ce plan devient l'ossature de tout le reste : une fiche par point du plan, une question de révision par point, un chapitre de l'épreuve blanche par grande partie.</p>
-      <div class="copiable prompt">
-        <div class="etiq-bloc">prompt à copier (joindre les diapos et le polycopié)</div>
-        <button type="button" class="btn-copier">Copier</button>
-        <pre>Voici les supports d'un cours de droit (diapositives et polycopié).
-
-Reconstitue le plan du cours, tel qu'il est, sans le réorganiser :
-- respecte l'ordre et la numérotation d'origine ;
-- descends jusqu'au troisième niveau quand il existe ;
-- pour chaque point, indique où il se trouve (diapo n°, page) ;
-- signale entre crochets les titres que tu as dû DÉDUIRE parce qu'ils
-  n'étaient pas écrits explicitement.
-
-Tu ne reformules aucun intitulé, tu ne fusionnes rien, tu n'ajoutes aucune
-partie qui te semblerait manquante : ce plan est celui de mon enseignant,
-pas le plan idéal de la matière.
-
-Rends `plan.md`, une ligne par point.</pre>
-      </div>
-      <div class="fini"><strong>Fini quand :</strong> <code>plan.md</code> existe et vous pouvez suivre le cours entier dessus, du début à la fin, sans trou dans la numérotation.</div>
-      <div class="piege"><strong>Piège :</strong> accepter un plan « amélioré » par l'IA. Le jour de l'épreuve, c'est le plan de l'enseignant qui sert de grille de correction.</div>
-      <label class="fait-ligne"><input type="checkbox" data-noeud="f3"> nœud terminé</label>
-    </article>
-
-    <article class="fiche" id="f4" style="--fc:var(--bleu)">
-      <div class="fiche-entete"><div class="numero">4</div><h3>Repérer les trous</h3></div>
-      <div class="badges"><span class="badge temps">30 min</span><span class="badge depend">dépend de : 3</span><span class="badge">branche parallèle</span></div>
-      <p>Un cours donné n'est jamais un cours complet : il renvoie au manuel, il annonce « on verra ça en TD », il comporte des diapos à compléter, et il contient des choses dites qui ne sont écrites nulle part. Ces trous sont exactement là où les questions d'examen se logent.</p>
-      <ul><li>Les diapos qui annoncent sans développer (<em>« nous verrons »</em>, <em>« cf. manuel »</em>, une diapo au titre seul).</li><li>Les points du plan pour lesquels vos notes sont vides ou illisibles.</li><li>Les corrigés de TD qui mobilisent une notion absente du CM.</li><li>Les renvois à un arrêt ou à un texte cité sans être reproduit.</li></ul>
-      <div class="regle">
-        <span class="etiquette">Où l'on comble un trou, dans l'ordre</span>
-        <p><strong>L'enseignant</strong> d'abord — une question posée en fin de cours ou par courriel coûte deux minutes et lève l'ambiguïté. <strong>Le manuel recommandé</strong> ensuite. <strong>Les camarades et le corrigé de TD</strong> ensuite. <strong>L'IA en dernier</strong>, et jamais pour une référence : elle peut vous expliquer une notion de première année, elle ne peut pas vous dire ce que votre enseignant attend.</p>
-      </div>
-      <div class="fini"><strong>Fini quand :</strong> la liste des trous est écrite, chacun avec la source où vous irez le combler. Une liste vide veut dire que la relecture a été superficielle.</div>
-      <div class="piege"><strong>Piège :</strong> demander à l'IA de « compléter les parties manquantes du cours ». Elle produira un texte plausible, cohérent, bien écrit — et sans rapport avec ce qui sera corrigé.</div>
-      <label class="fait-ligne"><input type="checkbox" data-noeud="f4"> nœud terminé</label>
-    </article>
-
-    <article class="fiche" id="f5" style="--fc:var(--violet)">
-      <div class="fiche-entete"><div class="numero">5</div><h3>Fabriquer les fiches, à partir de ses supports seulement</h3></div>
-      <div class="badges"><span class="badge temps">2 à 4 h</span><span class="badge critique">chemin critique</span><span class="badge depend">dépend de : 3 et 4</span></div>
-      <p>Une fiche par point du plan. Toujours la même structure, parce qu'une structure constante est ce qui rend la révision rapide et l'oubli visible.</p>
-      <div class="copiable">
-        <div class="etiq-bloc">le gabarit d'une fiche</div>
-        <button type="button" class="btn-copier">Copier</button>
-        <pre># [Notion] — point 2.1.3 du plan
-**Définition** : la formulation du cours, mot à mot.
-**Conditions** : les conditions cumulatives, numérotées.
-**Régime** : ce qui se produit quand elles sont réunies, en trois lignes.
-**Référence clé** : l'article ou l'arrêt cité EN COURS (et rien d'autre).
-**Le piège** : la confusion classique, la distinction voisine.
-**Ma question** : la question que je me poserai pour vérifier que je sais.</pre>
-      </div>
-      <div class="copiable prompt">
-        <div class="etiq-bloc">prompt à copier (joindre le plan, le cours, et le point à ficher)</div>
-        <button type="button" class="btn-copier">Copier</button>
-        <pre>Voici mon plan de cours, mes supports, et le point 2.1.3 à traiter.
-
-Produis une fiche de révision selon ce gabarit exact : Définition,
-Conditions, Régime, Référence clé, Le piège, Ma question.
-
-Règles absolues :
-- tu n'utilises QUE mes documents joints. Rien de ta propre connaissance,
-  même si tu es certain que c'est juste ;
-- la définition reprend les mots du cours, tu ne la reformules pas ;
-- la référence clé est celle qui figure dans mes supports. Si aucune n'y
-  figure, tu écris « aucune référence dans le cours » — tu n'en proposes
-  pas une que tu connaîtrais ;
-- si une partie du gabarit n'est pas couverte par mes documents, tu écris
-  MANQUE et tu t'arrêtes là. Tu ne combles pas.
-
-Une fiche tient sur une page. Si elle déborde, c'est que le point du plan
-doit être coupé en deux : dis-le-moi au lieu de compresser.</pre>
-      </div>
-      <div class="fini"><strong>Fini quand :</strong> chaque point du plan a sa fiche, et chaque <code>MANQUE</code> a été traité — comblé au nœud 4, ou assumé.</div>
-      <div class="piege"><strong>Piège :</strong> lire les fiches produites et se sentir prêt. Une fiche lue n'est pas une fiche sue : c'est le nœud 7 qui fait la différence, et lui seul.</div>
-      <label class="fait-ligne"><input type="checkbox" data-noeud="f5"> nœud terminé</label>
-    </article>
-
-    <article class="fiche" id="f6" style="--fc:var(--violet)">
-      <div class="fiche-entete"><div class="numero">6</div><h3>Vérifier avant d'apprendre</h3></div>
-      <div class="badges"><span class="badge temps">30 min</span><span class="badge depend">dépend de : 5</span><span class="badge">branche parallèle</span></div>
-      <p>Une référence apprise est très difficile à désapprendre. Or c'est précisément là que l'IA se trompe le mieux : elle produit des numéros d'arrêts et d'articles parfaitement crédibles, du bon format, avec la bonne juridiction et une date vraisemblable — et parfois entièrement faux.</p>
-      <div class="regle">
-        <span class="etiquette">La règle qui vous protège en une phrase</span>
-        <p><strong>Toute référence qui n'a pas été vue dans le cours, dans le corrigé de TD ou sur <span class="terme" tabindex="0" data-def="Le service public de diffusion du droit : textes consolidés, versions successives, dates d&#x27;entrée en vigueur. La source qui fait foi.">Légifrance</span> est présumée fausse, et ne se recopie pas dans une copie.</strong></p>
-      </div>
-      <p>On vérifie donc, avant d'apprendre, les seules choses qui se vérifient : que l'article existe et porte bien ce numéro, que l'arrêt existe à cette date, que le chiffre ou le délai est le bon. Un quart d'heure sur Légifrance pour l'ensemble d'un cours, et le doute disparaît.</p>
-      <div class="fini"><strong>Fini quand :</strong> les références des fiches ont été retrouvées dans le cours ou sur une source officielle. Celles qui restent introuvables sont barrées, pas apprises.</div>
-      <div class="piege"><strong>Piège :</strong> « c'est sûrement bon, l'IA l'a pris dans mon cours ». Elle a peut-être complété. Le contrôle prend quinze minutes ; une référence inventée dans une copie coûte beaucoup plus.</div>
-      <div class="renvoi"><strong>Renvoi :</strong> la page <em>Mettre à jour un cours</em> décrit la même vérification, en plus systématique, du point de vue de l'enseignant.</div>
-      <label class="fait-ligne"><input type="checkbox" data-noeud="f6"> nœud terminé</label>
-    </article>
-
-    <article class="fiche" id="f7" style="--fc:var(--vert)">
-      <div class="fiche-entete"><div class="numero">7</div><h3>Se faire interroger, ne pas se faire répondre</h3></div>
-      <div class="badges"><span class="badge">3 séances</span><span class="badge critique">chemin critique</span><span class="badge depend">dépend de : 5</span></div>
-      <p>C'est le nœud qui fait la différence entre réviser et relire. Le principe tient en une inversion : <strong>l'IA pose les questions, vous répondez.</strong> Tant que c'est elle qui parle, vous ne mesurez rien — la sensation de comprendre en lisant est notoirement trompeuse.</p>
-      <div class="copiable prompt">
-        <div class="etiq-bloc">prompt à copier (joindre vos fiches)</div>
-        <button type="button" class="btn-copier">Copier</button>
-        <pre>Voici mes fiches de révision. Interroge-moi.
-
-Déroulé imposé :
-- une seule question à la fois, et tu attends ma réponse ;
-- tu ne donnes JAMAIS la réponse avant que j'aie répondu, même si je te
-  le demande, même si je réponds « je ne sais pas » — dans ce cas tu me
-  donnes un indice, et tu reposes la question autrement ;
-- après ma réponse, tu compares avec ma fiche, tu me dis ce qui manque
-  et tu cites la fiche d'où vient la correction ;
-- tu alternes : définition, conditions, cas d'application, piège ;
-- toutes les cinq questions, tu me dis où j'en suis : ce qui est acquis,
-  ce qui est fragile, ce qui n'est pas su du tout.
-
-Commence par les points que je vais te dire, et ne sors jamais de mes fiches.</pre>
-      </div>
-      <div class="regle">
-        <span class="etiquette">Trois séances espacées valent dix séances d'affilée</span>
-        <p>Deux mécanismes font tout le travail ici, et aucun des deux n'est la relecture. La <span class="terme" tabindex="0" data-def="Se forcer à retrouver l&#x27;information de mémoire, au lieu de la relire. Beaucoup plus coûteux sur le moment, beaucoup plus efficace ensuite.">restitution active</span> : se forcer à retrouver de mémoire, ce qui coûte sur le moment et paie ensuite. La <span class="terme" tabindex="0" data-def="Répartir les passages de révision sur plusieurs jours plutôt que de les enchaîner. L&#x27;espacement fait plus pour la mémoire que la durée totale.">révision espacée</span> : une première passe sur tout, une deuxième à deux ou trois jours d'intervalle sur ce qui était fragile, une troisième la veille sur ce qui résiste encore. Ce sont les deux résultats les mieux établis de la psychologie de l'apprentissage, et ils sont antérieurs à l'IA de plusieurs décennies.</p>
-      </div>
-      <div class="fini"><strong>Fini quand :</strong> vous répondez juste, de mémoire, sur l'essentiel du plan — et vous savez nommer les deux ou trois points qui restent fragiles.</div>
-      <div class="renvoi"><strong>Renvoi :</strong> la page <em>Travailler avec l'IA — LEA</em> donne un prompt de fabrication de QCM avec traçabilité à la page : il complète très bien l'interrogation orale décrite ici, sur les matières où le QCM est le format de l'épreuve.</div>
-      <div class="piege"><strong>Piège :</strong> demander à l'IA de vous « expliquer encore une fois ». Une explication de plus donne la sensation d'avancer sans rien changer à ce que vous saurez restituer. Si un point ne rentre pas, on retourne au cours, pas à une nouvelle explication.</div>
-      <label class="fait-ligne"><input type="checkbox" data-noeud="f7"> nœud terminé</label>
-    </article>
-
-    <article class="fiche" id="f8" style="--fc:var(--rouge)">
-      <div class="fiche-entete"><div class="numero">8</div><h3>L'épreuve blanche, sans IA</h3></div>
-      <div class="badges"><span class="badge temps">2 à 4 h</span><span class="badge critique">chemin critique</span><span class="badge depend">dépend de : 7 et 1</span></div>
-      <p>Le nœud terminal, et le seul qui prouve quelque chose. Un sujet du format de l'épreuve — cas pratique, dissertation, questions —, dans les conditions réelles : <strong>le temps imparti, sans notes si l'épreuve est sans documents, et l'IA fermée.</strong></p>
-      <p>Le sujet peut venir d'une annale, d'un TD non corrigé, ou être produit par l'IA à partir du plan et des fiches. La provenance importe peu : ce qui compte est de composer sans assistance.</p>
-      <div class="copiable prompt">
-        <div class="etiq-bloc">prompt à copier — pour fabriquer le sujet, puis pour le corriger</div>
-        <button type="button" class="btn-copier">Copier</button>
-        <pre>[AVANT] À partir de mon plan de cours et de mes fiches, écris un sujet de
-cas pratique du niveau et du format de mon épreuve. Ne donne AUCUNE
-indication de correction, aucun plan, aucun indice : seulement l'énoncé.
-Tu ne mobilises que des notions présentes dans mes fiches.
-
-[APRÈS, dans une nouvelle conversation] Voici l'énoncé, ma copie, et mes
-fiches. Corrige :
-- ce qui est juste, ce qui est faux, ce qui est absent ;
-- pour chaque manque, la fiche qui contenait la réponse ;
-- la méthode : ai-je qualifié, appliqué, conclu ?
-- une note indicative et les trois points à retravailler en priorité.
-Tu corriges à partir de mes fiches et de mon cours, pas de ta connaissance
-générale du droit : si quelque chose te paraît faux mais figure dans mon
-cours, tu me le signales sans le corriger.</pre>
-      </div>
-      <div class="fini"><strong>Fini quand :</strong> la copie est écrite, corrigée, et les trois points prioritaires sont retravaillés au nœud 7. Si la note est très en deçà de l'objectif, c'est la révision qui reprend — pas la veille de l'épreuve, et c'est bien pour ça qu'on fait l'épreuve blanche tôt.</div>
-      <div class="piege"><strong>Piège :</strong> composer avec l'IA ouverte « juste pour vérifier un point ». L'épreuve blanche ne mesure alors plus rien, et elle donne en prime une confiance qui ne survivra pas à la salle d'examen.</div>
-      <label class="fait-ligne"><input type="checkbox" data-noeud="f8"> nœud terminé</label>
-    </article>
-  </section>
-
-  <section class="bloc" id="calendrier">
-    <h2 class="section">Trois semaines avant, trois jours avant</h2>
-    <p class="intro-section">Le parcours ne se déroule pas au même rythme selon le temps disponible. Ce qu'on garde, ce qu'on sacrifie.</p>
-    <div class="chrono">
-      <div><b>J−21</b><span>Nœuds 1 à 3 en un après-midi. Le plan reconstitué est ce qui rend tout le reste rapide.</span></div>
-      <div><b>J−14</b><span>Nœuds 4 et 5 : les trous, puis les fiches. C'est le gros du travail, et il se fait par chapitres.</span></div>
-      <div><b>J−10</b><span>Nœud 6 : un quart d'heure de vérification des références. Puis première séance d'interrogation.</span></div>
-      <div><b>J−7</b><span>Épreuve blanche. Tôt, pour qu'un mauvais résultat serve encore à quelque chose.</span></div>
-      <div><b>J−3</b><span>Deuxième interrogation, sur les seuls points fragiles. Correction de l'épreuve blanche relue.</span></div>
-      <div><b>J−1</b><span>Troisième passage, court, sur ce qui résiste. Rien de neuf ce jour-là.</span></div>
+      <p class="st-verif"><b>À vérifier avant de s'en servir&nbsp;:</b> une objection qui vous paraît juste doit être vérifiable ailleurs. Une IA sait aussi fabriquer des critiques plausibles et creuses. La bonne objection est celle qui vous envoie chercher quelque chose.</p>
     </div>
-    <div class="regle">
-      <span class="etiquette">S'il ne reste que trois jours</span>
-      <p>On saute les nœuds 3 et 4, on fiche uniquement les chapitres tombables, et on va directement au nœud 7 : se faire interroger. Une heure d'interrogation vaut trois heures de relecture, et c'est encore plus vrai quand le temps manque.</p>
-    </div>
-  </section>
+  </details>
 
-  <section class="bloc glossaire" id="glossaire">
-    <h2 class="section">Glossaire</h2>
-    <p class="intro-section">Tous les mots soulignés en pointillés dans la page, réunis. Ils se survolent aussi là où ils apparaissent.</p>
-    <dl>
-      <div><dt>chemin critique</dt><dd>La plus longue chaîne de tâches qui dépendent les unes des autres. Tout retard sur elle retarde la fin ; un retard ailleurs, non.</dd></div>
-      <div><dt>corpus</dt><dd>L&#x27;ensemble des documents qu&#x27;on décide de traiter comme un tout. Ce qui n&#x27;y est pas n&#x27;existe pas pour l&#x27;IA — elle ne le devinera pas.</dd></div>
-      <div><dt>hallucination</dt><dd>Réponse plausible et fausse, produite avec le même aplomb qu&#x27;une réponse juste. En droit, elle prend surtout la forme d&#x27;une référence inventée.</dd></div>
-      <div><dt>Légifrance</dt><dd>Le service public de diffusion du droit : textes consolidés, versions successives, dates d&#x27;entrée en vigueur. La source qui fait foi.</dd></div>
-      <div><dt>prompt</dt><dd>La consigne donnée au modèle. Ce qui la rend efficace n&#x27;est pas sa tournure, c&#x27;est ce qu&#x27;elle interdit et les documents qu&#x27;on y joint.</dd></div>
-      <div><dt>restitution active</dt><dd>Se forcer à retrouver l&#x27;information de mémoire, au lieu de la relire. Beaucoup plus coûteux sur le moment, beaucoup plus efficace ensuite.</dd></div>
-      <div><dt>révision espacée</dt><dd>Répartir les passages de révision sur plusieurs jours plutôt que de les enchaîner. L&#x27;espacement fait plus pour la mémoire que la durée totale.</dd></div>
-    </dl>
-  </section>
+  <!-- E -->
+  <details class="st-fiche" id="e-e"><summary class="st-fiche-tete"><span class="st-lettre">E</span>
+      <h3>CV, LinkedIn et entretien&nbsp;: dire ce que la licence LEA certifie vraiment</h3></summary><div class="st-fiche-corps">
+      <p class="st-rate"><b>Ce qui rate&nbsp;:</b> «&nbsp;améliore mon CV&nbsp;». Le modèle produit alors un CV plus fluide et plus vide, saturé de «&nbsp;dynamique&nbsp;», «&nbsp;rigoureux&nbsp;», «&nbsp;esprit d'équipe&nbsp;» — exactement les mots que tous les autres candidats emploient. Il ne connaît ni votre maquette, ni ce que votre diplôme atteste réellement.</p>
+
+      <p class="sf-texte">Or vous disposez d'un document que le modèle n'a pas et qui vaut de l'or en candidature&nbsp;: <b>la grille de compétences de votre licence</b>. Elle nomme, en termes vérifiables, ce que vous savez faire. Le geste utile n'est pas d'embellir le CV, c'est de le confronter à ce référentiel.</p>
+
+      <div class="sf-encadre sf-encadre--rappel">
+        <span class="sf-encadre-etiquette">Les cinq compétences de la licence LEA — UNC, maquette 2026</span>
+        <p class="sf-mb-0"><b>C1</b> Conduire des échanges professionnels en langues étrangères · <b>C2</b> Traduire un message d'une langue vers une autre en contexte professionnel · <b>C3</b> Analyser le fonctionnement et les enjeux d'une organisation · <b>C4</b> Élaborer une stratégie marketing export <span class="sf-attenue">(parcours MI)</span> ou exploiter les savoirs culturels hispanophones <span class="sf-attenue">(parcours LCH)</span> · <b>C5</b> Construire et mettre en œuvre son projet professionnel.</p>
+      </div>
+
+      <p class="sf-texte">Et cinq activités-types décrivent le métier visé&nbsp;: <b>AT1</b> commerce et développement international · <b>AT2</b> marketing et valorisation territoriale · <b>AT3</b> logistique et <i>supply chain</i> · <b>AT4</b> maîtrise linguistique et interculturelle · <b>AT5</b> compétences transversales. Ce sont les mots que lit un recruteur.</p>
+
+      <div class="st-prompt">
+        <span class="et">Prompt · confronter son CV au référentiel du diplôme</span>
+        <button class="sf-btn sf-btn--discret st-copier" type="button">Copier</button>
+        <pre><code>Je joins mon CV et le référentiel de compétences de ma licence LEA (UNC).
+Je candidate à : [intitulé du stage ou de l'alternance, structure, secteur].
+
+Tu ne réécris rien pour l'instant. Tu produis un tableau à quatre colonnes :
+
+  COMPÉTENCE DU RÉFÉRENTIEL (C1 à C5, et les activités-types AT1 à AT5)
+  CE QUE MON CV EN MONTRE (citation exacte de mon CV, ou « rien »)
+  NIVEAU DE PREUVE (fait daté et vérifiable / affirmation invérifiable / absent)
+  CE QU'IL FAUDRAIT POUR LE PROUVER
+
+Règle de lecture : un adjectif n'est pas une preuve. « Rigoureux » ne prouve rien.
+« A traduit et localisé un catalogue de 40 pages FR/EN en trois semaines » prouve.
+
+Puis dis-moi les trois compétences du référentiel que je possède réellement
+et que mon CV ne montre pas du tout. C'est là que je perds des entretiens.
+
+Enfin, seulement pour ces trois-là, propose une formulation — en partant
+de ce que j'ai fait, pas de ce qui sonne bien. Si tu manques d'information
+sur une expérience, pose-moi la question au lieu d'inventer.</code></pre>
+      </div>
+
+      <div class="st-prompt">
+        <span class="et">Prompt · préparer l'entretien à partir de son propre dossier</span>
+        <button class="sf-btn sf-btn--discret st-copier" type="button">Copier</button>
+        <pre><code>Je joins mon CV, ma lettre de motivation et le profil de poste.
+
+Tu es le recruteur. Tu as lu mon dossier et tu as vingt minutes.
+
+1. Relève d'abord les cinq points de mon dossier qui appellent une question
+   gênante : un trou, une affirmation invérifiable, une incohérence de dates,
+   une compétence annoncée sans preuve, une motivation passe-partout.
+
+2. Ensuite, interroge-moi. Une question à la fois, tu attends ma réponse.
+   Tu relances quand ma réponse est vague, et tu relances vraiment :
+   « c'est-à-dire ? », « donnez-moi un exemple précis », « qu'auriez-vous
+   fait autrement ? ». Ne te contente jamais d'une première réponse.
+
+3. Tu ne me complimentes pas pendant l'entretien.
+
+4. Au bout de dix questions, tu t'arrêtes et tu me dis : ce qui a tenu,
+   ce qui n'a pas tenu, et les deux réponses que je dois préparer par écrit
+   avant le vrai entretien.
+
+Fais l'entretien en français, puis reprends les trois questions les plus
+difficiles en anglais et en espagnol : le poste l'exige.</code></pre>
+      </div>
+
+      <p class="st-verif"><b>À vérifier avant de s'en servir&nbsp;:</b> ne laissez jamais le modèle écrire une expérience à votre place. Une ligne de CV que vous ne pouvez pas raconter pendant trois minutes en entretien est une ligne qui vous coûtera le poste. Le référentiel sert à <i>nommer</i> ce que vous avez fait, pas à le remplacer.</p>
+      <p class="st-outil"><b>Où trouver les documents&nbsp;:</b> la grille de compétences et le guide pédagogique de la licence sont disponibles auprès du département LEA&nbsp;; la fiche RNCP correspondante se consulte sur le site de France compétences. Pour le parcours L2, voir aussi la page SAÉ — la SAÉ «&nbsp;Horizons LEA&nbsp;» prévoit explicitement la production d'un CV d'une page et d'un profil LinkedIn.</p>
+    </div>
+  </details>
+</section>
+<footer class="sf-pied">
+  <p><b>Loïc STEFFAN</b> — Département LEA, Université de la Nouvelle-Calédonie. Support de formation, maquette 2026, approche par compétences. Page unique, autonome&nbsp;: elle s'ouvre par double-clic, fonctionne hors ligne et s'imprime.</p>
+  <p class="sf-mini">Références au référentiel&nbsp;: guide pédagogique des enseignants de la licence LEA (UNC, maquette 2026) et trame des grilles de compétences. Benchmark des outils vérifié le 18&nbsp;août 2026 sur les pages officielles des éditeurs&nbsp;; les tarifs et quotas évoluent, revérifiez avant tout engagement. Taux d'erreur de Perplexity&nbsp;: étude du Tow Center for Digital Journalism, Columbia University. Page produite avec l'aide d'un modèle de langue, à partir du corpus méthodologique de l'auteur, du guide pédagogique et d'une recherche documentaire vérifiée&nbsp;; les prompts ont été rédigés et testés par l'auteur.</p>
+</footer>
+
 </div>
-<footer>Compagnon pratique du parcours « Travailler avec l'IA ». Page autonome : hors ligne, imprimable, sans installation.</footer>
 
 <script>
 (function(){
-  var noeuds = document.querySelectorAll('.noeud');
-  function versFiche(id){
-    var f = document.getElementById(id);
-    if(!f) return;
-    f.scrollIntoView({behavior:'smooth', block:'start'});
-    f.classList.remove('cible');
-    void f.offsetWidth;
-    f.classList.add('cible');
+  // copier les prompts
+  function replique(b, ok){
+    var t = b.dataset.libelle || (b.dataset.libelle = b.textContent);
+    b.textContent = ok ? 'Copié ✓' : 'Sélectionnez et copiez';
+    setTimeout(function(){ b.textContent = t; }, ok ? 1600 : 2600);
   }
-  noeuds.forEach(function(n){
-    n.addEventListener('click', function(){ versFiche(n.dataset.fiche); });
-    n.addEventListener('keydown', function(e){
-      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); versFiche(n.dataset.fiche); }
+  function copieDeSecours(txt){
+    // navigator.clipboard n'existe pas toujours en file:// : repli execCommand
+    var z=document.createElement('textarea');
+    z.value=txt; z.setAttribute('readonly','');
+    z.style.cssText='position:fixed;top:0;left:0;opacity:0';
+    document.body.appendChild(z); z.select(); z.setSelectionRange(0, txt.length);
+    var ok=false; try{ ok=document.execCommand('copy'); }catch(e){ ok=false; }
+    document.body.removeChild(z); return ok;
+  }
+  document.querySelectorAll('.st-copier').forEach(function(b){
+    b.addEventListener('click',function(){
+      var c=b.parentElement.querySelector('code'); if(!c) return;
+      var txt=c.innerText;
+      if(navigator.clipboard && window.isSecureContext){
+        navigator.clipboard.writeText(txt)
+          .then(function(){ replique(b,true); })
+          .catch(function(){ replique(b, copieDeSecours(txt)); });
+      } else {
+        replique(b, copieDeSecours(txt));
+      }
     });
   });
-
-  var cases = document.querySelectorAll('.fait-ligne input[type=checkbox]');
-  var compteur = document.getElementById('compteur');
-  function majCompteur(){
-    var n = document.querySelectorAll('.fait-ligne input:checked').length;
-    compteur.textContent = n + ' / 8 nœud' + (n > 1 ? 's terminés' : ' terminé');
-  }
-  cases.forEach(function(c){
-    c.addEventListener('change', function(){
-      var g = document.querySelector('.noeud[data-fiche="' + c.dataset.noeud + '"]');
-      if(g) g.classList.toggle('fait', c.checked);
-      majCompteur();
+  // surlignage de la navigation
+  var liens=[].slice.call(document.querySelectorAll('.st-nav a'));
+  var cibles=liens.map(function(a){return document.querySelector(a.getAttribute('href'));});
+  function maj(){
+    var actif=-1;
+    cibles.forEach(function(c,i){
+      if(c && c.getBoundingClientRect().top<=96) actif=i;
     });
-  });
-  document.getElementById('btn-reset').addEventListener('click', function(){
-    cases.forEach(function(c){ c.checked = false; });
-    noeuds.forEach(function(n){ n.classList.remove('fait'); });
-    majCompteur();
-  });
-  document.getElementById('btn-imprimer').addEventListener('click', function(){ window.print(); });
-
-  document.querySelectorAll('.btn-copier').forEach(function(b){
-    b.addEventListener('click', function(){
-      var pre = b.parentElement.querySelector('pre');
-      if(!pre) return;
-      var txt = pre.textContent;
-      var fini = function(){ var a = b.textContent; b.textContent = 'Copié ✓'; setTimeout(function(){ b.textContent = a; }, 1600); };
-      if(navigator.clipboard && navigator.clipboard.writeText){
-        navigator.clipboard.writeText(txt).then(fini, function(){ secours(txt, fini); });
-      } else { secours(txt, fini); }
-    });
-  });
-  function secours(txt, fini){
-    var t = document.createElement('textarea');
-    t.value = txt; t.style.position = 'fixed'; t.style.opacity = '0';
-    document.body.appendChild(t); t.select();
-    try { document.execCommand('copy'); fini(); } catch(e) {}
-    document.body.removeChild(t);
+    liens.forEach(function(a,i){ a.classList.toggle('actif', i===actif); });
   }
-  majCompteur();
+  var tick=false;
+  window.addEventListener('scroll',function(){
+    if(tick) return; tick=true;
+    requestAnimationFrame(function(){ maj(); tick=false; });
+  },{passive:true});
+  maj();
 })();
 </script>
 <!--pia-pied-->
-
 <button class="pia-haut" type="button" aria-label="Revenir en haut de la page">↑</button>
 
 <script id="pia-script">
@@ -640,5 +1804,15 @@ cours, tu me le signales sans le corriger.</pre>
   if(a && a.scrollIntoView) a.scrollIntoView({block:'nearest',inline:'nearest'});
 })();
 </script>
-<!--/pia-pied--></body>
+<!--/pia-pied--><script>
+(function(){
+  function ouvrir(id){ var d = document.getElementById(id); if (d && d.tagName === 'DETAILS') { d.open = true; d.scrollIntoView({block:'start'}); } }
+  window.addEventListener('hashchange', function(){ ouvrir(location.hash.slice(1)); });
+  Array.prototype.forEach.call(document.querySelectorAll('nav.st-nav a[href^="#e-"]'), function(a){
+    a.addEventListener('click', function(){ ouvrir(a.getAttribute('href').slice(1)); });
+  });
+  if (location.hash) { ouvrir(location.hash.slice(1)); }
+})();
+</script>
+</body>
 </html>

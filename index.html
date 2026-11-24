@@ -1055,25 +1055,29 @@ nav.tabs:has(#t-bourses[aria-selected="true"]){--k:var(--dur);}
 .acces a[href="#competences"]{--k:var(--c1);}
 .mm-r[data-i="8"]{--k:var(--c1);}
 nav.tabs:has(#t-competences[aria-selected="true"]){--k:var(--c1);}
+#t-valider{--k:var(--c3);}
+.acces a[href="#valider"]{--k:var(--c3);}
+.mm-r[data-i="9"]{--k:var(--c3);}
+nav.tabs:has(#t-valider[aria-selected="true"]){--k:var(--c3);}
 #t-mcc{--k:var(--c3);}
 .acces a[href="#mcc"]{--k:var(--c3);}
-.mm-r[data-i="9"]{--k:var(--c3);}
+.mm-r[data-i="10"]{--k:var(--c3);}
 nav.tabs:has(#t-mcc[aria-selected="true"]){--k:var(--c3);}
 #t-examens{--k:var(--dur);}
 .acces a[href="#examens"]{--k:var(--dur);}
-.mm-r[data-i="10"]{--k:var(--dur);}
+.mm-r[data-i="11"]{--k:var(--dur);}
 nav.tabs:has(#t-examens[aria-selected="true"]){--k:var(--dur);}
 #t-ia{--k:var(--dur);}
 .acces a[href="#ia"]{--k:var(--dur);}
-.mm-r[data-i="11"]{--k:var(--dur);}
+.mm-r[data-i="12"]{--k:var(--dur);}
 nav.tabs:has(#t-ia[aria-selected="true"]){--k:var(--dur);}
 #t-reglement{--k:var(--c2);}
 .acces a[href="#reglement"]{--k:var(--c2);}
-.mm-r[data-i="12"]{--k:var(--c2);}
+.mm-r[data-i="13"]{--k:var(--c2);}
 nav.tabs:has(#t-reglement[aria-selected="true"]){--k:var(--c2);}
 #t-contacts{--k:var(--c5);}
 .acces a[href="#contacts"]{--k:var(--c5);}
-.mm-r[data-i="13"]{--k:var(--c5);}
+.mm-r[data-i="14"]{--k:var(--c5);}
 nav.tabs:has(#t-contacts[aria-selected="true"]){--k:var(--c5);}
 nav.tabs a[role="tab"]{border-top:3px solid var(--k, transparent);}
 nav.tabs a[role="tab"][aria-selected="true"]{color:var(--k, var(--ink)); border-bottom-color:var(--k, var(--ink)); font-weight:600;}
@@ -1088,6 +1092,15 @@ nav.tabs a[role="tab"]:hover{background:color-mix(in srgb, var(--k, #888) 10%, v
   .mm-feuille .mm-r .mm-i{color:var(--k, var(--muted)); font-weight:600;}
   .mm-feuille .mm-r[aria-current="true"]{border-color:var(--k, var(--ink)); box-shadow:inset 0 0 0 1px var(--k, var(--ink)); background:color-mix(in srgb, var(--k, #888) 8%, var(--surface));}
 }
+/* intertitres des encarts : plus grands, en gras, dans la teinte de la rubrique (consigne du 24/11/2026) ; avant : petites capitales grises à chasse fixe */
+section.panneau .pc h4:not(.seuil), section.panneau .cols h4{font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif; font-size:17px; font-weight:600; letter-spacing:0; text-transform:none; line-height:1.3; color:var(--accent); margin:20px 0 10px; padding:6px 12px; border-left:5px solid var(--accent); border-radius:0 4px 4px 0; background:color-mix(in srgb, var(--accent) 9%, var(--surface));}
+section.panneau .pc > h4:first-child, section.panneau .cols > div > h4:first-child{margin-top:6px;}
+section.panneau .fil3 h4{margin:0 0 8px;}
+section.panneau details.sous{border-top:0; margin-top:8px;}
+section.panneau details.sous > summary{font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif; font-size:16.5px; font-weight:600; letter-spacing:0; text-transform:none; line-height:1.3; color:var(--ink); padding:12px 40px 12px 14px; border-left:5px solid var(--accent); border-radius:0 4px 4px 0; background:color-mix(in srgb, var(--accent) 7%, var(--surface));}
+section.panneau details.sous > summary::after{right:12px; top:50%; transform:translateY(-50%); color:var(--accent);}
+section.panneau details.sous[open] > summary{color:var(--accent);}
+section.panneau details.sous > .sous-c{padding:8px 4px 6px 14px;}
 /* couleurs-rubriques:fin */
 
 
@@ -1104,6 +1117,125 @@ nav.tabs a[role="tab"]:hover{background:color-mix(in srgb, var(--k, #888) 10%, v
   .acces span{font-size:12.5px; line-height:1.25; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
 }
 /* accueil-cartes:fin */
+
+
+ul.valide-non, ul.valide-oui{list-style:none; padding-left:0;}
+ul.valide-non li, ul.valide-oui li{position:relative; padding-left:26px;}
+ul.valide-non li::before{content:"✗"; position:absolute; left:0; font-weight:700; color:var(--dur);}
+ul.valide-oui li::before{content:"✓"; position:absolute; left:0; font-weight:700; color:var(--ok);}
+/* « Valider son année » en cartes de couleur (24/11/2026) */
+.valide-duo{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; margin:14px 0 22px; align-items:start;}
+.vcarte{padding:16px 18px; border-radius:10px; border:1px solid var(--line); border-top-width:5px;}
+.vcarte h4{margin:0 0 10px !important; padding:0 !important; border:0 !important; background:none !important;}
+.vcarte.non{background:#FBEFEF; border-top-color:#9C2F2F;} .vcarte.non h4{color:#9C2F2F !important;}
+.vcarte.oui{background:#EAF5EE; border-top-color:#1E7A46;} .vcarte.oui h4{color:#1E7A46 !important;}
+.vcarte ul{margin:0 0 10px;} .vcarte p{margin:10px 0 0;}
+ul.issues{list-style:none; padding:0; margin:12px 0 0; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px;}
+ul.issues li{position:relative; padding:16px 16px 16px 62px; border-radius:10px; background:#fff; border:1px solid var(--line); border-left:8px solid var(--i);}
+ul.issues li::before{content:var(--g); position:absolute; left:14px; top:14px; width:34px; height:34px; border-radius:50%; background:var(--i); color:#fff; font:700 18px/34px "IBM Plex Mono",monospace; text-align:center;}
+ul.issues li strong:first-child{display:block; margin-bottom:4px; color:var(--i); font-size:1.02em;}
+ul.issues .i-ok{--i:#1E7A46; --g:"✓"; background:#EAF5EE;}
+ul.issues .i-dette{--i:#B4650A; --g:"!"; background:#FDF3E4;}
+ul.issues .i-jury{--i:#4A5A78; --g:"?"; background:#EEF1F7;}
+ul.issues .i-non{--i:#9C2F2F; --g:"✗"; background:#FBEFEF;}
+@media (max-width:760px){.valide-duo, ul.issues{grid-template-columns:minmax(0,1fr);}}
+
+/* corrections-24-11:debut (24/11/2026) */
+details.sous{border-top:1px solid var(--line); margin:10px 0 0;}
+details.sous > summary{list-style:none; cursor:pointer; position:relative; padding:11px 36px 11px 2px; font-family:"IBM Plex Mono",monospace; font-size:12.5px; font-weight:500; letter-spacing:.1em; text-transform:uppercase; color:var(--muted);}
+details.sous > summary::-webkit-details-marker{display:none;}
+details.sous > summary::after{content:"+"; position:absolute; right:6px; top:8px; font-size:20px; line-height:1.2;}
+details.sous[open] > summary{color:var(--accent);}
+details.sous[open] > summary::after{content:"–";}
+details.sous > summary:hover{background:var(--surface-2);}
+details.sous > .sous-c{padding:2px 2px 8px;}
+.fil3{display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr)); margin:6px 0 4px;}
+.fil3 > div{background:var(--surface-2); border:1px solid var(--line); border-top:4px solid var(--accent); border-radius:4px; padding:10px 14px 6px;}
+.fil3 h4{margin:0 0 6px;}
+.fil3 ul{list-style:none; margin:0 0 6px; padding:0;}
+.fil3 li{margin:0 0 7px; font-size:15.5px; line-height:1.3;}
+.fil3 li small{display:block; color:var(--muted); font-size:13px;}
+.metiers-fiches{margin:4px 0 10px;}
+.metiers-fiches .nc{color:var(--ink-2);}
+/* corrections-24-11:fin */
+
+
+/* contact : écrire au responsable pédagogique (24/11/2026) */
+form.ecrire{margin:0 0 20px; padding:18px 20px; border-radius:10px; background:#FDF6EA; border:1px solid var(--line); border-top:5px solid #B4650A;}
+form.ecrire h3{margin:0 0 12px; font-family:"Source Serif 4",Georgia,serif; font-size:20px; color:#8A4A05;}
+form.ecrire .ligne{display:grid; grid-template-columns:2fr 1fr; gap:12px;}
+form.ecrire label{display:block; margin-bottom:12px; font-size:13px; font-weight:600; color:#3B2A12;}
+form.ecrire input, form.ecrire select, form.ecrire textarea{display:block; width:100%; box-sizing:border-box; margin-top:4px; padding:9px 10px; font:inherit; font-weight:400; border:1px solid #CDBFA8; border-radius:6px; background:#fff; color:var(--ink);}
+form.ecrire button{padding:11px 18px; border:0; border-radius:8px; background:#B4650A; color:#fff; font:600 15px "IBM Plex Sans",sans-serif; cursor:pointer;}
+form.ecrire button:hover{background:#8A4A05;}
+@media (max-width:640px){form.ecrire .ligne{grid-template-columns:1fr;}}
+
+
+/* rubriques « L'alternance » et « Le CAPES » rangées en parties titrées (24/11/2026) */
+.panneau .wrap{counter-reset:grp;}
+h3.grp{display:flex; align-items:center; gap:12px; margin:30px 0 12px; padding:0 0 8px; border-bottom:2px solid var(--accent,#1F56A0); font-family:"Source Serif 4",Georgia,serif; font-size:21px; font-weight:600; color:var(--accent,#1F56A0);}
+h3.grp::before{counter-increment:grp; content:counter(grp); flex:0 0 30px; height:30px; border-radius:50%; background:var(--accent,#1F56A0); color:#fff; font:600 15px/30px "IBM Plex Mono",monospace; text-align:center;}
+
+
+/* frise de l'alternance et contacts en couleurs (24/11/2026) */
+ol.calt{list-style:none; display:flex; gap:0; margin:6px 0 18px; padding:0;}
+ol.calt li{flex:1 1 0; position:relative; padding:12px 14px 12px 18px; background:#E6EEF8; border-top:5px solid #1F56A0; margin-right:14px; min-width:0;}
+ol.calt li:nth-child(2){background:#D5E3F5;} ol.calt li:nth-child(3){background:#C3D6F0;} ol.calt li:nth-child(4){background:#E6EEF8; margin-right:0;}
+ol.calt li:not(:last-child)::after{content:""; position:absolute; right:-14px; top:-5px; bottom:0; width:14px; background:inherit; clip-path:polygon(0 0,100% 50%,0 100%);}
+ol.calt li.debut{background:#FDEBD0; border-top-color:#B4650A;} ol.calt li.debut b{color:#B4650A;} ol.calt li.debut strong{color:#8A4A05;}
+.calt-note{margin:4px 0 0; padding:11px 14px; border-radius:8px; background:#FDF3E4; border-left:6px solid #B4650A; color:#3B2A12;}
+ol.calt li b{display:block; font-family:"Source Serif 4",Georgia,serif; font-size:17px; color:#1F56A0;}
+ol.calt li span{display:block; margin-top:3px; font-size:13.5px; color:#2E3947; line-height:1.35;}
+@media (max-width:760px){ol.calt{flex-direction:column; gap:8px;} ol.calt li{margin-right:0;} ol.calt li::after{display:none !important;}}
+.contacts li{border-top:5px solid var(--k); border-radius:8px;}
+.contacts li:nth-child(1){--k:#B4650A; background:#FDF6EA;} .contacts li:nth-child(2){--k:#1F56A0; background:#EEF3FB;}
+.contacts li:nth-child(3){--k:#8D3A62; background:#FAEFF4;} .contacts li:nth-child(4){--k:#0E6B60; background:#EAF5F3;}
+.contacts .role{color:var(--k);}
+
+
+/* specialites-colonnes:debut (24/11/2026) : chaque spé forme une colonne verticale */
+#specialite .plis{grid-template-columns:repeat(2,minmax(0,1fr)); align-items:start;}
+#specialite .plis > .spe-col{display:grid; gap:10px; align-content:start; min-width:0;}
+#specialite .plis > .pli.large{grid-column:1 / -1;}
+@media (max-width:760px){#specialite .plis{grid-template-columns:minmax(0,1fr);}}
+/* chemin S1 à S7 et couleurs des deux spés (24/11/2026) */
+#specialite .chemin{display:flex; align-items:center; gap:0; margin:6px 0 22px; padding:18px 18px; background:#fff; border:1px solid var(--line); border-radius:10px;}
+#specialite .chemin .etapes{display:flex; align-items:center; flex:0 0 auto;}
+#specialite .chemin .et{min-width:62px; text-align:center; padding:10px 12px; border-radius:8px; background:#EEF1F5; color:#3B4452; font-family:"IBM Plex Mono",monospace; font-size:15px; font-weight:600; line-height:1.1;}
+#specialite .chemin .et small{display:block; margin-top:3px; font-size:10px; font-weight:400; letter-spacing:.06em; text-transform:uppercase; color:#6B7480;}
+#specialite .chemin .fl{width:22px; height:2px; background:#9AA3AF; position:relative; flex:0 0 22px;}
+#specialite .chemin .fl::after{content:""; position:absolute; right:-1px; top:-4px; border-left:7px solid #9AA3AF; border-top:5px solid transparent; border-bottom:5px solid transparent;}
+#specialite .chemin .fourche{flex:0 0 70px; align-self:stretch; min-height:150px;}
+#specialite .chemin .fourche svg{width:100%; height:100%; display:block;}
+#specialite .chemin .fourche path{fill:none; stroke-width:2.5; vector-effect:non-scaling-stroke;}
+#specialite .chemin .voies{flex:1 1 auto; display:grid; gap:14px; min-width:0;}
+#specialite .chemin .voie{position:relative; display:flex; align-items:center; gap:12px; padding:12px 16px 12px 18px; border-radius:9px; color:#fff;}
+#specialite .chemin .voie::before{content:""; position:absolute; left:-9px; top:50%; margin-top:-7px; border-right:9px solid var(--v); border-top:7px solid transparent; border-bottom:7px solid transparent;}
+#specialite .chemin .voie.v1{--v:#1F56A0; background:#1F56A0;}
+#specialite .chemin .voie.v2{--v:#8D3A62; background:#8D3A62;}
+#specialite .chemin .voie b{display:block; font-family:"Source Serif 4",Georgia,serif; font-size:18px; line-height:1.2;}
+#specialite .chemin .voie span.sub{display:block; margin-top:3px; font-size:13px; opacity:.92;}
+#specialite .chemin .voie .sem{flex:0 0 auto; font-family:"IBM Plex Mono",monospace; font-size:12px; letter-spacing:.06em; padding:5px 9px; border-radius:6px; background:rgba(255,255,255,.2);}
+#specialite .chemin .choix{position:absolute; transform:translateY(-100%);}
+#specialite .legende-chemin{margin:-14px 0 20px; font-size:13px; color:var(--muted);}
+#specialite .plis > .spe-col{padding:12px; border-radius:12px; border-top:5px solid var(--c);}
+#specialite .plis > .spe-1{--c:#1F56A0; background:rgba(31,86,160,.07);}
+#specialite .plis > .spe-2{--c:#8D3A62; background:rgba(141,58,98,.08);}
+#specialite .spe-tete{margin:0 0 2px; padding:10px 14px; border-radius:8px; background:var(--c); color:#fff; font-family:"Source Serif 4",Georgia,serif; font-size:19px; font-weight:600;}
+#specialite .spe-tete small{display:block; margin-top:2px; font-family:"IBM Plex Mono",monospace; font-size:11px; font-weight:400; letter-spacing:.1em; text-transform:uppercase; opacity:.9;}
+#specialite .spe-col .pli{border-left-width:6px; border-left-color:var(--c);}
+#specialite .spe-col .pli .pt{color:var(--c);}
+#specialite .spe-col .pli .pk{color:var(--c); font-weight:600;}
+@media (max-width:860px){
+  #specialite .chemin{flex-direction:column; align-items:stretch;}
+  #specialite .chemin .etapes{flex-wrap:wrap; gap:6px;}
+  #specialite .chemin .fl{display:none;}
+  #specialite .chemin .fourche{display:none;}
+  #specialite .chemin .voies{margin-top:16px;}
+  #specialite .chemin .voie::before{left:50%; top:-9px; margin:0 0 0 -7px; border-right:7px solid transparent; border-left:7px solid transparent; border-bottom:9px solid var(--v); border-top:0;}
+  #specialite .chemin .voie{flex-wrap:wrap;}
+}
+/* specialites-colonnes:fin */
 
 
 /* ia-onglet:debut (23/11/2026) : onglet « Utilisation des IA » */
@@ -1155,6 +1287,7 @@ a.ia-bouton .bd{display:block; font-size:14.5px; opacity:.85; margin-top:2px;}
     <a role="tab" id="t-rapport" href="#rapport" aria-controls="rapport" aria-selected="false">Rapport et soutenance</a>
     <a role="tab" id="t-bourses" href="#bourses" aria-controls="bourses" aria-selected="false">Bourses et absences en cours</a>
     <a role="tab" id="t-competences" href="#competences" aria-controls="competences" aria-selected="false">Compétences et UE</a>
+    <a role="tab" id="t-valider" href="#valider" aria-controls="valider" aria-selected="false">Valider son année</a>
     <a role="tab" id="t-mcc" href="#mcc" aria-controls="mcc" aria-selected="false">Les MCC</a>
     <a role="tab" id="t-examens" href="#examens" aria-controls="examens" aria-selected="false">Les examens</a>
     <a role="tab" id="t-ia" href="#ia" aria-controls="ia" aria-selected="false">Utilisation des IA</a>
@@ -1170,7 +1303,7 @@ a.ia-bouton .bd{display:block; font-size:14.5px; opacity:.85; margin-top:2px;}
     <div class="tete">
       <h2><span class="eyeb">Accueil</span>Les rubriques de la page</h2>
     </div>
-    <div class="acces"><a href="#licence"><b>La licence LEA</b><span>Sept semestres, quatre niveaux</span></a><a href="#specialite"><b>Choisir sa spé en fin de S4</b><span>La bifurcation</span></a><a href="#alternance"><b>L'alternance</b><span>Spé Marketing International</span></a><a href="#capes"><b>Le CAPES d'espagnol</b><span>Spé CAPES d'espagnol</span></a><a href="#sae"><b>Les SAÉ</b><span>Situations d'apprentissage et d'évaluation</span></a><a href="#rapport"><b>Rapport et soutenance</b><span>L'exercice final</span></a><a href="#bourses"><b>Bourses et absences en cours</b><span>Présence et assiduité</span></a><a href="#competences"><b>Compétences et UE</b><span>L'approche par compétences</span></a><a href="#mcc"><b>Les MCC</b><span>Modalités de contrôle</span></a><a href="#examens"><b>Les examens</b><span>Charte des examens</span></a><a href="#ia"><b>Utilisation des IA</b><span>La règle de la licence LEA</span></a><a href="#reglement"><b>Règlement des études LEA</b><span>Le texte qui fait foi</span></a><a href="#contacts"><b>Contacts</b><span>Pour aller plus loin</span></a></div>
+    <div class="acces"><a href="#licence"><b>La licence LEA</b><span>Sept semestres, quatre niveaux</span></a><a href="#specialite"><b>Choisir sa spé en fin de S4</b><span>La bifurcation</span></a><a href="#alternance"><b>L'alternance</b><span>Spé Marketing International</span></a><a href="#capes"><b>Le CAPES d'espagnol</b><span>Spé CAPES d'espagnol</span></a><a href="#sae"><b>Les SAÉ</b><span>Situations d'apprentissage et d'évaluation</span></a><a href="#rapport"><b>Rapport et soutenance</b><span>L'exercice final</span></a><a href="#bourses"><b>Bourses et absences en cours</b><span>Présence et assiduité</span></a><a href="#competences"><b>Compétences et UE</b><span>L'approche par compétences</span></a><a href="#valider"><b>Valider son année</b><span>Depuis 2026, par compétences</span></a><a href="#mcc"><b>Les MCC</b><span>Modalités de contrôle</span></a><a href="#examens"><b>Les examens</b><span>Charte des examens</span></a><a href="#ia"><b>Utilisation des IA</b><span>La règle de la licence LEA</span></a><a href="#reglement"><b>Règlement des études LEA</b><span>Le texte qui fait foi</span></a><a href="#contacts"><b>Contacts</b><span>Pour aller plus loin</span></a></div>
   </div>
 </section>
 
@@ -1776,7 +1909,7 @@ a.ia-bouton .bd{display:block; font-size:14.5px; opacity:.85; margin-top:2px;}
 
     <div class="progbloc encart-onglet">
       <h4>Après le diplôme</h4>
-      <p class="note-tbl"><a class="renvoi bouton-onglet" href="#specialite">Bac et débouchés →</a></p>
+      <p class="note-tbl"><a class="renvoi bouton-onglet" href="#debouches" data-vers-pli="debouches">Les débouchés : masters, écoles, métiers →</a></p>
     </div>
     </div>
 
@@ -1808,8 +1941,25 @@ a.ia-bouton .bd{display:block; font-size:14.5px; opacity:.85; margin-top:2px;}
         <a class="renvoi" href="#licence" data-sem="S5">Voir les cours du S5 →</a></p>
     </div>
 
-    <div class="plis">
-      <details class="pli mi">
+        <div class="chemin" role="img" aria-label="Parcours de S1 à S4 en tronc commun, puis au semestre 5 deux voies : Marketing International ou CAPES d'espagnol">
+      <div class="etapes">
+        <span class="et">S1<small>tronc commun</small></span><span class="fl"></span>
+        <span class="et">S2<small>tronc commun</small></span><span class="fl"></span>
+        <span class="et">S3<small>Horizons LEA</small></span><span class="fl"></span>
+        <span class="et">S4<small>vous choisissez</small></span><span class="fl"></span>
+      </div>
+      <div class="fourche" aria-hidden="true"><svg viewBox="0 0 70 100" preserveAspectRatio="none">
+        <path d="M0 50 C35 50 35 22 70 22" stroke="#1F56A0"/><path d="M0 50 C35 50 35 78 70 78" stroke="#8D3A62"/></svg></div>
+      <div class="voies">
+        <div class="voie v1"><span class="sem">S5 · S6 · S7</span><div><b>Spé 1 · Marketing International</b></div></div>
+        <div class="voie v2"><span class="sem">S5 · S6 · S7</span><div><b>Spé 2 · CAPES d'espagnol</b></div></div>
+      </div>
+    </div>
+
+<div class="plis">
+      <div class="spe-col spe-1">
+<p class="spe-tete">Marketing International</p>
+<details class="pli mi">
         <summary><span class="pk">Spé 1</span><span class="pt">Marketing International</span><span class="pr">Alternance sur S6 et S7 · soutenance en anglais</span></summary>
         <div class="pc">
           <dl class="faits">
@@ -1876,7 +2026,10 @@ a.ia-bouton .bd{display:block; font-size:14.5px; opacity:.85; margin-top:2px;}
         </div>
       </details>
 
-      <details class="pli ce">
+      </div>
+<div class="spe-col spe-2">
+<p class="spe-tete">CAPES d'espagnol</p>
+<details class="pli ce">
         <summary><span class="pk">Spé 2</span><span class="pt">CAPES d'espagnol</span><span class="pr">Préparation du concours · stage d'observation au S6 · soutenance en espagnol</span></summary>
         <div class="pc">
           <dl class="faits">
@@ -1932,7 +2085,8 @@ a.ia-bouton .bd{display:block; font-size:14.5px; opacity:.85; margin-top:2px;}
         </div>
       </details>
 
-        <details class="pli large mi">
+        </div>
+<details class="pli large mi" id="debouches">
         <summary><span class="pk">Et après ?</span><span class="pt">Débouchés</span><span class="pr">Masters, écoles, métiers de l'international · taux d'insertion supérieur à 80 %</span></summary>
         <div class="pc">
           <div class="cols">
@@ -1964,16 +2118,7 @@ a.ia-bouton .bd{display:block; font-size:14.5px; opacity:.85; margin-top:2px;}
                 internationale</strong>, administration des ventes à l'export, organisation de
                 manifestations internationales.</p>
               <h4>Quelques métiers</h4>
-              <ul class="puces">
-                <li>Assistant(e) export / import</li>
-                <li>Chargé(e) de marketing international</li>
-                <li>Community manager bilingue</li>
-                <li>Chargé(e) d'études de marché</li>
-                <li>Logistique et supply chain internationale</li>
-                <li>Communication et relations publiques</li>
-                <li>Gestion de projets internationaux</li>
-                <li>Traduction et médiation interculturelle</li>
-              </ul>
+              <div class="metiers-fiches"><details class="sous"><summary>Assistant(e) export / import</summary><div class="sous-c"><p>Suit les commandes, les documents et les transporteurs d'une opération d'import ou d'export, et tient les échanges en anglais ou en espagnol avec les fournisseurs et les clients étrangers.</p><p class="nc"><strong>En Nouvelle-Calédonie :</strong> importateurs et grossistes (Maxitour, Primex, Promotop), transitaires et logisticiens (Transam, GEODIS, SIFA Logistics), producteurs qui exportent (SOPAC, SICA NC).</p></div></details><details class="sous"><summary>Chargé(e) de marketing international</summary><div class="sous-c"><p>Participe à la stratégie marketing et commerciale d'une entreprise sur des marchés étrangers : positionnement, offre, communication, marketing digital et e-commerce.</p><p class="nc"><strong>En Nouvelle-Calédonie :</strong> entreprises qui vendent hors du territoire ou à une clientèle étrangère : compagnie aérienne et hôtels (Aircalin, hôtellerie de Nouméa), producteurs locaux à l'export (NATIV-NC, Iaora Export), industrie (SLN, Prony Resources).</p></div></details><details class="sous"><summary>Community manager bilingue</summary><div class="sous-c"><p>Anime les réseaux sociaux d'une marque ou d'une organisation dans deux langues : publications, réponses aux internautes, suivi de l'audience, publicité digitale.</p><p class="nc"><strong>En Nouvelle-Calédonie :</strong> hôtels et opérateurs touristiques, médias et régies publicitaires (Canal+ Calédonie, France Télévisions Publicité NC), marques et commerces locaux, organismes de promotion du territoire.</p></div></details><details class="sous"><summary>Chargé(e) d'études de marché</summary><div class="sous-c"><p>Recueille et analyse des données sur un marché, des clients ou la concurrence, puis rédige une note qui aide à décider : enquête de satisfaction, étude de faisabilité, veille.</p><p class="nc"><strong>En Nouvelle-Calédonie :</strong> entreprises qui préparent un lancement ou une exportation, et structures d'appui à l'économie (ADECAL, CCI-NC, direction du développement économique de la Province Sud).</p></div></details><details class="sous"><summary>Logistique et supply chain internationale</summary><div class="sous-c"><p>Suit l'acheminement des marchandises, des approvisionnements au stock, au transport et à la douane, et coordonne les prestataires en langues étrangères.</p><p class="nc"><strong>En Nouvelle-Calédonie :</strong> transport, transit et logistique (Transam, GEODIS, SIFA Logistics), agences maritimes et Port autonome, compagnies aériennes (Aircalin, Air Calédonie), distributeurs et grossistes.</p></div></details><details class="sous"><summary>Communication et relations publiques</summary><div class="sous-c"><p>Prépare les supports et les événements qui font connaître une organisation, entretient les relations avec la presse et les partenaires, en plusieurs langues.</p><p class="nc"><strong>En Nouvelle-Calédonie :</strong> médias et régies (Canal+ Calédonie, France Télévisions Publicité NC), OPT, grandes entreprises (SLN, Prony Resources), collectivités et institutions.</p></div></details><details class="sous"><summary>Gestion de projets internationaux</summary><div class="sous-c"><p>Aide à monter et à suivre un projet ou un événement avec des partenaires étrangers : calendrier, budget, prestataires, communication ; foires, salons, congrès.</p><p class="nc"><strong>En Nouvelle-Calédonie :</strong> agences d'événements et réceptives (Creation Events, Authentik Caledonia), hôtellerie, structures d'appui à l'export et au développement (CCI-NC, ADECAL, Team France Export).</p></div></details><details class="sous"><summary>Traduction et médiation interculturelle</summary><div class="sous-c"><p>Traduit ou adapte des textes (catalogues, contrats, contenus touristiques) et aide des interlocuteurs de cultures différentes à se comprendre : visites, accueil, communication interculturelle.</p><p class="nc"><strong>En Nouvelle-Calédonie :</strong> entreprises qui importent ou exportent, agences de voyages et réceptives (Noumea Discovery, Promenade Tours), hôtels, institutions culturelles et administrations.</p></div></details></div>
               <p><span class="chiffre-cle">Taux d'insertion supérieur à 80 %</span>
                 <span style="font-size:12px; color:var(--muted);">(source : LePoint.fr)</span></p>
             </div>
@@ -1990,488 +2135,448 @@ a.ia-bouton .bd{display:block; font-size:14.5px; opacity:.85; margin-top:2px;}
 
 <!-- =================== ALTERNANCE =================== -->
 <section class="panneau" id="alternance" data-accent="c4mi" role="tabpanel" aria-labelledby="t-alternance">
-  <div class="wrap">
-    <div class="tete">
-      <h2><span class="eyeb">Spé Marketing International</span>L'alternance, de A à Z</h2>
-      <button type="button" class="tout">Tout déplier</button>
-    </div>
-    <div class="intro">
-      <p>Les <strong>semestres 6 et 7</strong> de la spé Marketing International se déroulent en
+<div class="wrap">
+<div class="tete">
+<h2><span class="eyeb">Spé Marketing International</span>L'alternance, de A à Z</h2>
+<button class="tout" type="button">Tout déplier</button>
+</div>
+<div class="intro">
+<p>Les <strong>semestres 6 et 7</strong> de la spé Marketing International se déroulent en
         alternance entre l'UNC et une entreprise, sous <strong>contrat unique d'alternance</strong> de douze mois, <strong>du 1<sup>er</sup> juin de l'année N au
         31 mai de l'année N+1</strong>. On n'entre pas en S6 dans cette spé sans contrat signé.</p>
-    </div>
-    <ul class="liens" data-ajout="candidater"><li><a href="candidater-en-alternance.html" target="_blank" rel="noopener"><span><span class="t">Candidater en alternance — LEA</span><span class="d">Loïc Steffan · CV, lettre et profil LinkedIn, rythme hebdomadaire, missions à chercher, 14 prompts à copier</span></span><span class="fl">ouvrir ↗</span></a></li><li><a href="chercher-sur-linkedin.html" target="_blank" rel="noopener"><span><span class="t">Chercher sur LinkedIn : les bonnes personnes, les alertes</span><span class="d">Trouver la ou le responsable d'une entreprise, faire une recherche précise, créer une alerte Emploi</span></span><span class="fl">ouvrir ↗</span></a></li></ul>
-
-    <div class="plis">
-      <details class="pli large pos">
-        <summary><span class="pk">Le stage et l'alternance</span><span class="pt">Trois mises en situation, une par année</span><span class="pr">Quand elle a lieu, ce qui est demandé, comment elle est évaluée</span></summary>
-        <div class="pc">
-          <div class="frisewrap"><div class="frise paliers">
-            <div class="et"><span class="s">Première année · semestre 2</span><span class="n">Le stage d'observation</span><span class="d">Deux semaines en entreprise calédonienne, semaines 42 et 43. Vous observez comment l'organisation se divise en services, qui décide quoi, dans quelle langue on y travaille, et vous tenez un journal de bord. Évaluation : la grille de votre tuteur d'entreprise et le journal de bord.</span><div class="mat"><span>15 jours · code à attribuer</span><a class="renvoi" href="#licence" data-sem="S2">La fiche du stage →</a></div></div>
-            <span class="fl">→</span>
-            <div class="et"><span class="s">Deuxième année · semestre 4</span><span class="n">Le stage en entreprise</span><span class="d">Quatre semaines, semaines 40 à 43. Vous situez l'entreprise : son positionnement, son environnement concurrentiel, ses marchés. Évaluation : la grille de votre tuteur, un rapport et une soutenance ; s'y ajoute un pitch devant les étudiants du semestre 3.</span><div class="mat"><span>Un mois · code à attribuer</span><a class="renvoi" href="#licence" data-sem="S4">La fiche du stage →</a></div></div>
-            <span class="fl">→</span>
-            <div class="et"><span class="s">Troisième année · semestres 6 et 7</span><span class="n">L'alternance</span><span class="d">Contrat unique d'alternance d'un an, du 1<sup>er</sup> juin au 31 mai. Évaluation : la grille du maître d'alternance, le rapport rédigé en français — note éliminatoire à 10 — et la soutenance en anglais.</span><div class="mat"><span>Spécialisation Marketing International · ELP 96_0091</span></div></div>
-          </div></div>
-          <p><strong>Aucun stage ne commence sans convention</strong> : conclue avec l'entreprise et signée par votre responsable de filière avant le premier jour. Sans ces signatures, le stage n'est ni couvert ni validable.</p>
-        </div>
-      </details>
-
-      <details class="pli">
-        <summary><span class="pk">Toutes années</span><span class="pt">Où chercher</span><span class="pr">Entreprises qui accueillent des étudiants LEA en Nouvelle-Calédonie, et pistes pour candidater</span></summary>
-        <div class="pc">
-          <h4>Transport, logistique, commerce international</h4>
-          <p>Transam (Nouméa) · GEODIS (Nouville, Nouméa) · SIFA Logistics (ZAC Panda) · SOPAC (Nouméa) · Aircalin (Tontouta) · Ballande SAS · BCS Import (Nouméa) · NCT&amp;I.</p>
-          <h4>Industrie, énergie, environnement</h4>
-          <p>SLN — Société Le Nickel (Nouméa) · Prony Resources · Isotechnic (Ducos) · Agence Calédonienne de l'Énergie · ONFI · Synverdev.</p>
-          <h4>Médias, communication, services</h4>
-          <p>France Télévisions Publicité NC · Canal+ Calédonie · OPT · Bamyr-NC (Nouméa) · Connectic System · Boniface ACMA · SICA NC · CEA · PRNC.</p>
-          <p class="note-tbl">Source : maquette de la licence LEA 2027, « Le stage et l'alternance ».</p>
-
-          <h4>Des entreprises à contacter en plus</h4>
-          <p>Les noms et adresses viennent de sources publiques (annuaire de Nouvelle-Calédonie Tourisme, liste officielle des agences de voyage agréées, annuaires professionnels). <b>Aucune de ces sources ne dit qu'une entreprise recrute des alternants</b> : ce sont des destinataires de candidatures spontanées. La liste officielle des agences de voyage date en outre de février 2023.</p>
-          <p><b>Un précédent : Tropic Travel</b> (agence de voyages, 2 rue Jean-François Cherrier, Green Valley, Nouméa, tél. 28 89 89, <a href="mailto:tropic@tropic-travel.nc">tropic@tropic-travel.nc</a>) a déjà accueilli une alternante de la licence.</p>
-
-          <h4>Transport, tourisme et voyages</h4>
-          <p><b>Agences de voyages agréées</b> (liste officielle, 07/02/2023) : Pacifique Lagon (1 rue d'Ypres) · Asia Voyages (22 rue Anatole France) · Agence de voyages Jean Brock (14 rue Georges Clémenceau) · Voyagence (9 rue d'Austerlitz) · T.P.V. (33 rue de Sébastopole) · Axxess Travel (22 rue Duquesne, Quartier Latin) · Amac Voyages (26 rue Georges Clémenceau, et centre commercial Téari).</p>
-          <p><b>Agences réceptives</b> (elles organisent les séjours de clients étrangers sur place ; l'anglais y est un outil de travail quotidien) : Authentik Caledonia · Axxess Travel · Creation Events · Noumea Discovery · Pacifique Lagon Voyages · Promenade Tours · Toutazimut – Tours guidés (Yaté) · Transat Tours.</p>
-          <p><b>Agences maritimes</b> (escales de navires, dont les croisiéristes) : A.M.R.P.P · Agence Maritime Ballande · Kenua (elle se présente comme assurant la liaison avec les navires de croisière) · Nouméa Yacht Services · SATO SAS.</p>
-          <p><b>Transport et services aux voyageurs</b> : Air Calédonie · Air Alizé · Nouméa Excursions · Foord Location · SIXT · Point Rouge Tontouta · Taxis de Nouméa · navettes aéroport (Arc en Ciel Services, Bourail Shuttle Service).</p>
-          <p><b>Hôtellerie de Nouméa</b> : Hilton Nouméa La Promenade Residences (109 Promenade Roger Laroque) · DoubleTree by Hilton Nouméa Îlot Maître Resort · Le Méridien · Ramada Hotel &amp; Suites Nouméa (7 rue Louis Blériot) · Château Royal Beach Resort &amp; Spa · Sheraton Deva (Bourail).</p>
-          <p><b>Autres pistes</b> : Port autonome de la Nouvelle-Calédonie (il recense les escales de paquebots) · Aircalin (compagnie internationale, absente de l'annuaire consulté, ajoutée parce que c'est la compagnie du territoire).</p>
-
-          <h4>Import-export, distribution et commerce</h4>
-          <ul>
-            <li><b>Team France Export Nouvelle-Calédonie</b> : dispositif d'appui à l'export réunissant la CCI-NC, Business France et Bpifrance ; Business France est installée à la CCI, +687 24 42 89.</li>
-            <li><b>Maxitour</b> : grossiste, 50 route de l'Anse Vata (Trianon).</li>
-            <li><b>Primex</b> : grossiste, 4 rue Ange Berlioz (Trianon).</li>
-            <li><b>Promotop</b> : grossiste, lot 26 route de la Ziza, Païta.</li>
-            <li><b>Société d'Importation Frigorifique NC</b> : commerce de gros alimentaire.</li>
-            <li><b>SICA NC</b> : aliments pour animaux d'élevage, fabrication et export dans le Pacifique.</li>
-            <li><b>Provenderie Saint-Vincent</b> : aliments pour crevettes.</li>
-          </ul>
-          <p>L'annuaire <a href="https://www.1012.nc/" target="_blank" rel="noopener">1012.nc</a> renvoie 62 résultats pour « import-export, sociétés de commerce international » : c'est la source à dépouiller pour aller plus loin.</p>
-
-          <h4>Agriculture, pêche et produits locaux</h4>
-          <ul>
-            <li><b>SOPAC</b> (Société des Producteurs Aquacoles Calédoniens) : coopérative de producteurs de crevettes, cinq producteurs certifiés ASC.</li>
-            <li><b>Centre technique aquacole</b> (Boulouparis) : co-acteur de la filière crevette, Province Nord.</li>
-            <li><b>Iaora Export</b> : pêche et déshydrate la bêche-de-mer pour l'exporter.</li>
-            <li><b>Société d'élevage aquacole de la Ouenghi</b> (Boulouparis) : élevage d'holothuries.</li>
-            <li><b>NATIV-NC</b> : projets sur le santal, la vanille et le miel (« Terroirs d'Océanie », objectif export), boutique en ligne des producteurs, « Pacific Cosmetic Valley ».</li>
-            <li><b>Chambre d'agriculture et de la pêche de NC</b> : réseau « Bienvenue à la ferme » (dont produits de cerf).</li>
-          </ul>
-          <p>Pour la vanille de Boulouparis et le cerf, il n'a été trouvé que des structures d'appui, pas d'entreprises identifiées : à chercher auprès de la mairie de Boulouparis et de la Chambre d'agriculture.</p>
-
-          <h4>Développement et projets</h4>
-          <p>ADECAL Technopole (agence de développement économique de la NC : pôle marin, pôle innovation) · Province Sud, direction du développement économique et du tourisme (DDET) · Nord Avenir (pôle agro, Province Nord) · French Tech Nouvelle-Calédonie · CCI-NC.</p>
-
-          <h4>Services, entretien et équipement</h4>
-          <p>Aucune source fiable ne liste des entreprises de ce secteur. Cherchez dans les annuaires <a href="https://www.1012.nc/" target="_blank" rel="noopener">1012.nc</a> et Plan.nc.</p>
-
-          <h4>Où chercher d'autres entreprises</h4>
-          <ul>
-            <li>Annuaire pro de Nouvelle-Calédonie Tourisme (hébergements, prestataires d'activités, événements) : <a href="https://www.nouvellecaledonie.travel/pro/annuaire/" target="_blank" rel="noopener">nouvellecaledonie.travel/pro/annuaire/</a></li>
-            <li>CCI-NC : page « Recruter un(e) alternant(e)/stagiaire » et job dating alternance organisé avec l'EGC (surveiller la prochaine édition).</li>
-            <li><a href="https://www.pointa.nc/" target="_blank" rel="noopener">pointa.nc</a> : offre de formation en alternance du territoire.</li>
-            <li>MEDEF NC, rubrique alternance.</li>
-            <li>Annuaires <a href="https://www.1012.nc/" target="_blank" rel="noopener">1012.nc</a> et Plan.nc : recherche par secteur.</li>
-          </ul>
-
-          <h4>Vos deux interlocuteurs</h4>
-          <p><b>Angela Leclerc</b>, conseillère formation continue et alternance, Pôle Alternance et Formation Continue de l'UNC — pour le contrat, le calendrier et la mise en relation. <b>Emmeline Gros</b>, responsable de la licence LEA — pour les missions, le rapport et la soutenance.</p>
-        </div>
-      </details>
-
-      <details class="pli">
-        <summary><span class="pk">Toutes années</span><span class="pt">Les compétences que le stage engage</span><span class="pr">Ce que le tuteur évalue, compétence par compétence</span></summary>
-        <div class="pc">
-          <p><b>C1 — Conduire des échanges professionnels en langues étrangères.</b> S'adapter à son interlocuteur ; s'exprimer dans une langue intelligible sur les plans grammatical, lexical et phonologique ; comprendre des locuteurs natifs et des documents authentiques.</p>
-          <p><b>C3 — Analyser le fonctionnement et les enjeux d'une organisation.</b> S'appuyer sur des outils d'analyse quantitatifs et qualitatifs ; identifier les leviers d'action ; tenir compte des dynamiques sociales, économiques, réglementaires et culturelles ; formuler des recommandations justifiées.</p>
-          <p><b>C5 — Construire et mettre en œuvre son projet professionnel.</b> Identifier et valoriser ses compétences ; analyser les besoins du secteur visé ; respecter les codes culturels, les normes professionnelles et les principes éthiques ; travailler en équipe sur un projet réel.</p>
-          <p>Selon la spécialisation s'y ajoute <b>C4 Marketing International</b> — aider à l'élaboration d'une stratégie marketing et commerciale à l'export — ou <b>C4 CAPES d'espagnol</b> — exploiter les savoirs culturels et littéraires d'un espace linguistique donné. Le stage en établissement scolaire engage en outre <b>C2 — Traduire un message d'une langue dans une autre</b>.</p>
-        </div>
-      </details>
-
-      <details class="pli pos large">
-        <summary><span class="pk">Qui vous aide ?</span><span class="pt">Le bureau de l'alternance, dès le semestre 4</span><span class="pr">Prenez contact très rapidement</span></summary>
-        <div class="pc">
-          <p>C'est le <strong>bureau de l'alternance</strong> de l'UNC qui vous accompagne dans votre
+</div>
+<h3 class="grp">Trouver votre alternance</h3><div class="plis"><details class="pli large mi" id="courbe-temps" open="">
+<summary><span class="pk">Le calendrier</span><span class="pt">Quand chercher ? Dès le S4</span><span class="pr">De la recherche à la fin du contrat</span></summary>
+<div class="pc">
+<ol aria-label="Le calendrier de l'alternance" class="calt">
+<li class="debut"><b>Dès le S4</b><span><strong>Commencez à chercher</strong> votre entreprise</span></li>
+<li><b>1<sup>er</sup> juin</b><span>Début du S6 et du contrat unique d'alternance</span></li>
+<li><b>S6 et S7</b><span>Douze mois alternés entre l'UNC et l'entreprise</span></li>
+<li><b>31 mai N+1</b><span>Fin du contrat</span></li>
+</ol>
+<p class="calt-note">D'autres formations de l'UNC commencent leur alternance <strong>en février</strong>, donc avant les étudiants LEA. <strong>Sécurisez une offre avant elles</strong>, notamment avant l'IUT.</p>
+</div>
+</details><details class="pli">
+<summary><span class="pt">Le calendrier de la recherche</span><span class="pr">Du S4 à la soutenance, en six étapes</span></summary>
+<div class="pc">
+<ol class="etapes">
+<li><span class="quand">Semestre 4</span><b>Vous contactez le bureau de l'alternance</b>, et
+              vous mettez à jour CV, lettre et profil LinkedIn.</li>
+<li><span class="quand">Semestre 5</span><b>Vous cherchez votre contrat.</b> L'équipe
+              pédagogique valide l'entreprise. Attention : l'absence de démarche avérée peut entraîner un
+              basculement anticipé vers une autre spé.</li>
+<li><span class="quand">Avant la date limite</span><b>Vous signez</b> le contrat, ou une
+              convention alternée validée par l'UNC.</li>
+<li><span class="quand">1<sup>er</sup> juin</span><b>Le contrat démarre</b>, pour douze mois.</li>
+<li><span class="quand">S6 et S7</span><b>Double tutorat</b> : un tuteur universitaire et un
+              tuteur en entreprise suivent ensemble votre progression.</li>
+<li><span class="quand">Fin du S7</span><b>Rapport d'alternance et soutenance.</b> S'y
+              ajoutent l'évaluation continue des cours et celle du tuteur en entreprise.</li>
+</ol>
+</div>
+</details><details class="pli">
+<summary><span class="pk">Toutes années</span><span class="pt">Où chercher</span><span class="pr">Entreprises qui accueillent des étudiants LEA en Nouvelle-Calédonie, et pistes pour candidater</span></summary>
+<div class="pc"><details class="sous"><summary>Entreprises qui accueillent des étudiants LEA</summary><div class="sous-c"><h4>Transport, logistique, commerce international</h4>
+<p>Transam (Nouméa) · GEODIS (Nouville, Nouméa) · SIFA Logistics (ZAC Panda) · SOPAC (Nouméa) · Aircalin (Tontouta) · Ballande SAS · BCS Import (Nouméa) · NCT&amp;I.</p>
+<h4>Industrie, énergie, environnement</h4>
+<p>SLN — Société Le Nickel (Nouméa) · Prony Resources · Isotechnic (Ducos) · Agence Calédonienne de l'Énergie · ONFI · Synverdev.</p>
+<h4>Médias, communication, services</h4>
+<p>France Télévisions Publicité NC · Canal+ Calédonie · OPT · Bamyr-NC (Nouméa) · Connectic System · Boniface ACMA · SICA NC · CEA · PRNC.</p>
+<p class="note-tbl">Source : maquette de la licence LEA 2027, « Le stage et l'alternance ».</p>
+</div></details><details class="sous"><summary>Des entreprises à contacter en plus</summary><div class="sous-c">
+<p>Les noms et adresses viennent de sources publiques (annuaire de Nouvelle-Calédonie Tourisme, liste officielle des agences de voyage agréées, annuaires professionnels). <b>Aucune de ces sources ne dit qu'une entreprise recrute des alternants</b> : ce sont des destinataires de candidatures spontanées. La liste officielle des agences de voyage date en outre de février 2023.</p>
+<p><b>Un précédent : Tropic Travel</b> (agence de voyages, 2 rue Jean-François Cherrier, Green Valley, Nouméa, tél. 28 89 89, <a href="mailto:tropic@tropic-travel.nc">tropic@tropic-travel.nc</a>) a déjà accueilli une alternante de la licence.</p>
+</div></details><details class="sous"><summary>Transport, tourisme et voyages</summary><div class="sous-c">
+<p><b>Agences de voyages agréées</b> (liste officielle, 07/02/2023) : Pacifique Lagon (1 rue d'Ypres) · Asia Voyages (22 rue Anatole France) · Agence de voyages Jean Brock (14 rue Georges Clémenceau) · Voyagence (9 rue d'Austerlitz) · T.P.V. (33 rue de Sébastopole) · Axxess Travel (22 rue Duquesne, Quartier Latin) · Amac Voyages (26 rue Georges Clémenceau, et centre commercial Téari).</p>
+<p><b>Agences réceptives</b> (elles organisent les séjours de clients étrangers sur place ; l'anglais y est un outil de travail quotidien) : Authentik Caledonia · Axxess Travel · Creation Events · Noumea Discovery · Pacifique Lagon Voyages · Promenade Tours · Toutazimut – Tours guidés (Yaté) · Transat Tours.</p>
+<p><b>Agences maritimes</b> (escales de navires, dont les croisiéristes) : A.M.R.P.P · Agence Maritime Ballande · Kenua (elle se présente comme assurant la liaison avec les navires de croisière) · Nouméa Yacht Services · SATO SAS.</p>
+<p><b>Transport et services aux voyageurs</b> : Air Calédonie · Air Alizé · Nouméa Excursions · Foord Location · SIXT · Point Rouge Tontouta · Taxis de Nouméa · navettes aéroport (Arc en Ciel Services, Bourail Shuttle Service).</p>
+<p><b>Hôtellerie de Nouméa</b> : Hilton Nouméa La Promenade Residences (109 Promenade Roger Laroque) · DoubleTree by Hilton Nouméa Îlot Maître Resort · Le Méridien · Ramada Hotel &amp; Suites Nouméa (7 rue Louis Blériot) · Château Royal Beach Resort &amp; Spa · Sheraton Deva (Bourail).</p>
+<p><b>Autres pistes</b> : Port autonome de la Nouvelle-Calédonie (il recense les escales de paquebots) · Aircalin (compagnie internationale, absente de l'annuaire consulté, ajoutée parce que c'est la compagnie du territoire).</p>
+</div></details><details class="sous"><summary>Import-export, distribution et commerce</summary><div class="sous-c">
+<ul>
+<li><b>Team France Export Nouvelle-Calédonie</b> : dispositif d'appui à l'export réunissant la CCI-NC, Business France et Bpifrance ; Business France est installée à la CCI, +687 24 42 89.</li>
+<li><b>Maxitour</b> : grossiste, 50 route de l'Anse Vata (Trianon).</li>
+<li><b>Primex</b> : grossiste, 4 rue Ange Berlioz (Trianon).</li>
+<li><b>Promotop</b> : grossiste, lot 26 route de la Ziza, Païta.</li>
+<li><b>Société d'Importation Frigorifique NC</b> : commerce de gros alimentaire.</li>
+<li><b>SICA NC</b> : aliments pour animaux d'élevage, fabrication et export dans le Pacifique.</li>
+<li><b>Provenderie Saint-Vincent</b> : aliments pour crevettes.</li>
+</ul>
+<p>L'annuaire <a href="https://www.1012.nc/" rel="noopener" target="_blank">1012.nc</a> renvoie 62 résultats pour « import-export, sociétés de commerce international » : c'est la source à dépouiller pour aller plus loin.</p>
+</div></details><details class="sous"><summary>Agriculture, pêche et produits locaux</summary><div class="sous-c">
+<ul>
+<li><b>SOPAC</b> (Société des Producteurs Aquacoles Calédoniens) : coopérative de producteurs de crevettes, cinq producteurs certifiés ASC.</li>
+<li><b>Centre technique aquacole</b> (Boulouparis) : co-acteur de la filière crevette, Province Nord.</li>
+<li><b>Iaora Export</b> : pêche et déshydrate la bêche-de-mer pour l'exporter.</li>
+<li><b>Société d'élevage aquacole de la Ouenghi</b> (Boulouparis) : élevage d'holothuries.</li>
+<li><b>NATIV-NC</b> : projets sur le santal, la vanille et le miel (« Terroirs d'Océanie », objectif export), boutique en ligne des producteurs, « Pacific Cosmetic Valley ».</li>
+<li><b>Chambre d'agriculture et de la pêche de NC</b> : réseau « Bienvenue à la ferme » (dont produits de cerf).</li>
+</ul>
+<p>Pour la vanille de Boulouparis et le cerf, il n'a été trouvé que des structures d'appui, pas d'entreprises identifiées : à chercher auprès de la mairie de Boulouparis et de la Chambre d'agriculture.</p>
+</div></details><details class="sous"><summary>Développement et projets</summary><div class="sous-c">
+<p>ADECAL Technopole (agence de développement économique de la NC : pôle marin, pôle innovation) · Province Sud, direction du développement économique et du tourisme (DDET) · Nord Avenir (pôle agro, Province Nord) · French Tech Nouvelle-Calédonie · CCI-NC.</p>
+</div></details><details class="sous"><summary>Services, entretien et équipement</summary><div class="sous-c">
+<p>Aucune source fiable ne liste des entreprises de ce secteur. Cherchez dans les annuaires <a href="https://www.1012.nc/" rel="noopener" target="_blank">1012.nc</a> et Plan.nc.</p>
+</div></details><details class="sous"><summary>Où chercher d'autres entreprises</summary><div class="sous-c">
+<ul>
+<li>Annuaire pro de Nouvelle-Calédonie Tourisme (hébergements, prestataires d'activités, événements) : <a href="https://www.nouvellecaledonie.travel/pro/annuaire/" rel="noopener" target="_blank">nouvellecaledonie.travel/pro/annuaire/</a></li>
+<li>CCI-NC : page « Recruter un(e) alternant(e)/stagiaire » et job dating alternance organisé avec l'EGC (surveiller la prochaine édition).</li>
+<li><a href="https://www.pointa.nc/" rel="noopener" target="_blank">pointa.nc</a> : offre de formation en alternance du territoire.</li>
+<li>MEDEF NC, rubrique alternance.</li>
+<li>Annuaires <a href="https://www.1012.nc/" rel="noopener" target="_blank">1012.nc</a> et Plan.nc : recherche par secteur.</li>
+</ul>
+</div></details><details class="sous"><summary>Vos deux interlocuteurs</summary><div class="sous-c">
+<p><b>Angela Leclerc</b>, conseillère formation continue et alternance, Pôle Alternance et Formation Continue de l'UNC — pour le contrat, le calendrier et la mise en relation. <b>Emmeline Gros</b>, responsable de la licence LEA — pour les missions, le rapport et la soutenance.</p>
+</div></details></div>
+</details><details class="pli large mi" id="postuler">
+<summary><span class="pk">Candidater</span><span class="pt">Comment postuler à une offre ?</span><span class="pr">CV, lettre, profil LinkedIn, recherche des bonnes personnes</span></summary>
+<div class="pc">
+<ul class="liens" data-ajout="candidater"><li><a href="candidater-en-alternance.html" rel="noopener" target="_blank"><span><span class="t">Candidater en alternance — LEA</span><span class="d">Loïc Steffan · CV, lettre et profil LinkedIn, rythme hebdomadaire, missions à chercher, 14 prompts à copier</span></span><span class="fl">ouvrir ↗</span></a></li><li><a href="chercher-sur-linkedin.html" rel="noopener" target="_blank"><span><span class="t">Chercher sur LinkedIn : les bonnes personnes, les alertes</span><span class="d">Trouver la ou le responsable d'une entreprise, faire une recherche précise, créer une alerte Emploi</span></span><span class="fl">ouvrir ↗</span></a></li></ul>
+</div>
+</details><details class="pli">
+<summary><span class="pt">Les documents à montrer à une entreprise</span><span class="pr">Modèle d'offre, grille à remplir, fiche officielle, calendrier</span></summary>
+<div class="pc">
+<ul class="liens">
+<li><a download="" href="modele-offre-alternance-LEA.pdf"><span><span class="t">Confier une mission à un alternant LEA</span><span class="d">Six pages à montrer à l'entreprise · les missions que vous pouvez lui confier, les trois conditions à remplir, une trame d'offre et un exemple rédigé</span></span><span class="fl">PDF ↓</span></a></li>
+<li><a download="" href="modele-offre-alternance-LEA.docx"><span><span class="t">Le même document, en version modifiable</span><span class="d">Word · l'entreprise rédige son offre directement dedans</span></span><span class="fl">Word ↓</span></a></li>
+<li><a href="fiche-tuteur-alternance-LEA.pdf" rel="noopener" target="_blank"><span><span class="t">Accueillir un alternant LEA — pour votre futur tuteur</span><span class="d">Quatre pages : le calendrier, ce que la formation lui demande, et la grille d'évaluation qu'il remplira</span></span><span class="fl">PDF ↗</span></a></li>
+<li><a download="" href="grille-correspondance-poste-competences-LEA.docx"><span><span class="t">Grille de correspondance entre le poste et les compétences</span><span class="d">Word à remettre à l'entreprise · missions possibles, niveau de couverture à choisir, mission correspondante à décrire</span></span><span class="fl">Word ↓</span></a></li>
+<li><a href="https://www.unc.nc/wp-content/uploads/2017/10/Fiche-LEA-Alternance-2025_3.pdf" rel="noopener" target="_blank"><span><span class="t">Fiche descriptive de la licence, parcours Marketing International</span><span class="d">Site de l'UNC · secteurs, métiers, missions types de l'alternance</span></span><span class="fl">PDF ↗</span></a></li>
+<li><a href="https://www.unc.nc/wp-content/uploads/2017/10/CALENDRIER-ALTERNANCE_LEA-2026-2027.pdf" rel="noopener" target="_blank"><span><span class="t">Calendrier de l'alternance 2026-2027</span><span class="d">Site de l'UNC · les jours à l'université</span></span><span class="fl">PDF ↗</span></a></li>
+<li><a href="https://www.unc.nc/formations/licence-langues-etrangeres-appliquees-lea/" rel="noopener" target="_blank"><span><span class="t">La licence LEA sur le site de l'UNC</span><span class="d">Présentation, maquette, référentiel</span></span><span class="fl">site ↗</span></a></li>
+</ul>
+</div>
+</details><details class="pli pos large">
+<summary><span class="pk">Qui vous aide ?</span><span class="pt">Le bureau de l'alternance, dès le semestre 4</span><span class="pr">Prenez contact très rapidement</span></summary>
+<div class="pc">
+<p>C'est le <strong>bureau de l'alternance</strong> de l'UNC qui vous accompagne dans votre
             recherche. <strong>Prenez contact avec lui très rapidement, dès le semestre 4</strong> : il vous
             aidera à revoir votre CV et votre lettre de motivation, et à préparer vos candidatures.
             <a class="renvoi" href="#contacts">Contacts →</a></p>
-          <p>Avant de postuler, lisez aussi comment utiliser l'IA pour actualiser votre CV, votre lettre de
+<p>Avant de postuler, lisez aussi comment utiliser l'IA pour actualiser votre CV, votre lettre de
             motivation et votre profil LinkedIn :</p>
-          <ul class="liens">
-            <li><a href="candidater-en-alternance.html" target="_blank" rel="noopener"><span><span class="t">Candidater en alternance : CV, lettre et profil LinkedIn avec l'IA</span><span class="d">Loïc Steffan · rythme hebdomadaire, missions à chercher, 14 prompts à copier</span></span><span class="fl">ouvrir ↗</span></a></li>
-          </ul>
-        </div>
-      </details>
-
-      <details class="pli pos">
-        <summary><span class="pk">Le point qu'on oublie souvent</span><span class="pt">Vous êtes salarié, et vous êtes payé</span><span class="pr">Rémunération selon le code du travail de la Nouvelle-Calédonie</span></summary>
-        <div class="pc">
-          <p>Un contrat d'alternance est un <strong>contrat de travail</strong>. Pendant les semestres 6
-            et 7, vous n'êtes pas un étudiant en stage percevant une gratification : vous êtes
-            <strong>salarié de l'entreprise</strong>, avec un bulletin de paie, des congés payés et une
-            couverture sociale au titre de votre emploi.</p>
-          <p>Votre rémunération relève du <strong>code du travail de la Nouvelle-Calédonie</strong> : le
-            droit du travail y est une compétence locale, et ce ne sont pas les barèmes métropolitains
-            qui s'appliquent. Le montant dépend du type de contrat, de votre âge et de l'année
-            d'exécution ; il figure dans le contrat que vous signez.</p>
-          <p>Le règlement le précise : <strong>une autre activité salariée n'est pas compatible avec un
-            contrat d'alternance</strong>.</p>
-        </div>
-      </details>
-
-      <details class="pli">
-        <summary><span class="pt">Comment le temps se répartit</span><span class="pr">Deux jours à l'université, trois en entreprise</span></summary>
-        <div class="pc">
-          <div class="tbl"><table class="court">
-            <thead><tr><th>Période</th><th>Cours à l'UNC</th><th class="num">Jours à l'UNC</th></tr></thead>
-            <tbody>
-              <tr><td class="code">Semestre 6</td><td>230 heures</td><td class="num">35</td></tr>
-              <tr><td class="code">Semestre 7</td><td>210 heures</td><td class="num">34</td></tr>
-            </tbody>
-          </table></div>
-          <p style="margin-top:10px;">Le reste du temps se passe en entreprise. En pratique : deux jours
-            à l'université — le plus souvent le lundi et le mardi — et trois jours en entreprise, à temps
-            plein en entreprise pendant les périodes sans cours. Le calendrier précis est fixé chaque
-            année par le bureau de l'alternance.</p>
-        </div>
-      </details>
-
-      <details class="pli">
-        <summary><span class="pt">Le calendrier calédonien</span><span class="pr">Pourquoi l'alternance démarre le 1er juin</span></summary>
-        <div class="pc"><p>En Nouvelle-Calédonie, les semestres impairs se déroulent de février à juin
-          et les semestres pairs de juin à novembre. C'est pourquoi un contrat d'alternance qui
-          démarre le 1<sup>er</sup> juin s'aligne sur l'ouverture du semestre 6.</p></div>
-      </details>
-      <details class="pli">
-        <summary><span class="pt">Le calendrier de la recherche</span><span class="pr">Du S4 à la soutenance, en six étapes</span></summary>
-        <div class="pc">
-          <ol class="etapes">
-            <li><span class="quand">Semestre 4</span><b>Vous contactez le bureau de l'alternance</b>, et
-              vous mettez à jour CV, lettre et profil LinkedIn.</li>
-            <li><span class="quand">Semestre 5</span><b>Vous cherchez votre contrat.</b> L'équipe
-              pédagogique valide l'entreprise. Attention : l'absence de démarche avérée peut entraîner un
-              basculement anticipé vers une autre spé.</li>
-            <li><span class="quand">Avant la date limite</span><b>Vous signez</b> le contrat, ou une
-              convention alternée validée par l'UNC.</li>
-            <li><span class="quand">1<sup>er</sup> juin</span><b>Le contrat démarre</b>, pour douze mois.</li>
-            <li><span class="quand">S6 et S7</span><b>Double tutorat</b> : un tuteur universitaire et un
-              tuteur en entreprise suivent ensemble votre progression.</li>
-            <li><span class="quand">Fin du S7</span><b>Rapport d'alternance et soutenance.</b> S'y
-              ajoutent l'évaluation continue des cours et celle du tuteur en entreprise.</li>
-          </ol>
-        </div>
-      </details>
-
-      <details class="pli large">
-        <summary><span class="pt">Les missions que vous pouvez tenir</span><span class="pr">Commerce et communication · analyse et stratégie · logistique et achats · les intitulés d'offres à chercher</span></summary>
-        <div class="pc">
-          <div class="cols">
-            <div>
-              <h4>Commerce international et communication</h4>
-              <ul>
-                <li>Actions de marketing ou de communication bilingue ou multilingue : adaptation de supports, rédaction bilingue, coordination de campagne</li>
-                <li>Adaptation de supports commerciaux pour des marchés étrangers : fiche produit, présentation, site vitrine</li>
-                <li>Contenus en anglais : newsletter, brochure, réseaux sociaux</li>
-                <li>Appui au développement commercial à l'export : préparation d'un salon ou d'un rendez-vous client</li>
-                <li>Argumentaire de vente adapté au contexte culturel d'un marché cible</li>
-                <li>Réponse à un appel d'offres international, rédaction d'une <em>Expression of Interest</em></li>
-                <li>Organisation ou participation à des événements internationaux : foires, salons, forums</li>
-                <li>Communication touristique ou culturelle à l'international, e-commerce d'un produit local</li>
-              </ul>
-            </div>
-            <div>
-              <h4>Analyse et stratégie</h4>
-              <ul>
-                <li>Étude de marché, enquête de satisfaction, analyse de la concurrence</li>
-                <li>Veille stratégique : collecte, analyse et interprétation de données</li>
-                <li>Supports d'aide à la décision : tableaux de bord simplifiés, synthèses stratégiques</li>
-                <li>Business model ou business plan : recherche d'informations, étude de faisabilité, prévisionnel simplifié</li>
-                <li>Création ou développement d'activité : TPE, PME, start-up, structure touristique ou culturelle</li>
-                <li>Appui à la gestion de projet : coordination, planification, suivi des prestataires</li>
-                <li>Négociations commerciales simples avec des partenaires ou des fournisseurs</li>
-              </ul>
-            </div>
-            <div>
-              <h4>Logistique et achats</h4>
-              <ul>
-                <li>Suivi des flux logistiques internationaux, import et export</li>
-                <li>Suivi des fournisseurs étrangers, des appels d'offres et des conditions d'achat</li>
-                <li>Incoterms, procédures douanières de base, coordination des opérations</li>
-              </ul>
-              <h4>En appui, en complément des missions principales</h4>
-              <ul>
-                <li>Synthèses d'actualité ou notes de marché en anglais et en français</li>
-                <li>Traduction ou adaptation de supports commerciaux</li>
-                <li>Valorisation territoriale ou culturelle, avec un volet communication</li>
-              </ul>
-            </div>
-          </div>
-          <h4>Les intitulés sous lesquels chercher les offres</h4>
-          <p>Une alternance de LEA ne se publie presque jamais sous ce nom. Cherchez plutôt : assistant en
+<ul class="liens">
+<li><a href="candidater-en-alternance.html" rel="noopener" target="_blank"><span><span class="t">Candidater en alternance : CV, lettre et profil LinkedIn avec l'IA</span><span class="d">Loïc Steffan · rythme hebdomadaire, missions à chercher, 14 prompts à copier</span></span><span class="fl">ouvrir ↗</span></a></li>
+</ul>
+</div>
+</details></div><h3 class="grp">Ce que vous y faites</h3><div class="plis"><details class="pli large pos">
+<summary><span class="pk">Le stage et l'alternance</span><span class="pt">Trois mises en situation, une par année</span><span class="pr">Quand elle a lieu, ce qui est demandé, comment elle est évaluée</span></summary>
+<div class="pc">
+<div class="frisewrap"><div class="frise paliers">
+<div class="et"><span class="s">Première année · semestre 2</span><span class="n">Le stage d'observation</span><span class="d">Deux semaines en entreprise calédonienne, semaines 42 et 43. Vous observez comment l'organisation se divise en services, qui décide quoi, dans quelle langue on y travaille, et vous tenez un journal de bord. Évaluation : la grille de votre tuteur d'entreprise et le journal de bord.</span><div class="mat"><span>15 jours · code à attribuer</span><a class="renvoi" data-sem="S2" href="#licence">La fiche du stage →</a></div></div>
+<span class="fl">→</span>
+<div class="et"><span class="s">Deuxième année · semestre 4</span><span class="n">Le stage en entreprise</span><span class="d">Quatre semaines, semaines 40 à 43. Vous situez l'entreprise : son positionnement, son environnement concurrentiel, ses marchés. Évaluation : la grille de votre tuteur, un rapport et une soutenance ; s'y ajoute un pitch devant les étudiants du semestre 3.</span><div class="mat"><span>Un mois · code à attribuer</span><a class="renvoi" data-sem="S4" href="#licence">La fiche du stage →</a></div></div>
+<span class="fl">→</span>
+<div class="et"><span class="s">Troisième année · semestres 6 et 7</span><span class="n">L'alternance</span><span class="d">Contrat unique d'alternance d'un an, du 1<sup>er</sup> juin au 31 mai. Évaluation : la grille du maître d'alternance, le rapport rédigé en français — note éliminatoire à 10 — et la soutenance en anglais.</span><div class="mat"><span>Spécialisation Marketing International · ELP 96_0091</span></div></div>
+</div></div>
+<p><strong>Aucun stage ne commence sans convention</strong> : conclue avec l'entreprise et signée par votre responsable de filière avant le premier jour. Sans ces signatures, le stage n'est ni couvert ni validable.</p>
+</div>
+</details><details class="pli large">
+<summary><span class="pt">Les missions que vous pouvez tenir</span><span class="pr">Commerce et communication · analyse et stratégie · logistique et achats · les intitulés d'offres à chercher</span></summary>
+<div class="pc">
+<div class="cols">
+<div>
+<h4>Commerce international et communication</h4>
+<ul>
+<li>Actions de marketing ou de communication bilingue ou multilingue : adaptation de supports, rédaction bilingue, coordination de campagne</li>
+<li>Adaptation de supports commerciaux pour des marchés étrangers : fiche produit, présentation, site vitrine</li>
+<li>Contenus en anglais : newsletter, brochure, réseaux sociaux</li>
+<li>Appui au développement commercial à l'export : préparation d'un salon ou d'un rendez-vous client</li>
+<li>Argumentaire de vente adapté au contexte culturel d'un marché cible</li>
+<li>Réponse à un appel d'offres international, rédaction d'une <em>Expression of Interest</em></li>
+<li>Organisation ou participation à des événements internationaux : foires, salons, forums</li>
+<li>Communication touristique ou culturelle à l'international, e-commerce d'un produit local</li>
+</ul>
+</div>
+<div>
+<h4>Analyse et stratégie</h4>
+<ul>
+<li>Étude de marché, enquête de satisfaction, analyse de la concurrence</li>
+<li>Veille stratégique : collecte, analyse et interprétation de données</li>
+<li>Supports d'aide à la décision : tableaux de bord simplifiés, synthèses stratégiques</li>
+<li>Business model ou business plan : recherche d'informations, étude de faisabilité, prévisionnel simplifié</li>
+<li>Création ou développement d'activité : TPE, PME, start-up, structure touristique ou culturelle</li>
+<li>Appui à la gestion de projet : coordination, planification, suivi des prestataires</li>
+<li>Négociations commerciales simples avec des partenaires ou des fournisseurs</li>
+</ul>
+</div>
+<div>
+<h4>Logistique et achats</h4>
+<ul>
+<li>Suivi des flux logistiques internationaux, import et export</li>
+<li>Suivi des fournisseurs étrangers, des appels d'offres et des conditions d'achat</li>
+<li>Incoterms, procédures douanières de base, coordination des opérations</li>
+</ul>
+<h4>En appui, en complément des missions principales</h4>
+<ul>
+<li>Synthèses d'actualité ou notes de marché en anglais et en français</li>
+<li>Traduction ou adaptation de supports commerciaux</li>
+<li>Valorisation territoriale ou culturelle, avec un volet communication</li>
+</ul>
+</div>
+</div>
+<h4>Les intitulés sous lesquels chercher les offres</h4>
+<p>Une alternance de LEA ne se publie presque jamais sous ce nom. Cherchez plutôt : assistant en
             commerce international · assistant import-export · assistant marketing et communication
             internationale · chargé d'études de marché · assistant chef de produit international · assistant
             achat international · gestionnaire d'opérations chez un transitaire · assistant logistique et
             supply chain · assistant marketing digital et e-commerce · assistant communication et relations
             publiques internationales · community manager · assistant en gestion de projets événementiels
             internationaux · chargé de veille.</p>
-          <p class="note-tbl">Sources : texte de cadrage du stage Marketing International 2026 (annexe 3 du
+<p class="note-tbl">Sources : texte de cadrage du stage Marketing International 2026 (annexe 3 du
             règlement) ; fiche descriptive de la licence LEA Marketing International, UNC.</p>
-        </div>
-      </details>
-
-      <details class="pli">
-        <summary><span class="pt">Ce que l'entreprise doit vous confier</span><span class="pr">Un projet principal, des missions listées, un processus complet</span></summary>
-        <div class="pc">
-          <ul>
-            <li>Une <strong>part importante</strong> de vos missions porte sur le commerce international, la
+</div>
+</details><details class="pli">
+<summary><span class="pk">Toutes années</span><span class="pt">Les compétences que le stage engage</span><span class="pr">Ce que le tuteur évalue, compétence par compétence</span></summary>
+<div class="pc">
+<p><b>C1 — Conduire des échanges professionnels en langues étrangères.</b> S'adapter à son interlocuteur ; s'exprimer dans une langue intelligible sur les plans grammatical, lexical et phonologique ; comprendre des locuteurs natifs et des documents authentiques.</p>
+<p><b>C3 — Analyser le fonctionnement et les enjeux d'une organisation.</b> S'appuyer sur des outils d'analyse quantitatifs et qualitatifs ; identifier les leviers d'action ; tenir compte des dynamiques sociales, économiques, réglementaires et culturelles ; formuler des recommandations justifiées.</p>
+<p><b>C5 — Construire et mettre en œuvre son projet professionnel.</b> Identifier et valoriser ses compétences ; analyser les besoins du secteur visé ; respecter les codes culturels, les normes professionnelles et les principes éthiques ; travailler en équipe sur un projet réel.</p>
+<p>Selon la spécialisation s'y ajoute <b>C4 Marketing International</b> — aider à l'élaboration d'une stratégie marketing et commerciale à l'export — ou <b>C4 CAPES d'espagnol</b> — exploiter les savoirs culturels et littéraires d'un espace linguistique donné. Le stage en établissement scolaire engage en outre <b>C2 — Traduire un message d'une langue dans une autre</b>.</p>
+</div>
+</details><details class="pli">
+<summary><span class="pt">Ce que l'entreprise doit vous confier</span><span class="pr">Un projet principal, des missions listées, un processus complet</span></summary>
+<div class="pc">
+<ul>
+<li>Une <strong>part importante</strong> de vos missions porte sur le commerce international, la
               gestion des affaires et la communication multilingue.</li>
-            <li>Un <strong>projet principal</strong>, qui occupe <strong>au moins 20 à 25 % de votre
+<li>Un <strong>projet principal</strong>, qui occupe <strong>au moins 20 à 25 % de votre
               temps</strong> : c'est lui qui nourrit la partie analytique du rapport.</li>
-            <li>L'entreprise <strong>liste précisément vos missions</strong>, sur la fiche projet ou en
+<li>L'entreprise <strong>liste précisément vos missions</strong>, sur la fiche projet ou en
               annexe ; l'équipe pédagogique les valide.</li>
-            <li>Si possible, vous suivez un <strong>processus complet</strong>, c'est-à-dire « l'ensemble
+<li>Si possible, vous suivez un <strong>processus complet</strong>, c'est-à-dire « l'ensemble
               d'activités corrélées ou en interaction qui transforme des éléments d'entrée en éléments de
               sortie » (ISO 9001) — par exemple un achat à l'étranger, de la commande à l'entrée en stock,
               litiges, devises et assurances compris. La première partie du rapport l'analyse.</li>
-            <li>Les missions d'appui viennent en complément des missions principales.</li>
-          </ul>
-        </div>
-      </details>
-
-      <details class="pli">
-        <summary><span class="pt">Ce que votre tuteur évalue</span><span class="pr">15 % de la note finale</span></summary>
-        <div class="pc">
-          <p>En fin de période, votre tuteur remplit une grille, jointe au rapport. Elle porte sur :</p>
-          <ul>
-            <li>la compréhension du contexte de l'organisme et des enjeux de la mission ;</li>
-            <li>le sens relationnel et l'intégration dans l'équipe ;</li>
-            <li>l'autonomie, l'initiative et la capacité d'adaptation ;</li>
-            <li>la qualité du travail et le professionnalisme ;</li>
-            <li>la capacité d'analyse et de synthèse.</li>
-          </ul>
-          <ul class="liens">
-            <li><a href="fiche-tuteur-alternance-LEA.pdf" target="_blank" rel="noopener"><span><span class="t">La fiche à remettre à votre tuteur en entreprise</span><span class="d">Ce que la formation attend de lui pendant les douze mois, et la grille qu'il remplira — avec les trois conditions qu'il est seul à pouvoir attester</span></span><span class="fl">PDF ↗</span></a></li>
-            <li><a href="fiche-tuteur-alternance-LEA.docx" download><span><span class="t">La même fiche, en version Word</span><span class="d">Pour que votre tuteur remplisse la grille à l'écran</span></span><span class="fl">Word ↓</span></a></li>
-          </ul>
-        </div>
-      </details>
-
-      <details class="pli">
-        <summary><span class="pt">Les documents à montrer à une entreprise</span><span class="pr">Modèle d'offre, grille à remplir, fiche officielle, calendrier</span></summary>
-        <div class="pc">
-          <ul class="liens">
-            <li><a href="modele-offre-alternance-LEA.pdf" download><span><span class="t">Confier une mission à un alternant LEA</span><span class="d">Six pages à montrer à l'entreprise · les missions que vous pouvez lui confier, les trois conditions à remplir, une trame d'offre et un exemple rédigé</span></span><span class="fl">PDF ↓</span></a></li>
-            <li><a href="modele-offre-alternance-LEA.docx" download><span><span class="t">Le même document, en version modifiable</span><span class="d">Word · l'entreprise rédige son offre directement dedans</span></span><span class="fl">Word ↓</span></a></li>
-            <li><a href="fiche-tuteur-alternance-LEA.pdf" target="_blank" rel="noopener"><span><span class="t">Accueillir un alternant LEA — pour votre futur tuteur</span><span class="d">Quatre pages : le calendrier, ce que la formation lui demande, et la grille d'évaluation qu'il remplira</span></span><span class="fl">PDF ↗</span></a></li>
-            <li><a href="grille-correspondance-poste-competences-LEA.docx" download><span><span class="t">Grille de correspondance entre le poste et les compétences</span><span class="d">Word à remettre à l'entreprise · missions possibles, niveau de couverture à choisir, mission correspondante à décrire</span></span><span class="fl">Word ↓</span></a></li>
-            <li><a href="https://www.unc.nc/wp-content/uploads/2017/10/Fiche-LEA-Alternance-2025_3.pdf" target="_blank" rel="noopener"><span><span class="t">Fiche descriptive de la licence, parcours Marketing International</span><span class="d">Site de l'UNC · secteurs, métiers, missions types de l'alternance</span></span><span class="fl">PDF ↗</span></a></li>
-            <li><a href="https://www.unc.nc/wp-content/uploads/2017/10/CALENDRIER-ALTERNANCE_LEA-2026-2027.pdf" target="_blank" rel="noopener"><span><span class="t">Calendrier de l'alternance 2026-2027</span><span class="d">Site de l'UNC · les jours à l'université</span></span><span class="fl">PDF ↗</span></a></li>
-            <li><a href="https://www.unc.nc/formations/licence-langues-etrangeres-appliquees-lea/" target="_blank" rel="noopener"><span><span class="t">La licence LEA sur le site de l'UNC</span><span class="d">Présentation, maquette, référentiel</span></span><span class="fl">site ↗</span></a></li>
-          </ul>
-        </div>
-      </details>
-
-      <details class="pli vig">
-        <summary><span class="pk">Quand ça se complique</span><span class="pt">Le contrat est rompu</span><span class="pr">La période peut être invalidée</span></summary>
-        <div class="pc"><p>Toute interruption anticipée entraîne, <strong>sauf décision motivée du
-          jury</strong>, l'invalidation de la période effectuée : vous devez accomplir une nouvelle
-          période d'une durée équivalente. Prévenez la responsable pédagogique sans attendre.</p></div>
-      </details>
-
-      <details class="pli vig">
-        <summary><span class="pk">Quand ça se complique</span><span class="pt">Vous voulez changer d'entreprise</span><span class="pr">Autorisation préalable obligatoire</span></summary>
-        <div class="pc"><p>Tout changement d'organisme doit être <strong>autorisé à l'avance</strong> par
-          la responsable pédagogique.</p></div>
-      </details>
-
-      <details class="pli vig">
-        <summary><span class="pk">Quand ça se complique</span><span class="pt">Votre assiduité compte double</span><span class="pr">À l'université et en entreprise</span></summary>
-        <div class="pc"><p>Vous devez être présent <strong>aux cours et en entreprise</strong>. Des
-          absences injustifiées peuvent entraîner la non-validation du semestre, voire l'exclusion du
-          parcours.</p></div>
-      </details>
-
-      <details class="pli dur">
-        <summary><span class="pk">Note éliminatoire</span><span class="pt">10/20 au minimum</span><span class="pr">Sans cette note, pas de diplôme</span></summary>
-        <div class="pc"><p>L'alternance et son rapport sont soumis à une <strong>note éliminatoire de
+<li>Les missions d'appui viennent en complément des missions principales.</li>
+</ul>
+</div>
+</details></div><h3 class="grp">Votre quotidien en alternance</h3><div class="plis"><details class="pli pos">
+<summary><span class="pk">Le point qu'on oublie souvent</span><span class="pt">Vous êtes salarié, et vous êtes payé</span><span class="pr">Rémunération selon le code du travail de la Nouvelle-Calédonie</span></summary>
+<div class="pc">
+<p>Un contrat d'alternance est un <strong>contrat de travail</strong>. Pendant les semestres 6
+            et 7, vous n'êtes pas un étudiant en stage percevant une gratification : vous êtes
+            <strong>salarié de l'entreprise</strong>, avec un bulletin de paie, des congés payés et une
+            couverture sociale au titre de votre emploi.</p>
+<p>Votre rémunération relève du <strong>code du travail de la Nouvelle-Calédonie</strong> : le
+            droit du travail y est une compétence locale, et ce ne sont pas les barèmes métropolitains
+            qui s'appliquent. Le montant dépend du type de contrat, de votre âge et de l'année
+            d'exécution ; il figure dans le contrat que vous signez.</p>
+<p>Le règlement le précise : <strong>une autre activité salariée n'est pas compatible avec un
+            contrat d'alternance</strong>.</p>
+</div>
+</details><details class="pli">
+<summary><span class="pt">Comment le temps se répartit</span><span class="pr">Deux jours à l'université, trois en entreprise</span></summary>
+<div class="pc">
+<div class="tbl"><table class="court">
+<thead><tr><th>Période</th><th>Cours à l'UNC</th><th class="num">Jours à l'UNC</th></tr></thead>
+<tbody>
+<tr><td class="code">Semestre 6</td><td>230 heures</td><td class="num">35</td></tr>
+<tr><td class="code">Semestre 7</td><td>210 heures</td><td class="num">34</td></tr>
+</tbody>
+</table></div>
+<p style="margin-top:10px;">Le reste du temps se passe en entreprise. En pratique : deux jours
+            à l'université — le plus souvent le lundi et le mardi — et trois jours en entreprise, à temps
+            plein en entreprise pendant les périodes sans cours. Le calendrier précis est fixé chaque
+            année par le bureau de l'alternance.</p>
+</div>
+</details><details class="pli">
+<summary><span class="pt">Le calendrier calédonien</span><span class="pr">Pourquoi l'alternance démarre le 1er juin</span></summary>
+<div class="pc"><p>En Nouvelle-Calédonie, les semestres impairs se déroulent de février à juin
+          et les semestres pairs de juin à novembre. C'est pourquoi un contrat d'alternance qui
+          démarre le 1<sup>er</sup> juin s'aligne sur l'ouverture du semestre 6.</p></div>
+</details></div><h3 class="grp">Évaluation et points de vigilance</h3><div class="plis"><details class="pli">
+<summary><span class="pt">Ce que votre tuteur évalue</span><span class="pr">15 % de la note finale</span></summary>
+<div class="pc">
+<p>En fin de période, votre tuteur remplit une grille, jointe au rapport. Elle porte sur :</p>
+<ul>
+<li>la compréhension du contexte de l'organisme et des enjeux de la mission ;</li>
+<li>le sens relationnel et l'intégration dans l'équipe ;</li>
+<li>l'autonomie, l'initiative et la capacité d'adaptation ;</li>
+<li>la qualité du travail et le professionnalisme ;</li>
+<li>la capacité d'analyse et de synthèse.</li>
+</ul>
+<ul class="liens">
+<li><a href="fiche-tuteur-alternance-LEA.pdf" rel="noopener" target="_blank"><span><span class="t">La fiche à remettre à votre tuteur en entreprise</span><span class="d">Ce que la formation attend de lui pendant les douze mois, et la grille qu'il remplira — avec les trois conditions qu'il est seul à pouvoir attester</span></span><span class="fl">PDF ↗</span></a></li>
+<li><a download="" href="fiche-tuteur-alternance-LEA.docx"><span><span class="t">La même fiche, en version Word</span><span class="d">Pour que votre tuteur remplisse la grille à l'écran</span></span><span class="fl">Word ↓</span></a></li>
+</ul>
+</div>
+</details><details class="pli dur">
+<summary><span class="pk">Note éliminatoire</span><span class="pt">10/20 au minimum</span><span class="pr">Sans cette note, pas de diplôme</span></summary>
+<div class="pc"><p>L'alternance et son rapport sont soumis à une <strong>note éliminatoire de
           10/20</strong>. Sans elle, le diplôme n'est pas délivré, quelles que soient les autres
           notes.</p></div>
-      </details>
-      </div>
-  </div>
+</details><details class="pli vig">
+<summary><span class="pk">Quand ça se complique</span><span class="pt">Le contrat est rompu</span><span class="pr">La période peut être invalidée</span></summary>
+<div class="pc"><p>Toute interruption anticipée entraîne, <strong>sauf décision motivée du
+          jury</strong>, l'invalidation de la période effectuée : vous devez accomplir une nouvelle
+          période d'une durée équivalente. Prévenez la responsable pédagogique sans attendre.</p></div>
+</details><details class="pli vig">
+<summary><span class="pk">Quand ça se complique</span><span class="pt">Vous voulez changer d'entreprise</span><span class="pr">Autorisation préalable obligatoire</span></summary>
+<div class="pc"><p>Tout changement d'organisme doit être <strong>autorisé à l'avance</strong> par
+          la responsable pédagogique.</p></div>
+</details><details class="pli vig">
+<summary><span class="pk">Quand ça se complique</span><span class="pt">Votre assiduité compte double</span><span class="pr">À l'université et en entreprise</span></summary>
+<div class="pc"><p>Vous devez être présent <strong>aux cours et en entreprise</strong>. Des
+          absences injustifiées peuvent entraîner la non-validation du semestre, voire l'exclusion du
+          parcours.</p></div>
+</details></div>
+</div>
 </section>
 
 <!-- =================== CAPES =================== -->
 <section class="panneau" id="capes" data-accent="c4lch" role="tabpanel" aria-labelledby="t-capes">
-  <div class="wrap">
-    <div class="tete">
-      <h2><span class="eyeb">Spé CAPES d'espagnol</span>Préparer le CAPES d'espagnol</h2>
-      <button type="button" class="tout">Tout déplier</button>
-    </div>
-    <div class="intro">
-      <p>Choisir cette spé, c'est <strong>préparer le concours pour devenir professeur d'espagnol</strong>
+<div class="wrap">
+<div class="tete">
+<h2><span class="eyeb">Spé CAPES d'espagnol</span>Préparer le CAPES d'espagnol</h2>
+<button class="tout" type="button">Tout déplier</button>
+</div>
+<div class="intro">
+<p>Choisir cette spé, c'est <strong>préparer le concours pour devenir professeur d'espagnol</strong>
         en collège ou en lycée. Depuis la session 2026, le CAPES externe est ouvert <strong>dès la fin
         de la licence</strong> (concours « bac+3 ») : il faut, selon le ministère, « être inscrit en
         dernière année d'études en vue de l'obtention d'une licence (L3) […] ou être titulaire d'une
         licence ».</p>
-    </div>
-
-    <div class="plis">
-      <details class="pli ce large">
-        <summary><span class="pk">Qui vous aide ?</span><span class="pt">Le stage d'observation : c'est l'INSPE qui vous le trouve</span><span class="pr">Quatre semaines en collège ou en lycée · semestre 6</span></summary>
-        <div class="pc">
-          <dl class="faits">
-            <div><dt>Qui vous aide</dt><dd><b>C'est l'INSPE qui vous trouve votre stage.</b> Vous n'avez
+</div>
+<h3 class="grp">Votre parcours</h3><div class="plis"><details class="pli large">
+<summary><span class="pk">Votre parcours</span><span class="pt">Le fil des matières de la spécialisation</span><span class="pr">Du semestre 5 au semestre 7 : ce que vous suivez pour préparer le concours</span></summary>
+<div class="pc"><div class="fil3"><div><h4>Semestre 5</h4><ul><li><b>Linguistique 1</b><small>8 h CM + 12 h TD</small></li><li><b>Traduction littéraire 1</b><small>10 h CM + 8 h TD</small></li><li><b>Cadre théorique et professionnel</b><small>8 h CM + 8 h TD</small></li><li><b>Méthodologie des épreuves</b><small>10 h TD</small></li></ul></div><div><h4>Semestre 6</h4><ul><li><b>Préparation aux écrits du concours</b><small>20 h CM + 20 h TD</small></li><li><b>Linguistique espagnole 2 (prépa écrits CAPES)</b><small>16 h CM + 16 h TD</small></li><li><b>Traduction littéraire 2 (prépa écrits CAPES)</b><small>18 h TD</small></li><li><b>Méthodologie des épreuves</b><small>15 h TD</small></li><li><b>Stage d'observation</b><small>quatre semaines en collège ou lycée</small></li></ul></div><div><h4>Semestre 7</h4><ul><li><b>Préparation à l'écrit du concours : littérature et civilisation</b><small>10 h CM + 10 h TD</small></li><li><b>Traduction et faits de langue</b><small>16 h TD</small></li><li><b>Préparation à l'oral du concours</b><small>24 h CM + 16 h TD + 2 h TP</small></li><li><b>Méthodologie des épreuves</b><small>15 h TD</small></li></ul></div></div></div>
+</details><details class="pli vig">
+<summary><span class="pk">Avant de choisir</span><span class="pt">Ce que la licence LEA vous donne</span><span class="pr">Et ce qui se passe en cas d'échec au concours</span></summary>
+<div class="pc">
+<p>La licence LEA est pluridisciplinaire : elle n'offre pas la préparation disciplinaire
+            approfondie d'une licence LLCER Espagnol, conçue pour ce concours.</p>
+<p>Un échec en fin de licence ne ferme rien : vous pouvez candidater à l'INSPE, entrer en
+            master MEEF et représenter le concours en fin de M1 ou de M2.</p>
+</div>
+</details></div><h3 class="grp">Le stage d'observation</h3><div class="plis"><details class="pli ce large">
+<summary><span class="pk">Qui vous aide ?</span><span class="pt">Le stage d'observation : c'est l'INSPE qui vous le trouve</span><span class="pr">Quatre semaines en collège ou en lycée · semestre 6</span></summary>
+<div class="pc">
+<dl class="faits">
+<div><dt>Qui vous aide</dt><dd><b>C'est l'INSPE qui vous trouve votre stage.</b> Vous n'avez
               pas à le chercher.</dd></div>
-            <div><dt>Ce que vous faites</dt><dd>Vous <b>préparez une lettre de motivation</b> et vous la
+<div><dt>Ce que vous faites</dt><dd>Vous <b>préparez une lettre de motivation</b> et vous la
               <b>transmettez à votre enseignant référent</b>.</dd></div>
-            <div><dt>Quand</dt><dd><b>Au semestre 6.</b></dd></div>
-            <div><dt>Durée</dt><dd>Quatre semaines, jusqu'à 18 heures par semaine avec l'enseignant
+<div><dt>Quand</dt><dd><b>Au semestre 6.</b></dd></div>
+<div><dt>Durée</dt><dd>Quatre semaines, jusqu'à 18 heures par semaine avec l'enseignant
               d'accueil</dd></div>
-            <div><dt>Sur place</dt><dd><b>Observer et, si le tuteur en établissement vous sollicite, aider
+<div><dt>Sur place</dt><dd><b>Observer et, si le tuteur en établissement vous sollicite, aider
               à concevoir une séance.</b></dd></div>
-            <div><dt>Convention</dt><dd><b>Une convention de stage est signée avant le début du stage.</b>
+<div><dt>Convention</dt><dd><b>Une convention de stage est signée avant le début du stage.</b>
               Le modèle de l'UNC se trouve sur Moodle et sur l'ENT, rubrique Stage.</dd></div>
-          </dl>
-          <ul class="liens">
-            <li><a href="fiche-tuteur-stage-CAPES-LEA.pdf" target="_blank" rel="noopener"><span><span class="t">La fiche à remettre à votre enseignant d'accueil</span><span class="d">Ce que l'INSPE et l'UNC attendent de votre stage, ce qu'il peut vous demander, et la grille qu'il remplira — la mise en œuvre devant la classe n'y est notée que s'il l'a autorisée</span></span><span class="fl">PDF ↗</span></a></li>
-            <li><a href="fiche-tuteur-stage-CAPES-LEA.docx" download><span><span class="t">La même fiche, en version Word</span><span class="d">Pour que votre enseignant d'accueil remplisse la grille à l'écran</span></span><span class="fl">Word ↓</span></a></li>
-            <li><a href="https://www.unc.nc/faire-un-stage-en-milieu-professionnel-2/" target="_blank" rel="noopener"><span><span class="t">Faire un stage en milieu professionnel</span><span class="d">Site de l'UNC · démarches et contacts</span></span><span class="fl">site ↗</span></a></li>
-            <li><a href="https://ent.unc.nc/" target="_blank" rel="noopener"><span><span class="t">Modèle de convention de stage</span><span class="d">ENT de l'UNC, rubrique Stage · le même modèle est sur Moodle</span></span><span class="fl">ENT ↗</span></a></li>
-          </ul>
-        </div>
-      </details>
-
-      <details class="pli ce large">
-        <summary><span class="pk">Le concours en bref</span><span class="pt">Quand et où se passe le concours</span><span class="pr">Inscription en ligne à l'automne · écrits en Nouvelle-Calédonie · oraux en France hexagonale</span></summary>
-        <div class="pc">
-          <div class="tbl"><table>
-            <thead><tr><th>Étape</th><th>Quand</th><th>Où</th></tr></thead>
-            <tbody>
-              <tr><td><b>Inscription</b></td>
-                <td>À l'automne qui précède le concours. <b>Session 2027 : du jeudi 1<sup>er</sup> octobre au mercredi 25 novembre 2026, 12 h,
+</dl>
+<ul class="liens">
+<li><a href="fiche-tuteur-stage-CAPES-LEA.pdf" rel="noopener" target="_blank"><span><span class="t">La fiche à remettre à votre enseignant d'accueil</span><span class="d">Ce que l'INSPE et l'UNC attendent de votre stage, ce qu'il peut vous demander, et la grille qu'il remplira — la mise en œuvre devant la classe n'y est notée que s'il l'a autorisée</span></span><span class="fl">PDF ↗</span></a></li>
+<li><a download="" href="fiche-tuteur-stage-CAPES-LEA.docx"><span><span class="t">La même fiche, en version Word</span><span class="d">Pour que votre enseignant d'accueil remplisse la grille à l'écran</span></span><span class="fl">Word ↓</span></a></li>
+<li><a href="https://www.unc.nc/faire-un-stage-en-milieu-professionnel-2/" rel="noopener" target="_blank"><span><span class="t">Faire un stage en milieu professionnel</span><span class="d">Site de l'UNC · démarches et contacts</span></span><span class="fl">site ↗</span></a></li>
+<li><a href="https://ent.unc.nc/" rel="noopener" target="_blank"><span><span class="t">Modèle de convention de stage</span><span class="d">ENT de l'UNC, rubrique Stage · le même modèle est sur Moodle</span></span><span class="fl">ENT ↗</span></a></li>
+</ul>
+</div>
+</details><details class="pli ce">
+<summary><span class="pt">Ce que vous faites pendant le stage</span><span class="pr">Observer, tenir un carnet de bord, aider si on vous le demande</span></summary>
+<div class="pc">
+<h4>Observer</h4>
+<ul>
+<li><b>L'établissement</b> : situation, environnement, plan du bâtiment, place de l'enseignant
+              dans l'organisation</li>
+<li><b>Les interactions</b> entre les familles, l'enseignant et l'équipe pédagogique, et entre
+              élèves et enseignants</li>
+<li><b>La classe</b> : discipline, rituels, prise de parole, gestion des différences de niveau</li>
+<li><b>Les séquences</b> : progression, articulation des séances, évaluation, apprentissage par
+              compétences (CECRL)</li>
+<li><b>Les différences</b> entre l'enseignement de l'anglais et celui de l'espagnol</li>
+</ul>
+<h4>Garder trace</h4>
+<ul><li>Un <b>carnet de bord</b> de vos observations et de ce que vous apprenez</li></ul>
+<h4>Si le tuteur en établissement vous sollicite</h4>
+<ul>
+<li>Aider à concevoir une séance</li>
+<li>Distribuer ou récupérer des documents, surveiller un devoir</li>
+<li>Accompagner ponctuellement un élève en difficulté : aide à la compréhension, reformulation</li>
+</ul>
+</div>
+</details><details class="pli dur">
+<summary><span class="pk">Note éliminatoire</span><span class="pt">10/20 au stage et au rapport</span><span class="pr">Sans cette note, pas de diplôme</span></summary>
+<div class="pc"><p>Le stage et son rapport sont soumis à une <strong>note éliminatoire de
+          10/20</strong>, et la délivrance du diplôme y est subordonnée.</p></div>
+</details></div><h3 class="grp">Le concours</h3><div class="plis"><details class="pli ce large">
+<summary><span class="pk">Le concours en bref</span><span class="pt">Quand et où se passe le concours</span><span class="pr">Inscription en ligne à l'automne · écrits en Nouvelle-Calédonie · oraux en France hexagonale</span></summary>
+<div class="pc">
+<div class="tbl"><table>
+<thead><tr><th>Étape</th><th>Quand</th><th>Où</th></tr></thead>
+<tbody>
+<tr><td><b>Inscription</b></td>
+<td>À l'automne qui précède le concours. <b>Session 2027 : du jeudi 1<sup>er</sup> octobre au mercredi 25 novembre 2026, 12 h,
                   heure de Paris.</b></td>
-                <td>En ligne, sur <b>Cyclades</b>, le site des examens et concours.</td></tr>
-              <tr><td><b>Écrits</b><br>admissibilité</td>
-                <td><b>Session 2027 : entre le mardi 9 et le vendredi 19 mars 2027</b>, selon la
+<td>En ligne, sur <b>Cyclades</b>, le site des examens et concours.</td></tr>
+<tr><td><b>Écrits</b><br/>admissibilité</td>
+<td><b>Session 2027 : entre le mardi 9 et le vendredi 19 mars 2027</b>, selon la
                   discipline.</td>
-                <td><b>En Nouvelle-Calédonie</b>, avec le vice-rectorat. La convocation se télécharge
+<td><b>En Nouvelle-Calédonie</b>, avec le vice-rectorat. La convocation se télécharge
                   sur Cyclades, rubrique « Mes documents » : rien n'est envoyé par la poste. À cause du
                   décalage horaire, les écrits peuvent commencer <b>jusqu'à 2 h 30 avant ceux de
                   l'Hexagone</b> : seul compte l'horaire de votre convocation.</td></tr>
-              <tr><td><b>Oraux</b><br>admission</td>
-                <td>Après les résultats d'admissibilité. Le calendrier prévisionnel est publié sur
+<tr><td><b>Oraux</b><br/>admission</td>
+<td>Après les résultats d'admissibilité. Le calendrier prévisionnel est publié sur
                   Cyclades.</td>
-                <td><b>En présentiel, en France hexagonale.</b> Le voyage est à votre charge ; vous
+<td><b>En présentiel, en France hexagonale.</b> Le voyage est à votre charge ; vous
                   pouvez demander une aide au transport, le <b>Passeport Mobilité Concours</b>, auprès
                   du Haut-commissariat.</td></tr>
-              <tr><td><b>Après la réussite</b></td>
-                <td>L'année de stage qui suit le concours.</td>
-                <td>Vous êtes recruté comme stagiaire <b>en France hexagonale</b>. Faire votre stage en
+<tr><td><b>Après la réussite</b></td>
+<td>L'année de stage qui suit le concours.</td>
+<td>Vous êtes recruté comme stagiaire <b>en France hexagonale</b>. Faire votre stage en
                   Nouvelle-Calédonie dépend des postes disponibles.</td></tr>
-            </tbody>
-          </table></div>
-          <p class="note-tbl">Sources : devenirenseignant.gouv.fr (calendrier de la session 2027, consulté le 8 novembre 2026) ; vice-rectorat de la Nouvelle-Calédonie (concours 2026 ; déplacement des
+</tbody>
+</table></div>
+<p class="note-tbl">Sources : devenirenseignant.gouv.fr (calendrier de la session 2027, consulté le 8 novembre 2026) ; vice-rectorat de la Nouvelle-Calédonie (concours 2026 ; déplacement des
             candidats, mise à jour du 17 mars 2026).</p>
-        </div>
-      </details>
-
-      <details class="pli ce">
-        <summary><span class="pk">Le concours en bref</span><span class="pt">Les quatre épreuves</span><span class="pr">Deux écrits d'admissibilité, deux oraux d'admission</span></summary>
-        <div class="pc">
-          <div class="tbl"><table class="court">
-            <thead><tr><th>Épreuve</th><th>Nature</th><th class="num">Durée</th><th class="num">Coef.</th></tr></thead>
-            <tbody>
-              <tr><td><b>Écrit 1</b></td><td>Composition en langue étrangère à partir d'un dossier</td><td class="num">5 h</td><td class="num">3</td></tr>
-              <tr><td><b>Écrit 2</b></td><td>Thème et version, et analyse critique de faits de langue</td><td class="num">4 h</td><td class="num">2</td></tr>
-              <tr><td><b>Oral 1</b></td><td>Exposé suivi d'un échange avec le jury, après 3 h de préparation</td><td class="num">1 h</td><td class="num">5</td></tr>
-              <tr><td><b>Oral 2</b></td><td>Entretien avec le jury</td><td class="num">35 min</td><td class="num">3</td></tr>
-            </tbody>
-          </table></div>
-          <p class="note-tbl">Éliminatoire : une note de 5 ou moins à un écrit, une note de 0 à un oral.
+</div>
+</details><details class="pli ce">
+<summary><span class="pk">Le concours en bref</span><span class="pt">Les quatre épreuves</span><span class="pr">Deux écrits d'admissibilité, deux oraux d'admission</span></summary>
+<div class="pc">
+<div class="tbl"><table class="court">
+<thead><tr><th>Épreuve</th><th>Nature</th><th class="num">Durée</th><th class="num">Coef.</th></tr></thead>
+<tbody>
+<tr><td><b>Écrit 1</b></td><td>Composition en langue étrangère à partir d'un dossier</td><td class="num">5 h</td><td class="num">3</td></tr>
+<tr><td><b>Écrit 2</b></td><td>Thème et version, et analyse critique de faits de langue</td><td class="num">4 h</td><td class="num">2</td></tr>
+<tr><td><b>Oral 1</b></td><td>Exposé suivi d'un échange avec le jury, après 3 h de préparation</td><td class="num">1 h</td><td class="num">5</td></tr>
+<tr><td><b>Oral 2</b></td><td>Entretien avec le jury</td><td class="num">35 min</td><td class="num">3</td></tr>
+</tbody>
+</table></div>
+<p class="note-tbl">Éliminatoire : une note de 5 ou moins à un écrit, une note de 0 à un oral.
             CAPES externe bac+3, langues vivantes étrangères.</p>
-        </div>
-      </details>
-
-      <details class="pli ce">
-        <summary><span class="pt">Le programme d'espagnol, session 2027</span><span class="pr"><em>La caída de Madrid</em> · la Transition démocratique</span></summary>
-        <div class="pc">
-          <h4>Écrit 1 · dossier en lien avec deux questions</h4>
-          <ul>
-            <li><b>Littérature</b> : <em>La caída de Madrid</em>, Rafael Chirbes (Anagrama, coll.
+</div>
+</details><details class="pli ce">
+<summary><span class="pt">Le programme d'espagnol, session 2027</span><span class="pr"><em>La caída de Madrid</em> · la Transition démocratique</span></summary>
+<div class="pc">
+<h4>Écrit 1 · dossier en lien avec deux questions</h4>
+<ul>
+<li><b>Littérature</b> : <em>La caída de Madrid</em>, Rafael Chirbes (Anagrama, coll.
               Compactos, 2011 ; 1<sup>re</sup> édition 2000)</li>
-            <li><b>Civilisation</b> : de la fin du franquisme à la Transition démocratique</li>
-          </ul>
-          <h4>Oral 1 · dossier en lien avec</h4>
-          <ul>
-            <li>le thème culturel du cycle 4 (collège) : <b>« Langages »</b></li>
-            <li>l'axe culturel de la classe de seconde : <b>« Vivre entre générations »</b></li>
-          </ul>
-          <p>Le programme est renouvelé tous les deux ans : vérifiez la session qui vous concerne.</p>
-        </div>
-      </details>
-
-      <details class="pli ce">
-        <summary><span class="pt">Les textes officiels</span><span class="pr">Épreuves, programme, calendrier, déplacement</span></summary>
-        <div class="pc">
-          <ul class="liens">
-            <li><a href="https://www.devenirenseignant.gouv.fr/enseigner-au-college-ou-au-lycee-general-le-capes-1394" target="_blank" rel="noopener"><span><span class="t">Le CAPES : présentation</span><span class="d">Conditions d'inscription, types de concours</span></span><span class="fl">site ↗</span></a></li>
-            <li><a href="https://www.devenirenseignant.gouv.fr/les-epreuves-du-capes-externe-bac3-section-langues-vivantes-etrangeres-1427" target="_blank" rel="noopener"><span><span class="t">Les épreuves du CAPES bac+3, langues vivantes</span><span class="d">Description complète des quatre épreuves</span></span><span class="fl">site ↗</span></a></li>
-            <li><a href="https://www.devenirenseignant.gouv.fr/media/20671/download" target="_blank" rel="noopener"><span><span class="t">Programme de la session 2027</span><span class="d">PDF du 15 juillet 2026 ; espagnol en page 3</span></span><span class="fl">PDF ↗</span></a></li>
-            <li><a href="https://www.devenirenseignant.gouv.fr/le-calendrier-des-concours-de-recrutement-d-enseignants-du-second-degre-de-la-session-2027-1562" target="_blank" rel="noopener"><span><span class="t">Le calendrier de la session 2027</span><span class="d">Inscriptions, dates des écrits dès leur publication</span></span><span class="fl">site ↗</span></a></li>
-            <li><a href="https://candidat.examens-concours.gouv.fr/cyccandidat/" target="_blank" rel="noopener"><span><span class="t">Cyclades</span><span class="d">Inscription, convocations, résultats</span></span><span class="fl">site ↗</span></a></li>
-            <li><a href="https://www.ac-noumea.nc/spip.php?rubrique133" target="_blank" rel="noopener"><span><span class="t">Vice-rectorat : déplacement des candidats</span><span class="d">Oraux en France hexagonale, Passeport Mobilité Concours</span></span><span class="fl">site ↗</span></a></li>
-          </ul>
-        </div>
-      </details>
-
-      <details class="pli ce">
-        <summary><span class="pt">Ce que vous faites pendant le stage</span><span class="pr">Observer, tenir un carnet de bord, aider si on vous le demande</span></summary>
-        <div class="pc">
-          <h4>Observer</h4>
-          <ul>
-            <li><b>L'établissement</b> : situation, environnement, plan du bâtiment, place de l'enseignant
-              dans l'organisation</li>
-            <li><b>Les interactions</b> entre les familles, l'enseignant et l'équipe pédagogique, et entre
-              élèves et enseignants</li>
-            <li><b>La classe</b> : discipline, rituels, prise de parole, gestion des différences de niveau</li>
-            <li><b>Les séquences</b> : progression, articulation des séances, évaluation, apprentissage par
-              compétences (CECRL)</li>
-            <li><b>Les différences</b> entre l'enseignement de l'anglais et celui de l'espagnol</li>
-          </ul>
-          <h4>Garder trace</h4>
-          <ul><li>Un <b>carnet de bord</b> de vos observations et de ce que vous apprenez</li></ul>
-          <h4>Si le tuteur en établissement vous sollicite</h4>
-          <ul>
-            <li>Aider à concevoir une séance</li>
-            <li>Distribuer ou récupérer des documents, surveiller un devoir</li>
-            <li>Accompagner ponctuellement un élève en difficulté : aide à la compréhension, reformulation</li>
-          </ul>
-        </div>
-      </details>
-
-      <details class="pli vig">
-        <summary><span class="pk">Avant de choisir</span><span class="pt">Ce que la licence LEA vous donne</span><span class="pr">Et ce qui se passe en cas d'échec au concours</span></summary>
-        <div class="pc">
-          <p>La licence LEA est pluridisciplinaire : elle n'offre pas la préparation disciplinaire
-            approfondie d'une licence LLCER Espagnol, conçue pour ce concours.</p>
-          <p>Un échec en fin de licence ne ferme rien : vous pouvez candidater à l'INSPE, entrer en
-            master MEEF et représenter le concours en fin de M1 ou de M2.</p>
-        </div>
-      </details>
-
-      <details class="pli dur">
-        <summary><span class="pk">Note éliminatoire</span><span class="pt">10/20 au stage et au rapport</span><span class="pr">Sans cette note, pas de diplôme</span></summary>
-        <div class="pc"><p>Le stage et son rapport sont soumis à une <strong>note éliminatoire de
-          10/20</strong>, et la délivrance du diplôme y est subordonnée.</p></div>
-      </details>
-    </div>
-  </div>
+<li><b>Civilisation</b> : de la fin du franquisme à la Transition démocratique</li>
+</ul>
+<h4>Oral 1 · dossier en lien avec</h4>
+<ul>
+<li>le thème culturel du cycle 4 (collège) : <b>« Langages »</b></li>
+<li>l'axe culturel de la classe de seconde : <b>« Vivre entre générations »</b></li>
+</ul>
+<p>Le programme est renouvelé tous les deux ans : vérifiez la session qui vous concerne.</p>
+</div>
+</details><details class="pli ce">
+<summary><span class="pt">Les textes officiels</span><span class="pr">Épreuves, programme, calendrier, déplacement</span></summary>
+<div class="pc">
+<ul class="liens">
+<li><a href="https://www.devenirenseignant.gouv.fr/enseigner-au-college-ou-au-lycee-general-le-capes-1394" rel="noopener" target="_blank"><span><span class="t">Le CAPES : présentation</span><span class="d">Conditions d'inscription, types de concours</span></span><span class="fl">site ↗</span></a></li>
+<li><a href="https://www.devenirenseignant.gouv.fr/les-epreuves-du-capes-externe-bac3-section-langues-vivantes-etrangeres-1427" rel="noopener" target="_blank"><span><span class="t">Les épreuves du CAPES bac+3, langues vivantes</span><span class="d">Description complète des quatre épreuves</span></span><span class="fl">site ↗</span></a></li>
+<li><a href="https://www.devenirenseignant.gouv.fr/media/20671/download" rel="noopener" target="_blank"><span><span class="t">Programme de la session 2027</span><span class="d">PDF du 15 juillet 2026 ; espagnol en page 3</span></span><span class="fl">PDF ↗</span></a></li>
+<li><a href="https://www.devenirenseignant.gouv.fr/le-calendrier-des-concours-de-recrutement-d-enseignants-du-second-degre-de-la-session-2027-1562" rel="noopener" target="_blank"><span><span class="t">Le calendrier de la session 2027</span><span class="d">Inscriptions, dates des écrits dès leur publication</span></span><span class="fl">site ↗</span></a></li>
+<li><a href="https://candidat.examens-concours.gouv.fr/cyccandidat/" rel="noopener" target="_blank"><span><span class="t">Cyclades</span><span class="d">Inscription, convocations, résultats</span></span><span class="fl">site ↗</span></a></li>
+<li><a href="https://www.ac-noumea.nc/spip.php?rubrique133" rel="noopener" target="_blank"><span><span class="t">Vice-rectorat : déplacement des candidats</span><span class="d">Oraux en France hexagonale, Passeport Mobilité Concours</span></span><span class="fl">site ↗</span></a></li>
+</ul>
+</div>
+</details></div>
+</div>
 </section>
 
 <!-- =================== SAE =================== -->
@@ -2536,201 +2641,199 @@ a.ia-bouton .bd{display:block; font-size:14.5px; opacity:.85; margin-top:2px;}
       </details>
 
       <details class="pli large">
-        <summary><span class="pk">Semestre 3 · ELP 99_0247 · 35 h · C5 L2</span><span class="pt">Sortie Métiers et Road-show LEA</span><span class="pr">Organiser une rencontre métiers, promouvoir la licence</span></summary>
-        <div class="pc">
-          <h4>Ce que la SAÉ demande</h4>
-          <p><strong>Vous êtes ambassadeurs de la marque LEA.</strong> La SAÉ travaille la compétence de
+<summary><span class="pk">Semestre 3 · ELP 99_0247 · 35 h · C5 L2</span><span class="pt">Sortie Métiers et Road-show LEA</span><span class="pr">Organiser une rencontre métiers, promouvoir la licence</span></summary>
+<div class="pc">
+<details class="sous"><summary>Ce que la SAÉ demande</summary><div class="sous-c">
+<p><strong>Vous êtes ambassadeurs de la marque LEA.</strong> La SAÉ travaille la compétence de
             communication promotionnelle à travers trois productions.</p>
-          <p>Vous organisez vous-mêmes la rencontre métiers : contacter l'organisation — Port autonome de
+<p>Vous organisez vous-mêmes la rencontre métiers : contacter l'organisation — Port autonome de
             Nouméa, direction de l'hôtel de l'Îlot Maître —, chiffrer, solliciter un financement, monter la
             journée, puis vous y présenter. Le pitch de soi y trouve son public réel. La méthode vient de la
             Gestion de projet, au même semestre et en amont.</p>
-          <p>Le pitch de soi est adressé à deux publics distincts : d'un côté les parents et lycéens de Cap
+<p>Le pitch de soi est adressé à deux publics distincts : d'un côté les parents et lycéens de Cap
             Horizons, de l'autre un recruteur, pour une alternance de L3, un stage, un job ou des extras.
             C'est le même parcours raconté deux fois, avec deux intentions différentes.</p>
-          <p>Un poster promotionnel LEA destiné à l'affichage Cap Horizons, avec un objet dérivé possible : sac, autocollant.</p>
-          <p>Le script puis la vidéo promotionnelle LEA destinée aux lycéens, utilisable pour le tour des lycées.</p>
-          <p>En parallèle de la SAÉ, le cours Horizons LEA prépare votre choix d'orientation de fin de S4
+<p>Un poster promotionnel LEA destiné à l'affichage Cap Horizons, avec un objet dérivé possible : sac, autocollant.</p>
+<p>Le script puis la vidéo promotionnelle LEA destinée aux lycéens, utilisable pour le tour des lycées.</p>
+<p>En parallèle de la SAÉ, le cours Horizons LEA prépare votre choix d'orientation de fin de S4
             entre Marketing International et CAPES espagnol : débouchés, métiers, fiches métiers, et travail
             sur le CV et LinkedIn.</p>
-          <h4>Livrables attendus</h4>
-          <ul>
-            <li>La rencontre métiers, organisée de bout en bout : contacter l'organisation, chiffrer,
-              solliciter un financement, monter la journée et s'y présenter.</li>
-            <li>Le pitch de soi en deux versions : l'une pour les parents et les lycéens de Cap Horizons,
+</div></details><details class="sous"><summary>Livrables attendus</summary><div class="sous-c">
+<ul>
+<li>Le pitch de soi en deux versions : l'une pour les parents et les lycéens de Cap Horizons,
               l'autre pour un recruteur — alternance de L3, stage, job ou extras.</li>
-            <li>Un poster promotionnel LEA destiné à l'affichage Cap Horizons, avec un objet dérivé
+<li>Un poster promotionnel LEA destiné à l'affichage Cap Horizons, avec un objet dérivé
               possible : sac, autocollant.</li>
-            <li>Le script, puis la vidéo promotionnelle LEA destinée aux lycéens, utilisable pour le tour
+<li>Le script, puis la vidéo promotionnelle LEA destinée aux lycéens, utilisable pour le tour
               des lycées.</li>
-          </ul>
-          <dl class="faits">
-            <div><dt>Reçoit en prérequis</dt><dd>Gestion de projet (S3, même semestre, en amont) · GRC (S3,
+</ul>
+<dl class="faits">
+<div><dt>Reçoit en prérequis</dt><dd>Gestion de projet (S3, même semestre, en amont) · GRC (S3,
               même semestre) · Horizons LEA (S3) · Marketing 2 (S2)</dd></div>
-            <div><dt>Alimente</dt><dd>Choix de spécialisation fin S4 · SAÉ Nouméa, récits croisés (S4) ·
+<div><dt>Alimente</dt><dd>Choix de spécialisation fin S4 · SAÉ Nouméa, récits croisés (S4) ·
               Stage 1 mois S4 · Pitch de professionnalisation S7</dd></div>
-          </dl>
-          <h4>Grille d'évaluation</h4>
-          <p>Grille C5 L2 — cinq composantes essentielles notées de 0 à 4, note sur 20. Une seule composante
+</dl>
+</div></details><details class="sous"><summary>Grille d'évaluation</summary><div class="sous-c">
+<p>Grille C5 L2 — cinq composantes essentielles notées de 0 à 4, note sur 20. Une seule composante
             à 0 invalide la compétence, quelle que soit la moyenne.</p>
-          <p>Cours ressources : Gestion de projet, Horizons LEA.
-            <a class="renvoi" href="#licence" data-sem="S3">Voir le S3 →</a></p>
-        </div>
-      </details>
+<p>Cours ressources : Gestion de projet, Horizons LEA.
+            <a class="renvoi" data-sem="S3" href="#licence">Voir le S3 →</a></p>
+</div></details></div>
+</details>
 
       <details class="pli large">
-        <summary><span class="pk">Semestre 4 · ELP 99_0249 · 35 h · C3 L2 · C5 L2</span><span class="pt">Valorisation du patrimoine calédonien : Nouméa, récits croisés</span><span class="pr">Concepteur·rice d'une expérience culturelle plurilingue, sur un lieu de Nouméa</span></summary>
-        <div class="pc">
-          <h4>Ce que la SAÉ demande</h4>
-          <p>Comment faire découvrir un territoire à quelqu'un qui ne le connaît pas, lorsque plusieurs
+<summary><span class="pk">Semestre 4 · ELP 99_0249 · 35 h · C3 L2 · C5 L2</span><span class="pt">Valorisation du patrimoine calédonien : Nouméa, récits croisés</span><span class="pr">Concepteur·rice d'une expérience culturelle plurilingue, sur un lieu de Nouméa</span></summary>
+<div class="pc">
+<details class="sous"><summary>Ce que la SAÉ demande</summary><div class="sous-c">
+<p>Comment faire découvrir un territoire à quelqu'un qui ne le connaît pas, lorsque plusieurs
             langues, cultures et regards racontent simultanément le même lieu ? <strong>Vous devenez
             concepteurs d'expériences culturelles plurilingues.</strong></p>
-          <p>Chaque groupe ouvre son travail par un diagnostic du territoire et des publics : qui vient sur
+<p>Chaque groupe ouvre son travail par un diagnostic du territoire et des publics : qui vient sur
             le lieu et qui n'y vient pas, ce que les visiteurs en attendent selon leur langue et leur
             culture, quels acteurs le font vivre — institutions, associations, professionnels du tourisme,
             habitants —, et quelles ressources et contraintes pèsent sur lui. Ce diagnostic fonde le choix
             de l'angle narratif, du public visé et des langues retenues ; il est rendu avant la conception
             de l'identité visuelle et sert de référence à l'évaluation de vos choix ultérieurs.</p>
-          <p>Chaque groupe travaille un lieu, une histoire ou une problématique de Nouméa et construit
+<p>Chaque groupe travaille un lieu, une histoire ou une problématique de Nouméa et construit
             progressivement son identité narrative et visuelle en trois langues : Île Nou et l'ancien bagne
             pour la mémoire et l'enfermement, le centre-ville pour la ville historique et la ville
             contemporaine, la baie et le port pour les circulations et les migrations, l'architecture pour
             les traces et transformations du territoire, l'UNC pour la transmission des savoirs.</p>
-          <ol class="blocs">
-            <li><b>1 · Raconter un lieu</b> — direction artistique et storytelling. Que voulons-nous faire
+<ol class="blocs">
+<li><b>1 · Raconter un lieu</b> — direction artistique et storytelling. Que voulons-nous faire
               ressentir, à qui parlons-nous, quelle histoire raconter, quel est notre angle, comment le
               récit et la perception changent-ils selon la langue, la culture et le public ?</li>
-            <li><b>2 · Une identité visuelle pour une expérience</b> — moodboard, intention, palette,
+<li><b>2 · Une identité visuelle pour une expérience</b> — moodboard, intention, palette,
               photographie, typographie, affiche, contenu pour les réseaux sociaux, QR code, signalétique.
               Le flyer A5, le kakémono et la publication réseaux déjà prévus deviennent les déclinaisons
               d'un même concept visuel et narratif, au lieu de productions pensées séparément. Une
               collaboration avec les étudiants MMI est envisageable.</li>
-            <li><b>3 · Faire vivre le patrimoine</b> — un dispositif interactif simple : capsule audio
+<li><b>3 · Faire vivre le patrimoine</b> — un dispositif interactif simple : capsule audio
               trilingue derrière un QR code, énigme, détail architectural à retrouver, témoignage, archive
               confrontée au paysage actuel, micro-performance, photographie à recomposer, expérience
               sonore. Izi.travel accueille les contenus multilingues et devient l'un des éléments d'une
               expérience de médiation plus large, avec sur certains points une dimension d'escape game
               patrimonial.</li>
-            <li><b>4 · Horizon LEA, Live</b> — une demi-journée de restitution ouverte à un public réel.
+<li><b>4 · Horizon LEA, Live</b> — une demi-journée de restitution ouverte à un public réel.
               Vous accueillez les visiteurs et leur remettez une carte du parcours ; chaque équipe devient
               une agence de médiation culturelle plurilingue responsable de son expérience. Le visiteur
               passe d'un dispositif à l'autre en français, anglais et espagnol.</li>
-          </ol>
-          <p>Un objet ambassadeur — carte postale contemporaine, carte à collectionner, affiche
+</ol>
+<p>Un objet ambassadeur — carte postale contemporaine, carte à collectionner, affiche
             typographique, mini-dépliant accordéon, carte sonore, création graphique ou petite édition —
             donne envie de découvrir chaque lieu. L'ensemble constituerait la collection Horizon LEA, que
             l'UNC pourrait conserver, exposer et revaloriser lors d'Explore UNC en septembre 2027.</p>
-          <p><b>Transversalité :</b> anglais et espagnol pour la qualité linguistique, la traduction et
+<p><b>Transversalité :</b> anglais et espagnol pour la qualité linguistique, la traduction et
             l'adaptation interculturelle ; gestion pour la connaissance des publics, la stratégie et la
             posture professionnelle ; communication pour les supports, la valorisation et la diffusion ;
             création pour la conception, la direction artistique, la narration, l'expérience utilisateur et
             la restitution publique.</p>
-          <h4>Livrables attendus</h4>
-          <ul>
-            <li>Le diagnostic de territoire et de publics : qui vient sur le lieu et qui n'y vient pas, ce
+</div></details><details class="sous"><summary>Livrables attendus</summary><div class="sous-c">
+<ul>
+<li>Le diagnostic de territoire et de publics : qui vient sur le lieu et qui n'y vient pas, ce
               que les visiteurs en attendent selon leur langue, quels acteurs le font vivre, quelles
               ressources et contraintes pèsent sur lui. Rendu avant l'identité visuelle.</li>
-            <li>L'intention narrative : ce que le groupe veut faire ressentir, à qui il parle, quelle
+<li>L'intention narrative : ce que le groupe veut faire ressentir, à qui il parle, quelle
               histoire il raconte, quel est son angle.</li>
-            <li>L'identité visuelle : moodboard, palette, typographie, photographie, signe éventuel — un
+<li>L'identité visuelle : moodboard, palette, typographie, photographie, signe éventuel — un
               univers cohérent dont tout le reste découle.</li>
-            <li>Ses déclinaisons : affiche, flyer A5, kakémono, publication pour les réseaux sociaux,
+<li>Ses déclinaisons : affiche, flyer A5, kakémono, publication pour les réseaux sociaux,
               éléments de signalétique.</li>
-            <li>Un dispositif interactif simple : capsule audio trilingue derrière un QR code, énigme,
+<li>Un dispositif interactif simple : capsule audio trilingue derrière un QR code, énigme,
               détail architectural à retrouver, témoignage, archive à confronter au paysage actuel,
               micro-performance.</li>
-            <li>Les contenus multilingues déposés sur izi.travel : textes, photographies, capsules audio en
+<li>Les contenus multilingues déposés sur izi.travel : textes, photographies, capsules audio en
               français, anglais et espagnol.</li>
-            <li>Un objet ambassadeur, physique ou numérique : carte postale contemporaine, carte à
+<li>Un objet ambassadeur, physique ou numérique : carte postale contemporaine, carte à
               collectionner, affiche typographique, mini-dépliant accordéon, carte sonore, petite
               édition.</li>
-            <li>La restitution publique « Horizon LEA, live » : une demi-journée ouverte à un vrai public,
+<li>La restitution publique « Horizon LEA, live » : une demi-journée ouverte à un vrai public,
               avec accueil des visiteurs, remise d'une carte du parcours et médiation par chaque équipe.</li>
-          </ul>
-          <dl class="faits">
-            <div><dt>Reçoit en prérequis</dt><dd>SAÉ S3 · Gestion de projet (S3) · Projet tutoré (S3) · les
+</ul>
+<dl class="faits">
+<div><dt>Reçoit en prérequis</dt><dd>SAÉ S3 · Gestion de projet (S3) · Projet tutoré (S3) · les
               deux langues · Stratégie d'entreprise (S2) · Gestion de la relation client (S3)</dd></div>
-            <div><dt>Alimente</dt><dd>Communication expérientielle et patrimoniale S6 · SAÉ S7</dd></div>
-          </dl>
-          <h4>Grille d'évaluation</h4>
-          <p>Grille C3 L2 · C5 L2 — cinq composantes essentielles notées de 0 à 4, note sur 20. Une seule
+<div><dt>Alimente</dt><dd>Communication expérientielle et patrimoniale S6 · SAÉ S7</dd></div>
+</dl>
+</div></details><details class="sous"><summary>Grille d'évaluation</summary><div class="sous-c">
+<p>Grille C3 L2 · C5 L2 — cinq composantes essentielles notées de 0 à 4, note sur 20. Une seule
             composante à 0 invalide la compétence, quelle que soit la moyenne.</p>
-          <h4>Ce que l'enseignant évalue concrètement</h4>
-          <div class="tbl"><table>
-            <thead><tr><th>Composante du référentiel</th><th>Ce que l'enseignant évalue concrètement</th></tr></thead>
-            <tbody>
-              <tr><td>En s'appuyant sur des outils d'analyse quantitatifs et qualitatifs (C3)</td><td>Utilisation combinée de deux outils d'analyse avec croisement des résultats</td></tr>
-              <tr><td>En prenant en compte les dynamiques contextuelles (C3)</td><td>Vous intégrez les dimensions économiques, culturelles et environnementales</td></tr>
-              <tr><td>En formulant des recommandations cohérentes et adaptées (C3)</td><td>Vos recommandations sont argumentées et intègrent la durabilité</td></tr>
-              <tr><td>En mobilisant des sources dans au moins deux langues (C3)</td><td>Votre rapport intègre et exploite analytiquement des sources en français et en langue étrangère</td></tr>
-              <tr><td>En travaillant en équipe et en réseau ainsi qu'en autonomie et responsabilité au service d'un projet (C5)</td><td>Vous contribuez activement au projet collectif</td></tr>
-              <tr><td>En tenant compte des spécificités culturelles (C5)</td><td>Vous intégrez la dimension calédonienne</td></tr>
-              <tr><td>En identifiant les leviers d'action possibles pour une organisation dans un environnement donné (C5)</td><td>Priorisation des leviers d'action avec matrice d'impact/faisabilité</td></tr>
-            </tbody>
-          </table></div>
-          <p>Cours ressource : Projet tutoré.
-            <a class="renvoi" href="#licence" data-sem="S4">Voir le S4 →</a></p>
-        </div>
-      </details>
+</div></details><details class="sous"><summary>Ce que l'enseignant évalue concrètement</summary><div class="sous-c">
+<div class="tbl"><table>
+<thead><tr><th>Composante du référentiel</th><th>Ce que l'enseignant évalue concrètement</th></tr></thead>
+<tbody>
+<tr><td>En s'appuyant sur des outils d'analyse quantitatifs et qualitatifs (C3)</td><td>Utilisation combinée de deux outils d'analyse avec croisement des résultats</td></tr>
+<tr><td>En prenant en compte les dynamiques contextuelles (C3)</td><td>Vous intégrez les dimensions économiques, culturelles et environnementales</td></tr>
+<tr><td>En formulant des recommandations cohérentes et adaptées (C3)</td><td>Vos recommandations sont argumentées et intègrent la durabilité</td></tr>
+<tr><td>En mobilisant des sources dans au moins deux langues (C3)</td><td>Votre rapport intègre et exploite analytiquement des sources en français et en langue étrangère</td></tr>
+<tr><td>En travaillant en équipe et en réseau ainsi qu'en autonomie et responsabilité au service d'un projet (C5)</td><td>Vous contribuez activement au projet collectif</td></tr>
+<tr><td>En tenant compte des spécificités culturelles (C5)</td><td>Vous intégrez la dimension calédonienne</td></tr>
+<tr><td>En identifiant les leviers d'action possibles pour une organisation dans un environnement donné (C5)</td><td>Priorisation des leviers d'action avec matrice d'impact/faisabilité</td></tr>
+</tbody>
+</table></div>
+<p>Cours ressource : Projet tutoré.
+            <a class="renvoi" data-sem="S4" href="#licence">Voir le S4 →</a></p>
+</div></details></div>
+</details>
 
       <details class="pli large">
-        <summary><span class="pk">Semestre 7 · ELP 99_0259 · 30 h · C5 L3</span><span class="pt">Mise en situation professionnelle</span><span class="pr">De l'expérience vécue à la prise de position</span></summary>
-        <div class="pc">
-          <h4>Ce que la SAÉ demande</h4>
-          <p>Adossée à une alternance — et à un stage d'observation en enseignement pour les étudiants
+<summary><span class="pk">Semestre 7 · ELP 99_0259 · 30 h · C5 L3</span><span class="pt">Mise en situation professionnelle</span><span class="pr">De l'expérience vécue à la prise de position</span></summary>
+<div class="pc">
+<details class="sous"><summary>Ce que la SAÉ demande</summary><div class="sous-c">
+<p>Adossée à une alternance — et à un stage d'observation en enseignement pour les étudiants
             préparant le CAPES —, la SAÉ conduit l'étudiant de l'expérience vécue à l'analyse, puis de
             l'analyse à la prise de position professionnelle.</p>
-          <p>Livrables principaux : un rapport de stage individuel — présentation de l'organisation et de
+<p>Livrables principaux : un rapport de stage individuel — présentation de l'organisation et de
             son environnement, présentation et analyse des activités menées, trois récits d'expérience
             dont un récit vécu — et une soutenance orale individuelle qui met l'expérience en perspective
             plutôt que de restituer le rapport.</p>
-          <p>Quatre fiches étape jalonnent le parcours : pitch de professionnalisation oral et multilingue
+<p>Quatre fiches étape jalonnent le parcours : pitch de professionnalisation oral et multilingue
             (1'30 à 2' par langue), récit d'expérience, point de mi-stage avec problématique, et fiche
             éthique, déontologie et RSE.</p>
-          <p>Cours ressources mobilisés : Traduction de spécialité pour la reformulation et la terminologie, Techniques d'expression pour la structuration et la clarté argumentative, Soft skills pour la posture et la réflexivité, Méthodologie du rapport pour la problématique et le raisonnement — ces deux derniers hors spécialisation CAPES d'espagnol.</p>
-          <h4>Livrables attendus</h4>
-          <ul>
-            <li><b>Rendu 1</b> — Le pitch professionnel, présenté devant un jury multilingue.</li>
-            <li><b>Rendu 2</b> — La fiche de pré-positionnement professionnel.</li>
-            <li><b>Rendu 3</b> — Une fiche « récit d'expérience » au choix parmi trois, 1 à 2 pages : une
+<p>Cours ressources mobilisés : Traduction de spécialité pour la reformulation et la terminologie, Techniques d'expression pour la structuration et la clarté argumentative, Soft skills pour la posture et la réflexivité, Méthodologie du rapport pour la problématique et le raisonnement — ces deux derniers hors spécialisation CAPES d'espagnol.</p>
+</div></details><details class="sous"><summary>Livrables attendus</summary><div class="sous-c">
+<ul>
+<li><b>Rendu 1</b> — Le pitch professionnel, présenté devant un jury multilingue.</li>
+<li><b>Rendu 2</b> — La fiche de pré-positionnement professionnel.</li>
+<li><b>Rendu 3</b> — Une fiche « récit d'expérience » au choix parmi trois, 1 à 2 pages : une
               initiative menée avec succès, une situation difficile ou un échec relatif, une collaboration
               interculturelle ou multilingue. Pour la spécialisation CAPES d'espagnol, trois fiches
               équivalentes sur le stage d'observation en établissement scolaire.</li>
-            <li><b>Rendu 4</b>, à mi-stage — La problématique du rapport de stage et son cheminement, plus
+<li><b>Rendu 4</b>, à mi-stage — La problématique du rapport de stage et son cheminement, plus
               le récit d'expérience n° 2 : 1 à 2 pages.</li>
-            <li><b>Rendu 5</b> — La fiche éthique, déontologie et responsabilité.</li>
-            <li><b>Rendu 6</b> — Le rapport de stage et sa soutenance : rapport en français, soutenance en
+<li><b>Rendu 5</b> — La fiche éthique, déontologie et responsabilité.</li>
+<li><b>Rendu 6</b> — Le rapport de stage et sa soutenance : rapport en français, soutenance en
               anglais pour la spécialisation Marketing International, en espagnol pour la spécialisation
               CAPES d'espagnol. Rendu une semaine avant l'oral. Tout recours à l'IA doit être mentionné et cité ; tout recours abusif à l'IA sera très lourdement pénalisé.</li>
-          </ul>
-          <dl class="faits">
-            <div><dt>Reçoit en prérequis</dt><dd>Stage découverte S2 · Stage 1 mois S4 · Traduction de
+</ul>
+<dl class="faits">
+<div><dt>Reçoit en prérequis</dt><dd>Stage découverte S2 · Stage 1 mois S4 · Traduction de
               spécialité, Techniques d'expression, Soft skills et Méthodologie du rapport (S7)</dd></div>
-            <div><dt>Alimente</dt><dd>Poursuite d'études en master</dd></div>
-          </dl>
-          <h4>Grille d'évaluation</h4>
-          <p>Grille C5 L3 — cinq composantes essentielles notées de 0 à 4, note sur 20. Une seule
+<div><dt>Alimente</dt><dd>Poursuite d'études en master</dd></div>
+</dl>
+</div></details><details class="sous"><summary>Grille d'évaluation</summary><div class="sous-c">
+<p>Grille C5 L3 — cinq composantes essentielles notées de 0 à 4, note sur 20. Une seule
             composante à 0 invalide la compétence, quelle que soit la moyenne.</p>
-          <h4>Ce que l'enseignant évalue concrètement</h4>
-          <div class="tbl"><table>
-            <thead><tr><th>Composante du référentiel</th><th>Ce que l'enseignant évalue concrètement</th></tr></thead>
-            <tbody>
-              <tr><td>En situant son rôle et sa mission au sein d'une organisation</td><td>Vous identifiez et analysez vos activités de stage en les reliant aux enjeux de l'organisation</td></tr>
-              <tr><td>En caractérisant et valorisant votre identité, vos compétences et votre projet professionnel</td><td>Vous construisez un pitch de professionnalisation ciblé et une problématique de rapport argumentée</td></tr>
-              <tr><td>En travaillant en équipe et en réseau ainsi qu'en autonomie et responsabilité</td><td>Vous travaillez en équipe sur la mise en situation professionnelle et assumez vos responsabilités en autonomie</td></tr>
-              <tr><td>En analysant vos actions et en vous autoévaluant pour améliorer votre pratique</td><td>Vous produisez trois fiches SAAP et une fiche éthique avec une posture réflexive professionnelle</td></tr>
-              <tr><td>En respectant les principes d'éthique, de déontologie et de responsabilité environnementale</td><td>Respect de toutes les normes professionnelles dans vos livrables (rapport, soutenance, correspondances)</td></tr>
-              <tr><td>En identifiant et valorisant vos compétences</td><td>Portfolio de compétences complet avec preuves (travaux, rapports de stage, certifications)</td></tr>
-              <tr><td>En analysant les enjeux et les besoins du secteur professionnel visé</td><td>Monographie professionnelle sur un secteur à l'international</td></tr>
-              <tr><td>En travaillant en équipe et en réseau ainsi qu'en autonomie et responsabilité au service d'un projet</td><td>Coordination d'un projet interculturel impliquant au moins un partenaire étranger, réel ou simulé</td></tr>
-              <tr><td>En adoptant une posture professionnelle en fonction du contexte</td><td>Vous adoptez une posture professionnelle complète en situation réelle ou simulée (rigueur, autonomie, initiative, qualité du livrable)</td></tr>
-            </tbody>
-          </table></div>
-          <p>Cours ressources : Méthodologie de la recherche et du rapport, Soft skills stratégiques,
+</div></details><details class="sous"><summary>Ce que l'enseignant évalue concrètement</summary><div class="sous-c">
+<div class="tbl"><table>
+<thead><tr><th>Composante du référentiel</th><th>Ce que l'enseignant évalue concrètement</th></tr></thead>
+<tbody>
+<tr><td>En situant son rôle et sa mission au sein d'une organisation</td><td>Vous identifiez et analysez vos activités de stage en les reliant aux enjeux de l'organisation</td></tr>
+<tr><td>En caractérisant et valorisant votre identité, vos compétences et votre projet professionnel</td><td>Vous construisez un pitch de professionnalisation ciblé et une problématique de rapport argumentée</td></tr>
+<tr><td>En travaillant en équipe et en réseau ainsi qu'en autonomie et responsabilité</td><td>Vous travaillez en équipe sur la mise en situation professionnelle et assumez vos responsabilités en autonomie</td></tr>
+<tr><td>En analysant vos actions et en vous autoévaluant pour améliorer votre pratique</td><td>Vous produisez trois fiches SAAP et une fiche éthique avec une posture réflexive professionnelle</td></tr>
+<tr><td>En respectant les principes d'éthique, de déontologie et de responsabilité environnementale</td><td>Respect de toutes les normes professionnelles dans vos livrables (rapport, soutenance, correspondances)</td></tr>
+<tr><td>En identifiant et valorisant vos compétences</td><td>Portfolio de compétences complet avec preuves (travaux, rapports de stage, certifications)</td></tr>
+<tr><td>En analysant les enjeux et les besoins du secteur professionnel visé</td><td>Monographie professionnelle sur un secteur à l'international</td></tr>
+<tr><td>En travaillant en équipe et en réseau ainsi qu'en autonomie et responsabilité au service d'un projet</td><td>Coordination d'un projet interculturel impliquant au moins un partenaire étranger, réel ou simulé</td></tr>
+<tr><td>En adoptant une posture professionnelle en fonction du contexte</td><td>Vous adoptez une posture professionnelle complète en situation réelle ou simulée (rigueur, autonomie, initiative, qualité du livrable)</td></tr>
+</tbody>
+</table></div>
+<p>Cours ressources : Méthodologie de la recherche et du rapport, Soft skills stratégiques,
             Traduction de spécialité, Techniques d'expression.
-            <a class="renvoi" href="#licence" data-sem="S7">Voir le S7 →</a></p>
-        </div>
-      </details>
+            <a class="renvoi" data-sem="S7" href="#licence">Voir le S7 →</a></p>
+</div></details></div>
+</details>
     </div>
   </div>
 </section>
@@ -3164,13 +3267,6 @@ a.ia-bouton .bd{display:block; font-size:14.5px; opacity:.85; margin-top:2px;}
           Avec au moins 10 l'année suivante, elle est validée après coup ; sinon, elle se repasse.</p></div>
       </details>
       <details class="pli">
-        <summary><span class="pt">Vos notes en cas de redoublement</span><span class="pr">Report automatique au-dessus de 10</span></summary>
-        <div class="pc"><p>Dans une UE non validée, une note de cours supérieure à 10 est <strong>reportée
-          automatiquement</strong>, pendant deux ans au plus. Pour repasser un cours plutôt que garder sa
-          note, demandez-le <strong>avant votre contrat pédagogique</strong> ; la décision est
-          définitive.</p></div>
-      </details>
-      <details class="pli">
         <summary><span class="pt">Le cas de « Se professionnaliser »</span><span class="pr">À valider obligatoirement en L4</span></summary>
         <div class="pc"><p>Elle apparaît en L1, en L2 sous forme de deux SAÉ, puis au S7 ; en L3, le bloc
           de spé la remplace. Non validée en L2, elle ne bloque pas l'entrée en L3 si les trois autres le
@@ -3184,6 +3280,42 @@ a.ia-bouton .bd{display:block; font-size:14.5px; opacity:.85; margin-top:2px;}
           demande.</p></div>
       </details>
     </div>
+  </div>
+</section>
+
+<!-- =================== VALIDER SON ANNEE =================== -->
+<section class="panneau" id="valider" data-accent="c3" role="tabpanel" aria-labelledby="t-valider" hidden>
+  <div class="wrap">
+    <div class="tete">
+      <h2><span class="eyeb">Depuis 2026, par compétences</span>Valider son année</h2>
+    </div>
+    <div class="pc">
+          <p>Depuis 2026, la licence LEA fonctionne par compétences. Sur le relevé de notes :</p>
+          <div class="valide-duo">
+          <div class="vcarte non">
+          <h4>Ce qu’il ne faut plus regarder</h4>
+          <ul class="valide-non">
+            <li>La moyenne générale de l’année ou du semestre en cours, (le système calcule automatiquement une moyenne en additionnant toutes les notes).</li>
+            <li>La moyenne d’un semestre pris isolément.</li>
+            <li>L’idée de « valider ou non son semestre » : en compétences, il n’y a plus d’étudiants à cheval sur deux années (S2 validé mais S1 en dette, par exemple). <strong>On ne valide plus un semestre, on valide une année.</strong></li>
+          </ul>
+          </div>
+          <div class="vcarte oui">
+          <h4>Ce qu’il faut regarder</h4>
+          <ul class="valide-oui">
+            <li><strong>La moyenne de chacun de vos 4 blocs de compétences.</strong> Un bloc = la moyenne de ses deux semestres (par exemple UE01A + UE01B). Il est validé à 10/20.</li>
+          </ul>
+          <p><strong>Un bon bloc ne rattrape pas un bloc raté.</strong> Chaque compétence se juge séparément. Par exemple, une excellente note en traduction ne peut pas compenser une compétence liée au monde de l’entreprise : si vous avez 16 en traduction et 7 dans le bloc « Analyser le fonctionnement d’une organisation », le second bloc n’est pas validé.</p>
+          </div>
+          </div>
+          <h4>Ce qui vous attend</h4>
+          <ul class="issues">
+            <li class="i-ok"><strong>4 blocs validés :</strong> vous passez en année supérieure.</li>
+            <li class="i-dette"><strong>3 blocs validés + 1 bloc entre 8 et 10 :</strong> vous passez, mais ce bloc reste « en dette ». L’an prochain, vous devrez obtenir 10/20 dans ce bloc. Si vous y arrivez, il est validé pour l’année précédente. Sinon, vous devrez refaire toutes les matières de ce bloc.</li>
+            <li class="i-jury"><strong>Cas d’un seul bloc sous 8/20 :</strong> c’est le jury d’examen qui apprécie la situation.</li>
+            <li class="i-non"><strong>2 blocs non validés ou plus :</strong> vous ne passez pas. Vous refaites l’année, mais seulement les blocs non validés. Les blocs déjà validés sont acquis définitivement.</li>
+          </ul>
+        </div>
   </div>
 </section>
 
@@ -3300,7 +3432,7 @@ a.ia-bouton .bd{display:block; font-size:14.5px; opacity:.85; margin-top:2px;}
     </div>
 
     <h3 class="ia-h">Réviser</h3>
-    <a class="ia-bouton" href="reviser-avec-lia-etudiant.html" target="_blank" rel="noopener"><span class="bt">Réviser vos cours avec les IA</span><span class="bd">Loïc Steffan · de vos supports de cours à l'épreuve blanche, huit fiches ↗</span></a>
+    <a class="ia-bouton" href="reviser-avec-lia-etudiant.html" target="_blank" rel="noopener"><span class="bt">Réviser vos cours avec les IA</span><span class="bd">Loïc Steffan · cinq besoins : réviser et se faire des QCM, affiner une problématique, fabriquer des fiches, éviter le générique, CV et entretien ↗</span></a>
 
     <h3 class="ia-h">Postuler à une alternance ou à un stage</h3>
     <ul class="liens">
@@ -3383,7 +3515,30 @@ a.ia-bouton .bd{display:block; font-size:14.5px; opacity:.85; margin-top:2px;}
       <h2><span class="eyeb">Pour aller plus loin</span>Contacts</h2>
     </div>
 
-    <ul class="contacts">
+    <form class="ecrire" id="ecrire-resp" autocomplete="off">
+    <h3>Envoyer un email à mon responsable pédagogique</h3>
+    <div class="ligne">
+      <label>Votre nom et prénom<input type="text" name="nom" required autocomplete="name"></label>
+      <label>Votre année<select name="annee" required><option value="">Choisir</option><option>L1</option><option>L2</option><option>L3 Marketing International</option><option>L3 CAPES d'espagnol</option></select></label>
+    </div>
+    <label>Sujet précis de la demande<input type="text" name="sujet" required maxlength="120"></label>
+    <label>Votre message<textarea name="msg" rows="5" required></textarea></label>
+    <button type="submit">Envoyer un email à mon responsable pédagogique</button>
+  </form>
+  <script>
+  (function(){
+    var f = document.getElementById('ecrire-resp');
+    if (!f) { return; }
+    f.addEventListener('submit', function(ev){
+      ev.preventDefault();
+      var nom = f.nom.value.trim(), an = f.annee.value, msg = f.msg.value.trim();
+      var sujet = 'Licence LEA, ' + an + ' : ' + f.sujet.value.trim() + ' (' + nom + ')';
+      var corps = msg + '\n\n' + nom + '\nLicence LEA, ' + an;
+      location.href = 'mailto:emmeline.gros@unc.nc?subject=' + encodeURIComponent(sujet) + '&body=' + encodeURIComponent(corps);
+    });
+  })();
+  </script>
+  <ul class="contacts">
       <li><span class="role">Responsable de la licence LEA</span>
         <span class="nom">Emmeline Gros</span><br>
         <span class="mel">emmeline.gros@unc.nc</span><br>
@@ -3392,10 +3547,7 @@ a.ia-bouton .bd{display:block; font-size:14.5px; opacity:.85; margin-top:2px;}
         <span class="nom">Angela Leclerc</span><br>
         <span class="mel">angela.leclerc@unc.nc</span><br>
         À contacter dès le semestre 4 : CV, lettre, contrat, mise en relation.</li>
-      <li><span class="role">Spé CAPES d'espagnol</span>
-        <span class="nom">Maria Elena Merino Dominguez</span><br>
-        <span class="mel">elena.merino-dominguez@unc.nc</span><br>
-        Stage d'observation en établissement scolaire.</li>
+      <li><span class="role">Spé CAPES d'espagnol</span> <span class="nom">Gema Jimeno</span><br> Responsable du stage d'observation en établissement scolaire.</li>
       <li><span class="role">Secrétariat du département LEA</span>
         <span class="nom">Conventions et justificatifs</span><br>
         Les grilles d'évaluation se téléchargent sur Moodle ; la convention de stage, sur Moodle ou sur l'ENT, rubrique Stage.</li>
@@ -4570,6 +4722,29 @@ window.COMP_MARCHE = {"c1": {"missions": ["Adapter son discours oral ou écrit (
   btnRetour.addEventListener('click', function(){ history.back(); });
   document.addEventListener('click', function(ev){ if (ev.target.closest && ev.target.closest('#licence button.mode')) { nommer(); } });
   nommer();
+})();
+</script>
+<script>
+/* corrections-24-11 : un lien « data-vers-pli » ouvre la rubrique qui porte l'encart visé, déplie cet encart (les autres de la rubrique se replient)
+   et s'y place. Utilisé par « par les débouchés » → encart « Débouchés » de la rubrique « Choisir sa spé ». */
+(function(){
+  document.addEventListener('click', function(ev){
+    var a = ev.target.closest && ev.target.closest('a[data-vers-pli]');
+    if (!a) { return; }
+    var d = document.getElementById(a.getAttribute('data-vers-pli'));
+    var p = d && d.closest('section.panneau');
+    if (!p) { return; }
+    ev.preventDefault();
+    var t = document.getElementById('t-' + p.id);
+    if (t) { t.click(); }
+    function placer(){ d.scrollIntoView({block: 'start', behavior: 'auto'}); } // tient compte du « scroll-padding-top » : la barre collée ne cache pas l'encart
+    setTimeout(function(){
+      Array.prototype.forEach.call(p.querySelectorAll('details.pli'), function(x){ if (x !== d && !x.contains(d)) { x.open = false; } });
+      var e = d; while (e && e !== p) { if (e.tagName === 'DETAILS') { e.open = true; } e = e.parentElement; }
+      placer();
+    }, 90);
+    setTimeout(placer, 450); // la page recale aussi son défilement à l'ouverture d'une rubrique : on se replace après elle
+  });
 })();
 </script>
 </body>
