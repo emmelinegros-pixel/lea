@@ -120,6 +120,7 @@ b.hl{font-weight:700;color:var(--navy);border-bottom:2px dotted var(--blue);curs
 @media(max-width:600px){.sheet td,.sheet th{padding:8px 4px}}
 @media(prefers-reduced-motion:reduce){.prog i{transition:none}}
 .spotq{line-height:2.1}.spotq .sx{color:#b42318;font-weight:700}.wd{font:inherit;border:0;background:none;padding:1px 3px;margin:0 -1px;border-radius:5px;cursor:pointer;color:inherit}.wd:hover{background:#eef2f9}.wd.on{background:#fde7b0;box-shadow:inset 0 -2px 0 #b54708}.wd.good{background:#dcf5e3;box-shadow:inset 0 -2px 0 #067647}.wd.bad{background:#fde3e1;text-decoration:line-through}
+.spok{color:var(--green);font-weight:500}.spbad{color:var(--red);font-weight:700;text-decoration:underline wavy}
 .glo{padding:12px 14px;border:1px solid var(--line);border-left:5px solid #1d5fa8;border-radius:10px;background:var(--panel)}
 </style>
 </head>
@@ -337,11 +338,51 @@ function home(){
 function start(){R={items:pick(),i:0,score:0,miss:[]};go(roundView)}
 function oralMenu(){
  stage.innerHTML=`<div class="card"><div class="cardhead"><b>Travailler l'oral</b><span></span></div><div class="cardbody">
- <div class="act"><button class="btn" id="olisten" type="button">Listening</button><button class="btn" id="opron" type="button">Pronunciation</button></div></div></div>`;
+ <div class="act"><button class="btn" id="olisten" type="button">Listening</button><button class="btn" id="opron" type="button">Pronunciation</button><button class="btn" id="ospeak" type="button">Speaking</button></div></div></div>`;
  document.getElementById("olisten").onclick=listenStart;
- document.getElementById("opron").onclick=pronStart;
+ document.getElementById("opron").onclick=pronStart;document.getElementById("ospeak").onclick=()=>{SPK=null;go(speakView)};
 }
 function pronStart(){const pool=I.filter(x=>x.au&&x.y<=S.year);R={items:shuf(pool).slice(0,10),i:0,score:0,miss:[],oral:true};go(roundView)}
+let SPK=null;
+function spkPool(){const out=[];GS.forEach(g=>(g.learn||[]).forEach(([en,fr])=>out.push({en,fr,src:g.title})));I.forEach(x=>{if(x.au&&/\s/.test(x.au)&&x.fr)out.push({en:x.au,fr:x.fr,src:FAM[x.f].n})});return out}
+function speakView(){
+ if(!SPK){const p=spkPool();SPK={list:shuf(p),i:0,hide:false}}
+ const s=SPK.list[SPK.i%SPK.list.length];
+ const SRc=window.SpeechRecognition||window.webkitSpeechRecognition;
+ stage.innerHTML=`<div class="card"><div class="cardhead"><b>Speaking</b><span>${esc(s.src)}</span></div><div class="cardbody">
+ <p class="q" id="spen" ${SPK.hide?'style="filter:blur(7px)"':""}>${esc(s.en)}</p><p class="small">${esc(s.fr)}</p>
+ <div class="player"><button class="btn ghost" id="splisten" type="button">▶ Listen</button><button class="btn" id="spmic" type="button">🎤 Say it</button><button class="btn ghost" id="sphide" type="button" aria-pressed="${SPK.hide}">${SPK.hide?"Show the English":"Hide the English"}</button></div>
+ ${SRc?"":`<div class="pill trap"><b>⚠</b><span>Le micro marche avec Chrome, Edge ou Safari sur iPhone. Ici : écoutez, puis répétez à voix haute.</span></div>`}
+ <div class="fb" id="spfb"></div>
+ <div class="act"><button class="btn ghost" id="spnext" type="button">Next →</button></div></div></div>`;
+ document.getElementById("splisten").onclick=()=>speak(s.en,false);
+ document.getElementById("sphide").onclick=()=>{SPK.hide=!SPK.hide;speakView()};
+ document.getElementById("spnext").onclick=()=>{SPK.i++;speakView()};
+ const mic=document.getElementById("spmic"),fb=document.getElementById("spfb");
+ if(!SRc){mic.disabled=true;return}
+ mic.onclick=()=>{
+  stopAudio();const rec=new SRc();rec.lang="en-GB";rec.interimResults=false;rec.maxAlternatives=3;
+  mic.disabled=true;mic.textContent="🎤 Listening…";
+  rec.onresult=e=>{const alts=[...e.results[0]].map(a=>a.transcript);let best=null;alts.forEach(t=>{const r=spkCompare(s.en,t);if(!best||r.pct>best.pct)best=r});spkShow(fb,s,best)};
+  rec.onerror=e=>{fb.innerHTML=`<div class="pill trap"><b>⚠</b><span>${e.error==="not-allowed"?"Autorisez le micro dans le navigateur.":"Je n'ai rien entendu. Recommencez, plus près du micro."}</span></div>`};
+  rec.onend=()=>{mic.disabled=false;mic.textContent="🎤 Say it again"};
+  try{rec.start()}catch(e){mic.disabled=false}
+ };
+}
+function spkWords(t){return String(t).toLowerCase().replace(/[’‘]/g,"'").replace(/[^a-z0-9' ]+/g," ").split(/\s+/).filter(Boolean)}
+function spkCompare(target,said){
+ const a=spkWords(target),b=spkWords(said);const n=a.length,m=b.length;
+ const L=Array.from({length:n+1},()=>new Array(m+1).fill(0));
+ for(let i=n-1;i>=0;i--)for(let j=m-1;j>=0;j--)L[i][j]=a[i]===b[j]?L[i+1][j+1]+1:Math.max(L[i+1][j],L[i][j+1]);
+ const ok=new Array(n).fill(false);let i=0,j=0;while(i<n&&j<m){if(a[i]===b[j]){ok[i]=true;i++;j++}else if(L[i+1][j]>=L[i][j+1])i++;else j++}
+ return {ok,said,pct:Math.round(100*ok.filter(Boolean).length/Math.max(1,n))};
+}
+function spkShow(fb,s,r){
+ const toks=s.en.split(/\s+/);let k=0;
+ const html=toks.map(t=>{const w=spkWords(t);if(!w.length)return esc(t);const good=w.every(()=>r.ok[k++]);return good?`<span class="spok">${esc(t)}</span>`:`<span class="spbad">${esc(t)}</span>`}).join(" ");
+ const v=r.pct>=90?["model","✓ CLEAR"]:r.pct>=60?["trap","⚠ ALMOST"]:["wrong","✗ AGAIN"];
+ fb.innerHTML=`<div class="pill ${v[0]}"><b>${v[1]} · ${r.pct}%</b><span>${html}</span></div><div class="pill note"><b>Heard</b><span>${esc(r.said)}</span></div>${r.pct<90?`<div class="pill remember"><b>Tip</b><span>Écoutez (▶), puis redites les mots en rouge, lentement.</span></div>`:""}`;
+}
 function roundView(){if(!R)return home();if(R.i>=R.items.length)return end(true);show()}
 function practice(it){R={items:[it],i:0,score:0,miss:[],single:true};go(roundView)}
 
