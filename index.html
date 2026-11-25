@@ -1171,6 +1171,10 @@ form.ecrire button:hover{background:#8A4A05;}
 @media (max-width:640px){form.ecrire .ligne{grid-template-columns:1fr;}}
 
 
+/* règle sur le téléphone en cours (25/11/2026), même encadré que « Absences » */
+.absences + .absences{margin-top:14px;}
+
+
 /* rubriques « L'alternance » et « Le CAPES » rangées en parties titrées (24/11/2026) */
 .panneau .wrap{counter-reset:grp;}
 h3.grp{display:flex; align-items:center; gap:12px; margin:30px 0 12px; padding:0 0 8px; border-bottom:2px solid var(--accent,#1F56A0); font-family:"Source Serif 4",Georgia,serif; font-size:21px; font-weight:600; color:var(--accent,#1F56A0);}
@@ -3441,6 +3445,13 @@ a.ia-bouton .bd{display:block; font-size:14.5px; opacity:.85; margin-top:2px;}
     <div class="intro"><p>Soumis à la Commission de la formation et de la vie universitaire de l'UNC, il
       s'applique à tous les étudiants de la licence. En cas de doute, c'est lui qui tranche.
       <button type="button" class="tout" style="margin-left:8px;">Tout déplier</button></p></div>
+
+    <div class="absences telephone" role="note">
+      <span class="k">Téléphone</span>
+      <ul>
+        <li>Sauf indication contraire de la part de votre enseignant, le téléphone (utilisation et consultation) est <span class="maj">INTERDIT</span> pendant tous les cours : en CM, en TD et en TP. L'enseignant se réserve le droit d'en sanctionner l'usage comme il le souhaite.</li>
+      </ul>
+    </div>
 
     <div class="plis">
       <details class="pli">
