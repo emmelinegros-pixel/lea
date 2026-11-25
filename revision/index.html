@@ -335,7 +335,7 @@ function home(){
  stage.querySelectorAll(".yr").forEach(b=>b.onclick=()=>{S.year=+b.dataset.y;save();home()});
  document.getElementById("go").onclick=start;
  document.getElementById("listen").onclick=()=>go(oralMenu);
- const mc=document.getElementById("mescours");if(mc)mc.onclick=()=>go(coursList);
+ const mc=document.getElementById("mescours");if(mc)mc.onclick=()=>go(coursList2);
 }
 
 function start(){R={items:pick(),i:0,score:0,miss:[]};go(roundView)}
@@ -440,6 +440,83 @@ function coursDiag(c,final){
  document.getElementById("cdnext").onclick=()=>{if(final){S.cours[c.id]={i:0,res:{}}}else st.stop=null;save();LQ=null;coursView(c)};
  document.getElementById("cdsheet").onclick=()=>{SV={side:"recto",hide:false};go(()=>gsheetView(c.sheet))};
  document.getElementById("cdlist").onclick=()=>go(coursList);
+}
+let LQ2=null;
+function kBank(c){return c.qs.concat(c.rq||[])}
+function kState(c){S.cours2=S.cours2||{};let st=S.cours2[c.id];if(!st)st=S.cours2[c.id]={res:{},hist:{},queue:c.qs.map(q=>q.id),n:0,pass:1,stop:false};return st}
+function kMastered(st,n){const h=st.hist[n]||[];return h.length>=2&&h[h.length-1]===1&&h[h.length-2]===1}
+function kPrune(c,st){st.queue=st.queue.filter(id=>{const q=kBank(c).find(x=>x.id===id);return q&&!kMastered(st,q.n)})}
+function kCount(c){const st=kState(c);let a=0,b=0,z=0;Object.values(st.hist).forEach(h=>h.forEach(r=>{if(r===1)a++;else if(r===2)b++;else z++}));const m=c.notions.filter(n=>kMastered(st,n[0])).length;return `Premier essai : ${a} · Deuxième essai : ${b} · Ratées : ${z} · Notions maîtrisées : ${m} / ${c.notions.length}`}
+function coursList2(){
+ const C=window.COURS||[];const by={};C.forEach(c=>(by[c.course]=by[c.course]||[]).push(c));
+ stage.innerHTML=`<div class="card"><div class="cardhead"><b>Mes cours</b><span>${C.length} séance${C.length>1?"s":""}</span></div><div class="cardbody">${Object.keys(by).map(k=>`<p class="q">${esc(k)}</p><div class="cards">${by[k].map(c=>{const st=kState(c);const m=c.notions.filter(n=>kMastered(st,n[0])).length;return `<button type="button" data-c="${c.id}"><b>${esc(c.title)}</b><br><span class="small">Notions maîtrisées : ${m} / ${c.notions.length}</span></button>`}).join("")}</div>`).join("")||'<p class="small">Aucune séance pour l\'instant.</p>'}</div></div>`;
+ stage.querySelectorAll("[data-c]").forEach(b=>b.onclick=()=>{const c=C.find(x=>x.id===b.dataset.c);LQ2=null;go(()=>coursView2(c))});
+}
+function coursView2(c){
+ const st=kState(c);
+ if(st.stop)return coursDiag2(c);
+ kPrune(c,st);
+ if(!st.queue.length)return coursDiag2(c);
+ const q=kBank(c).find(x=>x.id===st.queue[0]);
+ if(!LQ2||LQ2.id!==q.id)LQ2={id:q.id,order:shuf([0,1,2,3]),tries:0,pick:null,wrong:[],done:false};
+ const lvl={r:"Restitution",a:"Compréhension appliquée",d:"Difficile"}[q.lvl];
+ const notion=(c.notions.find(n=>n[0]===q.n)||["",""])[1];
+ stage.innerHTML=`<div class="card"><div class="cardhead"><b>${esc(c.title)}</b><span>${st.pass>1?`Reprise ${st.pass-1} · `:""}${lvl} · reste ${st.queue.length}</span></div><div class="cardbody">
+ <p class="small">${esc(notion)}</p>
+ <p class="q">${esc(q.q).replace("______",'<span class="gap" aria-hidden="true">&nbsp;</span>')}</p>
+ <div class="opts">${LQ2.order.map(k=>`<button type="button" class="opt${LQ2.wrong.includes(k)?" bad":""}" data-k="${k}"${LQ2.wrong.includes(k)?" disabled":""}>${esc(q.o[k])}</button>`).join("")}</div>
+ <div class="fb" id="lqfb">${LQ2.tries===1&&!LQ2.done?`<div class="pill wrong"><b>✗</b><span>Deuxième essai.</span></div><div class="pill remember"><b>Indice</b><span>${esc(q.hint)}</span></div>`:""}</div>
+ <div class="act" id="lqact"><button class="btn" id="lqcheck" type="button">Valider</button></div>
+ <p class="small" id="lqcount">${kCount(c)}</p></div></div>`;
+ stage.querySelectorAll(".opt:not([disabled])").forEach(b=>b.onclick=()=>{if(LQ2.done)return;stage.querySelectorAll(".opt").forEach(x=>x.classList.remove("on"));b.classList.add("on");LQ2.pick=+b.dataset.k});
+ document.getElementById("lqcheck").onclick=()=>{
+  if(LQ2.pick===null)return;
+  if(LQ2.pick===0)return coursEnd2(c,q,LQ2.tries+1);
+  LQ2.tries++;LQ2.wrong.push(LQ2.pick);
+  if(LQ2.tries===1){LQ2.pick=null;return coursView2(c)}
+  coursEnd2(c,q,0);
+ };
+}
+function coursEnd2(c,q,r){
+ const st=kState(c);LQ2.done=true;
+ const was=kMastered(st,q.n);
+ st.res[q.id]=r;(st.hist[q.n]=st.hist[q.n]||[]).push(r);st.n++;st.queue=st.queue.filter(id=>id!==q.id);
+ const now=kMastered(st,q.n);if(now&&!was)kPrune(c,st);
+ if(st.n%5===0)st.stop=true;
+ save();
+ stage.querySelectorAll(".opt").forEach(b=>{b.disabled=true;if(+b.dataset.k===0)b.classList.add("good")});
+ const rule=(c.notions.find(n=>n[0]===q.n)||["","",""]);
+ document.getElementById("lqfb").innerHTML=(r?`<div class="pill model"><b>✓ ${r===1?"1er essai":"2e essai"}</b><span>${esc(q.o[0])}</span></div>`:
+  `<div class="pill wrong"><b>✗ Erreur de raisonnement</b><span>${esc(q.c[LQ2.pick-1].charAt(0).toUpperCase()+q.c[LQ2.pick-1].slice(1))}</span></div><div class="pill model"><b>✓ Réponse</b><span>${esc(q.o[0])}</span></div><div class="pill remember"><b>Règle du cours</b><span>${esc(rule[2])}</span></div>`)+
+  (now&&!was?`<div class="pill note"><b>Notion maîtrisée</b><span>${esc(rule[1])} : elle ne sera plus testée.</span></div>`:"");
+ document.getElementById("lqact").innerHTML=`<button class="btn" id="lqnext" type="button">${st.stop||!st.queue.length?"Bilan":"Question suivante"}</button>`;
+ document.getElementById("lqnext").onclick=()=>{LQ2=null;coursView2(c)};
+ document.getElementById("lqcount").textContent=kCount(c);
+}
+function kWeak(c,st){const sc={};Object.entries(st.hist).forEach(([n,h])=>{sc[n]=h.reduce((s,r)=>s+(r===0?2:r===2?1:0),0)});
+ return c.notions.map((n,k)=>[n,sc[n[0]]||0,k,(st.hist[n[0]]||[]).length]).filter(x=>!kMastered(st,x[0][0])).sort((a,b)=>b[1]-a[1]||a[2]-b[2])}
+function kRefill(c,st){
+ const weak=kWeak(c,st);const bank=kBank(c);const lists=weak.map(([n])=>{const qs=bank.filter(q=>q.n===n[0]);
+  const rank=q=>st.res[q.id]===undefined?0:st.res[q.id]===0?1:st.res[q.id]===2?2:3;
+  return shuf(qs).sort((a,b)=>rank(a)-rank(b)).filter(q=>rank(q)<3).slice(0,3).map(q=>q.id)});
+ const out=[];for(let i=0;i<3;i++)lists.forEach(l=>{if(l[i])out.push(l[i])});
+ st.queue=out;st.pass++;st.stop=false;
+}
+function coursDiag2(c){
+ const st=kState(c);kPrune(c,st);
+ const weak=kWeak(c,st).filter(x=>x[1]>0);const pend=kWeak(c,st).filter(x=>x[1]===0&&x[3]>0);
+ const mast=c.notions.filter(n=>kMastered(st,n[0]));
+ const allDone=mast.length===c.notions.length;
+ const action=st.queue.length?"cont":allDone?"zero":"refill";
+ stage.innerHTML=`<div class="card"><div class="cardhead"><b>Bilan · ${esc(c.title)}</b><span>${st.n} réponses</span></div><div class="cardbody">
+ <p class="small">${kCount(c)}</p>
+ ${weak.length?`<p class="q">Notions non maîtrisées, dans l'ordre où les retravailler avant le partiel :</p>${weak.map(([n,s],i)=>`<div class="pill trap"><b>${i+1}. ${esc(n[1])}</b><span>${esc(n[2])} <span class="small">(${s} point${s>1?"s":""} d'erreur)</span></span></div>`).join("")}`:""}
+ ${pend.length?`<div class="pill remember"><b>En cours de vérification</b><span>${pend.map(([n])=>esc(n[1])).join(" · ")} : une bonne réponse, il en faut deux de suite.</span></div>`:""}
+ ${mast.length?`<div class="pill note"><b>Maîtrisées : ${mast.length} / ${c.notions.length}</b><span>${mast.map(n=>esc(n[1])).join(" · ")}. Elles ne sont plus testées.</span></div>`:""}
+ <div class="act"><button class="btn" id="cdnext" type="button">${action==="cont"?"Continuer":action==="refill"?"Reprendre mes notions non maîtrisées":"Recommencer à zéro"}</button><button class="btn ghost" id="cdsheet" type="button">Fiche de la séance</button><button class="btn ghost" id="cdlist" type="button">Mes cours</button></div></div></div>`;
+ document.getElementById("cdnext").onclick=()=>{if(action==="cont")st.stop=false;else if(action==="refill")kRefill(c,st);else{delete S.cours2[c.id]}save();LQ2=null;coursView2(c)};
+ document.getElementById("cdsheet").onclick=()=>{SV={side:"recto",hide:false};go(()=>gsheetView(c.sheet))};
+ document.getElementById("cdlist").onclick=()=>go(coursList2);
 }
 function roundView(){if(!R)return home();if(R.i>=R.items.length)return end(true);show()}
 function practice(it){R={items:[it],i:0,score:0,miss:[],single:true};go(roundView)}
