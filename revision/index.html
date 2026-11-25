@@ -141,6 +141,7 @@ b.hl{font-weight:700;color:var(--navy);border-bottom:2px dotted var(--blue);curs
 </div></main>
 
 <script src="jargon.js"></script>
+<script src="cours/all.js"></script>
 <script>
 {
 /* ---------- FAMILIES ---------- */
@@ -329,11 +330,12 @@ function home(){
  stage.innerHTML=`<div class="card"><div class="cardhead"><b>LEA English Lab</b><span>${played?`${played} items done`:""}</span></div>
  <div class="cardbody"><p class="q">Which year are you in?</p>
  <div class="years" role="group" aria-label="Year">${yrs.map(([v,l])=>`<button type="button" class="yr${S.year===v?" on":""}" data-y="${v}">${l}</button>`).join("")}</div>
- <div class="act"><button class="btn" id="go" type="button">Travailler l'écrit</button><button class="btn" id="listen" type="button">Travailler l'oral</button></div>
+ <div class="act"><button class="btn" id="go" type="button">Travailler l'écrit</button><button class="btn" id="listen" type="button">Travailler l'oral</button><button class="btn" id="mescours" type="button">Mes cours</button></div>
  </div></div>`;
  stage.querySelectorAll(".yr").forEach(b=>b.onclick=()=>{S.year=+b.dataset.y;save();home()});
  document.getElementById("go").onclick=start;
  document.getElementById("listen").onclick=()=>go(oralMenu);
+ const mc=document.getElementById("mescours");if(mc)mc.onclick=()=>go(coursList);
 }
 
 function start(){R={items:pick(),i:0,score:0,miss:[]};go(roundView)}
@@ -386,6 +388,59 @@ function spkShow(fb,s,r){
 }
 function jargonIn(text){const L=window.JARGON||[];const t=String(text||"");return L.filter(([w])=>new RegExp("(^|[^A-Za-z])"+w.replace(/[.*+?^${}()|[\]\\]/g,"\\$&").replace(/[- ]/g,"[- ]")+"(s|es)?(?=[^A-Za-z]|$)","i").test(t)).filter((x,i,a)=>!(x[0]==="quadrant"&&a.some(y=>y[0]==="top-right quadrant")))}
 function jargonHTML(list){return `<div class="pill remember"><b>Vocabulaire technique</b><span>${list.map(([w,f,e])=>`<b>${esc(w)}</b> = ${esc(f)} <span class="small">(${esc(e)})</span>`).join("<br>")}</span></div>`}
+let LQ=null;
+function coursState(c){S.cours=S.cours||{};return S.cours[c.id]||(S.cours[c.id]={i:0,res:{}})}
+function coursList(){
+ const C=window.COURS||[];const by={};C.forEach(c=>(by[c.course]=by[c.course]||[]).push(c));
+ stage.innerHTML=`<div class="card"><div class="cardhead"><b>Mes cours</b><span>${C.length} séance${C.length>1?"s":""}</span></div><div class="cardbody">${Object.keys(by).map(k=>`<p class="q">${esc(k)}</p><div class="cards">${by[k].map(c=>{const st=coursState(c);return `<button type="button" data-c="${c.id}"><b>${esc(c.title)}</b><br><span class="small">${st.i}/${c.qs.length} questions</span></button>`}).join("")}</div>`).join("")||'<p class="small">Aucune séance pour l\'instant.</p>'}</div></div>`;
+ stage.querySelectorAll("[data-c]").forEach(b=>b.onclick=()=>{const c=C.find(x=>x.id===b.dataset.c);LQ=null;go(()=>coursView(c))});
+}
+function coursCount(c){const st=coursState(c);const v=Object.values(st.res);return `Premier essai : ${v.filter(r=>r===1).length} · Deuxième essai : ${v.filter(r=>r===2).length} · Ratées : ${v.filter(r=>r===0).length} · sur ${v.length}`}
+function coursView(c){
+ const st=coursState(c);
+ if(st.i>=c.qs.length)return coursDiag(c,true);
+ if(st.i>0&&st.i%5===0&&st.stop===st.i)return coursDiag(c,false);
+ const q=c.qs[st.i];
+ if(!LQ||LQ.id!==q.id)LQ={id:q.id,order:shuf([0,1,2,3]),tries:0,pick:null,wrong:[],done:false};
+ const lvl={r:"Restitution",a:"Compréhension appliquée",d:"Difficile"}[q.lvl];
+ stage.innerHTML=`<div class="prog" aria-hidden="true"><i style="width:${100*st.i/c.qs.length}%"></i></div><div class="card"><div class="cardhead"><b>${esc(c.title)}</b><span>Question ${st.i+1} / ${c.qs.length} · ${lvl}</span></div><div class="cardbody">
+ <p class="q">${esc(q.q).replace("______",'<span class="gap" aria-hidden="true">&nbsp;</span>')}</p>
+ <div class="opts">${LQ.order.map(k=>`<button type="button" class="opt${LQ.wrong.includes(k)?" bad":""}" data-k="${k}"${LQ.wrong.includes(k)?" disabled":""}>${esc(q.o[k])}</button>`).join("")}</div>
+ <div class="fb" id="lqfb">${LQ.tries===1&&!LQ.done?`<div class="pill wrong"><b>✗</b><span>Deuxième essai.</span></div><div class="pill remember"><b>Indice</b><span>${esc(q.hint)}</span></div>`:""}</div>
+ <div class="act" id="lqact"><button class="btn" id="lqcheck" type="button">Valider</button></div>
+ <p class="small">${coursCount(c)}</p></div></div>`;
+ stage.querySelectorAll(".opt:not([disabled])").forEach(b=>b.onclick=()=>{if(LQ.done)return;stage.querySelectorAll(".opt").forEach(x=>x.classList.remove("on"));b.classList.add("on");LQ.pick=+b.dataset.k});
+ document.getElementById("lqcheck").onclick=()=>{
+  if(LQ.pick===null)return;
+  if(LQ.pick===0){st.res[q.id]=LQ.tries+1;return coursEnd(c,q,true)}
+  LQ.tries++;LQ.wrong.push(LQ.pick);
+  if(LQ.tries===1){LQ.pick=null;save();return coursView(c)}
+  st.res[q.id]=0;coursEnd(c,q,false);
+ };
+}
+function coursEnd(c,q,ok){
+ const st=coursState(c);LQ.done=true;
+ stage.querySelectorAll(".opt").forEach(b=>{const k=+b.dataset.k;b.disabled=true;if(k===0&&!ok)b.classList.add("good");if(k===0&&ok)b.classList.add("good")});
+ const fb=document.getElementById("lqfb");
+ fb.innerHTML=ok?`<div class="pill model"><b>✓ ${LQ.tries?"2e essai":"1er essai"}</b><span>${esc(q.o[0])}</span></div>`:
+  `<div class="pill wrong"><b>✗ Erreur de raisonnement</b><span>${esc(q.c[LQ.pick-1].charAt(0).toUpperCase()+q.c[LQ.pick-1].slice(1))}</span></div><div class="pill model"><b>✓ Réponse</b><span>${esc(q.o[0])}</span></div><div class="pill remember"><b>Règle du cours</b><span>${esc((c.notions.find(n=>n[0]===q.n)||["","",""])[2])}</span></div>`;
+ st.i++;if(st.i%5===0)st.stop=st.i;save();
+ document.getElementById("lqact").innerHTML=`<button class="btn" id="lqnext" type="button">${st.i>=c.qs.length||st.i%5===0?"Bilan":"Question suivante"}</button>`;
+ document.getElementById("lqnext").onclick=()=>{LQ=null;coursView(c)};
+ document.querySelector("#lqact").nextElementSibling.textContent=coursCount(c);
+}
+function coursDiag(c,final){
+ const st=coursState(c);const sc={};
+ c.qs.forEach(q=>{const r=st.res[q.id];if(r===undefined)return;sc[q.n]=(sc[q.n]||0)+(r===0?2:r===2?1:0)});
+ const weak=c.notions.map((n,k)=>[n,sc[n[0]]||0,k]).filter(x=>x[1]>0).sort((a,b)=>b[1]-a[1]||a[2]-b[2]);
+ stage.innerHTML=`<div class="card"><div class="cardhead"><b>Bilan · ${esc(c.title)}</b><span>${st.i} / ${c.qs.length} questions</span></div><div class="cardbody">
+ <p class="small">${coursCount(c)}</p>
+ ${weak.length?`<p class="q">Notions non maîtrisées, dans l'ordre où les retravailler avant le partiel :</p>${weak.map(([n,s],i)=>`<div class="pill trap"><b>${i+1}. ${esc(n[1])}</b><span>${esc(n[2])} <span class="small">(${s} point${s>1?"s":""} d'erreur)</span></span></div>`).join("")}`:`<div class="pill note"><b>0</b><span>Aucune notion à retravailler sur les questions faites.</span></div>`}
+ <div class="act"><button class="btn" id="cdnext" type="button">${final?"Recommencer la séance":`Questions ${st.i+1} à ${Math.min(st.i+5,c.qs.length)}`}</button><button class="btn ghost" id="cdsheet" type="button">Fiche de la séance</button><button class="btn ghost" id="cdlist" type="button">Mes cours</button></div></div></div>`;
+ document.getElementById("cdnext").onclick=()=>{if(final){S.cours[c.id]={i:0,res:{}}}else st.stop=null;save();LQ=null;coursView(c)};
+ document.getElementById("cdsheet").onclick=()=>{SV={side:"recto",hide:false};go(()=>gsheetView(c.sheet))};
+ document.getElementById("cdlist").onclick=()=>go(coursList);
+}
 function roundView(){if(!R)return home();if(R.i>=R.items.length)return end(true);show()}
 function practice(it){R={items:[it],i:0,score:0,miss:[],single:true};go(roundView)}
 
